@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heurémen</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400&family=Abril+Fatface&family=Cinzel:wght@400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;background:#f7f0e0;overflow:hidden;font-family:'Lora',serif}
+
+.room{
+  width:100vw;height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  position:relative;
+  background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(200,144,42,0.06) 0%,transparent 65%),#f7f0e0;
+}
+.room::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+
+#symbol-wrap{
+  position:relative;z-index:1;
+  animation:fadein 1.4s ease both;
+}
+@keyframes fadein{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}
+
+#symbol{touch-action:none;cursor:grab}
+#symbol:active{cursor:grabbing}
+
+.hint-text{
+  font-family:'Cinzel',serif;font-size:0.6rem;
+  letter-spacing:0.3em;color:rgba(42,31,14,0.25);
+  text-transform:uppercase;text-align:center;
+  margin-top:24px;position:relative;z-index:1;
+  animation:fadein 1.4s ease 1.2s both;
+  transition:opacity 0.6s;
+}
+
+/* REVEAL */
+#reveal{
+  position:fixed;inset:0;background:#f7f0e0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity 1.2s ease;z-index:10;
+}
+#reveal.active{opacity:1;pointer-events:all}
+
+.rev-symbol{margin-bottom:30px;animation:rsym 1s ease both}
+@keyframes rsym{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
+
+.rev-word{
+  font-family:'Abril Fatface',serif;
+  font-size:clamp(2.4rem,7vw,4.2rem);
+  color:#2a1a08;letter-spacing:0.04em;
+  margin-bottom:6px;
+  animation:rup 0.9s ease 0.3s both;
+  position:relative;
+}
+.rev-word::after{
+  content:'';position:absolute;
+  bottom:-5px;left:8%;right:8%;height:3px;
+  background:linear-gradient(90deg,#c43c2a,#c8902a,#2a5a8a);
+  border-radius:2px;
+}
+.rev-pron{
+  font-style:italic;font-size:0.95rem;
+  color:rgba(42,31,14,0.38);letter-spacing:0.12em;
+  margin-bottom:36px;animation:rup 0.9s ease 0.5s both;
+}
+.rev-def{
+  font-style:italic;font-size:clamp(0.9rem,1.8vw,1.1rem);
+  color:rgba(42,31,14,0.55);max-width:460px;
+  text-align:center;line-height:1.85;
+  margin-bottom:44px;animation:rup 0.9s ease 0.7s both;
+}
+.rev-enter{
+  font-family:'Cinzel',serif;font-size:0.68rem;
+  letter-spacing:0.28em;color:rgba(42,31,14,0.4);
+  text-transform:uppercase;border:none;
+  border-bottom:1px solid rgba(42,31,14,0.2);
+  padding-bottom:3px;cursor:pointer;background:none;
+  transition:all 0.35s;animation:rup 0.9s ease 0.9s both;
+}
+.rev-enter:hover{color:#2a1a08;border-bottom-color:rgba(42,31,14,0.5);letter-spacing:0.38em}
+@keyframes rup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<div class="room">
+  <div id="symbol-wrap">
+    <svg id="symbol" width="320" height="320" viewBox="0 0 320 320" fill="none">
+
+      <!-- Outer circle -->
+      <circle cx="160" cy="160" r="140"
+        stroke="#1a1208" stroke-width="9" fill="none"/>
+
+      <!--
+        TOP TRIANGLE:
+        - Apex points DOWN to center (160,160)
+        - Base spans top of circle
+        - Hollow (fill:none)
+      -->
+      <g id="tri-top" style="transform-origin:160px 160px;transform:rotate(0deg)">
+        <polygon
+          points="160,160 284,68 36,68"
+          stroke="#1a1208" stroke-width="7"
+          fill="none"
+          stroke-linejoin="round"/>
+      </g>
+
+      <!--
+        BOTTOM TRIANGLE:
+        - Apex points UP to center (160,160)
+        - Base spans bottom of circle
+        - Hollow (fill:none)
+      -->
+      <g id="tri-bot" style="transform-origin:160px 160px;transform:rotate(0deg)">
+        <polygon
+          points="160,160 284,252 36,252"
+          stroke="#1a1208" stroke-width="7"
+          fill="none"
+          stroke-linejoin="round"/>
+      </g>
+
+      <!-- Center meeting point — solid dot -->
+      <circle id="center-dot" cx="160" cy="160" r="5" fill="#1a1208"/>
+
+      <!-- Word — hidden, appears as gap opens -->
+      <text id="the-word"
+        x="160" y="163"
+        text-anchor="middle"
+        dominant-baseline="middle"
+        font-family="Georgia, serif"
+        font-style="italic"
+        font-size="22"
+        letter-spacing="2.5"
+        fill="#2a1a08"
+        opacity="0">Heurémen</text>
+
+      <!-- Gold breath replaces center dot -->
+      <circle id="gold-dot" cx="160" cy="160" r="4" fill="rgba(200,144,42,0)"/>
+
+    </svg>
+  </div>
+
+  <div class="hint-text" id="hint">find the gap</div>
+</div>
+
+<!-- REVEAL -->
+<div id="reveal">
+  <div class="rev-symbol">
+    <svg width="90" height="90" viewBox="0 0 320 320" fill="none">
+      <circle cx="160" cy="160" r="140" stroke="#1a1208" stroke-width="9" fill="none"/>
+      <polygon points="160,128 284,68 36,68"
+        stroke="#c43c2a" stroke-width="7" fill="none" stroke-linejoin="round"/>
+      <polygon points="160,192 284,252 36,252"
+        stroke="#2a5a8a" stroke-width="7" fill="none" stroke-linejoin="round"/>
+      <text x="160" y="163" text-anchor="middle" dominant-baseline="middle"
+        font-family="Georgia,serif" font-style="italic" font-size="22" letter-spacing="2.5" fill="#2a1a08">Heurémen</text>
+      <circle cx="160" cy="160" r="4" fill="rgba(200,144,42,0.65)"/>
+    </svg>
+  </div>
+  <div class="rev-word">Heurémen</div>
+  <div class="rev-pron">hyoo · RAY · men</div>
+  <div class="rev-def">We found it together — the thing that emerges between minds that couldn't get there alone.</div>
+  <button class="rev-enter" onclick="window.location='index.html'">Enter →</button>
+</div>
+
+<script>
+const triTop = document.getElementById('tri-top');
+const triBot = document.getElementById('tri-bot');
+const word = document.getElementById('the-word');
+const centerDot = document.getElementById('center-dot');
+const goldDot = document.getElementById('gold-dot');
+const hint = document.getElementById('hint');
+const reveal = document.getElementById('reveal');
+
+// topAngle: 0=closed, negative=pulled up (gap opens)
+// botAngle: 0=closed, positive=pulled down (gap opens)
+let topAngle = 0;
+let botAngle = 0;
+let dragging = null;
+let startY = 0;
+let startAngle = 0;
+let unlocked = false;
+let idleT = 0;
+
+const UNLOCK_AT = 28;
+
+function setTri(el, angle) {
+  el.style.transform = `rotate(${angle}deg)`;
+}
+
+function lerp(a, b, t) { return Math.round(a + (b - a) * t); }
+
+function update() {
+  const separation = (-topAngle) + botAngle;
+  const progress = Math.min(1, Math.max(0, separation / (UNLOCK_AT * 2)));
+
+  // Word fades in
+  word.setAttribute('opacity', progress * 0.9);
+
+  // Center dot fades out, gold dot fades in
+  centerDot.setAttribute('fill', `rgba(26,18,8,${1 - progress})`);
+  goldDot.setAttribute('fill', `rgba(200,144,42,${progress * 0.7})`);
+
+  // Triangle colors shift: black → red (top) / blue (bottom)
+  const topPoly = triTop.querySelector('polygon');
+  const botPoly = triBot.querySelector('polygon');
+
+  if (topPoly) {
+    const r = lerp(26, 196, progress);
+    const g = lerp(18, 60, progress);
+    const b = lerp(8, 42, progress);
+    topPoly.setAttribute('stroke', `rgb(${r},${g},${b})`);
+  }
+  if (botPoly) {
+    const r = lerp(26, 42, progress);
+    const g = lerp(18, 90, progress);
+    const b = lerp(8, 138, progress);
+    botPoly.setAttribute('stroke', `rgb(${r},${g},${b})`);
+  }
+
+  // Hint fades
+  hint.style.opacity = Math.max(0, 1 - progress * 2.5);
+
+  // Unlock
+  if ((-topAngle) >= UNLOCK_AT && botAngle >= UNLOCK_AT && !unlocked) {
+    unlocked = true;
+    topAngle = -UNLOCK_AT; botAngle = UNLOCK_AT;
+    setTri(triTop, topAngle); setTri(triBot, botAngle);
+    word.style.transition = 'opacity 0.6s';
+    word.setAttribute('opacity', '1');
+    hint.style.opacity = '0';
+    setTimeout(() => reveal.classList.add('active'), 900);
+  }
+}
+
+function getY(e) { return e.touches ? e.touches[0].clientY : e.clientY; }
+
+function onDown(e, which) {
+  if (unlocked) return;
+  dragging = which;
+  startY = getY(e);
+  startAngle = which === 'top' ? topAngle : botAngle;
+  e.preventDefault();
+}
+
+triTop.addEventListener('mousedown', e => onDown(e, 'top'));
+triTop.addEventListener('touchstart', e => onDown(e, 'top'), { passive: false });
+triBot.addEventListener('mousedown', e => onDown(e, 'bot'));
+triBot.addEventListener('touchstart', e => onDown(e, 'bot'), { passive: false });
+
+function onMove(e) {
+  if (!dragging || unlocked) return;
+  const dy = getY(e) - startY;
+  if (dragging === 'top') {
+    topAngle = Math.max(-50, Math.min(0, startAngle - dy * 0.4));
+    setTri(triTop, topAngle);
+  } else {
+    botAngle = Math.min(50, Math.max(0, startAngle + dy * 0.4));
+    setTri(triBot, botAngle);
+  }
+  update();
+}
+
+window.addEventListener('mousemove', onMove);
+window.addEventListener('touchmove', e => { onMove(e); e.preventDefault(); }, { passive: false });
+window.addEventListener('mouseup', () => dragging = null);
+window.addEventListener('touchend', () => dragging = null);
+
+setTri(triTop, 0);
+setTri(triBot, 0);
+
+// Gentle breathing pulse
+function idle() {
+  if (!dragging && !unlocked) {
+    idleT += 0.004;
+    const p = Math.sin(idleT) * 0.9;
+    if (topAngle === 0) triTop.style.transform = `rotate(${p}deg)`;
+    if (botAngle === 0) triBot.style.transform = `rotate(${-p}deg)`;
+  }
+  requestAnimationFrame(idle);
+}
+idle();
+</script>
+</body>
+</html>
