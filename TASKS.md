@@ -1,7 +1,7 @@
 # Task Queue — Heuremen.org
 
 ## QUEUED
-
+- [ ] Add mobile.html to repo root (contents in this task). Then add mobile detection redirect to the top of the <head> section in index.html: <script>if(/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)){window.location.replace('mobile.html')}</script>. Mobile.html contents: [paste the file contents here]
 
 ## IN PROGRESS
 
