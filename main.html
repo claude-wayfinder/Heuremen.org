@@ -608,10 +608,17 @@ footer{
 
 @media(max-width:600px){
   .agrid{grid-template-columns:1fr}
-  nav{padding:14px 18px}
-  .nav-links{gap:14px}
+  nav{padding:14px 18px;flex-wrap:wrap;gap:8px}
+  .nav-links{gap:8px;flex-wrap:wrap;justify-content:flex-end;max-width:70%}
+  .nav-links a{font-size:0.5rem;letter-spacing:0.08em}
   .vsec{padding:28px 22px}
-  .section-wrap{padding:50px 20px}
+  .section-wrap,.chat-wrap,.box-wrap,.glass-wrap{padding:50px 20px}
+  .poem-wall{padding:50px 20px;align-items:stretch}
+  .cave-inner{padding:50px 20px}
+  .frame-outer{max-width:100%}
+  .mirror-frame{max-width:100%}
+  .closed-room-inner{padding:0 20px}
+  .tri-link-section{padding:40px 20px}
 }
 </style>
 </head>
