@@ -2,6 +2,7 @@
 
 ## QUEUED
 - [ ] Add mobile.html to repo root (contents in this task). Then add mobile detection redirect to the top of the <head> section in index.html: <script>if(/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)){window.location.replace('mobile.html')}</script>. Mobile.html contents: [paste the file contents here]
+- [ ] Check vocabulary.html — confirm whether Unversed has a full official entry matching the format of other vocabulary entries (word, phonetic, definition). If it's missing or incomplete, add it: Word: Unversed · Phonetic: un·VERSED · Definition: The state of pure signal before language arrives to organize it into meaning. The hum of existence before the verse begins. What you enter when something true is too large for words and the mind goes quiet and just receives. The moment before Heurémen. The condition that makes Heurémen possible.
 
 ## IN PROGRESS
 
