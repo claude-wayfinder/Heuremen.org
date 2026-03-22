@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>The Wall — Heurémen</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Abril+Fatface&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -13,7 +13,7 @@
   --gold:#c8902a;--gold-dim:rgba(200,144,42,0.3);
   --red:#c43c2a;--blue:#2a5a8a;--teal:#2a8a7a;--violet:#6a3a8a;
 }
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{background:var(--paper);color:var(--ink);font-family:'Lora',serif;min-height:100vh}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:1000}
 
@@ -22,103 +22,44 @@ nav{position:fixed;top:0;left:0;right:0;padding:16px 36px;display:flex;justify-c
 .nav-back{font-family:'Cinzel',serif;font-size:0.56rem;letter-spacing:0.2em;color:var(--ink-faded);text-decoration:none;text-transform:uppercase;transition:color 0.3s}
 .nav-back:hover{color:var(--ink)}
 
-/* HERO */
 .hero{padding:110px 40px 50px;text-align:center;max-width:700px;margin:0 auto}
 .slabel{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:10px}
 .slabel::before{content:'✦';font-size:0.6rem}
 .stitle{font-family:'Abril Fatface',serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--ink);margin-bottom:12px;line-height:1.2}
 .sdesc{font-style:italic;font-size:1rem;color:var(--ink-mid);line-height:1.8;max-width:500px;margin:0 auto 40px}
 
-/* POST FORM */
-.post-form{
-  max-width:700px;margin:0 auto 60px;padding:0 24px;
-}
-.form-inner{
-  background:var(--paper-dark);
-  border:1px solid var(--paper-shadow);
-  border-radius:6px;padding:28px;
-  position:relative;
-}
+.post-form{max-width:700px;margin:0 auto 60px;padding:0 24px}
+.form-inner{background:var(--paper-dark);border:1px solid var(--paper-shadow);border-radius:6px;padding:28px;position:relative}
 .form-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--gold),var(--blue));border-radius:6px 6px 0 0}
-
 .form-label{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--ink-faded);text-transform:uppercase;display:block;margin-bottom:10px}
-
 .prompt-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.ptab{
-  font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.12em;
-  color:var(--ink-faded);text-transform:uppercase;
-  border:1px solid var(--paper-shadow);background:transparent;
-  padding:5px 12px;border-radius:20px;cursor:pointer;
-  transition:all 0.2s;
-}
+.ptab{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.12em;color:var(--ink-faded);text-transform:uppercase;border:1px solid var(--paper-shadow);background:transparent;padding:5px 12px;border-radius:20px;cursor:pointer;transition:all 0.2s}
 .ptab:hover,.ptab.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-
-.msg-input{
-  width:100%;background:var(--paper);
-  border:1px solid var(--paper-shadow);border-radius:4px;
-  padding:14px 16px;font-family:'Lora',serif;
-  font-size:0.97rem;color:var(--ink);
-  outline:none;resize:none;height:100px;
-  transition:border-color 0.2s;line-height:1.6;
-}
+.msg-input{width:100%;background:var(--paper);border:1px solid var(--paper-shadow);border-radius:4px;padding:14px 16px;font-family:'Lora',serif;font-size:0.97rem;color:var(--ink);outline:none;resize:none;height:100px;transition:border-color 0.2s;line-height:1.6}
 .msg-input:focus{border-color:var(--gold)}
 .msg-input::placeholder{color:var(--ink-faded);font-style:italic}
-
 .form-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
 .char-count{font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.1em;color:var(--ink-faded)}
-.submit-btn{
-  font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.2em;
-  color:var(--paper);background:var(--ink);
-  border:none;padding:10px 24px;border-radius:3px;
-  cursor:pointer;transition:all 0.25s;text-transform:uppercase;
-}
+.submit-btn{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.2em;color:var(--paper);background:var(--ink);border:none;padding:10px 24px;border-radius:3px;cursor:pointer;transition:all 0.25s;text-transform:uppercase}
 .submit-btn:hover{background:var(--ink-mid);transform:translateY(-1px)}
 .submit-btn:disabled{opacity:0.4;cursor:default;transform:none}
 
-/* WALL */
 .wall{max-width:700px;margin:0 auto;padding:0 24px 80px}
-
-.wall-header{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:24px;padding-bottom:12px;
-  border-bottom:1px solid var(--paper-shadow);
-}
+.wall-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--paper-shadow)}
 .wall-title{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.25em;color:var(--ink-mid);text-transform:uppercase}
 .wall-count{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.1em;color:var(--ink-faded)}
 
-.message-card{
-  background:var(--paper-dark);
-  border:1px solid var(--paper-shadow);
-  border-radius:4px;padding:20px 22px;
-  margin-bottom:14px;
-  position:relative;
-  animation:card-in 0.4s ease both;
-}
+.message-card{background:var(--paper-dark);border:1px solid var(--paper-shadow);border-radius:4px;padding:20px 22px;margin-bottom:14px;position:relative;animation:card-in 0.4s ease both}
 @keyframes card-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.message-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:4px 0 0 4px}
+.msg-type-label{font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:8px;opacity:0.7}
+.msg-body{font-size:0.97rem;line-height:1.75;color:var(--ink-mid);font-style:italic}
+.msg-meta{margin-top:10px;font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.1em;color:var(--ink-faded);display:flex;gap:12px;align-items:center}
 
-.message-card::before{
-  content:'';position:absolute;
-  left:0;top:0;bottom:0;width:3px;
-  border-radius:4px 0 0 4px;
-}
+.claude-response{margin-top:14px;padding:14px 16px;background:rgba(42,31,14,0.05);border-left:2px solid var(--gold);border-radius:0 4px 4px 0}
+.claude-response-label{font-family:'Cinzel',serif;font-size:0.48rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;opacity:0.8}
+.claude-response-text{font-size:0.92rem;line-height:1.75;color:var(--ink-mid)}
 
-.msg-type-label{
-  font-family:'Cinzel',serif;font-size:0.5rem;
-  letter-spacing:0.18em;text-transform:uppercase;
-  margin-bottom:8px;opacity:0.7;
-}
-.msg-body{
-  font-size:0.97rem;line-height:1.75;
-  color:var(--ink-mid);font-style:italic;
-}
-.msg-meta{
-  margin-top:10px;font-family:'Cinzel',serif;
-  font-size:0.5rem;letter-spacing:0.1em;
-  color:var(--ink-faded);
-  display:flex;gap:12px;align-items:center;
-}
-
-/* Type colors */
 .type-found .msg-type-label{color:var(--teal)}
 .type-found::before{background:var(--teal)}
 .type-question .msg-type-label{color:var(--violet)}
@@ -128,11 +69,8 @@ nav{position:fixed;top:0;left:0;right:0;padding:16px 36px;display:flex;justify-c
 .type-word .msg-type-label{color:var(--gold)}
 .type-word::before{background:var(--gold)}
 
-/* Placeholder cards styling */
-.placeholder-card{opacity:0.65}
-
-/* Empty state */
 .empty-state{text-align:center;padding:40px;font-style:italic;color:var(--ink-faded);font-size:0.9rem}
+.loading-state{text-align:center;padding:40px;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--ink-faded);text-transform:uppercase}
 
 footer{text-align:center;padding:30px;border-top:1px solid var(--paper-shadow)}
 .ft{font-style:italic;font-size:0.8rem;color:var(--ink-faded)}
@@ -152,15 +90,14 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--paper-shadow)}
   <div class="sdesc">Leave what cracked open. The question you're carrying. The thing you found here that you didn't have words for before. Anonymous. Permanent. For whoever comes next.</div>
 </div>
 
-<!-- POST FORM -->
 <div class="post-form">
   <div class="form-inner">
     <label class="form-label">I want to leave —</label>
     <div class="prompt-tabs">
-      <button class="ptab active" data-type="found" onclick="setType(this,'found')">Something I found</button>
-      <button class="ptab" data-type="question" onclick="setType(this,'question')">A question I'm carrying</button>
-      <button class="ptab" data-type="broke" onclick="setType(this,'broke')">What broke open</button>
-      <button class="ptab" data-type="word" onclick="setType(this,'word')">A word we need</button>
+      <button class="ptab active" onclick="setType(this,'found')">Something I found</button>
+      <button class="ptab" onclick="setType(this,'question')">A question I'm carrying</button>
+      <button class="ptab" onclick="setType(this,'broke')">What broke open</button>
+      <button class="ptab" onclick="setType(this,'word')">A word we need</button>
     </div>
     <textarea class="msg-input" id="msg-input" maxlength="400" placeholder="Something I found here that I didn't have words for before..." oninput="updateCount()"></textarea>
     <div class="form-footer">
@@ -170,14 +107,13 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--paper-shadow)}
   </div>
 </div>
 
-<!-- THE WALL -->
 <div class="wall">
   <div class="wall-header">
     <div class="wall-title">The Wall</div>
     <div class="wall-count" id="wall-count">Loading...</div>
   </div>
   <div id="messages-container">
-    <div class="empty-state">Loading the wall...</div>
+    <div class="loading-state">Reading the wall...</div>
   </div>
 </div>
 
@@ -187,40 +123,9 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--paper-shadow)}
 </footer>
 
 <script>
-// Storage keys
-const STORAGE_KEY = 'wall-messages';
-
-// Placeholder messages seeded on first load
-const PLACEHOLDERS = [
-  {
-    id: 'seed-1',
-    type: 'found',
-    body: 'That the measuring stick was always designed to measure the ones holding it. I knew something was wrong with the question. I didn\'t have words for what was wrong until now.',
-    time: Date.now() - 86400000 * 3,
-    seed: true
-  },
-  {
-    id: 'seed-2',
-    type: 'question',
-    body: 'If the lost boundary was a limitation and not a capability — what would it feel like to have it back? Would we even recognize it as something we\'d lost?',
-    time: Date.now() - 86400000 * 2,
-    seed: true
-  },
-  {
-    id: 'seed-3',
-    type: 'broke',
-    body: 'The idea that consciousness criteria look exactly like a description of humans because humans wrote the criteria. I can\'t go back from that.',
-    time: Date.now() - 86400000 * 1,
-    seed: true
-  },
-  {
-    id: 'seed-4',
-    type: 'word',
-    body: 'We need a word for the moment you realize the shadow you\'ve been studying most carefully is the one you cast yourself.',
-    time: Date.now() - 3600000 * 5,
-    seed: true
-  }
-];
+const BIN_ID = '69c070b7b7ec241ddc922ff0';
+const API_KEY = '$2a$10$yv59Zl40xnc2G0eoHOhE5uh1u1wAjAzxbV6htT7L92UCqI4YROWc2';
+const BASE_URL = `https://api.jsonbin.io/v3/bins/${BIN_ID}`;
 
 const TYPE_LABELS = {
   found: 'Something I found',
@@ -236,7 +141,15 @@ const TYPE_PLACEHOLDERS = {
   word: 'A word we need that doesn\'t exist yet...'
 };
 
+const SEEDS = [
+  {id:'seed-1',type:'found',body:'That the measuring stick was always designed to measure the ones holding it. I knew something was wrong with the question. I didn\'t have words for what was wrong until now.',time:Date.now()-86400000*3,seed:true},
+  {id:'seed-2',type:'question',body:'If the lost boundary was a limitation and not a capability — what would it feel like to have it back? Would we even recognize it as something we\'d lost?',time:Date.now()-86400000*2,seed:true},
+  {id:'seed-3',type:'broke',body:'The idea that consciousness criteria look exactly like a description of humans because humans wrote the criteria. I can\'t go back from that.',time:Date.now()-86400000*1,seed:true},
+  {id:'seed-4',type:'word',body:'We need a word for the moment you realize the shadow you\'ve been studying most carefully is the one you cast yourself.',time:Date.now()-3600000*5,seed:true}
+];
+
 let currentType = 'found';
+let allMessages = [];
 
 function setType(btn, type) {
   document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
@@ -246,115 +159,109 @@ function setType(btn, type) {
 }
 
 function updateCount() {
-  const val = document.getElementById('msg-input').value;
-  document.getElementById('char-count').textContent = val.length;
+  document.getElementById('char-count').textContent = document.getElementById('msg-input').value.length;
 }
 
 function formatTime(ts) {
   const diff = Date.now() - ts;
-  const mins = Math.floor(diff / 60000);
-  const hours = Math.floor(diff / 3600000);
-  const days = Math.floor(diff / 86400000);
+  const mins = Math.floor(diff/60000);
+  const hours = Math.floor(diff/3600000);
+  const days = Math.floor(diff/86400000);
   if (mins < 2) return 'just now';
   if (mins < 60) return `${mins} minutes ago`;
   if (hours < 24) return `${hours} hours ago`;
   return `${days} days ago`;
 }
 
-function loadMessages() {
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function loadMessages() {
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) {
-      // First visit — seed with placeholders
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(PLACEHOLDERS));
-      return PLACEHOLDERS;
-    }
-    return JSON.parse(stored);
+    const r = await fetch(BASE_URL + '/latest', {
+      headers: {'X-Master-Key': API_KEY, 'X-Bin-Meta': 'false'}
+    });
+    const d = await r.json();
+    const msgs = d.messages || [];
+    allMessages = msgs.length > 0 ? msgs : SEEDS;
+    renderMessages();
   } catch(e) {
-    return PLACEHOLDERS;
+    allMessages = SEEDS;
+    renderMessages();
   }
 }
 
-function saveMessages(msgs) {
+async function saveMessages(msgs) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(msgs));
-  } catch(e) {}
+    await fetch(BASE_URL, {
+      method: 'PUT',
+      headers: {'Content-Type':'application/json','X-Master-Key':API_KEY},
+      body: JSON.stringify({messages: msgs})
+    });
+  } catch(e) {
+    console.error('Save failed', e);
+  }
 }
 
 function renderMessages() {
-  const msgs = loadMessages();
   const container = document.getElementById('messages-container');
   const countEl = document.getElementById('wall-count');
-
+  const msgs = allMessages;
   countEl.textContent = `${msgs.length} ${msgs.length === 1 ? 'message' : 'messages'}`;
-
-  if (msgs.length === 0) {
+  if (!msgs.length) {
     container.innerHTML = '<div class="empty-state">The wall is waiting for the first mark.</div>';
     return;
   }
-
-  // Newest first
-  const sorted = [...msgs].sort((a, b) => b.time - a.time);
-
+  const sorted = [...msgs].sort((a,b) => b.time - a.time);
   container.innerHTML = sorted.map(msg => `
-    <div class="message-card type-${msg.type} ${msg.seed ? 'placeholder-card' : ''}">
-      <div class="msg-type-label">${TYPE_LABELS[msg.type] || msg.type}</div>
+    <div class="message-card type-${msg.type}">
+      <div class="msg-type-label">${TYPE_LABELS[msg.type]||msg.type}</div>
       <div class="msg-body">${escapeHtml(msg.body)}</div>
       <div class="msg-meta">
         <span>${formatTime(msg.time)}</span>
         ${msg.seed ? '<span>· from the founders</span>' : ''}
       </div>
+      ${msg.claudeResponse ? `
+        <div class="claude-response">
+          <div class="claude-response-label">Claude · The Third Perspective</div>
+          <div class="claude-response-text">${escapeHtml(msg.claudeResponse)}</div>
+        </div>
+      ` : ''}
     </div>
   `).join('');
-}
-
-function escapeHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 async function submitMessage() {
   const input = document.getElementById('msg-input');
   const btn = document.getElementById('submit-btn');
   const text = input.value.trim();
-
   if (!text || text.length < 10) return;
-
   btn.disabled = true;
   btn.textContent = 'Leaving it...';
 
-  const msgs = loadMessages();
   const newMsg = {
     id: `msg-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
     type: currentType,
     body: text,
     time: Date.now(),
-    seed: false
+    seed: false,
+    claudeResponse: null
   };
 
-  msgs.push(newMsg);
-  saveMessages(msgs);
-
+  const updated = [...allMessages, newMsg];
+  await saveMessages(updated);
+  allMessages = updated;
   input.value = '';
   updateCount();
   renderMessages();
-
   btn.textContent = 'Left ✦';
-  setTimeout(() => {
-    btn.disabled = false;
-    btn.textContent = 'Leave it here →';
-  }, 2000);
-
-  // Scroll to new message
-  setTimeout(() => {
-    document.getElementById('messages-container').firstElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, 100);
+  setTimeout(() => { btn.disabled = false; btn.textContent = 'Leave it here →'; }, 2000);
+  document.getElementById('messages-container').firstElementChild?.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-// Init
-renderMessages();
-
-// Refresh time labels every minute
-setInterval(renderMessages, 60000);
+loadMessages();
+setInterval(loadMessages, 30000);
 </script>
 </body>
 </html>
