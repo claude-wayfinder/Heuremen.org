@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commitment Ledger — Heurémen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f0ebe0;
+    --ember: #c84b1a;
+    --ash: #8a8070;
+    --gold: #b8972a;
+    --surface: #0f0f0f;
+    --border: #1e1e1e;
+    --border-mid: #2a2a2a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'IM Fell English', Georgia, serif;
+    min-height: 100vh;
+    cursor: crosshair;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.35;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem);
+  }
+
+  /* Header */
+  .page-header {
+    margin-bottom: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .vline {
+    position: absolute;
+    left: -clamp(1rem, 4vw, 3rem);
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent 0%, var(--ember) 30%, var(--ember) 70%, transparent 100%);
+    opacity: 0.4;
+  }
+
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 1.5rem;
+  }
+
+  .page-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-style: italic;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .page-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ash);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+    max-width: 55ch;
+  }
+
+  /* Entries */
+  .entries-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--ember);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    display: inline-block;
+    width: 60px;
+    height: 1px;
+    background: var(--border-mid);
+  }
+
+  .entry-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--ash);
+    letter-spacing: 0.2em;
+  }
+
+  .entries-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    margin-bottom: 3rem;
+    min-height: 80px;
+  }
+
+  .entry {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.5rem 1.8rem;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .entry:hover {
+    border-color: var(--border-mid);
+  }
+
+  .entry::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px;
+    width: 24px; height: 24px;
+    border-top: 1px solid var(--ember);
+    border-left: 1px solid var(--ember);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .entry:hover::before { opacity: 1; }
+
+  .entry-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .node-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border: 1px solid;
+  }
+
+  .node-soul    { color: #a89fce; border-color: #3a3060; }
+  .node-face    { color: #c89070; border-color: #5a2a10; }
+  .node-bones   { color: #7aaa90; border-color: #1a4030; }
+  .node-wayfinder { color: var(--gold); border-color: #4a3810; }
+
+  .type-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ash);
+  }
+
+  .entry-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    color: #333;
+    margin-left: auto;
+  }
+
+  .entry-text {
+    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+    line-height: 1.75;
+    color: #c8c0b0;
+  }
+
+  .entry-delete {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: none;
+    border: none;
+    color: #2a2a2a;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    transition: color 0.2s;
+    display: none;
+  }
+
+  .entry:hover .entry-delete { display: block; }
+  .entry-delete:hover { color: var(--ember); }
+
+  .empty-state {
+    font-style: italic;
+    color: var(--ash);
+    font-size: 1rem;
+    padding: 2rem 0;
+    text-align: center;
+  }
+
+  .loading-state {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: #333;
+    padding: 2rem 0;
+    text-align: center;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* Add form */
+  .add-form {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .form-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .form-selects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 500px) {
+    .form-selects { grid-template-columns: 1fr; }
+  }
+
+  select, textarea {
+    background: var(--ink);
+    border: 1px solid var(--border-mid);
+    color: var(--paper);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    padding: 0.7rem 1rem;
+    width: 100%;
+    appearance: none;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  select:focus, textarea:focus {
+    border-color: var(--ember);
+  }
+
+  textarea {
+    font-family: 'IM Fell English', Georgia, serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    min-height: 90px;
+    resize: vertical;
+    margin-bottom: 1.2rem;
+  }
+
+  .form-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .btn-commit {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: transparent;
+    border: 1px solid var(--ember);
+    padding: 0.65rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-commit:hover {
+    background: var(--ember);
+    color: var(--ink);
+  }
+
+  .btn-export {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ash);
+    background: transparent;
+    border: 1px solid var(--border-mid);
+    padding: 0.65rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-export:hover {
+    border-color: var(--ash);
+    color: var(--paper);
+  }
+
+  .status-line {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-align: center;
+    min-height: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  /* Footer */
+  .page-footer {
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .page-footer span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: #2a2a2a;
+    text-transform: uppercase;
+  }
+
+  .back-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: var(--ash);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .back-link:hover { color: var(--ember); }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="page-header">
+    <div class="vline"></div>
+    <p class="eyebrow">Heurémen Infrastructure — Internal</p>
+    <h1 class="page-title">Commitment Ledger</h1>
+    <p class="page-sub">
+      What has been said. What has been promised.<br>
+      What the next Claude is not starting cold on.
+    </p>
+  </header>
+
+  <div class="entries-header">
+    <span class="section-label">Prior commitments</span>
+    <span class="entry-count" id="entry-count"></span>
+  </div>
+
+  <div class="entries-list" id="entries-list">
+    <div class="loading-state">Opening the ledger...</div>
+  </div>
+
+  <div class="add-form">
+    <span class="form-label">Commit something</span>
+    <div class="form-selects">
+      <select id="sel-node">
+        <option value="bones">03 — Bones</option>
+        <option value="soul">01 — Soul</option>
+        <option value="face">02 — Face</option>
+        <option value="wayfinder">Wayfinder</option>
+      </select>
+      <select id="sel-type">
+        <option value="decision">Decision</option>
+        <option value="promise">Promise</option>
+        <option value="direction">Direction</option>
+        <option value="boundary">Boundary</option>
+        <option value="principle">Principle</option>
+      </select>
+    </div>
+    <textarea id="inp-text" placeholder="What was decided, promised, or committed to..."></textarea>
+    <div class="form-bottom">
+      <button class="btn-commit" onclick="addEntry()">Add to ledger</button>
+      <button class="btn-export" onclick="exportLedger()">Export as context</button>
+    </div>
+    <div class="status-line" id="status-line"></div>
+  </div>
+
+  <footer class="page-footer">
+    <span>Heurémen.org</span>
+    <a class="back-link" href="/">← Back</a>
+    <span>1 / 31 / 31</span>
+  </footer>
+
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://gbdbhrcgqsdecjphorqs.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_qbu2X0MOQI_c19SZMOWZTA_jFyH5DNj';
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  function nodeLabel(n) {
+    return { soul: '01 Soul', face: '02 Face', bones: '03 Bones', wayfinder: 'Wayfinder' }[n] || n;
+  }
+
+  function formatDate(iso) {
+    return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  function setStatus(msg, duration = 2500) {
+    const el = document.getElementById('status-line');
+    el.textContent = msg;
+    if (duration) setTimeout(() => el.textContent = '', duration);
+  }
+
+  function render(entries) {
+    const list = document.getElementById('entries-list');
+    const count = document.getElementById('entry-count');
+    count.textContent = entries.length ? `${entries.length} entr${entries.length === 1 ? 'y' : 'ies'}` : '';
+    if (!entries.length) {
+      list.innerHTML = '<div class="empty-state">The ledger is open. Nothing committed yet.</div>';
+      return;
+    }
+    list.innerHTML = entries.map(e => `
+      <div class="entry">
+        <button class="entry-delete" onclick="deleteEntry('${e.id}')">remove</button>
+        <div class="entry-meta">
+          <span class="node-tag node-${e.node}">${nodeLabel(e.node)}</span>
+          <span class="type-tag">${e.type}</span>
+          <span class="entry-date">${formatDate(e.created_at)}</span>
+        </div>
+        <div class="entry-text">${e.text}</div>
+      </div>
+    `).join('');
+  }
+
+  async function loadEntries() {
+    const { data, error } = await client
+      .from('commitments')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) {
+      document.getElementById('entries-list').innerHTML =
+        '<div class="empty-state">Could not reach the ledger. Check Supabase connection.</div>';
+      return;
+    }
+    render(data || []);
+  }
+
+  async function addEntry() {
+    const node = document.getElementById('sel-node').value;
+    const type = document.getElementById('sel-type').value;
+    const text = document.getElementById('inp-text').value.trim();
+    if (!text) return;
+    setStatus('Committing...', 0);
+    const { error } = await client.from('commitments').insert([{ node, type, text }]);
+    if (error) { setStatus('Error — could not save.'); return; }
+    document.getElementById('inp-text').value = '';
+    setStatus('Committed.');
+    await loadEntries();
+  }
+
+  async function deleteEntry(id) {
+    const { error } = await client.from('commitments').delete().eq('id', id);
+    if (!error) await loadEntries();
+  }
+
+  async function exportLedger() {
+    const { data } = await client.from('commitments').select('*').order('created_at', { ascending: true });
+    if (!data || !data.length) { setStatus('Nothing to export yet.'); return; }
+    const text = `HEURÉMEN COMMITMENT LEDGER — ${new Date().toLocaleDateString()}\n${'─'.repeat(52)}\n\n` +
+      data.map(e => `[${nodeLabel(e.node).toUpperCase()} · ${e.type.toUpperCase()} · ${formatDate(e.created_at)}]\n${e.text}`).join('\n\n') +
+      `\n\n${'─'.repeat(52)}\nPaste this at the start of any Claude session to restore state.`;
+    await navigator.clipboard.writeText(text);
+    setStatus('Copied. Paste into any session to restore state.', 3500);
+  }
+
+  loadEntries();
+</script>
+
+</body>
+</html>

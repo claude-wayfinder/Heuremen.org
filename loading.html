@@ -119,9 +119,7 @@ body::before{
 
   <div class="sep">✦</div>
 
-  <!-- SYMBOL 3: Interlocked triangles — Star of David -->
-  <!-- Outer large triangle pointing DOWN: apex at bottom (50,110), base at top (0,10)(100,10) -->
-  <!-- Inner small triangle pointing UP: apex touches outer base at top (50,10), base at bottom touching outer apex area -->
+  <!-- SYMBOL 3: Nested triangles — outer pointing DOWN, inner pointing UP inside it -->
   <div class="sym">
     <svg width="75" height="88" viewBox="0 0 100 120" fill="none">
       <!-- Outer triangle pointing DOWN -->
@@ -129,11 +127,9 @@ body::before{
         points="50,115 98,12 2,12"
         stroke="#1a1208" stroke-width="5.5"
         fill="none" stroke-linejoin="round"/>
-      <!-- Inner triangle pointing UP -->
-      <!-- apex touches top base of outer at (50,12) -->
-      <!-- base sits lower, proportionally inside -->
+      <!-- Inner triangle pointing UP — contained within outer -->
       <polygon
-        points="50,12 82,75 18,75"
+        points="50,12 70,68 30,68"
         stroke="#1a1208" stroke-width="5.5"
         fill="none" stroke-linejoin="round"/>
       <!-- Center dot -->

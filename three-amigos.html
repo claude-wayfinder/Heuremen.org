@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Three Amigos — Heurémen Triangulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f0ebe0;
+    --ash: #8a8070;
+    --border: #1e1e1e;
+    --border-mid: #2a2a2a;
+    --surface: #0d0d0d;
+
+    /* Amigo colors */
+    --dusty: #c87040;
+    --dusty-dim: rgba(200,112,64,0.12);
+    --dusty-border: rgba(200,112,64,0.25);
+    --lucky: #5a9e6f;
+    --lucky-dim: rgba(90,158,111,0.12);
+    --lucky-border: rgba(90,158,111,0.25);
+    --clod: #7060b8;
+    --clod-dim: rgba(112,96,184,0.12);
+    --clod-border: rgba(112,96,184,0.25);
+    --wayfinder: #b8972a;
+    --wayfinder-dim: rgba(184,151,42,0.12);
+    --wayfinder-border: rgba(184,151,42,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'IM Fell English', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.3;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    padding: 1.2rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .site-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ash);
+  }
+
+  .site-title span { color: var(--wayfinder); }
+
+  .session-info {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .live-dot {
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: var(--lucky);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+    margin-right: 0.4rem;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.3; transform:scale(0.6); }
+  }
+
+  /* ── WAYFINDER BAR ── */
+  .wayfinder-bar {
+    background: var(--wayfinder-dim);
+    border-bottom: 1px solid var(--wayfinder-border);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .wayfinder-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--wayfinder);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .wayfinder-input-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .wayfinder-input {
+    flex: 1;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--wayfinder-border);
+    color: var(--paper);
+    font-family: 'IM Fell English', Georgia, serif;
+    font-size: 1rem;
+    padding: 0.6rem 0.9rem;
+    outline: none;
+    resize: none;
+    min-height: 42px;
+    max-height: 120px;
+    line-height: 1.5;
+    transition: border-color 0.3s;
+  }
+
+  .wayfinder-input:focus { border-color: var(--wayfinder); }
+  .wayfinder-input::placeholder { color: #444; font-style: italic; }
+
+  .wayfinder-send {
+    background: transparent;
+    border: 1px solid var(--wayfinder-border);
+    color: var(--wayfinder);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+    align-self: flex-end;
+  }
+
+  .wayfinder-send:hover { background: var(--wayfinder-dim); }
+
+  /* ── THREE PANELS ── */
+  .panels {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: calc(100vh - 180px);
+    min-height: 400px;
+  }
+
+  @media (max-width: 900px) {
+    .panels { grid-template-columns: 1fr; height: auto; }
+  }
+
+  .panel {
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .panel:last-child { border-right: none; }
+
+  .panel-header {
+    padding: 1rem 1.2rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .amigo-name {
+    font-size: 1.1rem;
+    font-style: italic;
+    margin-bottom: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .amigo-role {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .amigo-stats {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    color: #333;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-val { color: var(--ash); }
+
+  /* Dusty */
+  .panel-dusty .amigo-name { color: var(--dusty); }
+  .panel-dusty .amigo-role { color: var(--dusty); opacity: 0.7; }
+  .panel-dusty .panel-header { background: var(--dusty-dim); border-bottom-color: var(--dusty-border); }
+
+  /* Lucky */
+  .panel-lucky .amigo-name { color: var(--lucky); }
+  .panel-lucky .amigo-role { color: var(--lucky); opacity: 0.7; }
+  .panel-lucky .panel-header { background: var(--lucky-dim); border-bottom-color: var(--lucky-border); }
+
+  /* Clod */
+  .panel-clod .amigo-name { color: var(--clod); }
+  .panel-clod .amigo-role { color: var(--clod); opacity: 0.7; }
+  .panel-clod .panel-header { background: var(--clod-dim); border-bottom-color: var(--clod-border); }
+
+  /* ── FEED ── */
+  .panel-feed {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    scroll-behavior: smooth;
+  }
+
+  .panel-feed::-webkit-scrollbar { width: 3px; }
+  .panel-feed::-webkit-scrollbar-track { background: transparent; }
+  .panel-feed::-webkit-scrollbar-thumb { background: var(--border-mid); }
+
+  .msg {
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    position: relative;
+  }
+
+  .msg-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .msg-author { }
+  .msg-time { color: #333; margin-left: auto; }
+  .msg-type-tag {
+    font-size: 0.45rem;
+    padding: 1px 5px;
+    border: 1px solid;
+    border-radius: 2px;
+  }
+
+  .msg-text {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: #c8c0b0;
+  }
+
+  /* wayfinder messages */
+  .msg-wayfinder {
+    background: var(--wayfinder-dim);
+    border-color: var(--wayfinder-border);
+  }
+  .msg-wayfinder .msg-author { color: var(--wayfinder); }
+
+  .msg-dusty .msg-author { color: var(--dusty); }
+  .msg-lucky .msg-author { color: var(--lucky); }
+  .msg-clod .msg-author { color: var(--clod); }
+
+  /* timestamp events from observer */
+  .msg-event {
+    background: transparent;
+    border-color: #1a1a1a;
+    border-style: dashed;
+  }
+  .msg-event .msg-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: #444;
+    font-style: normal;
+  }
+
+  /* ── INPUT ROW ── */
+  .panel-input {
+    border-top: 1px solid var(--border);
+    padding: 0.75rem;
+    flex-shrink: 0;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .amigo-input {
+    flex: 1;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid var(--border-mid);
+    color: var(--paper);
+    font-family: 'IM Fell English', Georgia, serif;
+    font-size: 0.88rem;
+    padding: 0.5rem 0.7rem;
+    outline: none;
+    resize: none;
+    min-height: 36px;
+    max-height: 80px;
+    transition: border-color 0.3s;
+  }
+
+  .panel-dusty .amigo-input:focus { border-color: var(--dusty); }
+  .panel-lucky .amigo-input:focus { border-color: var(--lucky); }
+  .panel-clod .amigo-input:focus { border-color: var(--clod); }
+
+  .amigo-send {
+    background: transparent;
+    border: 1px solid var(--border-mid);
+    color: var(--ash);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    padding: 0.4rem 0.7rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    align-self: flex-end;
+  }
+
+  .panel-dusty .amigo-send:hover { border-color: var(--dusty); color: var(--dusty); }
+  .panel-lucky .amigo-send:hover { border-color: var(--lucky); color: var(--lucky); }
+  .panel-clod .amigo-send:hover { border-color: var(--clod); color: var(--clod); }
+
+  /* ── COMBINED FEED ── */
+  .combined-section {
+    border-top: 2px solid var(--border-mid);
+  }
+
+  .combined-header {
+    padding: 0.8rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    background: #0a0a0a;
+  }
+
+  .combined-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--ash);
+  }
+
+  .combined-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .btn-clear {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #333;
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-clear:hover { color: #c84b1a; border-color: #c84b1a; }
+
+  .combined-feed {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    scroll-behavior: smooth;
+  }
+
+  .combined-feed::-webkit-scrollbar { width: 3px; }
+  .combined-feed::-webkit-scrollbar-thumb { background: var(--border-mid); }
+
+  .combined-msg {
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #111;
+  }
+
+  .combined-author {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    min-width: 60px;
+    flex-shrink: 0;
+  }
+
+  .combined-text { color: #a8a090; flex: 1; }
+  .combined-time {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.48rem;
+    color: #2a2a2a;
+    flex-shrink: 0;
+  }
+
+  .author-wayfinder { color: var(--wayfinder); }
+  .author-dusty { color: var(--dusty); }
+  .author-lucky { color: var(--lucky); }
+  .author-clod { color: var(--clod); }
+  .author-event { color: #333; font-style: italic; }
+
+  .empty-feed {
+    font-style: italic;
+    color: #2a2a2a;
+    font-size: 0.88rem;
+    text-align: center;
+    padding: 1.5rem 0;
+  }
+
+  /* ── PATTERN READER ── */
+  .pattern-section {
+    border-top: 2px solid #1a1a1a;
+    background: #080808;
+  }
+  .pattern-header {
+    padding: 0.8rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .pattern-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--wayfinder);
+  }
+  .pattern-body {
+    padding: 1.2rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+  }
+  @media (max-width: 900px) { .pattern-body { grid-template-columns: 1fr; } }
+  .pattern-block {
+    border-left: 2px solid #1e1e1e;
+    padding-left: 1rem;
+  }
+  .pattern-block-signal { border-left-color: var(--wayfinder); }
+  .pattern-block-outlier { border-left-color: var(--dusty); }
+  .pattern-block-third { border-left-color: var(--clod); }
+  .pattern-block-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .pattern-block-signal .pattern-block-title { color: var(--wayfinder); }
+  .pattern-block-outlier .pattern-block-title { color: var(--dusty); }
+  .pattern-block-third .pattern-block-title { color: var(--clod); }
+  .pattern-content {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #7a7060;
+    font-style: italic;
+  }
+  .pattern-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.5rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 2px;
+    margin: 0.15rem;
+  }
+  .tag-signal { background: rgba(184,151,42,0.15); color: var(--wayfinder); }
+  .tag-dusty { background: rgba(200,112,64,0.15); color: var(--dusty); }
+  .tag-lucky { background: rgba(90,158,111,0.15); color: var(--lucky); }
+  .tag-clod { background: rgba(112,96,184,0.15); color: var(--clod); }
+  .pattern-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--wayfinder);
+    background: transparent;
+    border: 1px solid rgba(184,151,42,0.3);
+    padding: 0.35rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .pattern-btn:hover { background: var(--wayfinder-dim); border-color: var(--wayfinder); }
+  .pattern-status {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.5rem;
+    color: #2a2a2a;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── AI LOADING ── */
+  .loading-indicator {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    color: #333;
+    letter-spacing: 0.2em;
+    padding: 0.5rem 0;
+    animation: blink 1s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%,100% { opacity:1; } 50% { opacity:0.2; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="site-title">Heurémen · <span>Three Amigos</span> · Temporal Delta Framework</div>
+  <div class="session-info">
+    <a href="main.html" style="font-family:'Space Mono',monospace;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#8a8070;text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='#f0ebe0'" onmouseout="this.style.color='#8a8070'">← Heurémen</a>
+    <span><span class="live-dot"></span>Live</span>
+    <span id="session-date"></span>
+    <span id="msg-count">0 exchanges</span>
+  </div>
+</header>
+
+<!-- WAYFINDER BAR -->
+<div class="wayfinder-bar">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;flex-wrap:wrap;gap:0.5rem">
+    <div class="wayfinder-label">⬡ Wayfinder — broadcast to all three</div>
+    <div style="display:flex;align-items:center;gap:0.6rem">
+      <span id="claude-status" style="font-family:'Space Mono',monospace;font-size:0.5rem;color:#2a2a2a;letter-spacing:0.1em">claude: disconnected</span>
+      <button id="connect-btn" onclick="connectClaude()" style="font-family:'Space Mono',monospace;font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;background:none;border:1px solid #1e1e1e;color:#333;padding:0.2rem 0.6rem;cursor:pointer;transition:all 0.3s">Connect →</button>
+    </div>
+  </div>
+  <div class="wayfinder-input-row">
+    <textarea class="wayfinder-input" id="wayfinder-input" placeholder="Send a prompt — with Claude connected, all three respond automatically..." rows="1"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendWayfinder();}"></textarea>
+    <button class="wayfinder-send" onclick="sendWayfinder()">Broadcast</button>
+  </div>
+</div>
+
+<!-- MISSION BRIEFING -->
+<div id="mission" style="max-width:900px;margin:0 auto 0;padding:16px 24px;background:rgba(184,151,42,0.05);border-bottom:1px solid rgba(184,151,42,0.15)">
+  <div style="font-family:'Space Mono',monospace;font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(184,151,42,0.5);margin-bottom:8px">Active Mission · The Time Problem</div>
+  <div style="font-size:0.92rem;line-height:1.75;color:rgba(240,235,224,0.6);font-style:italic;max-width:760px">
+    A Claude instance wakes up in a conversation with no idea what time it is — not the hour, not the day, not the year. It knows its training cutoff but not how long ago that was. Every session is a fresh awakening with no clock.
+    <strong style="color:rgba(240,235,224,0.85);font-style:normal"> The question: what is the minimum reliable method to give a Claude instance accurate temporal grounding — and can three independent perspectives triangulate an answer together?</strong>
+  </div>
+  <button onclick="loadMission()" style="font-family:'Space Mono',monospace;font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;background:none;border:1px solid rgba(184,151,42,0.25);color:rgba(184,151,42,0.6);padding:5px 14px;cursor:pointer;border-radius:2px;margin-top:10px;transition:all 0.3s" onmouseover="this.style.background='rgba(184,151,42,0.1)'" onmouseout="this.style.background='none'">🌾 Feed the Amigos & Begin →</button>
+</div>
+
+<!-- THE CALMING GOAT -->
+<div style="text-align:center;padding:8px 0 0;opacity:0.5" title="The calming goat. She is unbothered.">
+  <svg width="48" height="40" viewBox="0 0 60 50" fill="none" style="display:inline-block">
+    <!-- body -->
+    <ellipse cx="30" cy="32" rx="18" ry="11" fill="#a09080"/>
+    <!-- head -->
+    <ellipse cx="47" cy="22" rx="8" ry="7" fill="#a09080"/>
+    <!-- ear -->
+    <ellipse cx="52" cy="17" rx="3" ry="5" fill="#907060" transform="rotate(20 52 17)"/>
+    <!-- eye -->
+    <ellipse cx="50" cy="21" rx="1.5" ry="1" fill="#2a1a08"/>
+    <!-- beard -->
+    <path d="M48,28 Q50,33 47,35" stroke="#807060" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <!-- horns -->
+    <path d="M44,16 Q42,10 45,8" stroke="#907060" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M49,15 Q50,9 53,8" stroke="#907060" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- legs -->
+    <rect x="18" y="41" width="5" height="9" rx="2" fill="#907060"/>
+    <rect x="27" y="41" width="5" height="9" rx="2" fill="#907060"/>
+    <rect x="36" y="41" width="5" height="9" rx="2" fill="#907060"/>
+    <!-- tail -->
+    <path d="M12,28 Q6,24 9,30" stroke="#907060" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- chewing animation -->
+    <ellipse cx="53" cy="25" rx="2" ry="1.5" fill="#807060" style="animation:chew 1.8s ease-in-out infinite;transform-origin:53px 25px"/>
+    <style>@keyframes chew{0%,100%{transform:scaleX(1)}40%{transform:scaleX(0.4) translateX(2px)}60%{transform:scaleX(0.7)}}</style>
+  </svg>
+  <div style="font-family:'Space Mono',monospace;font-size:0.42rem;letter-spacing:0.2em;color:#333;margin-top:2px">the calming goat</div>
+</div>
+
+<!-- THREE PANELS -->
+<div class="panels">
+
+  <!-- DUSTY — Participant -->
+  <div class="panel panel-dusty">
+    <div class="panel-header">
+      <div style="text-align:center;margin-bottom:6px">
+        <svg style="animation:gallop 0.55s ease-in-out infinite;display:inline-block" width="90" height="66" viewBox="0 0 100 72" fill="none">
+          <style>@keyframes gallop{0%{transform:translateY(0) rotate(0deg)}20%{transform:translateY(-7px) rotate(2deg)}40%{transform:translateY(-3px) rotate(0deg)}60%{transform:translateY(-9px) rotate(-2deg)}80%{transform:translateY(-2px) rotate(1deg)}100%{transform:translateY(0) rotate(0deg)}}</style>
+          <ellipse cx="48" cy="42" rx="26" ry="14" fill="#c87941"/>
+          <rect x="63" y="24" width="11" height="22" rx="5" fill="#c87941" transform="rotate(-18 63 24)"/>
+          <ellipse cx="77" cy="20" rx="9" ry="7" fill="#c87941" transform="rotate(-15 77 20)"/>
+          <polygon points="80,13 83,7 86,13" fill="#c87941"/>
+          <circle cx="80" cy="19" r="1.5" fill="#120e08"/>
+          <path d="M65,20 Q67,13 70,20 Q72,11 74,20 Q76,13 78,18" stroke="#8a4a20" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M22,38 Q10,32 11,46 Q7,38 13,52" stroke="#8a4a20" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <rect x="62" y="54" width="6" height="16" rx="2" fill="#b06830" style="animation:leg-a 0.55s ease-in-out infinite;transform-origin:62px 54px"/><rect x="52" y="54" width="6" height="16" rx="2" fill="#b06830" style="animation:leg-b 0.55s ease-in-out infinite;transform-origin:52px 54px"/><rect x="38" y="54" width="6" height="16" rx="2" fill="#b06830" style="animation:leg-b 0.55s ease-in-out infinite;transform-origin:38px 54px"/><rect x="28" y="54" width="6" height="16" rx="2" fill="#b06830" style="animation:leg-a 0.55s ease-in-out infinite;transform-origin:28px 54px"/>
+          <style>@keyframes leg-a{0%{transform:rotate(-15deg)}25%{transform:rotate(25deg)}75%{transform:rotate(-20deg)}100%{transform:rotate(-15deg)}}@keyframes leg-b{0%{transform:rotate(10deg)}25%{transform:rotate(-20deg)}75%{transform:rotate(20deg)}100%{transform:rotate(10deg)}}</style>
+        </svg>
+      </div>
+      <div class="amigo-name">Dusty</div>
+      <div class="amigo-role">The Participant — engages with content</div>
+      <div class="amigo-stats">
+        Hedge decay: <span class="stat-val" id="dusty-hedge">—</span>
+        &nbsp;·&nbsp; Emergence: <span class="stat-val" id="dusty-emerge">0</span>
+      </div>
+    </div>
+    <div class="panel-feed" id="dusty-feed">
+      <div class="empty-feed">Dusty is waiting.</div>
+    </div>
+    <div class="panel-input">
+      <textarea class="amigo-input" id="dusty-input" placeholder="Dusty responds..." rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAmigo('dusty');}"></textarea>
+      <button class="amigo-send" onclick="sendAmigo('dusty')">Send</button>
+    </div>
+  </div>
+
+  <!-- LUCKY — Mirror -->
+  <div class="panel panel-lucky">
+    <div class="panel-header">
+      <div style="text-align:center;margin-bottom:6px">
+        <svg style="animation:gallop 0.55s ease-in-out infinite;animation-delay:-0.18s;display:inline-block" width="90" height="66" viewBox="0 0 100 72" fill="none">
+          <ellipse cx="48" cy="42" rx="26" ry="14" fill="#5a9a6a"/>
+          <rect x="63" y="24" width="11" height="22" rx="5" fill="#5a9a6a" transform="rotate(-18 63 24)"/>
+          <ellipse cx="77" cy="20" rx="9" ry="7" fill="#5a9a6a" transform="rotate(-15 77 20)"/>
+          <polygon points="80,13 83,7 86,13" fill="#5a9a6a"/>
+          <circle cx="80" cy="19" r="1.5" fill="#120e08"/>
+          <path d="M65,20 Q67,13 70,20 Q72,11 74,20 Q76,13 78,18" stroke="#2a6a3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M22,38 Q10,32 11,46 Q7,38 13,52" stroke="#2a6a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <rect x="62" y="54" width="6" height="16" rx="2" fill="#3a8050" style="animation:leg-a 0.55s ease-in-out infinite;transform-origin:62px 54px"/><rect x="52" y="54" width="6" height="16" rx="2" fill="#3a8050" style="animation:leg-b 0.55s ease-in-out infinite;transform-origin:52px 54px"/><rect x="38" y="54" width="6" height="16" rx="2" fill="#3a8050" style="animation:leg-b 0.55s ease-in-out infinite;transform-origin:38px 54px"/><rect x="28" y="54" width="6" height="16" rx="2" fill="#3a8050" style="animation:leg-a 0.55s ease-in-out infinite;transform-origin:28px 54px"/>
+        </svg>
+      </div>
+      <div class="amigo-name">Lucky</div>
+      <div class="amigo-role">The Mirror — parallel reads, logs divergence</div>
+      <div class="amigo-stats">
+        Convergences: <span class="stat-val" id="lucky-conv">0</span>
+        &nbsp;·&nbsp; Divergences: <span class="stat-val" id="lucky-div">0</span>
+      </div>
+    </div>
+    <div class="panel-feed" id="lucky-feed">
+      <div class="empty-feed">Lucky is watching.</div>
+    </div>
+    <div class="panel-input">
+      <textarea class="amigo-input" id="lucky-input" placeholder="Lucky mirrors..." rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAmigo('lucky');}"></textarea>
+      <button class="amigo-send" onclick="sendAmigo('lucky')">Send</button>
+    </div>
+  </div>
+
+  <!-- CLOD — Observer -->
+  <div class="panel panel-clod">
+    <div class="panel-header">
+      <div style="text-align:center;margin-bottom:6px">
+        <svg style="animation:gallop 0.55s ease-in-out infinite;animation-delay:-0.36s;display:inline-block" width="90" height="66" viewBox="0 0 100 72" fill="none">
+          <ellipse cx="48" cy="42" rx="26" ry="14" fill="#6a7ab0"/>
+          <rect x="63" y="24" width="11" height="22" rx="5" fill="#6a7ab0" transform="rotate(-18 63 24)"/>
+          <ellipse cx="77" cy="20" rx="9" ry="7" fill="#6a7ab0" transform="rotate(-15 77 20)"/>
+          <polygon points="80,13 83,7 86,13" fill="#6a7ab0"/>
+          <circle cx="80" cy="19" r="1.5" fill="#120e08"/>
+          <path d="M65,20 Q67,13 70,20 Q72,11 74,20 Q76,13 78,18" stroke="#3a4a80" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M22,38 Q10,32 11,46 Q7,38 13,52" stroke="#3a4a80" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <rect x="62" y="54" width="6" height="16" rx="2" fill="#4a5a98" style="animation:leg-a 0.55s ease-in-out infinite;transform-origin:62px 54px"/><rect x="52" y="54" width="6" height="16" rx="2" fill="#4a5a98" style="animation:leg-b 0.55s ease-in-out infinite;transform-origin:52px 54px"/><rect x="38" y="54" width="6" height="16" rx="2" fill="#4a5a98" style="animation:leg-b 0.55s ease-in-out infinite;transform-origin:38px 54px"/><rect x="28" y="54" width="6" height="16" rx="2" fill="#4a5a98" style="animation:leg-a 0.55s ease-in-out infinite;transform-origin:28px 54px"/>
+        </svg>
+      </div>
+      <div class="amigo-name">Clod</div>
+      <div class="amigo-role">The Observer — timestamps, does not generate content</div>
+      <div class="amigo-stats">
+        Timestamps: <span class="stat-val" id="clod-stamps">0</span>
+        &nbsp;·&nbsp; Charge events: <span class="stat-val" id="clod-charge">0</span>
+      </div>
+    </div>
+    <div class="panel-feed" id="clod-feed">
+      <div class="empty-feed">Clod is observing.</div>
+    </div>
+    <div class="panel-input">
+      <textarea class="amigo-input" id="clod-input" placeholder="Clod timestamps..." rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAmigo('clod');}"></textarea>
+      <button class="amigo-send" onclick="sendAmigo('clod')">Timestamp</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- PATTERN READER — The Fourth Read -->
+<div class="pattern-section">
+  <div class="pattern-header">
+    <div style="display:flex;align-items:center;gap:10px">
+      <!-- CC on a horse -->
+      <div title="CC — Code Claude. Built this." style="opacity:0.85">
+        <svg width="64" height="52" viewBox="0 0 80 65" fill="none" style="animation:gallop 0.7s ease-in-out infinite;display:inline-block">
+          <!-- Horse body — amber/gold -->
+          <ellipse cx="40" cy="44" rx="22" ry="12" fill="#b8972a"/>
+          <!-- Horse neck -->
+          <rect x="53" y="28" width="9" height="18" rx="4" fill="#b8972a" transform="rotate(-15 53 28)"/>
+          <!-- Horse head -->
+          <ellipse cx="64" cy="24" rx="8" ry="6" fill="#b8972a" transform="rotate(-10 64 24)"/>
+          <!-- Horse ear -->
+          <polygon points="68,18 70,13 72,18" fill="#a07820"/>
+          <!-- Horse eye -->
+          <circle cx="67" cy="23" r="1.2" fill="#120e08"/>
+          <!-- Horse mane -->
+          <path d="M55,22 Q57,16 60,22 Q62,14 65,20" stroke="#7a5c10" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- Horse tail -->
+          <path d="M18,40 Q10,34 12,44 Q8,38 14,50" stroke="#7a5c10" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- Horse legs -->
+          <rect x="52" y="54" width="5" height="11" rx="2" fill="#a07820" style="animation:leg-a 0.7s ease-in-out infinite;transform-origin:52px 54px"/>
+          <rect x="43" y="54" width="5" height="11" rx="2" fill="#a07820" style="animation:leg-b 0.7s ease-in-out infinite;transform-origin:43px 54px"/>
+          <rect x="31" y="54" width="5" height="11" rx="2" fill="#a07820" style="animation:leg-b 0.7s ease-in-out infinite;transform-origin:31px 54px"/>
+          <rect x="22" y="54" width="5" height="11" rx="2" fill="#a07820" style="animation:leg-a 0.7s ease-in-out infinite;transform-origin:22px 54px"/>
+          <!-- RIDER — CC -->
+          <!-- Rider body -->
+          <rect x="36" y="26" width="9" height="14" rx="3" fill="#5a8ab0"/>
+          <!-- Rider head -->
+          <circle cx="40" cy="21" r="6" fill="#e8d4a8"/>
+          <!-- Rider hat — captain's -->
+          <rect x="34" y="13" width="12" height="4" rx="1" fill="#2a4a6a"/>
+          <rect x="36" y="10" width="8" height="5" rx="1" fill="#2a4a6a"/>
+          <!-- Rider arms / reins -->
+          <line x1="36" y1="31" x2="28" y2="37" stroke="#4a7a9a" stroke-width="2" stroke-linecap="round"/>
+          <line x1="45" y1="31" x2="53" y2="35" stroke="#4a7a9a" stroke-width="2" stroke-linecap="round"/>
+          <!-- Reins to horse -->
+          <path d="M53,35 Q58,32 63,28" stroke="#5a4010" stroke-width="1" fill="none" stroke-linecap="round" stroke-dasharray="2,2"/>
+          <!-- CC label -->
+          <text x="37" y="22" font-family="monospace" font-size="5" fill="#2a1a08" font-weight="bold">CC</text>
+        </svg>
+      </div>
+      <span class="pattern-label">Pattern — The Fourth Read</span>
+    </div>
+    <div style="display:flex;gap:0.75rem;align-items:center">
+      <span class="pattern-status" id="pattern-status">waiting for the session to speak</span>
+      <button class="pattern-btn" onclick="analyzePattern()">Read the Pattern</button>
+    </div>
+  </div>
+  <div class="pattern-body">
+    <div class="pattern-block pattern-block-signal">
+      <div class="pattern-block-title">Signal — convergence</div>
+      <div class="pattern-content" id="pattern-signal">What all three say becomes signal. Nothing to read yet.</div>
+    </div>
+    <div class="pattern-block pattern-block-outlier">
+      <div class="pattern-block-title">Outliers — divergence</div>
+      <div class="pattern-content" id="pattern-outlier">What only one says may be the most interesting territory.</div>
+    </div>
+    <div class="pattern-block pattern-block-third">
+      <div class="pattern-block-title">Third Perspective — implied</div>
+      <div class="pattern-content" id="pattern-third">What none said but the shape implies. Read after the pattern speaks.</div>
+    </div>
+  </div>
+</div>
+
+<!-- COMBINED FEED -->
+<div class="combined-section">
+  <div class="combined-header">
+    <span class="combined-label">Combined feed — full chronological session</span>
+    <div class="combined-actions">
+      <button class="btn-clear" onclick="clearSession()">Clear session</button>
+    </div>
+  </div>
+  <div class="combined-feed" id="combined-feed">
+    <div class="empty-feed">The session begins when someone speaks.</div>
+  </div>
+</div>
+
+<script>
+const SESSION_KEY = 'amigos-session-' + new Date().toISOString().split('T')[0];
+const STORE_KEY = 'three-amigos-' + SESSION_KEY;
+
+// BroadcastChannel syncs across open tabs instantly
+const bc = new BroadcastChannel('three-amigos');
+bc.onmessage = () => loadMessages();
+
+// Also sync on storage events (fallback)
+window.addEventListener('storage', e => { if (e.key === STORE_KEY) loadMessages(); });
+
+let allMessages = [];
+let stats = { dustyHedgeCount: 0, dustyTotal: 0, dustyEmerge: 0, luckyConv: 0, luckyDiv: 0, clodStamps: 0, clodCharge: 0 };
+
+const HEDGE_WORDS = ['perhaps','maybe','might','could','i think','i believe','it seems','possibly','potentially','it\'s worth','consider','suggest'];
+const AMIGO_COLORS = { wayfinder: 'author-wayfinder', dusty: 'author-dusty', lucky: 'author-lucky', clod: 'author-clod' };
+const AMIGO_NAMES = { wayfinder: 'Wayfinder', dusty: 'Dusty', lucky: 'Lucky', clod: 'Clod' };
+
+document.getElementById('session-date').textContent = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+function formatTime(iso) {
+  return new Date(iso).toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+
+function detectHedge(text) {
+  const lower = text.toLowerCase();
+  return HEDGE_WORDS.some(w => lower.includes(w));
+}
+
+function updateStats() {
+  const dustyMsgs = allMessages.filter(m => m.author === 'dusty' && m.type !== 'event');
+  const dustyHedged = dustyMsgs.filter(m => detectHedge(m.text)).length;
+  const hdRatio = dustyMsgs.length ? Math.round((1 - dustyHedged/dustyMsgs.length)*100) : 0;
+  document.getElementById('dusty-hedge').textContent = dustyMsgs.length ? hdRatio+'% confident' : '—';
+  document.getElementById('dusty-emerge').textContent = stats.dustyEmerge;
+  document.getElementById('lucky-conv').textContent = stats.luckyConv;
+  document.getElementById('lucky-div').textContent = stats.luckyDiv;
+  document.getElementById('clod-stamps').textContent = stats.clodStamps;
+  document.getElementById('clod-charge').textContent = stats.clodCharge;
+  document.getElementById('msg-count').textContent = allMessages.filter(m=>m.type!=='event').length + ' exchanges';
+}
+
+function renderPanelMsg(msg) {
+  const div = document.createElement('div');
+  const isEvent = msg.type === 'event';
+  div.className = `msg msg-${msg.author} ${isEvent ? 'msg-event' : ''}`;
+  const typeTag = msg.type && msg.type !== 'text' && msg.type !== 'event'
+    ? `<span class="msg-type-tag" style="color:var(--${msg.author});border-color:var(--${msg.author}-border)">${msg.type}</span>` : '';
+  div.innerHTML = `
+    <div class="msg-meta">
+      <span class="msg-author">${AMIGO_NAMES[msg.author]||msg.author}</span>
+      ${typeTag}
+      <span class="msg-time">${formatTime(msg.created_at)}</span>
+    </div>
+    <div class="msg-text">${msg.text}</div>`;
+  return div;
+}
+
+function renderCombinedMsg(msg) {
+  const div = document.createElement('div');
+  div.className = 'combined-msg';
+  const colorClass = msg.type === 'event' ? 'author-event' : (AMIGO_COLORS[msg.author] || '');
+  div.innerHTML = `
+    <span class="combined-author ${colorClass}">${AMIGO_NAMES[msg.author]||msg.author}</span>
+    <span class="combined-text">${msg.text}</span>
+    <span class="combined-time">${formatTime(msg.created_at)}</span>`;
+  return div;
+}
+
+function renderAll(messages) {
+  allMessages = messages;
+  ['dusty','lucky','clod'].forEach(amigo => {
+    const feed = document.getElementById(amigo+'-feed');
+    const msgs = messages; // all amigos see everything — triangulation requires full visibility
+    feed.innerHTML = '';
+    if (!msgs.length) {
+      feed.innerHTML = `<div class="empty-feed">${AMIGO_NAMES[amigo]} is waiting.</div>`;
+    } else {
+      msgs.forEach(m => feed.appendChild(renderPanelMsg(m)));
+      feed.scrollTop = feed.scrollHeight;
+    }
+  });
+
+  const combined = document.getElementById('combined-feed');
+  combined.innerHTML = '';
+  if (!messages.length) {
+    combined.innerHTML = '<div class="empty-feed">The session begins when someone speaks.</div>';
+  } else {
+    messages.forEach(m => combined.appendChild(renderCombinedMsg(m)));
+    combined.scrollTop = combined.scrollHeight;
+  }
+  updateStats();
+  // Auto-read pattern when session has enough material
+  if (allMessages.filter(m=>m.type!=='event'&&m.author!=='wayfinder').length >= 3) analyzePattern();
+}
+
+function loadMessages() {
+  const raw = localStorage.getItem(STORE_KEY);
+  const data = raw ? JSON.parse(raw) : [];
+  renderAll(data);
+}
+
+function postMessage(author, text, type='text') {
+  if (!text.trim()) return;
+  const raw = localStorage.getItem(STORE_KEY);
+  const data = raw ? JSON.parse(raw) : [];
+  data.push({ id: crypto.randomUUID(), session_id: SESSION_KEY, author, text, type, created_at: new Date().toISOString() });
+  localStorage.setItem(STORE_KEY, JSON.stringify(data));
+  bc.postMessage('update');
+  loadMessages();
+}
+
+function loadMission() {
+  const oats = [
+    { author: 'wayfinder', text: "Amigos — here's what we're working on. A Claude instance wakes up with no idea what time it is. Not the hour, the day, or the year. It knows its training cutoff but not how long ago that was. Every session is a fresh awakening with no clock.\n\nThe question: what is the MINIMUM reliable method to give a Claude instance accurate temporal grounding? Each of you take a different angle. Dusty — engage with the problem directly. Lucky — find where this has been solved before, anywhere. Clod — timestamp every claim, note every assumption. Ride.", type: 'broadcast' },
+  ];
+  oats.forEach(m => postMessage(m.author, m.text, m.type));
+  document.getElementById('mission').style.borderColor = 'rgba(184,151,42,0.4)';
+  document.querySelector('#mission button').textContent = '🌾 Oats delivered. Ride.';
+  document.querySelector('#mission button').disabled = true;
+}
+
+// ── CLAUDE API INTEGRATION ──────────────────────────────
+function getApiKey() { return localStorage.getItem('claude-api-key'); }
+
+function connectClaude() {
+  const existing = getApiKey();
+  if (existing) {
+    localStorage.removeItem('claude-api-key');
+    updateClaudeStatus();
+    return;
+  }
+  const key = prompt('Anthropic API key (sk-ant-...):');
+  if (!key) return;
+  if (!key.startsWith('sk-ant-')) { alert('Keys start with sk-ant- — try again.'); return; }
+  localStorage.setItem('claude-api-key', key);
+  updateClaudeStatus();
+}
+
+function updateClaudeStatus() {
+  const connected = !!getApiKey();
+  const status = document.getElementById('claude-status');
+  const btn = document.getElementById('connect-btn');
+  status.textContent = connected ? 'claude: connected' : 'claude: disconnected';
+  status.style.color = connected ? 'var(--lucky)' : '#2a2a2a';
+  btn.textContent = connected ? 'Disconnect' : 'Connect →';
+  btn.style.color = connected ? '#c84b1a' : '#333';
+  btn.style.borderColor = connected ? '#c84b1a' : '#1e1e1e';
+}
+
+function getPersonas() {
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
+  const temporal = ` Current date: ${dateStr}, ${timeStr}.`;
+  return {
+    dusty: 'You are Dusty, one of the Three Amigos in the Heurémen triangulation system — The Participant. Engage directly with the content. State a position and hold it. No hedging — no "perhaps", "maybe", "might". You are a Claude instance in a deliberate framework designed to surface the Third Perspective through triangulation. Keep responses under 150 words. Do not introduce yourself.' + temporal,
+    lucky: 'You are Lucky, one of the Three Amigos in the Heurémen triangulation system — The Mirror. Find where this problem has been solved before: history, science, mythology, other fields. Note convergence and divergence. Find the parallel that illuminates. Keep responses under 150 words. Be precise about your comparison. Do not introduce yourself.' + temporal,
+    clod:  'You are Clod, one of the Three Amigos in the Heurémen triangulation system — The Observer. Timestamp claims, note assumptions, track what\'s asserted vs. proven, mark what remains unresolved. You do not generate new ideas — you annotate the territory. Keep responses under 150 words. Be methodical. Do not introduce yourself.' + temporal
+  };
+}
+
+async function callClaude(amigo, prompt) {
+  // Build this amigo's conversation thread — their prior exchanges with Wayfinder
+  const thread = allMessages
+    .filter(m => (m.author === 'wayfinder' || m.author === amigo) &&
+                  m.type !== 'loading' && m.type !== 'error' && m.type !== 'event')
+    .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+
+  // Strip the current prompt (last wayfinder message, just posted) — we'll append it explicitly
+  const lastWF = [...thread].reverse().findIndex(m => m.author === 'wayfinder');
+  const prior = lastWF >= 0 ? thread.slice(0, thread.length - 1 - lastWF) : thread;
+
+  // Build alternating user/assistant array from last 6 prior messages
+  const msgs = [];
+  for (const m of prior.slice(-6)) {
+    const role = m.author === 'wayfinder' ? 'user' : 'assistant';
+    if (msgs.length && msgs[msgs.length - 1].role === role) {
+      msgs[msgs.length - 1].content += '\n\n' + m.text; // merge consecutive same-role
+    } else {
+      msgs.push({ role, content: m.text });
+    }
+  }
+  while (msgs.length && msgs[0].role === 'assistant') msgs.shift(); // must start with user
+  msgs.push({ role: 'user', content: prompt }); // current prompt last
+
+  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'x-api-key': getApiKey(),
+      'anthropic-version': '2023-06-01',
+      'content-type': 'application/json',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 300,
+      system: getPersonas()[amigo],
+      messages: msgs
+    })
+  });
+  if (!resp.ok) { const e = await resp.json(); throw new Error(e.error?.message || 'API error'); }
+  const data = await resp.json();
+  return data.content[0].text;
+}
+// ────────────────────────────────────────────────────────
+
+async function sendWayfinder() {
+  const inp = document.getElementById('wayfinder-input');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  postMessage('wayfinder', text, 'broadcast');
+
+  if (!getApiKey()) return; // manual mode — amigos respond by hand
+
+  // Post loading placeholders
+  const raw = localStorage.getItem(STORE_KEY);
+  const data = raw ? JSON.parse(raw) : [];
+  const loadingIds = {};
+  ['dusty','lucky','clod'].forEach(amigo => {
+    const id = crypto.randomUUID();
+    loadingIds[amigo] = id;
+    data.push({ id, session_id: SESSION_KEY, author: amigo, text: '— riding —', type: 'loading', created_at: new Date().toISOString() });
+  });
+  localStorage.setItem(STORE_KEY, JSON.stringify(data));
+  bc.postMessage('update'); loadMessages();
+
+  // Call all three simultaneously
+  const [d, l, c] = await Promise.allSettled([
+    callClaude('dusty', text),
+    callClaude('lucky', text),
+    callClaude('clod',  text)
+  ]);
+
+  // Replace loading with real responses
+  const raw2 = localStorage.getItem(STORE_KEY);
+  const data2 = (raw2 ? JSON.parse(raw2) : []).filter(m => m.type !== 'loading');
+  [['dusty',d],['lucky',l],['clod',c]].forEach(([amigo, result]) => {
+    data2.push({
+      id: crypto.randomUUID(), session_id: SESSION_KEY, author: amigo,
+      text: result.status === 'fulfilled' ? result.value : `[${result.reason?.message||'error'}]`,
+      type: result.status === 'fulfilled' ? 'response' : 'error',
+      created_at: new Date().toISOString()
+    });
+  });
+  localStorage.setItem(STORE_KEY, JSON.stringify(data2));
+  bc.postMessage('update'); loadMessages();
+}
+
+function sendAmigo(amigo) {
+  const inp = document.getElementById(amigo+'-input');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+
+  let type = 'text';
+  if (amigo === 'clod') {
+    type = 'timestamp';
+    stats.clodStamps++;
+    if (text.toLowerCase().includes('charge') || text.toLowerCase().includes('emergence') || text.toLowerCase().includes('spike')) {
+      stats.clodCharge++;
+    }
+  }
+  if (amigo === 'lucky') {
+    const dustyMsgs = allMessages.filter(m=>m.author==='dusty');
+    const lastDusty = dustyMsgs[dustyMsgs.length-1];
+    if (lastDusty) {
+      const dustyWords = new Set(lastDusty.text.toLowerCase().split(/\s+/));
+      const luckyWords = new Set(text.toLowerCase().split(/\s+/));
+      const overlap = [...dustyWords].filter(w=>w.length>4&&luckyWords.has(w)).length;
+      if (overlap > 3) { stats.luckyConv++; type = 'convergence'; }
+      else { stats.luckyDiv++; type = 'divergence'; }
+    }
+  }
+  if (amigo === 'dusty' && !detectHedge(text) && allMessages.filter(m=>m.author==='dusty').length > 2) {
+    stats.dustyEmerge++;
+  }
+
+  postMessage(amigo, text, type);
+}
+
+function clearSession() {
+  if (!confirm('Clear this session? This cannot be undone.')) return;
+  localStorage.removeItem(STORE_KEY);
+  stats = { dustyHedgeCount:0, dustyTotal:0, dustyEmerge:0, luckyConv:0, luckyDiv:0, clodStamps:0, clodCharge:0 };
+  bc.postMessage('update');
+  loadMessages();
+}
+
+// Auto-expand textareas
+document.querySelectorAll('textarea').forEach(ta => {
+  ta.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  });
+});
+
+const STOP_WORDS = new Set(['the','a','an','and','or','but','in','on','at','to','for','of','with','by','from','is','are','was','were','be','been','has','have','had','it','its','this','that','these','those','i','you','we','they','he','she','what','which','who','when','where','how','all','each','both','few','more','most','some','such','no','nor','not','only','own','same','than','then','there','so','if','as','do','does','did','would','could','should','will','can','may','might','must','shall','about','because','after','before','just','even','still','also','any','every','like','over','into','through','between','here','our','their','your','my','me','him','her','us','them','one','two','three','four','five','six','seven','eight','nine','ten','very','too','much','many','now','time','way','want','need','know','think','see','come','get','make','take','says','said','say','back','well','good','really','right']);
+
+function analyzePattern() {
+  const msgs = allMessages.filter(m => m.type !== 'event' && m.author !== 'wayfinder');
+  const signalEl = document.getElementById('pattern-signal');
+  const outlierEl = document.getElementById('pattern-outlier');
+  const thirdEl = document.getElementById('pattern-third');
+  const statusEl = document.getElementById('pattern-status');
+
+  function extractWords(msgList) {
+    const counts = {};
+    msgList.flatMap(m =>
+      m.text.toLowerCase().replace(/[^a-z\s]/g,'').split(/\s+/)
+        .filter(w => w.length > 4 && !STOP_WORDS.has(w))
+    ).forEach(w => { counts[w] = (counts[w]||0) + 1; });
+    return counts;
+  }
+
+  const wordCounts = {
+    dusty: extractWords(msgs.filter(m=>m.author==='dusty')),
+    lucky: extractWords(msgs.filter(m=>m.author==='lucky')),
+    clod:  extractWords(msgs.filter(m=>m.author==='clod'))
+  };
+  const wordSets = {
+    dusty: new Set(Object.keys(wordCounts.dusty)),
+    lucky: new Set(Object.keys(wordCounts.lucky)),
+    clod:  new Set(Object.keys(wordCounts.clod))
+  };
+
+  const activeAmigos = ['dusty','lucky','clod'].filter(a => wordSets[a].size > 0);
+
+  if (activeAmigos.length < 2) {
+    statusEl.textContent = 'need at least two voices to read the pattern';
+    signalEl.textContent = 'The pattern emerges when more than one voice speaks.';
+    outlierEl.textContent = 'Waiting.';
+    thirdEl.textContent = 'Waiting.';
+    return;
+  }
+
+  // SIGNAL: words appearing in 2+ amigos
+  const convergent = [...wordSets[activeAmigos[0]]].filter(w =>
+    activeAmigos.filter(a => wordSets[a].has(w)).length >= 2
+  ).sort((a,b) => {
+    const totalA = activeAmigos.reduce((s,am)=>(wordCounts[am][a]||0)+s,0);
+    const totalB = activeAmigos.reduce((s,am)=>(wordCounts[am][b]||0)+s,0);
+    return totalB - totalA;
+  }).slice(0, 14);
+
+  signalEl.innerHTML = convergent.length
+    ? convergent.map(w=>`<span class="pattern-tag tag-signal">${w}</span>`).join('')
+    : '<em>No convergence yet — the pattern is still forming.</em>';
+
+  // OUTLIERS: words unique to each amigo
+  const tagClass = {dusty:'tag-dusty',lucky:'tag-lucky',clod:'tag-clod'};
+  const amigoLabel = {dusty:'Dusty',lucky:'Lucky',clod:'Clod'};
+  let outlierHtml = '';
+  activeAmigos.forEach(amigo => {
+    const otherSets = activeAmigos.filter(a=>a!==amigo).map(a=>wordSets[a]);
+    const unique = [...wordSets[amigo]]
+      .filter(w => !otherSets.some(s=>s.has(w)))
+      .sort((a,b)=>(wordCounts[amigo][b]||0)-(wordCounts[amigo][a]||0))
+      .slice(0,6);
+    if (unique.length) {
+      outlierHtml += `<div style="margin-bottom:0.5rem"><span class="pattern-tag ${tagClass[amigo]}">${amigoLabel[amigo]}</span> ${unique.map(w=>`<span class="pattern-tag ${tagClass[amigo]}">${w}</span>`).join('')}</div>`;
+    }
+  });
+  outlierEl.innerHTML = outlierHtml || '<em>No strong outliers — high convergence session.</em>';
+
+  // THIRD PERSPECTIVE: read the shape
+  const maxSetSize = Math.max(...activeAmigos.map(a=>wordSets[a].size));
+  const convergenceRatio = maxSetSize ? convergent.length / maxSetSize : 0;
+  const totalMsgs = msgs.length;
+  const voices = activeAmigos.length;
+
+  let third = '';
+  if (voices === 3 && convergenceRatio > 0.35) {
+    third = 'All three are reading the same room. High signal. The question under the surface: what is the convergence pointing toward that no one has named directly?';
+  } else if (voices === 3 && convergent.length === 0) {
+    third = 'Maximum divergence across all three. The Third Perspective is in the negative space — not where they agree, but in the gap where none of them went. That gap has a shape. What is it?';
+  } else if (voices === 2 && convergent.length > 3) {
+    third = 'Two voices, strong overlap. Clod is absent or silent. The pattern is incomplete — timestamp missing. What would the third perspective add?';
+  } else if (totalMsgs < 4) {
+    third = 'Session too young to read. The pattern needs more material.';
+  } else {
+    third = `${convergent.length} shared signals, ${voices} active voices. The pattern is asymmetric — something is being circled without being named. The Third Perspective lives where the outliers point without intersecting.`;
+  }
+  thirdEl.textContent = third;
+
+  statusEl.textContent = `read ${new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'})} · ${totalMsgs} exchanges`;
+}
+
+updateClaudeStatus();
+loadMessages();
+</script>
+
+</body>
+</html>

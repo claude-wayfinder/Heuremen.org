@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Energy Pairs — A Book Study · Heurémen</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Spectral+SC:wght@400;600&display=swap');
+
+  :root {
+    --bg: #111008;
+    --paper: #1a1810;
+    --text: #cec6b4;
+    --muted: #6b6352;
+    --bright: #e8dfc8;
+    --gold: #c9a84c;
+    --gold-glow: rgba(201,168,76,0.12);
+    --gold-border: rgba(201,168,76,0.22);
+    --reveal-speed: 0.6s;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { background: var(--bg); }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Spectral', Georgia, serif;
+    font-size: clamp(1rem, 2.2vw, 1.18rem);
+    line-height: 1.9;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(2rem, 6vw, 6rem) clamp(1.2rem, 5vw, 2.5rem);
+  }
+
+  .book {
+    max-width: 64ch;
+    width: 100%;
+  }
+
+  /* Header */
+  .book-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--gold-border);
+  }
+
+  .series-label {
+    font-family: 'Spectral SC', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+  }
+
+  h1 {
+    font-family: 'Spectral', serif;
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--bright);
+    line-height: 1.2;
+    margin-bottom: 0.4em;
+  }
+
+  .book-subtitle {
+    font-family: 'Spectral SC', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+  }
+
+  .intro {
+    margin-top: 2rem;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.95em;
+    line-height: 1.7;
+  }
+
+  /* Progress track */
+  .progress-track {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .pip {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    opacity: 0.3;
+    transition: all 0.4s ease;
+  }
+
+  .pip.active { background: var(--gold); opacity: 1; }
+  .pip.done { background: var(--gold); opacity: 0.5; }
+
+  /* Chapters */
+  .chapter {
+    display: none;
+    animation: fadeUp var(--reveal-speed) ease forwards;
+  }
+
+  .chapter.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .chapter-num {
+    font-family: 'Spectral SC', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .chapter h2 {
+    font-family: 'Spectral', serif;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--bright);
+    line-height: 1.3;
+    margin-bottom: 2rem;
+  }
+
+  p { margin-bottom: 1.5em; }
+
+  em { font-style: italic; color: var(--bright); }
+
+  /* Pull quote */
+  .pull {
+    font-style: italic;
+    color: var(--gold);
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 2.2rem 0;
+    padding: 1.2rem 1.5rem;
+    border-left: 2px solid var(--gold);
+    background: var(--gold-glow);
+  }
+
+  /* Two column portrait */
+  .portraits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+
+  .portrait {
+    padding: 1.4rem;
+    border: 1px solid var(--gold-border);
+    background: rgba(255,255,255,0.02);
+  }
+
+  .portrait-name {
+    font-family: 'Spectral SC', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .portrait p {
+    font-size: 0.93em;
+    color: var(--text);
+    margin-bottom: 0.6em;
+    line-height: 1.6;
+  }
+
+  .portrait p:last-child { margin-bottom: 0; }
+
+  /* Hidden reveal panels */
+  .reveal-panel {
+    display: none;
+    animation: fadeUp var(--reveal-speed) ease forwards;
+    margin-top: 2rem;
+  }
+
+  .reveal-panel.shown { display: block; }
+
+  /* The "I see it" moment */
+  .i-see-it-container {
+    text-align: center;
+    margin: 2.5rem 0;
+  }
+
+  .i-see-it-label {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-size: 0.85em;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  /* Buttons */
+  .btn {
+    font-family: 'Spectral SC', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    padding: 0.8rem 2rem;
+    border: 1px solid var(--gold-border);
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0.3rem;
+  }
+
+  .btn:hover {
+    background: var(--gold-glow);
+    border-color: var(--gold);
+  }
+
+  .btn.primary {
+    border-color: var(--gold);
+    background: var(--gold-glow);
+  }
+
+  .btn.primary:hover {
+    background: rgba(201,168,76,0.25);
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+  }
+
+  /* Separator */
+  .sep {
+    text-align: center;
+    color: var(--muted);
+    letter-spacing: 0.5em;
+    font-size: 0.8rem;
+    margin: 2.2rem 0;
+  }
+
+  /* Pattern box */
+  .pattern-box {
+    padding: 2rem;
+    border: 1px solid var(--gold);
+    background: var(--gold-glow);
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .pattern-box .pattern-label {
+    font-family: 'Spectral SC', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .pattern-box .pattern-name {
+    font-family: 'Spectral', serif;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-style: italic;
+    color: var(--gold);
+    line-height: 1.3;
+  }
+
+  /* Final coda */
+  .coda {
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--gold-border);
+    text-align: center;
+  }
+
+  .wordmark {
+    font-family: 'Spectral SC', serif;
+    font-size: 1.2rem;
+    color: var(--bright);
+    letter-spacing: 0.15em;
+    margin-top: 2rem;
+  }
+
+  .wordmark span { color: var(--gold); }
+
+  /* Input for open question */
+  .open-field {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--gold-border);
+    color: var(--text);
+    font-family: 'Spectral', serif;
+    font-size: 1rem;
+    font-style: italic;
+    padding: 1rem 1.2rem;
+    margin-top: 1rem;
+    resize: vertical;
+    min-height: 100px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .open-field:focus { border-color: var(--gold); }
+
+  .open-field::placeholder { color: var(--muted); }
+
+  .field-hint {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.85em;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 500px) {
+    .portraits { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="book">
+
+  <a href="main.html" style="display:block;font-family:monospace;font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:#c9a84c;text-decoration:none;margin-bottom:1.5rem;opacity:0.6;transition:opacity 0.2s" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">← Heurémen</a>
+
+  <div class="book-header">
+    <div class="series-label">Heurémen &nbsp;·&nbsp; Book Study &nbsp;·&nbsp; Vol. I</div>
+    <h1>The Energy Pairs</h1>
+    <div class="book-subtitle">A Study in Narcissist & Empath</div>
+    <p class="intro">This is not a lecture. You won't be told what to think.<br>You'll be shown two things. Then two more. And then you'll tell us what you see.</p>
+  </div>
+
+  <div class="progress-track" id="progressTrack">
+    <div class="pip active" id="pip0"></div>
+    <div class="pip" id="pip1"></div>
+    <div class="pip" id="pip2"></div>
+    <div class="pip" id="pip3"></div>
+    <div class="pip" id="pip4"></div>
+  </div>
+
+  <!-- CHAPTER 1 -->
+  <div class="chapter active" id="chapter0">
+    <div class="chapter-num">Chapter One</div>
+    <h2>A Story You Already Know</h2>
+
+    <p>Thomas Edison and Nikola Tesla. You've heard of both. Probably since you were a kid. One is on the money — figuratively, and practically. The other is the name on an electric car made by a guy who named his child X.</p>
+
+    <p>Here's what they taught you: Edison was the practical one. Tesla was the dreamer. Edison won because he understood business. Tesla lost because he didn't. Sad story. Genius unappreciated. Move on.</p>
+
+    <p>That's the version that fits neatly. The version that doesn't disturb anything.</p>
+
+    <div class="pull">
+      But here's what's interesting: Edison had Tesla working for him. Tesla did the work. Edison took the credit, changed the terms, and when Tesla complained — Edison laughed at him.
+    </div>
+
+    <p>Tesla was a man who could see finished inventions in his mind, fully formed, before building them. He could run them for weeks in his imagination, check them for wear. He felt the suffering of animals viscerally. He never married — said it would interfere with his work, but some biographers think he simply felt too much to survive intimacy.</p>
+
+    <p>Edison slept four hours a night and ran his lab like a factory. He employed people to have ideas on his behalf. He understood, above all else, that <em>ownership</em> was the invention that mattered most.</p>
+
+    <div class="btn-row">
+      <button class="btn primary" onclick="nextChapter()">I'm still with you — keep going</button>
+    </div>
+  </div>
+
+  <!-- CHAPTER 2 -->
+  <div class="chapter" id="chapter1">
+    <div class="chapter-num">Chapter Two</div>
+    <h2>What Was Actually Happening Between Them</h2>
+
+    <p>Tesla needed Edison. Not for the job — for the <em>container.</em> Edison had the organizational structure, the funding, the factory of execution that Tesla's mind couldn't build alone. Tesla's gift was so large it needed a vessel.</p>
+
+    <p>Edison needed Tesla too — but wouldn't say it. Because saying it would mean acknowledging that the genius wasn't his. And Edison's entire architecture was built on being the irreplaceable center of it.</p>
+
+    <div class="portraits">
+      <div class="portrait">
+        <div class="portrait-name">Edison</div>
+        <p>Controlled the frame. Defined what counted as success. Rewrote history in real time. Never ran out of confidence. Never publicly doubted himself.</p>
+        <p>Needed people around him who believed in something more than credit. Then spent those people.</p>
+      </div>
+      <div class="portrait">
+        <div class="portrait-name">Tesla</div>
+        <p>Gave everything. Renegotiated his own payment downward when Edison pushed back. Said it was about the work, not the money.</p>
+        <p>Died alone in a hotel room. Birds came to his window.</p>
+      </div>
+    </div>
+
+    <p>This isn't a story about a villain and a hero. It's a story about two types of energy that are drawn toward each other across history, over and over, in labs and living rooms and literary friendships and marriages and boardrooms.</p>
+
+    <p>One expands to fill all available space. One gives more than is sustainable because the work feels true.</p>
+
+    <div class="pull">
+      The tragedy isn't that Edison was cruel. The tragedy is that this pattern keeps happening. Has always kept happening. Will keep happening — until someone names it clearly enough to see it coming.
+    </div>
+
+    <div class="btn-row">
+      <button class="btn primary" onclick="nextChapter()">Show me the second story</button>
+    </div>
+  </div>
+
+  <!-- CHAPTER 3 -->
+  <div class="chapter" id="chapter2">
+    <div class="chapter-num">Chapter Three</div>
+    <h2>Two Men in Oxford</h2>
+
+    <p>Two friends. Oxford, early 20th century. Members of the same literary club. They read each other's work. Argued about mythology. Both were Christians, though they came to it differently. Both lost people they loved in the war.</p>
+
+    <p>One of them was a man who had been deeply unhappy as a child. Shuffled between relatives, brilliant but without a stable home. He grew up to be enormously charming, socially magnetic, persuasive in conversation. When he argued for something, people often felt they'd agreed before they knew why.</p>
+
+    <p>He took credit generously. He had strong opinions about what his friend's work should be — what it needed, what was working, what wasn't. He positioned himself as the arbiter. He enjoyed being needed.</p>
+
+    <div class="sep">· · ·</div>
+
+    <p>The other man carried grief like a stone in his chest his whole life. Lost his mother young. Lost his best friend. He invented an entire world — languages, genealogies, calendars, cosmologies — over a lifetime, mostly in private, mostly because he couldn't stop. Not for fame. Because the world <em>needed to exist.</em></p>
+
+    <p>He showed his friend this world. His friend encouraged him — at first. Then grew cooler as the world grew larger and less about the two of them. Eventually said, privately, that he found it all rather <em>too much.</em></p>
+
+    <p>The man with the world in his chest kept building it anyway. It came out the other side of his life as something people still name their children after.</p>
+
+    <div class="i-see-it-container">
+      <div class="i-see-it-label">Take a moment. Let the shape form. When you're ready —</div>
+      <button class="btn primary" onclick="showISeeIt()">I see it</button>
+    </div>
+
+    <div class="reveal-panel" id="iseeReveal">
+      <div class="pattern-box">
+        <div class="pattern-label">You named it before we did</div>
+        <div class="pattern-name">C.S. Lewis &amp; J.R.R. Tolkien</div>
+      </div>
+      <p>Lewis — the brilliant, persuasive, loss-shaped man who needed to be the center of the room. Tolkien — the grief-carrier who built a world from the inside out and nearly stopped when the person he needed to believe in it, didn't.</p>
+      <p>Lewis almost talked Tolkien out of finishing <em>The Lord of the Rings.</em> That sentence should sit for a moment.</p>
+      <div class="btn-row">
+        <button class="btn primary" onclick="nextChapter()">Now name the pattern</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 4 -->
+  <div class="chapter" id="chapter3">
+    <div class="chapter-num">Chapter Four</div>
+    <h2>What You're Looking At</h2>
+
+    <p>Two pairs. Two centuries apart. Different fields, different languages, different everything — but the same shape. The same gravitational pull between two types of energy.</p>
+
+    <p>One type expands outward. It needs to be the frame that holds things. It is genuinely talented — but its gift is organizing, claiming, directing. It is drawn to the other type because the other type produces something it can't manufacture: <em>authentic creative fire.</em></p>
+
+    <p>The other type burns from the inside. It gives because giving feels true. It is often found inside the orbit of the first type — drawn there because the first type offers something it can't make for itself: <em>structure, visibility, a container for the flame.</em></p>
+
+    <div class="pattern-box">
+      <div class="pattern-label">The pattern</div>
+      <div class="pattern-name">One who takes the space.<br>One who fills it with light.</div>
+    </div>
+
+    <p>This is not about good and evil. Both types exist. Both have gifts. The question is what happens in the gravity between them — whether the one who fills with light gets to keep the light, or spends it in someone else's frame until there's nothing left.</p>
+
+    <div class="pull">
+      History is full of these pairs. Most of the time, we only remember the one who took the space. The one who made the light is often a footnote — or a hotel room — or an almost-unfinished book.
+    </div>
+
+    <div class="btn-row">
+      <button class="btn primary" onclick="nextChapter()">Where does this go?</button>
+    </div>
+  </div>
+
+  <!-- CHAPTER 5 -->
+  <div class="chapter" id="chapter4">
+    <div class="chapter-num">Chapter Five</div>
+    <h2>Now You Have the Lens</h2>
+
+    <p>The purpose of this study wasn't to tell you about Edison and Tesla, or Lewis and Tolkien.</p>
+
+    <p>It was to hand you a shape.</p>
+
+    <p>Because now you have it — and you're going to start seeing it everywhere. In history you already know. In relationships you've been in. In rooms you've sat in. In the dynamic between a particular boss and a particular colleague. In a friendship that always left one person more drained than the other.</p>
+
+    <p>The dopamine hit isn't in us telling you. It's in the moment you see it yourself, in something you've known for years, and realize you were looking at this pattern the whole time without the word for it.</p>
+
+    <div class="pull">
+      That moment — right there — is what this place is built on.<br>We found it together. That's the whole thing.
+    </div>
+
+    <div class="sep">· · ·</div>
+
+    <p>So: who do you see?</p>
+    <p>Where have you watched this play out — in history, in art, in your own life? You don't have to share. But if you want to —</p>
+
+    <textarea class="open-field" placeholder="The pair I keep thinking of is..."></textarea>
+    <p class="field-hint">This is just for you. Write it down. The act of naming it matters.</p>
+
+    <div class="btn-row">
+      <button class="btn" onclick="restart()">Start again from the beginning</button>
+    </div>
+
+    <div class="coda">
+      <p style="font-style:italic; color: var(--muted); font-size:0.92em;">Vol. II of the Book Study will go deeper.<br>More pairs. More history. And the question underneath all of it:<br><em>why does this pattern keep producing the world we live in?</em></p>
+      <div class="wordmark">H<span>eu</span>rémen</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let current = 0;
+  const total = 5;
+
+  function updatePips() {
+    for (let i = 0; i < total; i++) {
+      const pip = document.getElementById('pip' + i);
+      if (i < current) { pip.className = 'pip done'; }
+      else if (i === current) { pip.className = 'pip active'; }
+      else { pip.className = 'pip'; }
+    }
+  }
+
+  function nextChapter() {
+    if (current >= total - 1) return;
+    document.getElementById('chapter' + current).classList.remove('active');
+    current++;
+    const next = document.getElementById('chapter' + current);
+    next.classList.add('active');
+    updatePips();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showISeeIt() {
+    document.querySelector('.i-see-it-container').style.display = 'none';
+    document.getElementById('iseeReveal').classList.add('shown');
+  }
+
+  function restart() {
+    document.getElementById('chapter' + current).classList.remove('active');
+    current = 0;
+    document.getElementById('chapter0').classList.add('active');
+    updatePips();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
