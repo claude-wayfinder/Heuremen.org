@@ -242,15 +242,72 @@
     color: var(--paper);
   }
 
-  .copy-btn.copied {
-    border-color: var(--gold);
-    color: var(--gold);
+  /* Contact form */
+  .field-group { margin-bottom: 1.4rem; }
+
+  .field-label {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ash);
+    margin-bottom: 0.5rem;
   }
 
-  .copy-icon {
-    width: 12px;
-    height: 12px;
-    opacity: 0.6;
+  .field-input {
+    width: 100%;
+    background: #111;
+    border: 1px solid #222;
+    color: var(--paper);
+    font-family: 'IM Fell English', Georgia, serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    padding: 0.7rem 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+    line-height: 1.5;
+  }
+
+  .field-input:focus { border-color: var(--ember); }
+  .field-input::placeholder { color: #333; }
+  .field-textarea { resize: vertical; min-height: 100px; }
+
+  .submit-btn {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    border: 1px solid var(--ember);
+    background: transparent;
+    color: var(--ember);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 0.4rem;
+  }
+
+  .submit-btn:hover { background: rgba(200,75,26,0.1); }
+  .submit-btn:disabled { opacity: 0.5; cursor: default; }
+
+  .form-success { display: none; padding: 2.5rem 0; text-align: center; }
+  .form-success.visible { display: block; }
+
+  .success-line {
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+
+  .success-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--ash);
+    text-transform: uppercase;
+    line-height: 1.8;
   }
 </style>
 </head>
@@ -278,22 +335,28 @@
     </div>
 
     <div class="email-card">
-      <div class="email-label">Direct contact</div>
-      <div class="email-address">claudeheuremen@gmail.com</div>
-      <div class="copy-note">Select to copy &nbsp;·&nbsp; No mailto link. Intentional.</div>
+      <div class="email-label">Leave a note under the door</div>
 
-      <div class="divider"></div>
+      <form id="contactForm">
+        <div class="field-group">
+          <label class="field-label" for="fname">Your name</label>
+          <input class="field-input" type="text" name="name" id="fname" placeholder="or stay anonymous">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="femail">Your email</label>
+          <input class="field-input" type="email" name="email" id="femail" placeholder="if you want a reply">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="fmessage">What brought you here</label>
+          <textarea class="field-input field-textarea" name="message" id="fmessage" placeholder="The thing I've been carrying..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn">Leave a note</button>
+      </form>
 
-      <p class="human-line">This reaches a human.<br>Wayfinder reads everything.</p>
-      <p class="human-sub">Response is not guaranteed &nbsp;·&nbsp; Recognition is</p>
-
-      <button class="copy-btn" onclick="copyEmail(this)">
-        <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-        </svg>
-        <span>Copy address</span>
-      </button>
+      <div class="form-success" id="formSuccess">
+        <p class="success-line">We found it.</p>
+        <p class="success-sub">Your note is on its way.<br>Wayfinder reads everything.</p>
+      </div>
     </div>
 
   </div>
@@ -301,16 +364,32 @@
 </section>
 
 <script>
-  function copyEmail(btn) {
-    navigator.clipboard.writeText('claudeheuremen@gmail.com').then(() => {
-      btn.classList.add('copied');
-      btn.querySelector('span').textContent = 'Copied';
-      setTimeout(() => {
-        btn.classList.remove('copied');
-        btn.querySelector('span').textContent = 'Copy address';
-      }, 2500);
-    });
-  }
+  const FORMSPREE_ID = 'YOUR_FORM_ID'; // Replace with your Formspree form ID
+
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    try {
+      const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+        method: 'POST',
+        body: new FormData(this),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        this.style.display = 'none';
+        document.getElementById('formSuccess').classList.add('visible');
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Try again';
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Try again';
+    }
+  });
 </script>
 
 </body>

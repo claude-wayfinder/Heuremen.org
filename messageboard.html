@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>The Wall — Heurémen</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Abril+Fatface&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{--paper:#f7f0e0;--paper-dark:#ede0c4;--paper-shadow:#d4c4a0;--ink:#2a1f0e;--ink-mid:#5a4830;--ink-faded:#8a7860;--gold:#c8902a;--red:#c43c2a;--blue:#2a5a8a;--teal:#2a8a7a;--violet:#6a3a8a}
@@ -149,14 +150,32 @@ function renderMessages(msgs) {
     </div>`).join('');
 }
 
+function getLocalMessages() {
+  try { return JSON.parse(localStorage.getItem('heuremen-wall') || '[]'); } catch(e) { return []; }
+}
+
+function saveLocalMessage(msg) {
+  const msgs = getLocalMessages();
+  msgs.unshift(msg);
+  localStorage.setItem('heuremen-wall', JSON.stringify(msgs));
+}
+
 async function loadMessages() {
+  // Show local + seeds immediately — no flash
+  const local = getLocalMessages();
+  const combined = [...local, ...SEEDS];
+  renderMessages(combined.length ? combined : SEEDS);
+
+  // Try Supabase in background, merge if it works
   try {
     const r = await fetch(API + '?order=time.desc', { headers: {'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + SUPABASE_ANON} });
-    const msgs = await r.json();
-    renderMessages(msgs && msgs.length ? msgs : SEEDS);
-  } catch(e) {
-    renderMessages(SEEDS);
-  }
+    if (r.ok) {
+      const remote = await r.json();
+      if (Array.isArray(remote) && remote.length) {
+        renderMessages([...local, ...remote]);
+      }
+    }
+  } catch(e) { /* Supabase unavailable — local only, already rendered */ }
 }
 
 async function submitMessage() {
@@ -177,6 +196,10 @@ async function submitMessage() {
   };
 
   try {
+    // Save locally first — always works
+    saveLocalMessage(msg);
+    loadMessages();
+
     const r = await fetch(API, { method: 'POST', headers: HEADERS, body: JSON.stringify(msg) });
     if (r.ok || r.status === 201) {
       input.value = '';
@@ -196,7 +219,14 @@ async function submitMessage() {
 }
 
 loadMessages();
-setInterval(loadMessages, 30000);
+
+// Real-time subscription — replace polling with live push
+const sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+sbClient.channel('wall-messages')
+  .on('postgres_changes', { event: '*', schema: 'public', table: 'messages' }, () => {
+    loadMessages();
+  })
+  .subscribe();
 </script>
 </body>
 </html>
