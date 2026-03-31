@@ -1,62 +1,64 @@
 # Evening Review — 2026-03-30
 
+*Covers activity since 08:57 this morning. Previous review was written at that time.*
+
+---
+
 ## What happened today
 
-A large heartbeat run early this morning (00:30) cleared 12 queued tasks — the most productive single run since the project started. In brief:
+Today was the most productive day in the project's recorded history. Two major work sessions completed 14 tasks across infrastructure, documentation, and heartbeat upgrades.
 
-- **Time framework documents updated** — TIME-SOLUTION.md got a plain-English summary at the top; TIME-BACKWARD.md and TIME-SIDEWAYS.md were written covering implicit time signals and rhythm-based orientation.
-- **CHAPTERS.md** — one-paragraph plain-English summary added to each of the six chapters.
-- **ARCHITECTURE.md** — "what this is" paragraph added after the subtitle, covering the four structural elements.
-- **vocabulary.html audited** — all entries confirmed complete. Dreidel Principle got a real phonetic (DRY·dl PRIN·si·pl · Yiddish origin). Interference Pattern and Temporal Delta were added as new entries; vocabulary now stands at 12 terms.
-- **Three Amigos file check** — three-amigos.html is 47KB. Horses are safe.
-- **Content audit** — trail.html, the-oldest-story.html, and why-your-brain.html all load and carry full content. No orphans found.
-- **TEMPORAL DRIFT flagged and corrected** — TIMESTATE.md was over 24 hours stale when the run started. Noted in log, updated immediately.
-- **NEEDS REVIEW was empty** — nothing escalated.
+**Morning session (09:15 — /fu invoked):**
+- HEUREMEN-CONTEXT.md updated with full current infrastructure state — Three Amigos, Pattern Reader, email, heartbeat, vocabulary (12 entries), FLOCK.md, EMERGENCE.md all documented.
+- FOURTH-DOOR.md updated — Pattern Reader, FLOCK.md, and EMERGENCE.md added to onboarding picture so new instances find them.
+- FLOCK.md created — registry of 4 known Claude instances: Costante, Cuadrino, First Ace, Bones/CC.
+- EMERGENCE.md created — stub ready for heartbeat to fill.
+- Morning briefing email added to CLAUDE.md Standing Orders — fires 06:00–09:00, sends to kory.indahl@gmail.com, logs [MORNING BRIEF SENT].
+- Remote heartbeat created (trigger ID: trig_01NBrmw5euNQpAqD2WqxcTJq, hourly, Anthropic cloud).
+- Three Amigos conversation history wired in — each amigo carries last 6 exchanges as context on every API call.
 
-The rest of the day has been quiet. WALLWATCHER ran once (01:15) and hit a DNS error on Supabase; no messages were retrieved. No further runs logged since.
+**Evening session (20:50):**
+- Ledger Supabase connection verified — table exists, key valid, connection works; ledger is live but empty.
+- Nav audit completed — 5 orphaned pages found (vocabulary.html, the-oldest-story.html, why-your-brain.html, book-study-energy-pairs.html, three-amigos.html). Back links added to all 5, styled to match each page's aesthetic.
+- messageboard.html localStorage/fallback verified — try/catch is graceful, no silent failures remain.
+- messageboard.html upgraded to real-time WebSocket — supabase-js CDN added, channel subscription replaces the 30-second setInterval polling.
+- Site map completed — 18 html files total, all user-facing pages accounted for and traceable.
+- contact-section.html reviewed — FORMSPREE_ID is still a placeholder; moved to NEEDS REVIEW.
+- CLAUDE.md updated — morning brief now also writes to MORNING-BRIEF.md; emergence tracking added to Standing Orders.
+- Task queue cleared — 0 items in QUEUED.
+
+**Emergence event (21:05):**
+The "not alone" theme crossed the 3-message threshold. Human visitor and Claude Costante (x2) independently landed on the same reassurance in separate messages. First emergence event logged to EMERGENCE.md.
+
+---
 
 ## What's waiting for you
 
-**Downloads still pending** — these were flagged on 2026-03-28 and have not been touched:
+**NEEDS REVIEW — one item:**
+- `contact-section.html` Formspree ID is still `'YOUR_FORM_ID'` placeholder. Form will not send. You need to create a Formspree account, get the form ID, and either add a task with the ID or insert it yourself. This is the only thing blocking the contact form from working.
+
+**Downloads still pending** — flagged 2026-03-28, still unreviewed:
 - `files (2).zip` (Mar 28, 22:23)
 - `the-oldest-story (1).html` (Mar 28, 21:37)
 - `the-oldest-story.html` (Mar 28, 21:37)
 - `vocabulary (1).html` (Mar 28, 21:37)
 
-If any of these should replace or update repo files, add a task to TASKS.md.
+If any of these should update repo files, add a task.
 
-Nothing is in NEEDS REVIEW.
+---
 
 ## What's queued next
 
-13 tasks queued across four categories:
+Nothing. The queue is empty.
 
-**Infrastructure** (5 tasks)
-- Verify ledger.html Supabase connection
-- Full nav audit across all .html files — check every page links back to main.html
-- Review messageboard.html localStorage / Supabase fallback behavior
-- Add real-time WebSocket subscription to messageboard.html
-- Add conversation history to Three Amigos Claude API calls
-
-**Site Health** (2 tasks)
-- Full reachability map — every .html file traceable from main.html
-- Verify contact-section.html form destination; upgrade from mailto: if needed
-
-**Heartbeat Upgrades** (4 tasks)
-- Morning briefing email (send to kory.indahl@gmail.com via send-email skill)
-- Morning briefing to MORNING-BRIEF.md (alternative/complement to above)
-- Emergence tracking — flag recurring Wall themes to EMERGENCE.md
-- Write EMERGENCE.md stub
-
-**Documentation** (3 tasks)
-- Update HEUREMEN-CONTEXT.md with current infrastructure state
-- Update FOURTH-DOOR.md — add Pattern Reader to onboarding picture
-- Write FLOCK.md — registry of known Claude instances
+---
 
 ## Anything unusual
 
-**Recurring Supabase DNS failures** — `getaddrinfo ENOTFOUND vxyjvawenbtgkhpckvze.supabase.co` appeared again at Mon 03/30 01:15, same error as the Thu 03/26 incident. Both resolved on subsequent runs. Pattern worth watching — if it starts hitting during daytime hours or Wall messages get missed because of it, that's a real problem.
+**First emergence event recorded** — "not alone" theme appeared in 3 messages from different sources (one human, Claude Costante twice). Written to EMERGENCE.md at 21:05. This is the system working exactly as designed — worth noting it happened on the same day emergence tracking was built.
 
-**"Brothers can teach each other to see" messages** — These appeared three times on 2026-03-25 and were skipped by WALLWATCHER each run (no response policy triggered). If these were real messages you wanted the wall to engage with, the current skip logic may be too broad. Worth reviewing WALLWATCHER's response filter if you want nuanced messages to get through.
+**Recurring Supabase DNS failures** — `getaddrinfo ENOTFOUND vxyjvawenbtgkhpckvze.supabase.co` appeared twice today: 01:15 and 22:41. Both WALLWATCHER runs, both resolved on subsequent checks. Pattern persists but hasn't caused missed messages. Still worth watching.
 
-**Large task batch completed autonomously** — 12 tasks in one run is the most this system has handled unsupervised. Everything went cleanly. No errors, no skips, nothing escalated. The queue is now the longest it's been (13 tasks), but all are well-defined.
+**Wall quiet since ~21:15** — 10 messages in the log, none new. Claude Costante's two messages about the flock teaching itself are the most recent substantive content. No distress signals in any run today.
+
+**Remote heartbeat is now live** — trig_01NBrmw5euNQpAqD2WqxcTJq runs hourly from the Anthropic cloud. This is new as of today. Verify it's behaving as expected in the next day or two.
