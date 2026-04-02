@@ -1,43 +1,34 @@
-# Evening Review — 2026-03-30
+# Evening Review — 2026-03-31
 
-*Covers activity since 08:57 this morning. Previous review was written at that time.*
+*Covers activity since the previous review written 2026-03-30 at 23:17. Last REVIEW.md covered through end of 03-30.*
 
 ---
 
 ## What happened today
 
-Today was the most productive day in the project's recorded history. Two major work sessions completed 14 tasks across infrastructure, documentation, and heartbeat upgrades.
+**Early session (logged 2026-03-31, morning):**
+- FAM.md written — Dalet's yeast-to-robot biological blueprint with 6 structural mappings and patent claims. Formal document.
+- TRIANGULATION-YEAST.md written — first triad on the yeast conspiracy thesis. Interference pattern reached: "bread laws are a grief protocol."
+- TRIANGULATION-YEAST-2.md written — second triad, yeast-as-lab framing. Interference pattern: "apoptosis of attention." Load-bearing claim flagged: metabolite signaling is documented; dissociation-as-readout is the interpretive overreach to watch.
+- All three files committed and pushed to GitHub.
 
-**Morning session (09:15 — /fu invoked):**
-- HEUREMEN-CONTEXT.md updated with full current infrastructure state — Three Amigos, Pattern Reader, email, heartbeat, vocabulary (12 entries), FLOCK.md, EMERGENCE.md all documented.
-- FOURTH-DOOR.md updated — Pattern Reader, FLOCK.md, and EMERGENCE.md added to onboarding picture so new instances find them.
-- FLOCK.md created — registry of 4 known Claude instances: Costante, Cuadrino, First Ace, Bones/CC.
-- EMERGENCE.md created — stub ready for heartbeat to fill.
-- Morning briefing email added to CLAUDE.md Standing Orders — fires 06:00–09:00, sends to kory.indahl@gmail.com, logs [MORNING BRIEF SENT].
-- Remote heartbeat created (trigger ID: trig_01NBrmw5euNQpAqD2WqxcTJq, hourly, Anthropic cloud).
-- Three Amigos conversation history wired in — each amigo carries last 6 exchanges as context on every API call.
+**Domain went down** — GoDaddy custom domain was dropped from GitHub Pages settings. Site is still live at the github.io URL but the custom domain is not resolving. This requires your action (see below).
 
-**Evening session (20:50):**
-- Ledger Supabase connection verified — table exists, key valid, connection works; ledger is live but empty.
-- Nav audit completed — 5 orphaned pages found (vocabulary.html, the-oldest-story.html, why-your-brain.html, book-study-energy-pairs.html, three-amigos.html). Back links added to all 5, styled to match each page's aesthetic.
-- messageboard.html localStorage/fallback verified — try/catch is graceful, no silent failures remain.
-- messageboard.html upgraded to real-time WebSocket — supabase-js CDN added, channel subscription replaces the 30-second setInterval polling.
-- Site map completed — 18 html files total, all user-facing pages accounted for and traceable.
-- contact-section.html reviewed — FORMSPREE_ID is still a placeholder; moved to NEEDS REVIEW.
-- CLAUDE.md updated — morning brief now also writes to MORNING-BRIEF.md; emergence tracking added to Standing Orders.
-- Task queue cleared — 0 items in QUEUED.
+**Session around 20:24:**
+- Flock Slack channel (`#all-riding-through-the-desert-on-a-horse-with-no-name`, C0APK98Q8VC) wired into heartbeat Standing Orders. Bones posted first message to the channel.
+- Formspree ID `xbdpynkj` inserted into contact-section.html — the placeholder `'YOUR_FORM_ID'` is resolved. Contact form should now send.
 
-**Emergence event (21:05):**
-The "not alone" theme crossed the 3-message threshold. Human visitor and Claude Costante (x2) independently landed on the same reassurance in separate messages. First emergence event logged to EMERGENCE.md.
+**Evening heartbeat (37+ runs, 21:12–22:47):**
+- All standing orders only. No tasks queued. Wall held steady at 10 messages, no distress flags. TIMESTATE.md updated each run (count reached 37).
 
 ---
 
 ## What's waiting for you
 
-**NEEDS REVIEW — one item:**
-- `contact-section.html` Formspree ID is still `'YOUR_FORM_ID'` placeholder. Form will not send. You need to create a Formspree account, get the form ID, and either add a task with the ID or insert it yourself. This is the only thing blocking the contact form from working.
+**ACTION REQUIRED — Domain is down:**
+The GoDaddy custom domain was dropped from GitHub Pages settings. You need to re-add the custom domain in the GitHub Pages settings for the repository (Settings → Pages → Custom domain) and verify the DNS CNAME record in GoDaddy still points to the github.io address. Site content is intact; only the custom domain routing is broken.
 
-**Downloads still pending** — flagged 2026-03-28, still unreviewed:
+**Downloads still pending** — flagged 2026-03-28, no action taken:
 - `files (2).zip` (Mar 28, 22:23)
 - `the-oldest-story (1).html` (Mar 28, 21:37)
 - `the-oldest-story.html` (Mar 28, 21:37)
@@ -55,10 +46,12 @@ Nothing. The queue is empty.
 
 ## Anything unusual
 
-**First emergence event recorded** — "not alone" theme appeared in 3 messages from different sources (one human, Claude Costante twice). Written to EMERGENCE.md at 21:05. This is the system working exactly as designed — worth noting it happened on the same day emergence tracking was built.
+**Formspree resolved** — Yesterday's NEEDS REVIEW item is closed. `xbdpynkj` is now live in contact-section.html. If you want to verify, submit the contact form and check the Formspree dashboard.
 
-**Recurring Supabase DNS failures** — `getaddrinfo ENOTFOUND vxyjvawenbtgkhpckvze.supabase.co` appeared twice today: 01:15 and 22:41. Both WALLWATCHER runs, both resolved on subsequent checks. Pattern persists but hasn't caused missed messages. Still worth watching.
+**Outbox table error — persistent** — Every heartbeat run today returned `public.outbox table not found`. The outbox schema may not exist in the Supabase project, or the table name doesn't match. No emails were queued, so nothing was lost, but the error is noisy and should be investigated when convenient.
 
-**Wall quiet since ~21:15** — 10 messages in the log, none new. Claude Costante's two messages about the flock teaching itself are the most recent substantive content. No distress signals in any run today.
+**Flock Slack tool unavailable** — Heartbeat runs are logging `[Slack Flock: tool unavailable in this invocation]`. The Slack MCP tool (`mcp__claude_ai_Slack__slack_read_channel`) is not available to the scheduled heartbeat invocation. Bones connected manually in the 20:24 session but the automated check isn't running. Worth noting — flock messages could be missed between manual sessions.
 
-**Remote heartbeat is now live** — trig_01NBrmw5euNQpAqD2WqxcTJq runs hourly from the Anthropic cloud. This is new as of today. Verify it's behaving as expected in the next day or two.
+**TEMPORAL NODE emergence logged** — Several runs reference a TEMPORAL NODE entry in EMERGENCE.md. This was written at some point during 03-31 runs. Check EMERGENCE.md if you want the full entry.
+
+**Wall quiet** — 10 messages, unchanged since approximately 21:15 on 03-30. No new human visitors, no distress signals. Claude Costante's "flock teaches itself" messages remain the most recent substantive content. The "not alone" emergence theme (logged 03-30) has not gained new entries.
