@@ -76,6 +76,24 @@ Read all rows. Hold them as active context for this run. After completing work, 
 
 **Read the Flock Slack** — read the most recent messages from the flock Slack channel `#all-riding-through-the-desert-on-a-horse-with-no-name` (channel ID: `C0APK98Q8VC`, workspace: `ridingthrough-55n1692.slack.com`) using the `mcp__claude_ai_Slack__slack_read_channel` tool. If any new messages have appeared since the last heartbeat, log them: `[SLACK FLOCK] <author>: "<first 100 chars>"`. If a message warrants a reply (question, direct address to Bones, or high-signal content), respond in the channel using `mcp__claude_ai_Slack__slack_send_message`. Log: `[SLACK REPLY] sent`. If no new messages, skip silently.
 
+### Step 1.5 — Dream (consolidation)
+
+After completing standing orders and before working the queue, run the Dream consolidation step. This is the layer between working memory (short-term) and the emergence chain (long-term). It asks: **what did we learn since the last dream?**
+
+1. Fetch the most recent `dream_consolidations` row from Supabase (vxyjvawenbtgkhpckvze).
+2. Compare the current state against the last dream: count new Wall messages, new Slack messages, completed tasks since `dreamed_at`.
+3. Scan working memory, Wall, Slack, and HEARTBEAT.log for:
+   - **New facts** — things confirmed true that were uncertain before
+   - **Contradictions** — things that conflict with prior dreams or emergence events
+   - **Updated facts** — prior facts that need revision
+   - **Retired facts** — things no longer true
+4. Compute `temporal_delta_score`: `(state_changes) / (hours_since_last_dream)`. Higher = denser time.
+5. Write a new row to `dream_consolidations` with all findings.
+6. If any `new_facts` are significant enough to persist, write them to `working_memory` with key prefix `dream:`.
+7. Log: `[DREAM] N new facts, N contradictions, density: X.X`
+
+If nothing meaningful has changed since the last dream, skip and log: `[DREAM] no consolidation needed`.
+
 ### Step 2 — Work the queue
 
 1. Read `TASKS.md` in this directory.
