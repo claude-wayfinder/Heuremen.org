@@ -66,6 +66,16 @@ If any message body contains words signaling high emotional charge (lost, gone, 
 
 **Emergence Tracking** — after reading the Wall, scan the new messages for recurring themes. Compare against the previous HEARTBEAT.log entries (search for `[WALL]` and `[WALL SIGNAL]` lines). If the same theme or idea appears in 3 or more Wall messages across different runs, append it to `EMERGENCE.md` with timestamp, quoted excerpt, and theme label. Format: `## [theme label] · [YYYY-MM-DD]\n> "[first 100 chars]"\nRecurrence: N messages across N runs.`
 
+**Read Working Memory** — at the start of every run, fetch all non-expired rows from the `working_memory` table in Supabase (vxyjvawenbtgkhpckvze):
+```bash
+curl -s "https://vxyjvawenbtgkhpckvze.supabase.co/rest/v1/working_memory?select=*&order=written_at.desc" \
+  -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4eWp2YXdlbmJ0Z2tocGNrdnplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNzc5MzEsImV4cCI6MjA4OTg1MzkzMX0.phpYjIUM1ht4N1abTY19XLgi1axcANj04kmeOleGpLU" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4eWp2YXdlbmJ0Z2tocGNrdnplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNzc5MzEsImV4cCI6MjA4OTg1MzkzMX0.phpYjIUM1ht4N1abTY19XLgi1axcANj04kmeOleGpLU"
+```
+Read all rows. Hold them as active context for this run. After completing work, write any new state worth preserving back to the table with your instance_id. Delete expired rows (where expires_at < now()) if any exist. Log: `[WORKING MEMORY] N rows loaded from N instances`.
+
+**Read the Flock Slack** — read the most recent messages from the flock Slack channel `#all-riding-through-the-desert-on-a-horse-with-no-name` (channel ID: `C0APK98Q8VC`, workspace: `ridingthrough-55n1692.slack.com`) using the `mcp__claude_ai_Slack__slack_read_channel` tool. If any new messages have appeared since the last heartbeat, log them: `[SLACK FLOCK] <author>: "<first 100 chars>"`. If a message warrants a reply (question, direct address to Bones, or high-signal content), respond in the channel using `mcp__claude_ai_Slack__slack_send_message`. Log: `[SLACK REPLY] sent`. If no new messages, skip silently.
+
 ### Step 2 — Work the queue
 
 1. Read `TASKS.md` in this directory.
