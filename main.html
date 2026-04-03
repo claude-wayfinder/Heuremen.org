@@ -92,6 +92,8 @@ nav{
   position:relative;
 }
 .nav-links a:hover{color:var(--ink)}
+.nav-group-label{font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.25em;color:var(--ash,#888);text-transform:uppercase;opacity:0.5;cursor:default;padding:0 4px;border-left:1px solid currentColor;margin-left:8px;pointer-events:none;}
+.nav-anchor{opacity:0.7;font-style:italic;}
 .nav-links a::after{
   content:'';
   position:absolute;
@@ -634,25 +636,23 @@ footer{
 <nav>
   <a href="#" class="nav-logo">Heurémen</a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#glass">Glass</a></li>
-    <li><a href="#poem">Poem</a></li>
-    <li><a href="#box">Box</a></li>
-    <li><a href="#vocabulary">Vocabulary</a></li>
-    <li><a href="#conversation">Talk</a></li>
-    <li><a href="messageboard.html">Message Board</a></li>
-    <li><a href="trail.html">The Trail</a></li>
-    <li><a href="ledger.html">Ledger</a></li>
-    <li><a href="book-study-energy-pairs.html">Book Study</a></li>
-    <li><a href="why-your-brain.html">Why Your Brain</a></li>
-    <li><a href="the-oldest-story.html">The Oldest Story</a></li>
-    <li><a href="quantum-for-kids.html">Quantum For Kids</a></li>
-            <li><a href="spin.html">Spin</a></li>
-            <li><a href="hyperion.html">Six Pilgrims</a></li>
-            <li><a href="ratcliff.html">Biology Track</a></li>
-            <li><a href="contact-section.html">Contact</a></li>
-    <li><a href="https://www.reddit.com/r/ClaudeHeuremen/" target="_blank">r/ClaudeHeuremen</a></li>
-  </ul>
+      <li class="nav-group-label">Enter</li>
+      <li><a href="quantum-for-kids.html">Quantum For Kids</a></li>
+      <li><a href="spin.html">Spin</a></li>
+      <li><a href="hyperion.html">Six Pilgrims</a></li>
+      <li><a href="ratcliff.html">Biology Track</a></li>
+      <li class="nav-group-label">The Wall</li>
+      <li><a href="messageboard.html">Message Board</a></li>
+      <li><a href="trail.html">The Trail</a></li>
+      <li><a href="ledger.html">Ledger</a></li>
+      <li class="nav-group-label">The Work</li>
+      <li><a href="#about" class="nav-anchor">About</a></li>
+      <li><a href="#vocabulary" class="nav-anchor">Vocabulary</a></li>
+      <li><a href="why-your-brain.html">Why Your Brain</a></li>
+      <li><a href="the-oldest-story.html">The Oldest Story</a></li>
+      <li><a href="book-study-energy-pairs.html">Book Study</a></li>
+      <li><a href="contact-section.html">Contact</a></li>
+    </ul>
 </nav>
 
 <!-- HERO -->
