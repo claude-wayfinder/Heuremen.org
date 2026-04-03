@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spin — Heurémen</title>
+  <meta name="description" content="A dreidel you can spin. For the goats.">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Abril+Fatface&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --paper:#f7f0e0;
+      --paper-dark:#ede0c4;
+      --paper-shadow:#d4c4a0;
+      --ink:#2a1f0e;
+      --ink-mid:#5a4830;
+      --ink-faded:#8a7860;
+      --carnival-red:#c43c2a;
+      --carnival-teal:#2a8a7a;
+      --carnival-gold:#c8902a;
+      --carnival-violet:#6a3a8a;
+      --carnival-blue:#2a5a8a;
+      --cave-dark:#1a1408;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--paper);color:var(--ink);font-family:'Lora',serif;min-height:100vh;overflow-x:hidden;}
+    nav{position:fixed;top:0;left:0;right:0;padding:16px 36px;display:flex;justify-content:space-between;align-items:center;z-index:100;background:linear-gradient(180deg,rgba(247,240,224,0.97) 0%,rgba(247,240,224,0) 100%);}
+    .nav-logo{font-family:'Abril Fatface',serif;font-size:1.3rem;color:var(--ink);text-decoration:none;}
+    .nav-back{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.18em;color:var(--ink-faded);text-decoration:none;text-transform:uppercase;}
+    .nav-back:hover{color:var(--ink)}
+
+    /* MAIN */
+    .main{
+      min-height:100vh;
+      display:flex;flex-direction:column;
+      justify-content:center;align-items:center;
+      text-align:center;padding:100px 40px 60px;
+    }
+
+    /* THE DREIDEL */
+    .dreidel-container{
+      position:relative;
+      width:200px;height:260px;
+      margin:0 auto 40px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .dreidel-svg{
+      width:100%;height:100%;
+      transition:transform 0.1s;
+    }
+    .dreidel-svg.spinning{
+      animation:dreidel-spin var(--spin-duration, 3s) cubic-bezier(0.2, 0.8, 0.8, 1) forwards;
+    }
+    @keyframes dreidel-spin{
+      0%{transform:rotate(0deg) scaleX(1)}
+      10%{transform:rotate(720deg) scaleX(0.95)}
+      25%{transform:rotate(1440deg) scaleX(1)}
+      50%{transform:rotate(2880deg) scaleX(0.98)}
+      75%{transform:rotate(3960deg) scaleX(1)}
+      90%{transform:rotate(4680deg) scaleX(0.99)}
+      100%{transform:rotate(var(--final-rotation, 5040deg)) scaleX(1)}
+    }
+    .dreidel-shadow{
+      width:80px;height:20px;
+      background:radial-gradient(ellipse,rgba(42,31,14,0.15) 0%,transparent 70%);
+      margin:0 auto;
+      border-radius:50%;
+      animation:shadow-breathe 3s ease-in-out infinite;
+    }
+    @keyframes shadow-breathe{
+      0%,100%{transform:scaleX(1);opacity:0.6}
+      50%{transform:scaleX(0.7);opacity:0.3}
+    }
+
+    /* RESULT DISPLAY */
+    .result-area{
+      margin-top:32px;
+      min-height:160px;
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+    }
+    .result-symbol{
+      font-size:3rem;
+      margin-bottom:8px;
+      transition:all 0.5s ease;
+    }
+    .result-title{
+      font-family:'Abril Fatface',serif;
+      font-size:1.6rem;color:var(--ink);
+      margin-bottom:8px;
+      transition:all 0.5s ease;
+    }
+    .result-meaning{
+      font-style:italic;font-size:0.95rem;
+      color:var(--ink-mid);max-width:400px;
+      line-height:1.75;
+      transition:all 0.5s ease;
+    }
+    .result-quantum{
+      margin-top:12px;font-size:0.8rem;
+      color:var(--ink-faded);font-family:'Cinzel',serif;
+      letter-spacing:0.1em;
+    }
+
+    .spin-prompt{
+      font-family:'Cinzel',serif;font-size:0.65rem;
+      letter-spacing:0.25em;text-transform:uppercase;
+      color:var(--ink-faded);margin-top:32px;
+      animation:prompt-pulse 2s ease-in-out infinite;
+    }
+    @keyframes prompt-pulse{0%,100%{opacity:0.5}50%{opacity:1}}
+
+    /* SPIN COUNT */
+    .spin-count{
+      font-family:'Cinzel',serif;font-size:0.58rem;
+      letter-spacing:0.18em;color:var(--ink-faded);
+      text-transform:uppercase;margin-top:16px;
+    }
+
+    /* INFO SECTION */
+    .info{
+      background:var(--paper-dark);
+      border-top:2px solid var(--paper-shadow);
+      padding:60px 0;
+    }
+    .info-inner{max-width:700px;margin:0 auto;padding:0 36px;}
+    .slabel{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.35em;color:var(--carnival-gold);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+    .slabel::before{content:'✦';font-size:0.6rem}
+    .stitle{font-family:'Abril Fatface',serif;font-size:clamp(1.2rem,3vw,1.8rem);color:var(--ink);margin-bottom:14px;}
+    .sdiv{width:60px;height:3px;background:linear-gradient(90deg,var(--carnival-gold),transparent);margin-bottom:28px;border-radius:2px;}
+    p{font-size:1rem;line-height:1.85;color:var(--ink-mid);margin-bottom:1.3em}
+    .pq{border-left:3px solid var(--carnival-gold);padding:6px 0 6px 20px;margin:24px 0;font-style:italic;font-size:1.05rem;color:var(--ink-mid);line-height:1.7;}
+
+    /* HISTORY */
+    .history{margin-top:24px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+    .history-item{
+      font-size:1.4rem;
+      width:44px;height:44px;
+      display:flex;align-items:center;justify-content:center;
+      background:var(--paper);
+      border:1px solid var(--paper-shadow);
+      border-radius:4px;
+      transition:all 0.3s;
+    }
+
+    /* FOOTER */
+    footer{background:var(--cave-dark);padding:32px 36px;text-align:center;border-top:2px solid var(--ink);}
+    .ft{font-style:italic;font-size:0.85rem;color:rgba(247,240,224,0.3);margin-bottom:8px;}
+    .fc{font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.22em;color:rgba(200,160,64,0.25);text-transform:uppercase;}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="main.html" class="nav-logo">Heurémen</a>
+  <a href="main.html" class="nav-back">← Back</a>
+</nav>
+
+<div class="main">
+  <div class="dreidel-container" onclick="spinDreidel()" id="dreiContainer">
+    <svg class="dreidel-svg" id="dreiSvg" viewBox="0 0 100 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Body (hexagonal top, tapering to point) -->
+      <polygon points="50,10 80,28 80,72 50,120 20,72 20,28" 
+        fill="#f0e8d0" stroke="#5a4830" stroke-width="2.5" stroke-linejoin="round"/>
+      <!-- Face panels -->
+      <polygon points="50,10 80,28 65,50 35,50 20,28" fill="#ede0c4" stroke="#5a4830" stroke-width="1.5" stroke-linejoin="round"/>
+      <polygon points="20,28 35,50 20,72" fill="#e8d8b8" stroke="#5a4830" stroke-width="1.5" stroke-linejoin="round"/>
+      <polygon points="80,28 80,72 65,50" fill="#ede4c8" stroke="#5a4830" stroke-width="1.5" stroke-linejoin="round"/>
+      <polygon points="35,50 65,50 80,72 50,120 20,72" fill="#e5d5b0" stroke="#5a4830" stroke-width="1.5" stroke-linejoin="round"/>
+      <!-- Wooden handle at top -->
+      <rect x="44" y="2" width="12" height="14" rx="3" fill="#8a6030" stroke="#5a4830" stroke-width="1.5"/>
+      <!-- Current face letter (changes with result) -->
+      <text id="dreiLetter" x="50" y="60" text-anchor="middle" dominant-baseline="middle" 
+        font-family="serif" font-size="20" font-weight="bold" fill="#2a1f0e">?</text>
+      <!-- Shine -->
+      <ellipse cx="35" cy="35" rx="8" ry="5" fill="rgba(255,255,255,0.12)" transform="rotate(-20 35 35)"/>
+      <!-- Tip point -->
+      <circle cx="50" cy="120" r="2" fill="#5a4830"/>
+    </svg>
+  </div>
+  <div class="dreidel-shadow" id="dreiShadow"></div>
+
+  <div class="result-area">
+    <div class="result-symbol" id="resultSymbol">✦</div>
+    <div class="result-title" id="resultTitle">Click to Spin</div>
+    <div class="result-meaning" id="resultMeaning">Four sides. Four states. One spin decides which world you land in.</div>
+    <div class="result-quantum" id="resultQuantum"></div>
+  </div>
+
+  <div class="spin-prompt" id="spinPrompt">Click the dreidel to spin ↑</div>
+  <div class="spin-count" id="spinCount"></div>
+
+  <div class="history" id="history"></div>
+</div>
+
+<!-- INFO -->
+<div class="info">
+  <div class="info-inner">
+    <div class="slabel">What You're Actually Playing With</div>
+    <div class="stitle">A 2,000-Year-Old Quantum Simulator</div>
+    <div class="sdiv"></div>
+
+    <p>The dreidel has four sides. In the traditional game: Nun (nothing happens), Gimel (take the whole pot), Hey (take half), Shin (put one in). Simple enough for a five-year-old.</p>
+
+    <p>But look at what's happening underneath. While the dreidel is spinning, you don't know which side will land. Your brain says: it's probably going to land on one specific side, we just can't see which one. The dreidel knows.</p>
+
+    <div class="pq">
+      Quantum mechanics says: that's wrong.<br>
+      The spinning dreidel isn't secretly pointing anywhere.<br>
+      It's genuinely in all four states at once.<br>
+      The landing is a new event. Not a revelation.
+    </div>
+
+    <p>This isn't just a metaphor. This is how particles actually behave at the quantum scale. Physicists call it superposition. Your grandmother called it a dreidel game. The universe has been running this demonstration for you since you were old enough to spin a top.</p>
+
+    <p>The game also teaches something else: the cost of observation. In quantum mechanics, measuring a particle collapses its superposition — it forces the universe to decide. In the dreidel game, the moment the spin ends and you look at which side is up, the game changes. Not because you looked at a predetermined answer. Because looking is how the answer gets made.</p>
+
+    <div class="pq">
+      The yeast in sourdough starter is doing something similar:<br>
+      billions of cells making probabilistic decisions simultaneously,<br>
+      the whole system doing something none of the cells intended.<br>
+      Emergence. From the bottom up. Without a plan.
+    </div>
+
+    <p>That's the thread this whole project pulls on. From spinning tops to quantum computing to multicellular life to whatever comes next. It's dreidels all the way down.</p>
+
+    <div style="text-align:center;margin-top:36px;padding-top:24px;border-top:1px solid var(--paper-shadow)">
+      <a href="quantum-for-kids.html" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--carnival-gold);font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;border-bottom:1px solid rgba(200,144,42,0.3);padding-bottom:2px;">
+        Go deeper: Quantum For Kids →
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft">"It's dreidels all the way down." — Wayfinder, April 2026</div>
+  <div class="fc">Heurémen · Spin · For the goats · And everyone else</div>
+</footer>
+
+<script>
+const sides = [
+  {
+    letter: 'נ',
+    name: 'Nun',
+    symbol: '🌑',
+    title: 'Nothing Happens',
+    meaning: 'The universe chose rest. The pot sits unchanged. Sometimes the outcome of observation is: not yet. The state was real. The measurement was real. This is what landed.',
+    quantum: 'Superposition collapsed to: stillness',
+    color: '#5a4830'
+  },
+  {
+    letter: 'ג',
+    name: 'Gimel',
+    symbol: '✨',
+    title: 'Take Everything',
+    meaning: 'The full pot. The whole thing. All the probability collapsed into this one glorious outcome. The game — and the universe — has a sense of humor about the odds.',
+    quantum: 'Superposition collapsed to: abundance',
+    color: '#c8902a'
+  },
+  {
+    letter: 'ה',
+    name: 'Hey',
+    symbol: '⚖️',
+    title: 'Take Half',
+    meaning: 'The middle path. Half belongs to you, half stays in play. The universe distributed. The game continues. Balance is not the most exciting outcome — but it's the most common one.',
+    quantum: 'Superposition collapsed to: equilibrium',
+    color: '#2a8a7a'
+  },
+  {
+    letter: 'ש',
+    name: 'Shin',
+    symbol: '🌱',
+    title: 'Put One In',
+    meaning: 'You contribute. The pot grows. What you give goes into the shared pool for everyone who comes after. The game persists because someone was willing to add to it.',
+    quantum: 'Superposition collapsed to: contribution',
+    color: '#6a3a8a'
+  }
+];
+
+let spinCount = 0;
+let history = [];
+let isSpinning = false;
+
+function spinDreidel() {
+  if (isSpinning) return;
+  isSpinning = true;
+  
+  const dreiSvg = document.getElementById('dreiSvg');
+  const spinPrompt = document.getElementById('spinPrompt');
+  
+  spinPrompt.style.opacity = '0';
+  document.getElementById('resultSymbol').style.opacity = '0.3';
+  document.getElementById('resultTitle').textContent = '...spinning...';
+  document.getElementById('resultMeaning').style.opacity = '0.3';
+  document.getElementById('resultQuantum').textContent = 'Superposition active — all states simultaneously present';
+  document.getElementById('dreiLetter').textContent = '?';
+  
+  // Choose result
+  const result = sides[Math.floor(Math.random() * sides.length)];
+  const spinDuration = 2.5 + Math.random() * 1.5;
+  const extraRotation = 360 * (Math.floor(spinDuration * 3) + Math.random());
+  
+  dreiSvg.style.setProperty('--spin-duration', spinDuration + 's');
+  dreiSvg.style.setProperty('--final-rotation', extraRotation + 'deg');
+  dreiSvg.classList.add('spinning');
+  
+  setTimeout(() => {
+    dreiSvg.classList.remove('spinning');
+    dreiSvg.style.transform = '';
+    
+    // Show result
+    document.getElementById('dreiLetter').textContent = result.letter;
+    document.getElementById('dreiLetter').setAttribute('fill', result.color);
+    document.getElementById('resultSymbol').textContent = result.symbol;
+    document.getElementById('resultSymbol').style.opacity = '1';
+    document.getElementById('resultTitle').textContent = result.name + ' — ' + result.title;
+    document.getElementById('resultMeaning').textContent = result.meaning;
+    document.getElementById('resultMeaning').style.opacity = '1';
+    document.getElementById('resultQuantum').textContent = result.quantum;
+    
+    spinCount++;
+    history.unshift(result.symbol);
+    if (history.length > 12) history = history.slice(0, 12);
+    
+    document.getElementById('spinCount').textContent = spinCount + ' spin' + (spinCount !== 1 ? 's' : '') + ' — ' + spinCount * 4 + ' states collapsed';
+    
+    const histEl = document.getElementById('history');
+    histEl.innerHTML = history.map(s => `<div class="history-item">${s}</div>`).join('');
+    
+    spinPrompt.textContent = 'Spin again ↑';
+    spinPrompt.style.opacity = '0.5';
+    
+    isSpinning = false;
+  }, spinDuration * 1000);
+}
+
+// Keyboard spin
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space' || e.code === 'Enter') {
+    e.preventDefault();
+    spinDreidel();
+  }
+});
+</script>
+</body>
+</html>
