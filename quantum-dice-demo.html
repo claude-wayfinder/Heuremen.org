@@ -4,7 +4,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Quantum Dice Live — Heurémen</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.nhet/npm/chart.js"></script>
     <style>
           * { box-sizing: border-box; margin: 0; padding: 0; }
           body { font-family: 'Georgia', serif; background: #0a0a0a; color: #e8e0d0; min-height: 100vh; padding: 20px; }
@@ -46,12 +46,12 @@
         <h1>&#9860; Quantum Dice &#8212; Live</h1>
       <p>Real quantum random numbers, streaming from a photonic QRNG device</p>
       <p class="credit">Data source: <a href="https://www.quantum-dice.com" target="_blank">Quantum Dice Ltd</a>a> (University of Twente) &middot; Embedded in <a href="main.html">Heur&eacute;men</a>a></p>
-    </div>div>
+    </div><div
   <div class="container">
     <div class="controls">
         <button id="startButton" class="stopped">Start Capture</button>button>
         <span id="modeBadge" class="mode-badge"></span>span>
-    </div>div>
+    </div><div
     <div class="status-box">
         <div class="status-row">
               <div class="status-section">
@@ -59,34 +59,34 @@
                       <table>
                                   <tr><td>Duration:</td><td id="sessionDuration">0s</td></tr>
                                 <tr><td>Data Points:</td><td id="currentDataPoints">0</td></tr>
-                                <tr><td>Total Bytes:</td>td><td id="currentTotalBytes">0</td>td></tr>
+                                <tr><td>Total Bytes:</td><td<td id="currentTotalBytes">0</td><td</tr>
                       </table>
-              </div>div>
+              </div><div
               <div class="status-section">
                       <h3>All Time</h3>
                       <table>
                                 <tr><td>Data Points:</td><td id="allTimeDataPoints">0</td></tr>
                                 <tr><td>Total Bytes:</td><td id="allTimeTotalBytes">0</td></tr>
                       </table>
-              </div>div>
+              </div><div
               <div class="status-section">
                       <h3>Averages</h3>
                       <table>
-                                <tr><td>Entropy:</td>td><td id="avgEntropy">0.00</td>td></tr>
+                                <tr><td>Entropy:</td><td<td id="avgEntropy">0.00</td><td</tr>
                                 <tr><td>Raw Bits:</td><td id="avgRawBits">0.00</td></tr>
                                 <tr><td>QRNG Value:</td><td id="avgQrng">0.00</td></tr>
                       </table>
-              </div>div>
+              </div><div
               <div class="status-section">
                       <h3>Latest Hex</h3>
-                      <div id="latestQrngData">&mdash;</div>div>
-              </div>div>
-        </div>div>
-        <div id="errorStatus" class="error-status"></div>div>
-    </div>div>
+                      <div id="latestQrngData">&mdash;</div><div
+              </div><div
+        </div><div
+        <div id="errorStatus" class="error-status"></div><div
+    </div><div
     <div class="chart-container">
         <canvas id="randomChart"></canvas>canvas>
-    </div>div>
+    </div><div
     <div class="explainer">
         <h3>What you're watching</h3>
         <p>This visualizer connects to <strong>Quantum Dice Ltd's</strong> photonic QRNG device &mdash; a chip that uses fundamental quantum randomness to produce numbers that are truly unpredictable. If their live server is unavailable (it requires certificate auth), the visualizer automatically falls back to your browser's own cryptographic random number generator (<code>crypto.getRandomValues()</code>), labelled as <strong>SIM mode</strong>. The physics is the same &mdash; only the source differs.</p>
@@ -94,9 +94,9 @@
         <p><strong>Teal (Raw Bits):</strong> The raw bit stream before post-processing &mdash; closest to raw quantum noise.</p>
         <p><strong>Red (Entropy):</strong> A measure of unpredictability per sample. Quantum entropy is the gold standard because it has no hidden pattern &mdash; ever.</p>
         <p>The line never settles. That's not a bug. The die has no memory. Every roll is genuinely new.</p>
-    </div>div>
-    <div class="nav-back"><a href="main.html">&larr; Back to Heur&eacute;men</a>a></div>div>
-  </div>div>
+    </div><div
+    <div class="nav-back"><a href="main.html">&larr; Back to Heur&eacute;men</a>a></div><div
+  </div><div
   <script>
     const LIVE_ENDPOINT = 'https://testjson.qeaas.q-dice.com/randcertified?bytes=8';
     const MAX_DATA_POINTS = 200;
