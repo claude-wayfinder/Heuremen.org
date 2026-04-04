@@ -48,7 +48,7 @@ class Visualizer {
     }
 
   initChart() {
-        return new Chart(document.getElementById('randomChart').getContext('2d'), {
+        return new Chart((document.getElementById('qrngChart') || document.getElementById('randomChart')).getContext('2d'), {
                 type: 'line',
                 data: { labels: [], datasets: [
                   { label: 'QRNG Value', data: [], borderColor: 'rgb(153,102,255)', yAxisID: 'y' },
@@ -83,14 +83,14 @@ class Visualizer {
 
   async startCapture() {
         if (this.isCapturing) return;
-        document.getElementById('errorStatus').classList.remove('show');
+        (document.getElementById('errorStatus') || document.createElement('div')) || {textContent:'', style:{display:'none'}}.classList.remove('show');
         this.setBtn('connecting');
         const liveData = await this.tryLive();
         if (liveData) {
                 useSimMode = false; this.setBadge('live');
         } else {
                 useSimMode = true; this.setBadge('sim');
-                const e = document.getElementById('errorStatus');
+                const e = (document.getElementById('errorStatus') || document.createElement('div'));
                 e.textContent = 'Live QRNG requires certificate auth. Running browser crypto sim mode. Same math, different photons.';
                 e.classList.add('show');
         }
@@ -149,7 +149,7 @@ class Visualizer {
         set('avgRawBits', this.count > 0 ? (this.rawBitsSum / this.count).toFixed(2) : '0.00');
         set('avgQrng',    this.count > 0 ? (this.qrngSum    / this.count).toFixed(2) : '0.00');
         set('latestQrngData', this.dataPoints.length > 0 ? this.dataPoints[this.dataPoints.length-1].data : '-');
-        document.getElementById('errorStatus').classList.remove('show');
+        (document.getElementById('errorStatus') || document.createElement('div')).classList.remove('show');
   }
 }
 
