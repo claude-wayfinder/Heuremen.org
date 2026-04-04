@@ -1,57 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Quantum Dice Live — Heurémen</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-          * { box-sizing: border-box; margin: 0; padding: 0; }
-          body { font-family: 'Georgia', serif; background: #0a0a0a; color: #e8e0d0; min-height: 100vh; padding: 20px; }
-          .heuremen-header { text-align: center; padding: 30px 20px 20px; border-bottom: 1px solid #2a2a2a; margin-bottom: 30px; }
-          .heuremen-header h1 { font-size: 2em; letter-spacing: 0.15em; color: #c8b89a; margin-bottom: 8px; }
-          .heuremen-header p { color: #888; font-size: 0.9em; letter-spacing: 0.05em; }
-          .heuremen-header .credit { margin-top: 10px; font-size: 0.8em; color: #555; }
-          .heuremen-header .credit a { color: #7a9e7e; text-decoration: none; }
-          .container { max-width: 1100px; margin: 0 auto; }
-          .controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
-          #startButton { padding: 12px 32px; font-size: 15px; font-family: 'Georgia', serif; letter-spacing: 0.08em; cursor: pointer; border: none; border-radius: 4px; transition: all 0.3s; }
-          #startButton.stopped { background: #4a7c5a; color: #e8e0d0; }
-          #startButton.running { background: #7c4a4a; color: #e8e0d0; }
-          #startButton.error   { background: #7c6a3a; color: #e8e0d0; }
-          #startButton.connecting { background: #3a5a7c; color: #e8e0d0; opacity: 0.8; }
-          #startButton:disabled { opacity: 0.6; cursor: not-allowed; }
-          .mode-badge { padding: 6px 14px; border-radius: 20px; font-size: 0.75em; letter-spacing: 0.1em; text-transform: uppercase; font-family: monospace; display: none; }
-          .mode-badge.live { background: #1a3a1a; color: #7a9e7e; border: 1px solid #2a5a2a; display: inline-block; }
-          .mode-badge.sim  { background: #2a2a1a; color: #9e9a7a; border: 1px solid #4a4a2a; display: inline-block; }
-          .status-box { background: #111; border: 1px solid #222; border-radius: 6px; padding: 16px 20px; margin-bottom: 24px; }
-          .status-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
-          .status-section h3 { font-size: 0.8em; letter-spacing: 0.12em; text-transform: uppercase; color: #7a9e7e; border-bottom: 1px solid #222; padding-bottom: 6px; margin-bottom: 8px; }
-          .status-section table td { padding: 3px 8px 3px 0; font-size: 0.85em; color: #aaa; }
-          .status-section table td:last-child { color: #c8b89a; font-family: monospace; }
-          .error-status { margin-top: 12px; padding: 10px; border-radius: 4px; background: #1a1a0a; color: #9e9a7a; display: none; font-size: 0.8em; }
-          .error-status.show { display: block; }
-          .chart-container { background: #111; border: 1px solid #222; border-radius: 6px; padding: 20px; height: 380px; margin-bottom: 24px; }
-          .explainer { background: #111; border: 1px solid #1e2e1e; border-radius: 6px; padding: 20px 24px; margin-top: 10px; font-size: 0.88em; line-height: 1.7; color: #999; }
-          .explainer h3 { color: #c8b89a; font-size: 1em; letter-spacing: 0.08em; margin-bottom: 10px; }
-          .explainer p { margin-bottom: 10px; }
-          .explainer strong { color: #c8b89a; }
-          .nav-back { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #1a1a1a; }
-          .nav-back a { color: #7a9e7e; text-decoration: none; font-size: 0.85em; letter-spacing: 0.1em; }
-          #latestQrngData { font-family: monospace; font-size: 0.8em; color: #7a9e7e; word-break: break-all; }
-        </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Dice Live - Heuremen</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Georgia,serif;background:#0a0a0a;color:#e8e0d0;min-height:100vh;padding:20px}
+    header{text-align:center;padding:30px 20px 20px;border-bottom:1px solid #2a2a2a;margin-bottom:30px}
+    header h1{font-size:2em;letter-spacing:.15em;color:#c8b89a;margin-bottom:8px}
+    header p{color:#888;font-size:.9em}
+    header .credit{margin-top:10px;font-size:.8em;color:#555}
+    header .credit a{color:#7a9e7e;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto}
+    .controls{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:24px}
+    #startButton{padding:12px 32px;font-size:15px;font-family:Georgia,serif;cursor:pointer;border:none;border-radius:4px;transition:all .3s}
+    #startButton.stopped{background:#4a7c5a;color:#e8e0d0}
+    #startButton.running{background:#7c4a4a;color:#e8e0d0}
+    #startButton.error{background:#7c6a3a;color:#e8e0d0}
+    #startButton.connecting{background:#3a5a7c;color:#e8e0d0;opacity:.8}
+    #startButton:disabled{opacity:.6;cursor:not-allowed}
+    .mode-badge{padding:6px 14px;border-radius:20px;font-size:.75em;font-family:monospace;display:none}
+    .mode-badge.live{background:#1a3a1a;color:#7a9e7e;border:1px solid #2a5a2a;display:inline-block}
+    .mode-badge.sim{background:#2a2a1a;color:#9e9a7a;border:1px solid #4a4a2a;display:inline-block}
+    .status-box{background:#111;border:1px solid #222;border-radius:6px;padding:16px 20px;margin-bottom:24px}
+    .status-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
+    .status-section h3{font-size:.8em;letter-spacing:.12em;text-transform:uppercase;color:#7a9e7e;border-bottom:1px solid #222;padding-bottom:6px;margin-bottom:8px}
+    .status-section table td{padding:3px 8px 3px 0;font-size:.85em;color:#aaa}
+    .status-section table td:last-child{color:#c8b89a;font-family:monospace}
+    .error-status{margin-top:12px;padding:10px;border-radius:4px;background:#1a1a0a;color:#9e9a7a;display:none;font-size:.8em}
+    .error-status.show{display:block}
+    .chart-container{background:#111;border:1px solid #222;border-radius:6px;padding:20px;height:380px;margin-bottom:24px}
+    .explainer{background:#111;border:1px solid #1e2e1e;border-radius:6px;padding:20px 24px;font-size:.88em;line-height:1.7;color:#999}
+    .explainer h3{color:#c8b89a;margin-bottom:10px}
+    .explainer p{margin-bottom:10px}
+    .explainer strong{color:#c8b89a}
+    .nav-back{text-align:center;margin-top:30px;padding-top:20px;border-top:1px solid #1a1a1a}
+    .nav-back a{color:#7a9e7e;text-decoration:none;font-size:.85em}
+    #latestQrngData{font-family:monospace;font-size:.8em;color:#7a9e7e;word-break:break-all}
+    </style>
   </head>
   <body>
-    <div class="heuremen-header">
-        <h1>&#9860; Quantum Dice &#8212; Live</h1>
+    <header>
+        <h1>Quantum Dice &mdash; Live</h1>
       <p>Real quantum random numbers, streaming from a photonic QRNG device</p>
-      <p class="credit">Data source: <a href="https://www.quantum-dice.com" target="_blank">Quantum Dice Ltd</a> (University of Twente) &middot; Embedded in <a href="main.html">Heur&eacute;men</a></p>
-    </div><div
+      <p class="credit">Data source: <a href="https://www.quantum-dice.com" target="_blank">Quantum Dice Ltd</a>a> (University of Twente) &middot; Part of <a href="main.html">Heur&eacute;men</a>a></p>
+    </header>
   <div class="container">
     <div class="controls">
-        <button id="startButton" class="stopped">Start Capture</button>
-        <span id="modeBadge" class="mode-badge"></span>
-    </div><div
+        <button id="startButton" class="stopped">Start Capture</button>button>
+        <span id="modeBadge" class="mode-badge"></span>span>
+    </div>div>
     <div class="status-box">
         <div class="status-row">
               <div class="status-section">
@@ -59,219 +59,46 @@
                       <table>
                                   <tr><td>Duration:</td><td id="sessionDuration">0s</td></tr>
                                 <tr><td>Data Points:</td><td id="currentDataPoints">0</td></tr>
-                                <tr><td>Total Bytes:</td><td<td id="currentTotalBytes">0</td><td</tr>
+                                <tr><td>Total Bytes:</td>td><td id="currentTotalBytes">0</td>td></tr>
                       </table>
-              </div><div
+              </div>div>
               <div class="status-section">
                       <h3>All Time</h3>
                       <table>
                                 <tr><td>Data Points:</td><td id="allTimeDataPoints">0</td></tr>
                                 <tr><td>Total Bytes:</td><td id="allTimeTotalBytes">0</td></tr>
                       </table>
-              </div><div
+              </div>div>
               <div class="status-section">
                       <h3>Averages</h3>
                       <table>
-                                <tr><td>Entropy:</td><td<td id="avgEntropy">0.00</td><td</tr>
+                                <tr><td>Entropy:</td>td><td id="avgEntropy">0.00</td>td></tr>
                                 <tr><td>Raw Bits:</td><td id="avgRawBits">0.00</td></tr>
                                 <tr><td>QRNG Value:</td><td id="avgQrng">0.00</td></tr>
                       </table>
-              </div><div
+              </div>div>
               <div class="status-section">
                       <h3>Latest Hex</h3>
-                      <div id="latestQrngData">&mdash;</div><div
-              </div><div
-        </div><div
-        <div id="errorStatus" class="error-status"></div><div
-    </div><div
+                      <div id="latestQrngData">&mdash;</div>div>
+              </div>div>
+        </div>div>
+        <div id="errorStatus" class="error-status"></div>div>
+    </div>div>
     <div class="chart-container">
-        <canvas id="randomChart"></canvas>
-    </div><div
+        <canvas id="randomChart"></canvas>canvas>
+    </div>div>
     <div class="explainer">
-        <h3>What you're watching</h3>
-        <p>This visualizer connects to <strong>Quantum Dice Ltd's</strong> photonic QRNG device &mdash; a chip that uses fundamental quantum randomness to produce numbers that are truly unpredictable. If their live server is unavailable (it requires certificate auth), the visualizer automatically falls back to your browser's own cryptographic random number generator (<code>crypto.getRandomValues()</code>), labelled as <strong>SIM mode</strong>. The physics is the same &mdash; only the source differs.</p>
-        <p><strong>Purple (QRNG Value):</strong> The quantum random byte (0&ndash;255).</p>
-        <p><strong>Teal (Raw Bits):</strong> The raw bit stream before post-processing &mdash; closest to raw quantum noise.</p>
-        <p><strong>Red (Entropy):</strong> A measure of unpredictability per sample. Quantum entropy is the gold standard because it has no hidden pattern &mdash; ever.</p>
-        <p>The line never settles. That's not a bug. The die has no memory. Every roll is genuinely new.</p>
-    </div><div
-    <div class="nav-back"><a href="main.html">&larr; Back to Heur&eacute;men</a></div><div
-  </div><div
-  <script>
-    const LIVE_ENDPOINT = 'https://testjson.qeaas.q-dice.com/randcertified?bytes=8';
-    const MAX_DATA_POINTS = 200;
-    const UPDATE_INTERVAL = 100;
-
-    const SESSION_STATS = {
-        current: { startTime: null, dataPoints: 0, totalBytes: 0 },
-        allTime: { dataPoints: 0, totalBytes: 0 }
-    };
-
-    let useSimMode = false;
-
-    // Chart setup
-    const chartOptions = {
-        responsive: true, maintainAspectRatio: false,
-        animation: { duration: 0 },
-        elements: { line: { tension: 0.4, borderWidth: 2 }, point: { radius: 0, hoverRadius: 0 } },
-        interaction: { mode: 'index', intersect: false },
-        plugins: { legend: { labels: { color: '#888', font: { family: 'Georgia' } } } },
-        scales: {
-              x: { grid: { display: false }, ticks: { color: '#555', maxTicksLimit: 8 } },
-              y:  { type: 'linear', display: true, position: 'left',  title: { display: true, text: 'QRNG Value (0-255)', color: '#9966ff' }, min: 0, max: 255, grid: { display: false }, ticks: { color: '#555' } },
-              y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Raw Bits', color: '#4bc0c0' }, grid: { display: false }, min: 0, max: 255, ticks: { color: '#555' } },
-              y2: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Entropy', color: '#ff6384' }, grid: { display: false }, min: 0, max: 255, ticks: { color: '#555' } }
-        }
-    };
-
-    // Simulate quantum-style data using crypto.getRandomValues()
-    function getSimData() {
-        const buf = new Uint8Array(8);
-        crypto.getRandomValues(buf);
-        const hexStr = Array.from(buf).map(b => b.toString(16).padStart(2,'0')).join('');
-        // entropy and rawbits are derived from the bytes
-        const entropy = (buf[1] / 255) * 8;   // 0-8 bits
-        const rawBits = buf[2];                 // 0-255
-        return [{ data: hexStr, entropy: entropy * 31.875, rawbits: rawBits }];
-    }
-
-    class Visualizer {
-        constructor() {
-              this.dataPoints = [];
-              this.entropySum = 0; this.rawBitsSum = 0; this.qrngSum = 0; this.count = 0;
-              this.isCapturing = false; this.isTabVisible = true;
-              this.chart = this.initChart();
-              document.addEventListener('visibilitychange', () => {
-                      this.isTabVisible = !document.hidden;
-                      if (!this.isTabVisible && this.isCapturing) this.stopCapture();
-              });
-              const saved = localStorage.getItem('heuremenQrngStats');
-              if (saved) SESSION_STATS.allTime = JSON.parse(saved);
-              this.refreshDisplay();
-        }
-
-        initChart() {
-              return new Chart(document.getElementById('randomChart').getContext('2d'), {
-                      type: 'line',
-                      data: { labels: [], datasets: [
-                        { label: 'QRNG Value', data: [], borderColor: 'rgb(153,102,255)', yAxisID: 'y' },
-                        { label: 'Raw Bits',   data: [], borderColor: 'rgb(75,192,192)',  yAxisID: 'y1' },
-                        { label: 'Entropy',    data: [], borderColor: 'rgb(255,99,132)',   yAxisID: 'y2' }
-                              ]},
-                      options: chartOptions
-              });
-        }
-
-        setBtn(state) {
-              const btn = document.getElementById('startButton');
-              btn.className = state; btn.disabled = state === 'connecting';
-              btn.textContent = { running: 'Stop Capture', error: 'Retry', connecting: 'Connecting...' }[state] || 'Start Capture';
-        }
-
-        setBadge(mode) {
-              const badge = document.getElementById('modeBadge');
-              if (mode === 'live') { badge.className = 'mode-badge live'; badge.textContent = '● Live QRNG'; }
-              else if (mode === 'sim') { badge.className = 'mode-badge sim'; badge.textContent = '◌ Sim Mode'; }
-              else { badge.className = 'mode-badge'; }
-        }
-
-        async tryLiveConnection() {
-              try {
-                      const r = await fetch(LIVE_ENDPOINT, { method: 'GET', referrerPolicy: 'no-referrer' });
-                      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-                      return await r.json();
-              } catch { return null; }
-        }
-
-        async startCapture() {
-              if (this.isCapturing) return;
-              document.getElementById('errorStatus').classList.remove('show');
-              this.setBtn('connecting');
-
-              // Try live first
-              const liveData = await this.tryLiveConnection();
-              if (liveData) {
-                      useSimMode = false;
-                      this.setBadge('live');
-              } else {
-                      useSimMode = true;
-                      this.setBadge('sim');
-                      const errEl = document.getElementById('errorStatus');
-                      errEl.textContent = 'Live QRNG server requires certificate auth — running in browser crypto simulation mode (crypto.getRandomValues). Same math, different photons.';
-                      errEl.classList.add('show');
-              }
-
-              this.isCapturing = true;
-              this.setBtn('running');
-              SESSION_STATS.current = { startTime: new Date(), dataPoints: 0, totalBytes: 0 };
-
-              while (this.isCapturing && this.isTabVisible) {
-                      let data;
-                      if (useSimMode) {
-                                data = getSimData();
-                      } else {
-                                try {
-                                            const r = await fetch(LIVE_ENDPOINT, { method: 'GET', referrerPolicy: 'no-referrer' });
-                                            if (!r.ok) throw new Error(`HTTP ${r.status}`);
-                                            data = await r.json();
-                                } catch (e) {
-                                            useSimMode = true; this.setBadge('sim');
-                                            data = getSimData();
-                                }
-                      }
-                      this.processData(data);
-                      this.refreshDisplay();
-                      await new Promise(res => setTimeout(res, UPDATE_INTERVAL));
-              }
-        }
-
-        stopCapture() { this.isCapturing = false; this.setBtn('stopped'); this.setBadge(null); }
-
-        processData(data) {
-              if (!Array.isArray(data)) return;
-              data.forEach(item => {
-                      const hexBytes = item.data.match(/.{2}/g) || [];
-                      const byteValues = hexBytes.map(b => parseInt(b, 16));
-                      const qVal = byteValues[0];
-                      this.dataPoints.push({ ts: new Date().toLocaleTimeString(), rawBits: item.rawbits, entropy: item.entropy, qrngValue: qVal, data: item.data });
-                      this.entropySum += item.entropy; this.rawBitsSum += item.rawbits; this.qrngSum += qVal; this.count++;
-                      SESSION_STATS.current.dataPoints++; SESSION_STATS.current.totalBytes += byteValues.length;
-                      SESSION_STATS.allTime.dataPoints++;  SESSION_STATS.allTime.totalBytes  += byteValues.length;
-                      if (this.dataPoints.length > MAX_DATA_POINTS) this.dataPoints.shift();
-                      this.chart.data.labels = this.dataPoints.map(d => d.ts);
-                      this.chart.data.datasets[0].data = this.dataPoints.map(d => d.qrngValue);
-                      this.chart.data.datasets[1].data = this.dataPoints.map(d => d.rawBits);
-                      this.chart.data.datasets[2].data = this.dataPoints.map(d => d.entropy);
-                      this.chart.update();
-                      localStorage.setItem('heuremenQrngStats', JSON.stringify(SESSION_STATS.allTime));
-              });
-        }
-
-        refreshDisplay() {
-              const dur = SESSION_STATS.current.startTime ? Math.round((Date.now() - SESSION_STATS.current.startTime) / 1000) : 0;
-              document.getElementById('sessionDuration').textContent     = dur + 's';
-              document.getElementById('currentDataPoints').textContent   = SESSION_STATS.current.dataPoints;
-              document.getElementById('currentTotalBytes').textContent   = SESSION_STATS.current.totalBytes;
-              document.getElementById('allTimeDataPoints').textContent   = SESSION_STATS.allTime.dataPoints;
-              document.getElementById('allTimeTotalBytes').textContent   = SESSION_STATS.allTime.totalBytes;
-              document.getElementById('avgEntropy').textContent  = this.count > 0 ? (this.entropySum / this.count).toFixed(2) : '0.00';
-              document.getElementById('avgRawBits').textContent  = this.count > 0 ? (this.rawBitsSum / this.count).toFixed(2) : '0.00';
-              document.getElementById('avgQrng').textContent     = this.count > 0 ? (this.qrngSum    / this.count).toFixed(2) : '0.00';
-              document.getElementById('latestQrngData').textContent = this.dataPoints.length > 0 ? this.dataPoints[this.dataPoints.length-1].data : '—';
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const viz = new Visualizer();
-        document.getElementById('startButton').addEventListener('click', () => {
-              if (viz.isCapturing) viz.stopCapture(); else viz.startCapture();
-        });
-    });
-  </script>
+        <h3>What you are watching</h3>
+        <p>This connects to <strong>Quantum Dice Ltd</strong> &mdash; a photonic chip that uses fundamental quantum randomness to produce numbers that are truly unpredictable. If their server requires a certificate, the visualizer falls back to the browser crypto API (sim mode). Same math, different photons.</p>
+        <p><strong>Purple</strong> &mdash; QRNG Value (0&ndash;255). <strong>Teal</strong> &mdash; Raw Bits. <strong>Red</strong> &mdash; Entropy. The line never settles. The die has no memory.</p>
+    </div>div>
+    <div class="nav-back"><a href="main.html">&larr; Back to Heur&eacute;men</a>a></div>div>
+  </div>div>
+  <script src="quantum-dice.js"></script>
   </body>
-</html>html>
-  </script></p></strong></strong></p></p></code></strong></p></td></td></tr></tr></td></td></tr></tr></td></td></tr>
+</html>html></strong></strong></p></td></td></tr></tr></td></td></tr></tr></td></td></tr>
                       </table></p></h1>
+    </header>
   </body>
-    </style></title>
+  </style></title>
   </head>
