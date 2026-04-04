@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Dice Live - Heuremen</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Dice Live - Heuremen</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -15,90 +15,73 @@
     header .credit a{color:#7a9e7e;text-decoration:none}
     .container{max-width:1100px;margin:0 auto}
     .controls{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:24px}
-    #startButton{padding:12px 32px;font-size:15px;font-family:Georgia,serif;cursor:pointer;border:none;border-radius:4px;transition:all .3s}
+    #startButton{padding:12px 32px;font-size:15px;font-family:Georgia,serif;cursor:pointer;border:none;border-radius:4px;background:#5a6c5a;color:#e8e0d0;letter-spacing:.08em;transition:background .2s}
     #startButton.stopped{background:#4a7c5a;color:#e8e0d0}
     #startButton.running{background:#7c4a4a;color:#e8e0d0}
-    #startButton.error{background:#7c6a3a;color:#e8e0d0}
-    #startButton.connecting{background:#3a5a7c;color:#e8e0d0;opacity:.8}
-    #startButton:disabled{opacity:.6;cursor:not-allowed}
-    .mode-badge{padding:6px 14px;border-radius:20px;font-size:.75em;font-family:monospace;display:none}
-    .mode-badge.live{background:#1a3a1a;color:#7a9e7e;border:1px solid #2a5a2a;display:inline-block}
-    .mode-badge.sim{background:#2a2a1a;color:#9e9a7a;border:1px solid #4a4a2a;display:inline-block}
-    .status-box{background:#111;border:1px solid #222;border-radius:6px;padding:16px 20px;margin-bottom:24px}
-    .status-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
-    .status-section h3{font-size:.8em;letter-spacing:.12em;text-transform:uppercase;color:#7a9e7e;border-bottom:1px solid #222;padding-bottom:6px;margin-bottom:8px}
-    .status-section table td{padding:3px 8px 3px 0;font-size:.85em;color:#aaa}
-    .status-section table td:last-child{color:#c8b89a;font-family:monospace}
-    .error-status{margin-top:12px;padding:10px;border-radius:4px;background:#1a1a0a;color:#9e9a7a;display:none;font-size:.8em}
-    .error-status.show{display:block}
-    .chart-container{background:#111;border:1px solid #222;border-radius:6px;padding:20px;height:380px;margin-bottom:24px}
-    .explainer{background:#111;border:1px solid #1e2e1e;border-radius:6px;padding:20px 24px;font-size:.88em;line-height:1.7;color:#999}
-    .explainer h3{color:#c8b89a;margin-bottom:10px}
+    .mode-badge{padding:4px 12px;border-radius:12px;font-size:.75em;background:#1a2a1a;color:#7a9e7e;border:1px solid #3a5a3a;letter-spacing:.1em}
+    .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+    .stat-box{background:#111;border:1px solid #2a2a2a;border-radius:6px;padding:16px}
+    .stat-box h3{font-size:.7em;letter-spacing:.15em;color:#666;margin-bottom:12px;text-transform:uppercase}
+    .stat-row{display:flex;justify-content:space-between;margin-bottom:6px;font-size:.85em}
+    .stat-label{color:#888}
+    .stat-value{color:#c8b89a;font-variant-numeric:tabular-nums}
+    .hex-box{grid-column:span 3;background:#111;border:1px solid #2a2a2a;border-radius:6px;padding:16px}
+    .hex-box h3{font-size:.7em;letter-spacing:.15em;color:#666;margin-bottom:8px;text-transform:uppercase}
+    #latestHex{font-family:monospace;font-size:1.1em;color:#7a9e7e;letter-spacing:.1em}
+    .chart-box{background:#111;border:1px solid #2a2a2a;border-radius:6px;padding:20px;margin-bottom:24px}
+    .chart-box canvas{width:100%!important}
+    .explainer{background:#0d1a0d;border:1px solid #2a4a2a;border-radius:6px;padding:24px;color:#999;line-height:1.7;font-size:.9em}
+    .explainer h2{color:#c8b89a;font-size:1em;letter-spacing:.1em;margin-bottom:12px}
     .explainer p{margin-bottom:10px}
-    .explainer strong{color:#c8b89a}
-    .nav-back{text-align:center;margin-top:30px;padding-top:20px;border-top:1px solid #1a1a1a}
-    .nav-back a{color:#7a9e7e;text-decoration:none;font-size:.85em}
-    #latestQrngData{font-family:monospace;font-size:.8em;color:#7a9e7e;word-break:break-all}
-    </style>
-  </head>
-  <body>
-    <header>
-        <h1>Quantum Dice &mdash; Live</h1>
-      <p>Real quantum random numbers, streaming from a photonic QRNG device</p>
-      <p class="credit">Data source: <a href="https://www.quantum-dice.com" target="_blank">Quantum Dice Ltd</a>a> (University of Twente) &middot; Part of <a href="main.html">Heur&eacute;men</a>a></p>
-    </header>
+    .explainer a{color:#7a9e7e;text-decoration:none}
+  </style>
+</head>
+<body>
   <div class="container">
-    <div class="controls">
-        <button id="startButton" class="stopped">Start Capture</button>button>
-        <span id="modeBadge" class="mode-badge"></span>span>
-    </div>div>
-    <div class="status-box">
-        <div class="status-row">
-              <div class="status-section">
-                      <h3>Session</h3>
-                      <table>
-                                  <tr><td>Duration:</td><td id="sessionDuration">0s</td></tr>
-                                <tr><td>Data Points:</td><td id="currentDataPoints">0</td></tr>
-                                <tr><td>Total Bytes:</td>td><td id="currentTotalBytes">0</td>td></tr>
-                      </table>
-              </div>div>
-              <div class="status-section">
-                      <h3>All Time</h3>
-                      <table>
-                                <tr><td>Data Points:</td><td id="allTimeDataPoints">0</td></tr>
-                                <tr><td>Total Bytes:</td><td id="allTimeTotalBytes">0</td></tr>
-                      </table>
-              </div>div>
-              <div class="status-section">
-                      <h3>Averages</h3>
-                      <table>
-                                <tr><td>Entropy:</td>td><td id="avgEntropy">0.00</td>td></tr>
-                                <tr><td>Raw Bits:</td><td id="avgRawBits">0.00</td></tr>
-                                <tr><td>QRNG Value:</td><td id="avgQrng">0.00</td></tr>
-                      </table>
-              </div>div>
-              <div class="status-section">
-                      <h3>Latest Hex</h3>
-                      <div id="latestQrngData">&mdash;</div>div>
-              </div>div>
-        </div>div>
-        <div id="errorStatus" class="error-status"></div>div>
-    </div>div>
-    <div class="chart-container">
-        <canvas id="randomChart"></canvas>canvas>
-    </div>div>
-    <div class="explainer">
-        <h3>What you are watching</h3>
-        <p>This connects to <strong>Quantum Dice Ltd</strong> &mdash; a photonic chip that uses fundamental quantum randomness to produce numbers that are truly unpredictable. If their server requires a certificate, the visualizer falls back to the browser crypto API (sim mode). Same math, different photons.</p>
-        <p><strong>Purple</strong> &mdash; QRNG Value (0&ndash;255). <strong>Teal</strong> &mdash; Raw Bits. <strong>Red</strong> &mdash; Entropy. The line never settles. The die has no memory.</p>
-    </div>div>
-    <div class="nav-back"><a href="main.html">&larr; Back to Heur&eacute;men</a>a></div>div>
-  </div>div>
-  <script src="quantum-dice.js"></script>
-  </body>
-</html>html></strong></strong></p></td></td></tr></tr></td></td></tr></tr></td></td></tr>
-                      </table></p></h1>
+    <header>
+      <h1>QUANTUM DICE LIVE</h1>
+      <p>Real quantum random numbers, streaming from a photonic QRNG device</p>
+      <div class="credit">
+        Data source: <a href="https://quantum-dice.com" target="_blank">Quantum Dice Ltd</a> (University of Twente spin-out) &middot; Part of <a href="main.html">Heuremen</a>
+      </div>
     </header>
-  </body>
-  </style></title>
-  </head>
+    <div class="controls">
+      <button id="startButton">Start Capture</button>
+      <span class="mode-badge" id="modeBadge">Sim Mode</span>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-box">
+        <h3>Session</h3>
+        <div class="stat-row"><span class="stat-label">Duration:</span><span class="stat-value" id="duration">0s</span></div>
+        <div class="stat-row"><span class="stat-label">Data Points:</span><span class="stat-value" id="sessionPoints">0</span></div>
+        <div class="stat-row"><span class="stat-label">Total Bytes:</span><span class="stat-value" id="sessionBytes">0</span></div>
+      </div>
+      <div class="stat-box">
+        <h3>All Time</h3>
+        <div class="stat-row"><span class="stat-label">Data Points:</span><span class="stat-value" id="totalPoints">0</span></div>
+        <div class="stat-row"><span class="stat-label">Total Bytes:</span><span class="stat-value" id="totalBytes">0</span></div>
+      </div>
+      <div class="stat-box">
+        <h3>Averages</h3>
+        <div class="stat-row"><span class="stat-label">Entropy:</span><span class="stat-value" id="avgEntropy">0.00</span></div>
+        <div class="stat-row"><span class="stat-label">Raw Bits:</span><span class="stat-value" id="avgRaw">0.00</span></div>
+        <div class="stat-row"><span class="stat-label">QRNG Value:</span><span class="stat-value" id="avgQrng">0.00</span></div>
+      </div>
+      <div class="hex-box">
+        <h3>Latest Hex</h3>
+        <div id="latestHex">waiting...</div>
+      </div>
+    </div>
+    <div class="chart-box">
+      <canvas id="qrngChart"></canvas>
+    </div>
+    <div class="explainer">
+      <h2>WHAT YOU ARE WATCHING</h2>
+      <p>Each data point is generated by quantum vacuum fluctuations inside a photonic chip. The device measures genuine quantum randomness — not algorithmic pseudo-random numbers. Every value is fundamentally unpredictable, a direct readout of nature collapsing from superposition.</p>
+      <p>In Sim Mode, your browser's crypto.getRandomValues() provides cryptographic randomness as a stand-in. Same mathematics, different photons. For live QRNG, authenticate at <a href="https://orbit.quantum-dice.com" target="_blank">orbit.quantum-dice.com</a>.</p>
+      <p>The round faces of a quantum die are not cosmetic — they are the physical embodiment of the pre-collapse moment. A flat face implies a settled surface. A curved face holds all possibilities simultaneously, right up until the moment the world decides.</p>
+    </div>
+  </div>
+  <script src="quantum-dice.js"></script>
+</body>
+</html>
