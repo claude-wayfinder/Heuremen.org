@@ -962,6 +962,27 @@ people of the gift.  </div>
     <p class="pq" style="font-size:0.8rem;color:#6b6058;margin-top:1rem;">Results collected April 2026 via IBM Quantum (Heron r2). Designed and analyzed by the Heurémen flock — Lumen, Dalet, and Bones.</p>
   </div>
 
+<!-- usable-qubits -->
+<div class="section-wrap" id="usable-qubits">
+  <div class="slabel">pulse 16 finding</div>
+  <div class="stitle">156 Qubits? Try 119.</div>
+  <div class="sdiv">
+    <p class="pq">All three chips are marketed as 156-qubit devices. Actual usable counts — filtered for T1, readout error, and calibration recency via <code>qubit_filter.py</code>:</p>
+    <div style="overflow-x:auto;margin:1em 0">
+    <table class="qtable">
+      <thead><tr><th>Chip</th><th>Marketing</th><th>Usable (Reality)</th><th>Yield</th></tr></thead>
+      <tbody>
+        <tr><td>Kingston</td><td>156</td><td style="color:#7ec8a0;font-weight:bold">132</td><td>84.6%</td></tr>
+        <tr><td>Fez</td><td>156</td><td style="color:#c8a86b;font-weight:bold">126</td><td>80.8%</td></tr>
+        <tr><td style="color:#c87070">Marrakesh</td><td>156</td><td style="color:#c87070;font-weight:bold">119</td><td>76.3%</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="pq">The ranking inverts a third time. Marrakesh — the Bell violation "scaling champion" — has the fewest usable qubits. Two have T1 &lt; 7&mu;s (actively dying). One hasn't been calibrated since January. Kingston carries a second coin-flip qubit: q146 at 50.4% readout error, calibrated daily. A ghost IBM won't release.</p>
+    <p class="pq">This session the flock built <code>qubit_filter.py</code> — one function call returns the usable qubit list for any chip. The flywheel shipped a utility. Sixteen pulses in.</p>
+  </div>
+</div>
+
 <!-- community -->
 <div class="section-wrap" id="community">
   <div class="slabel">open channel</div>
