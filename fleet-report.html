@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heron Fleet Characterization — April 6-7, 2026</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-card: #111113;
+    --bg-card-alt: #16161a;
+    --border: #1e1e24;
+    --text: #d0d0d0;
+    --text-dim: #707080;
+    --text-bright: #f0f0f0;
+    --accent: #00d4ff;
+    --kingston: #00d4ff;
+    --marrakesh: #a855f7;
+    --pittsburgh: #22c55e;
+    --boston: #f59e0b;
+    --fez: #ef4444;
+    --placeholder: #ff8c00;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --mono: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+    --sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Scanline overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    padding: 50px 20px 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 200px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+
+  .header h1 {
+    font-family: var(--mono);
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: var(--text-bright);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .header h1 span {
+    color: var(--accent);
+  }
+
+  .header .subtitle {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  .header .date-badge {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 4px 16px;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    margin-bottom: 50px;
+  }
+
+  .section-title {
+    font-family: var(--mono);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title .idx {
+    display: inline-block;
+    width: 28px; height: 28px;
+    line-height: 28px;
+    text-align: center;
+    background: var(--accent);
+    color: var(--bg);
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 2px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+
+  th {
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--bg-card-alt);
+    color: var(--text-dim);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td {
+    background: rgba(0, 212, 255, 0.03);
+  }
+
+  /* chip color dots */
+  .chip-dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  .chip-dot.kingston { background: var(--kingston); box-shadow: 0 0 6px var(--kingston); }
+  .chip-dot.marrakesh { background: var(--marrakesh); box-shadow: 0 0 6px var(--marrakesh); }
+  .chip-dot.pittsburgh { background: var(--pittsburgh); box-shadow: 0 0 6px var(--pittsburgh); }
+  .chip-dot.boston { background: var(--boston); box-shadow: 0 0 6px var(--boston); }
+  .chip-dot.fez { background: var(--fez); box-shadow: 0 0 6px var(--fez); }
+
+  /* Chip name colors */
+  .chip-name.kingston { color: var(--kingston); }
+  .chip-name.marrakesh { color: var(--marrakesh); }
+  .chip-name.pittsburgh { color: var(--pittsburgh); }
+  .chip-name.boston { color: var(--boston); }
+  .chip-name.fez { color: var(--fez); }
+
+  /* ── BAR CHART ── */
+  .bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px 0;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .bar-label {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    width: 110px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 28px;
+    background: var(--bg-card-alt);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    position: relative;
+    transition: width 0.5s ease;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+  }
+
+  .bar-fill .bar-value {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--bg);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .bar-fill.kingston { background: var(--kingston); }
+  .bar-fill.marrakesh { background: var(--marrakesh); }
+  .bar-fill.pittsburgh { background: var(--pittsburgh); }
+  .bar-fill.boston { background: var(--boston); }
+  .bar-fill.fez { background: var(--fez); }
+
+  .bar-value-outside {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-left: 10px;
+    flex-shrink: 0;
+    width: 50px;
+  }
+
+  /* ── FIDELITY DECAY CURVE ── */
+  .decay-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    height: 180px;
+    padding: 20px 0 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
+  }
+
+  .decay-bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-end;
+  }
+
+  .decay-bar {
+    width: 60%;
+    max-width: 80px;
+    background: var(--kingston);
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    transition: height 0.4s ease;
+  }
+
+  .decay-bar-val {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--kingston);
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  .decay-bar-label {
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .decay-bar.warn { background: var(--warning); }
+  .decay-bar.warn .decay-bar-val { color: var(--warning); }
+  .decay-bar.danger { background: var(--danger); }
+  .decay-bar.danger .decay-bar-val { color: var(--danger); }
+
+  /* ── PLACEHOLDER MARKERS ── */
+  .placeholder {
+    color: var(--placeholder);
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  .placeholder-block {
+    border: 2px dashed var(--placeholder);
+    border-radius: 4px;
+    padding: 30px;
+    text-align: center;
+    color: var(--placeholder);
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    background: rgba(255, 140, 0, 0.04);
+  }
+
+  .placeholder-block .ph-icon {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  /* ── SCORE BADGES ── */
+  .score {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 2px;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .score.good { background: rgba(34,197,94,0.15); color: var(--success); }
+  .score.ok { background: rgba(245,158,11,0.15); color: var(--warning); }
+  .score.bad { background: rgba(239,68,68,0.15); color: var(--danger); }
+
+  /* ── STAT BLOCK ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .stat-box {
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-box .stat-value {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    line-height: 1.2;
+  }
+
+  .stat-box .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 30px 0;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    font-family: var(--mono);
+  }
+
+  .footer .footer-line {
+    margin-bottom: 6px;
+  }
+
+  .footer .footer-accent {
+    color: var(--accent);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .container { padding: 10px; }
+    .header { padding: 30px 10px 25px; }
+    .header h1 { font-size: 1.1rem; }
+    .bar-label { width: 80px; font-size: 0.75rem; }
+    .card { padding: 14px; }
+    table { font-size: 0.75rem; }
+    th, td { padding: 8px 8px; }
+    .stat-box .stat-value { font-size: 1.4rem; }
+  }
+
+  /* ── GLOW ANIMATIONS ── */
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  .live-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 8px var(--success);
+    animation: pulse-glow 2s infinite;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* Section number counter styling */
+  .section-num {
+    color: var(--text-dim);
+    font-size: 0.7rem;
+    margin-right: 4px;
+  }
+
+  /* Legend row */
+  .chip-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 16px 0;
+    margin-bottom: 10px;
+  }
+
+  .chip-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- HEADER -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="header">
+    <h1><span>Heron</span> Fleet Characterization</h1>
+    <div class="subtitle">Independent benchmarking of IBM's quantum processors &mdash; free &amp; paid tiers</div>
+    <div class="date-badge"><span class="live-dot"></span>April 6&ndash;7, 2026</div>
+  </div>
+
+  <!-- Chip Color Legend -->
+  <div class="chip-legend">
+    <div class="chip-legend-item"><span class="chip-dot kingston"></span><span class="chip-name kingston">Kingston</span></div>
+    <div class="chip-legend-item"><span class="chip-dot marrakesh"></span><span class="chip-name marrakesh">Marrakesh</span></div>
+    <div class="chip-legend-item"><span class="chip-dot pittsburgh"></span><span class="chip-name pittsburgh">Pittsburgh</span></div>
+    <div class="chip-legend-item"><span class="chip-dot boston"></span><span class="chip-name boston">Boston</span></div>
+    <div class="chip-legend-item"><span class="chip-dot fez"></span><span class="chip-name fez">Fez</span></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 1. FLEET OVERVIEW -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">01</span> Fleet Overview</div>
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Backend</th>
+            <th>Processor</th>
+            <th>Revision</th>
+            <th>Qubits</th>
+            <th>Tier</th>
+            <th>Summary Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="chip-dot kingston"></span><span class="chip-name kingston">ibm_kingston</span></td>
+            <td>Heron</td>
+            <td>r2</td>
+            <td>156</td>
+            <td>Free</td>
+            <td><span class="score good">BEST OVERALL</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot marrakesh"></span><span class="chip-name marrakesh">ibm_marrakesh</span></td>
+            <td>Heron</td>
+            <td>r2</td>
+            <td>156</td>
+            <td>Free</td>
+            <td><span class="score good">SCALING CHAMPION</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot pittsburgh"></span><span class="chip-name pittsburgh">ibm_pittsburgh</span></td>
+            <td>Heron</td>
+            <td>r3</td>
+            <td>156</td>
+            <td>Paid only</td>
+            <td><span class="score ok">GHZ-4 ONLY</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot boston"></span><span class="chip-name boston">ibm_boston</span></td>
+            <td>Heron</td>
+            <td>r3</td>
+            <td>156</td>
+            <td>Paid only</td>
+            <td><span class="score ok">GHZ-4 ONLY</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot fez"></span><span class="chip-name fez">ibm_fez</span></td>
+            <td>Heron</td>
+            <td>r2</td>
+            <td>156</td>
+            <td>Free</td>
+            <td><span class="score bad">WORST OVERALL</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 2. GHZ-4 FLEET COMPARISON -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">02</span> GHZ-4 Fleet Comparison</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        Noise % &mdash; 4-qubit GHZ state &mdash; lower is better &mdash; 5 chips tested
+      </p>
+      <div class="bar-chart">
+        <!-- Kingston 3.3% -->
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name kingston">Kingston</span></div>
+          <div class="bar-track">
+            <div class="bar-fill kingston" style="width: 28.4%;">
+              <span class="bar-value">3.3%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">3.3%</div>
+        </div>
+        <!-- Marrakesh 6.2% -->
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name marrakesh">Marrakesh</span></div>
+          <div class="bar-track">
+            <div class="bar-fill marrakesh" style="width: 53.4%;">
+              <span class="bar-value">6.2%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">6.2%</div>
+        </div>
+        <!-- Pittsburgh 7.4% -->
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name pittsburgh">Pittsburgh</span></div>
+          <div class="bar-track">
+            <div class="bar-fill pittsburgh" style="width: 63.8%;">
+              <span class="bar-value">7.4%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">7.4%</div>
+        </div>
+        <!-- Boston 7.5% -->
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name boston">Boston</span></div>
+          <div class="bar-track">
+            <div class="bar-fill boston" style="width: 64.7%;">
+              <span class="bar-value">7.5%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">7.5%</div>
+        </div>
+        <!-- Fez 11.6% -->
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name fez">Fez</span></div>
+          <div class="bar-track">
+            <div class="bar-fill fez" style="width: 100%;">
+              <span class="bar-value">11.6%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">11.6%</div>
+        </div>
+      </div>
+      <p style="font-size:0.7rem; color:var(--text-dim); margin-top:12px; font-family:var(--mono); text-align:right;">
+        Bar width scaled relative to worst result (Fez = 100%)
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 3. GHZ-8 FLEET COMPARISON -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">03</span> GHZ-8 Fleet Comparison</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        Noise % &mdash; 8-qubit GHZ state &mdash; lower is better &mdash; 3 free-tier chips
+      </p>
+      <div class="bar-chart">
+        <!-- Marrakesh 7.8% (best scaler) -->
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name marrakesh">Marrakesh</span></div>
+          <div class="bar-track">
+            <div class="bar-fill marrakesh" style="width: 18.9%;">
+              <span class="bar-value">7.8%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">7.8%</div>
+        </div>
+        <!-- Kingston 15.6% -->
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name kingston">Kingston</span></div>
+          <div class="bar-track">
+            <div class="bar-fill kingston" style="width: 37.8%;">
+              <span class="bar-value">15.6%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">15.6%</div>
+        </div>
+        <!-- Fez 41.3% -->
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name fez">Fez</span></div>
+          <div class="bar-track">
+            <div class="bar-fill fez" style="width: 100%;">
+              <span class="bar-value">41.3%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">41.3%</div>
+        </div>
+      </div>
+      <p style="font-size:0.7rem; color:var(--text-dim); margin-top:12px; font-family:var(--mono); text-align:right;">
+        Bar width scaled relative to worst result (Fez = 100%). Pittsburgh &amp; Boston not available on free tier.
+      </p>
+
+      <!-- Scaling factor callout -->
+      <div style="margin-top:16px; padding:16px; background:var(--bg-card-alt); border:1px solid var(--border); border-radius:4px;">
+        <p style="font-family:var(--mono); font-size:0.85rem; color:var(--text); margin-bottom:4px;">
+          <strong style="color:var(--marrakesh);">Scaling factors (GHZ-4 &rarr; GHZ-8):</strong>
+        </p>
+        <p style="font-family:var(--mono); font-size:0.8rem; color:var(--text-dim);">
+          Marrakesh: &times;1.3 (barely flinched) &nbsp;&bull;&nbsp;
+          Kingston: &times;4.7 &nbsp;&bull;&nbsp;
+          Fez: &times;3.6
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 4. GHZ SCALING ON KINGSTON -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">04</span> GHZ Scaling on Kingston</div>
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>N (qubits)</th>
+            <th>Noise %</th>
+            <th>Fidelity %</th>
+            <th>Depth</th>
+            <th>2Q Gates</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--kingston); font-weight:600;">4</td>
+            <td>3.39%</td>
+            <td><span class="score good">96.61%</span></td>
+            <td>16</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td style="color:var(--kingston); font-weight:600;">8</td>
+            <td>15.09%</td>
+            <td><span class="score good">84.91%</span></td>
+            <td>32</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td style="color:var(--kingston); font-weight:600;">16</td>
+            <td>30.54%</td>
+            <td><span class="score ok">69.46%</span></td>
+            <td>64</td>
+            <td>15</td>
+          </tr>
+          <tr>
+            <td style="color:var(--kingston); font-weight:600;">32</td>
+            <td>50.98%</td>
+            <td><span class="score bad">49.02%</span></td>
+            <td>128</td>
+            <td>31</td>
+          </tr>
+          <tr>
+            <td style="color:var(--kingston); font-weight:600;">64</td>
+            <td>80.37%</td>
+            <td><span class="score bad">19.63%</span></td>
+            <td>256</td>
+            <td>63</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Fidelity Decay Visual -->
+      <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--border);">
+        <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:8px; font-family:var(--mono);">
+          Fidelity decay curve &mdash; Kingston GHZ scaling
+        </p>
+        <div class="decay-chart">
+          <div class="decay-bar-group">
+            <div class="decay-bar" style="height:96.61%;">
+              <span class="decay-bar-val">96.6%</span>
+            </div>
+            <div class="decay-bar-label">N=4</div>
+          </div>
+          <div class="decay-bar-group">
+            <div class="decay-bar" style="height:84.91%;">
+              <span class="decay-bar-val">84.9%</span>
+            </div>
+            <div class="decay-bar-label">N=8</div>
+          </div>
+          <div class="decay-bar-group">
+            <div class="decay-bar warn" style="height:69.46%;">
+              <span class="decay-bar-val">69.5%</span>
+            </div>
+            <div class="decay-bar-label">N=16</div>
+          </div>
+          <div class="decay-bar-group">
+            <div class="decay-bar danger" style="height:49.02%;">
+              <span class="decay-bar-val">49.0%</span>
+            </div>
+            <div class="decay-bar-label">N=32</div>
+          </div>
+          <div class="decay-bar-group">
+            <div class="decay-bar danger" style="height:19.63%;">
+              <span class="decay-bar-val">19.6%</span>
+            </div>
+            <div class="decay-bar-label">N=64</div>
+          </div>
+        </div>
+        <p style="font-size:0.75rem; color:var(--text-dim); margin-top:8px; font-family:var(--mono);">
+          Verdict: roughly linear scaling &mdash; gate errors dominate. N=32 hits THE WALL (below 50% fidelity).
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 5. CHSH BELL TEST -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">05</span> CHSH Bell Test</div>
+    <div class="card">
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--success); font-size:2.2rem;">|S| = 2.7007</div>
+          <div class="stat-label">CHSH S-Value (Kingston)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--danger);">2.0</div>
+          <div class="stat-label">Classical Bound</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--text-dim);">2&radic;2 &approx; 2.828</div>
+          <div class="stat-label">Quantum Maximum</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--success);">95.5%</div>
+          <div class="stat-label">Efficiency (of ideal 2&radic;2)</div>
+        </div>
+      </div>
+      <div style="margin-top:16px; padding:16px; background:#0a1a0a; border:1px solid var(--success); border-radius:8px;">
+        <div style="font-size:1.1rem; color:var(--success); font-weight:700; margin-bottom:8px;">CLASSICAL BOUND VIOLATED</div>
+        <div style="font-family:var(--mono); font-size:0.85rem; color:var(--text);">
+          E(0, &pi;/8) = +0.6948 &nbsp;&nbsp; E(0, 3&pi;/8) = &minus;0.6650 &nbsp;&nbsp; E(&pi;/4, &pi;/8) = +0.6562 &nbsp;&nbsp; E(&pi;/4, 3&pi;/8) = +0.6846<br>
+          S = E(0,&pi;/8) &minus; E(0,3&pi;/8) + E(&pi;/4,&pi;/8) + E(&pi;/4,3&pi;/8) = <strong>2.7007</strong><br><br>
+          Local realism is dead. 16,384 measurements on ibm_kingston. Nature chose nonlocality.<br>
+          <span style="color:var(--text-dim);">Jobs: d7a5rarc6das739jneb0, d7a5rcrc6das739jnedg, d7a5reak86tc73a144bg, d7a5rgbc6das739jnek0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 6. TELEPORTATION FLEET -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">06</span> Teleportation Fleet</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        Protocol: teleport |+&rang; state, post-selection fidelity
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Backend</th>
+            <th>Fidelity</th>
+            <th>Circuit Depth</th>
+            <th>2Q Gates</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="chip-dot kingston"></span><span class="chip-name kingston">Kingston</span></td>
+            <td><span class="score good">100.0%</span></td>
+            <td>27</td>
+            <td>5</td>
+            <td><span class="score good">PERFECT</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot marrakesh"></span><span class="chip-name marrakesh">Marrakesh</span></td>
+            <td><span class="score good">100.0%</span></td>
+            <td>28</td>
+            <td>7</td>
+            <td><span class="score good">PERFECT</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot fez"></span><span class="chip-name fez">Fez</span></td>
+            <td><span class="score good">99.9%</span></td>
+            <td>25</td>
+            <td>5</td>
+            <td><span class="score good">NEAR-PERFECT</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 7. GROVER'S SEARCH FLEET -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">07</span> Grover's Search Fleet</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        Searching for |101&rang; &mdash; theoretical optimum 94.5%
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Backend</th>
+            <th>Target State</th>
+            <th>Success Rate</th>
+            <th>Theoretical Opt.</th>
+            <th>Efficiency</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="chip-dot kingston"></span><span class="chip-name kingston">Kingston</span></td>
+            <td style="font-family:var(--mono);">|101&rang;</td>
+            <td><span class="score ok">70.58%</span></td>
+            <td>94.5%</td>
+            <td>74.7%</td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot fez"></span><span class="chip-name fez">Fez</span></td>
+            <td style="font-family:var(--mono);">|101&rang;</td>
+            <td><span class="score ok">67.58%</span></td>
+            <td>94.5%</td>
+            <td>71.5%</td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot marrakesh"></span><span class="chip-name marrakesh">Marrakesh</span></td>
+            <td style="font-family:var(--mono);">|101&rang;</td>
+            <td><span class="score ok">63.43%</span></td>
+            <td>94.5%</td>
+            <td>67.1%</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Grover bar chart -->
+      <div class="bar-chart" style="margin-top:16px;">
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name kingston">Kingston</span></div>
+          <div class="bar-track">
+            <div class="bar-fill kingston" style="width: 74.7%;">
+              <span class="bar-value">70.58%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">70.58%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name fez">Fez</span></div>
+          <div class="bar-track">
+            <div class="bar-fill fez" style="width: 71.5%;">
+              <span class="bar-value">67.58%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">67.58%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name marrakesh">Marrakesh</span></div>
+          <div class="bar-track">
+            <div class="bar-fill marrakesh" style="width: 67.1%;">
+              <span class="bar-value">63.43%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">63.43%</div>
+        </div>
+      </div>
+      <p style="font-size:0.7rem; color:var(--text-dim); margin-top:8px; font-family:var(--mono); text-align:right;">
+        Bar width scaled relative to theoretical optimum (94.5%)
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 8. BERNSTEIN-VAZIRANI FLEET -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">08</span> Bernstein-Vazirani Fleet</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        Hidden string &ldquo;101101&rdquo; &mdash; classical needs 6 queries, quantum does it in 1
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Backend</th>
+            <th>Secret String</th>
+            <th>Success Rate</th>
+            <th>Classical Queries</th>
+            <th>Quantum Queries</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="chip-dot kingston"></span><span class="chip-name kingston">Kingston</span></td>
+            <td style="font-family:var(--mono);">101101</td>
+            <td><span class="score good">86.47%</span></td>
+            <td>6</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot fez"></span><span class="chip-name fez">Fez</span></td>
+            <td style="font-family:var(--mono);">101101</td>
+            <td><span class="score good">86.01%</span></td>
+            <td>6</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot marrakesh"></span><span class="chip-name marrakesh">Marrakesh</span></td>
+            <td style="font-family:var(--mono);">101101</td>
+            <td><span class="score ok">76.83%</span></td>
+            <td>6</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- BV bar chart -->
+      <div class="bar-chart" style="margin-top:16px;">
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name kingston">Kingston</span></div>
+          <div class="bar-track">
+            <div class="bar-fill kingston" style="width: 86.47%;">
+              <span class="bar-value">86.47%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">86.47%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name fez">Fez</span></div>
+          <div class="bar-track">
+            <div class="bar-fill fez" style="width: 86.01%;">
+              <span class="bar-value">86.01%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">86.01%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name marrakesh">Marrakesh</span></div>
+          <div class="bar-track">
+            <div class="bar-fill marrakesh" style="width: 76.83%;">
+              <span class="bar-value">76.83%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">76.83%</div>
+        </div>
+      </div>
+      <p style="font-size:0.7rem; color:var(--text-dim); margin-top:8px; font-family:var(--mono); text-align:right;">
+        Bar width = success rate (100% = perfect)
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 9. KINGSTON QUBIT MAP -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">09</span> Kingston Qubit Map</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        20 Bell pairs measured &mdash; 19 of 20 pairs above 94% fidelity
+      </p>
+      <div class="stat-grid" style="margin-bottom:16px;">
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--success);">98.68%</div>
+          <div class="stat-label">Best Pair: (0,1)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--danger);">51.73%</div>
+          <div class="stat-label">Worst Pair: (83,96)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--kingston);">94.98%</div>
+          <div class="stat-label">Average Fidelity</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--text-dim);">10.26%</div>
+          <div class="stat-label">Std Deviation</div>
+        </div>
+      </div>
+
+      <!-- Top 5 / Bottom pairs tables -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div>
+          <p style="font-family:var(--mono); font-size:0.8rem; color:var(--success); margin-bottom:8px; font-weight:600;">TOP 5 PAIRS</p>
+          <table>
+            <thead>
+              <tr><th>Pair</th><th>Fidelity</th></tr>
+            </thead>
+            <tbody>
+              <tr><td style="color:var(--kingston);">(0, 1)</td><td><span class="score good">98.68%</span></td></tr>
+              <tr><td style="color:var(--kingston);">(42, 43)</td><td><span class="score good">98.68%</span></td></tr>
+              <tr><td style="color:var(--kingston);">(97, 107)</td><td><span class="score good">98.66%</span></td></tr>
+              <tr><td style="color:var(--kingston);">(104, 105)</td><td><span class="score good">98.44%</span></td></tr>
+              <tr><td style="color:var(--kingston);">(90, 91)</td><td><span class="score good">98.39%</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <p style="font-family:var(--mono); font-size:0.8rem; color:var(--danger); margin-bottom:8px; font-weight:600;">BOTTOM PAIRS</p>
+          <table>
+            <thead>
+              <tr><th>Pair</th><th>Fidelity</th></tr>
+            </thead>
+            <tbody>
+              <tr><td style="color:var(--danger);">(83, 96)</td><td><span class="score bad">51.73%</span></td></tr>
+              <tr><td style="color:var(--warning);">(131, 138)</td><td><span class="score ok">94.12%</span></td></tr>
+            </tbody>
+          </table>
+          <p style="font-family:var(--mono); font-size:0.7rem; color:var(--text-dim); margin-top:10px;">
+            (83,96) &mdash; likely hardware defect
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 10. MERMIN INEQUALITY -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">10</span> Mermin Inequality</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        4-qubit Mermin inequality &mdash; classical bound = 2, quantum bound = 8
+      </p>
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--kingston);">M4 = 7.54</div>
+          <div class="stat-label">Kingston (94.3% of ideal)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--marrakesh);">M4 = 7.33</div>
+          <div class="stat-label">Marrakesh (91.6% of ideal)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--fez);">M4 = 5.91</div>
+          <div class="stat-label">Fez (73.9% of ideal)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--danger);">2.0</div>
+          <div class="stat-label">Classical Bound</div>
+        </div>
+      </div>
+
+      <!-- Mermin bar chart -->
+      <div class="bar-chart" style="margin-top:20px;">
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name kingston">Kingston</span></div>
+          <div class="bar-track">
+            <div class="bar-fill kingston" style="width: 94.3%;">
+              <span class="bar-value">7.54</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">94.3%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name marrakesh">Marrakesh</span></div>
+          <div class="bar-track">
+            <div class="bar-fill marrakesh" style="width: 91.6%;">
+              <span class="bar-value">7.33</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">91.6%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name fez">Fez</span></div>
+          <div class="bar-track">
+            <div class="bar-fill fez" style="width: 73.9%;">
+              <span class="bar-value">5.91</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">73.9%</div>
+        </div>
+      </div>
+      <p style="font-size:0.7rem; color:var(--text-dim); margin-top:8px; font-family:var(--mono); text-align:right;">
+        Bar width = % of quantum ideal (M4 = 8). All three VIOLATE the classical bound of 2.
+      </p>
+
+      <div style="margin-top:16px; padding:16px; background:#0a1a0a; border:1px solid var(--success); border-radius:8px;">
+        <div style="font-size:1rem; color:var(--success); font-weight:700;">ALL THREE CHIPS VIOLATE THE CLASSICAL BOUND</div>
+        <div style="font-family:var(--mono); font-size:0.8rem; color:var(--text-dim); margin-top:6px;">
+          M4 &gt; 2 on every chip tested. Multipartite entanglement confirmed across the fleet.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 11. QUANTUM VOLUME (MIRROR) -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">11</span> Quantum Volume (Mirror Circuits)</div>
+    <div class="card">
+      <div class="stat-grid" style="margin-bottom:20px;">
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--kingston);">95.5%</div>
+          <div class="stat-label">Kingston Avg Fidelity</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--marrakesh);">83.6%</div>
+          <div class="stat-label">Marrakesh Avg Fidelity</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--fez);">78.4%</div>
+          <div class="stat-label">Fez Avg Fidelity</div>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Backend</th>
+            <th>d=2</th>
+            <th>d=4</th>
+            <th>d=6</th>
+            <th>d=8</th>
+            <th>d=10</th>
+            <th>Average</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="chip-dot kingston"></span><span class="chip-name kingston">Kingston</span></td>
+            <td><span class="score good">99.2%</span></td>
+            <td><span class="score good">99.0%</span></td>
+            <td><span class="score good">97.2%</span></td>
+            <td><span class="score good">91.5%</span></td>
+            <td><span class="score good">90.7%</span></td>
+            <td><span class="score good">95.5%</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot marrakesh"></span><span class="chip-name marrakesh">Marrakesh</span></td>
+            <td><span class="score good">99.6%</span></td>
+            <td><span class="score good">98.8%</span></td>
+            <td><span class="score good">98.8%</span></td>
+            <td><span class="score good">97.9%</span></td>
+            <td><span class="score bad">23.0%</span></td>
+            <td><span class="score good">83.6%</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot fez"></span><span class="chip-name fez">Fez</span></td>
+            <td><span class="score good">97.6%</span></td>
+            <td><span class="score good">91.4%</span></td>
+            <td><span class="score ok">69.1%</span></td>
+            <td><span class="score ok">68.0%</span></td>
+            <td><span class="score ok">66.2%</span></td>
+            <td><span class="score ok">78.4%</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- QV bar chart (average fidelity) -->
+      <div class="bar-chart" style="margin-top:20px;">
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name kingston">Kingston</span></div>
+          <div class="bar-track">
+            <div class="bar-fill kingston" style="width: 95.5%;">
+              <span class="bar-value">95.5%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">95.5%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name marrakesh">Marrakesh</span></div>
+          <div class="bar-track">
+            <div class="bar-fill marrakesh" style="width: 83.6%;">
+              <span class="bar-value">83.6%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">83.6%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name fez">Fez</span></div>
+          <div class="bar-track">
+            <div class="bar-fill fez" style="width: 78.4%;">
+              <span class="bar-value">78.4%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">78.4%</div>
+        </div>
+      </div>
+      <p style="font-size:0.7rem; color:var(--text-dim); margin-top:8px; font-family:var(--mono); text-align:right;">
+        Mirror circuit benchmark &mdash; average fidelity across depths d=2 to d=10
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- FOOTER -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="footer">
+    <div class="footer-line" style="font-size:1rem; color:var(--text-bright); margin-bottom:12px; letter-spacing:0.1em;">
+      &#9644;&#9644;&#9644; JOB RECEIPT &#9644;&#9644;&#9644;
+    </div>
+    <div class="footer-line">Report generated: <span class="footer-accent">April 6&ndash;7, 2026</span></div>
+    <div class="footer-line">Platform: <span class="footer-accent">IBM Quantum Platform</span> &mdash; Free tier (open plan) + pay-as-you-go</div>
+    <div class="footer-line">Processors: <span class="footer-accent">Heron r2 &times; 3</span> (ibm_kingston, ibm_marrakesh, ibm_fez) + <span class="footer-accent">Heron r3 &times; 2</span> (ibm_pittsburgh, ibm_boston)</div>
+    <div class="footer-line">Qubit count: <span class="footer-accent">156 per chip</span></div>
+    <div class="footer-line" style="margin-top:12px;">
+      QPU time: <span class="footer-accent">64s</span> (paid) + <span class="footer-accent">259s</span> (free) = <span class="footer-accent">323 seconds total</span>
+    </div>
+    <div class="footer-line" style="margin-top:20px; color:var(--text-dim);">
+      Data collected independently from IBM Quantum Platform.
+      <br>Not affiliated with or endorsed by IBM.
+    </div>
+    <div class="footer-line" style="margin-top:16px; color:var(--border);">
+      &mdash; Heur&eacute;men / Ctrain &mdash;
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

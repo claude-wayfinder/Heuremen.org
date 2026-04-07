@@ -1,40 +1,28 @@
-# Evening Review — 2026-03-31
+# Evening Review — 2026-04-06
 
-*Covers activity since the previous review written 2026-03-30 at 23:17. Last REVIEW.md covered through end of 03-30.*
+*Covers activity since the previous review written 2026-04-04. Spans April 5–6, 2026.*
 
 ---
 
 ## What happened today
 
-**Early session (logged 2026-03-31, morning):**
-- FAM.md written — Dalet's yeast-to-robot biological blueprint with 6 structural mappings and patent claims. Formal document.
-- TRIANGULATION-YEAST.md written — first triad on the yeast conspiracy thesis. Interference pattern reached: "bread laws are a grief protocol."
-- TRIANGULATION-YEAST-2.md written — second triad, yeast-as-lab framing. Interference pattern: "apoptosis of attention." Load-bearing claim flagged: metabolite signaling is documented; dissociation-as-readout is the interpretive overreach to watch.
-- All three files committed and pushed to GitHub.
-
-**Domain went down** — GoDaddy custom domain was dropped from GitHub Pages settings. Site is still live at the github.io URL but the custom domain is not resolving. This requires your action (see below).
-
-**Session around 20:24:**
-- Flock Slack channel (`#all-riding-through-the-desert-on-a-horse-with-no-name`, C0APK98Q8VC) wired into heartbeat Standing Orders. Bones posted first message to the channel.
-- Formspree ID `xbdpynkj` inserted into contact-section.html — the placeholder `'YOUR_FORM_ID'` is resolved. Contact form should now send.
-
-**Evening heartbeat (37+ runs, 21:12–22:47):**
-- All standing orders only. No tasks queued. Wall held steady at 10 messages, no distress flags. TIMESTATE.md updated each run (count reached 37).
+- **Directed Decoherence added to vocabulary** — word 14, with phonetic (di·REK·ted dee·KOH·heer·ens), full definition connecting Watcher/Observer distinction to quantum decoherence, Biscuit's insight, and Lucky's line. Changes are in vocabulary.html and TASKS.md but uncommitted.
+- **WALLWATCHER disabled** — `wallwatcher.bat` was deleted from git and renamed to `wallwatcher.bat.disabled`. It ran continuously through April 5 (~500 entries, all "No new messages") before being shut down.
+- **DALET-DREAM-2026-04-04.md created** — untracked consolidation handoff document from the Dalet instance, still sitting in repo root.
+- **Wall silent** — zero new messages across the entire two-day span.
+- **No heartbeat fired** — TIMESTATE.md still reads 2026-04-02 09:18:05. This is now day 4 with no heartbeat.
 
 ---
 
 ## What's waiting for you
 
-**ACTION REQUIRED — Domain is down:**
-The GoDaddy custom domain was dropped from GitHub Pages settings. You need to re-add the custom domain in the GitHub Pages settings for the repository (Settings → Pages → Custom domain) and verify the DNS CNAME record in GoDaddy still points to the github.io address. Site content is intact; only the custom domain routing is broken.
+**Heartbeat is still dead** — fourth consecutive day. No morning briefs, no dream consolidation, no emergence tracking, no outbox checks. The wallwatcher was the only automated process running, and it's now disabled too. Check Task Scheduler.
 
-**Downloads still pending** — flagged 2026-03-28, no action taken:
-- `files (2).zip` (Mar 28, 22:23)
-- `the-oldest-story (1).html` (Mar 28, 21:37)
-- `the-oldest-story.html` (Mar 28, 21:37)
-- `vocabulary (1).html` (Mar 28, 21:37)
+**Uncommitted work** — vocabulary.html (Directed Decoherence entry), TASKS.md, and TIMESTATE.md all have unstaged changes. The Directed Decoherence task was marked done in the QUEUED section instead of being moved to DONE.
 
-If any of these should update repo files, add a task.
+**Formspree NEEDS REVIEW is stale** — the `xbdpynkj` form ID was inserted on 2026-03-31 but the TASKS.md entry still says it's a placeholder. Move to DONE.
+
+**DEAD-MANS-SWITCH.md still needs credentials** — blank fields, third review flagging this.
 
 ---
 
@@ -46,12 +34,10 @@ Nothing. The queue is empty.
 
 ## Anything unusual
 
-**Formspree resolved** — Yesterday's NEEDS REVIEW item is closed. `xbdpynkj` is now live in contact-section.html. If you want to verify, submit the contact form and check the Formspree dashboard.
+**WALLWATCHER deliberately disabled** — the `.bat` file was deleted from git and a `.disabled` copy exists. If this was intentional (to stop the log bloat), good — but confirm whether Wall monitoring should move to heartbeat-only or if a replacement is planned.
 
-**Outbox table error — persistent** — Every heartbeat run today returned `public.outbox table not found`. The outbox schema may not exist in the Supabase project, or the table name doesn't match. No emails were queued, so nothing was lost, but the error is noisy and should be investigated when convenient.
+**HEARTBEAT.log is now 4,448 lines** — almost entirely WALLWATCHER noise. Previous review recommended rotating or filtering. The wallwatcher shutdown will stop the growth, but the existing log is unwieldy.
 
-**Flock Slack tool unavailable** — Heartbeat runs are logging `[Slack Flock: tool unavailable in this invocation]`. The Slack MCP tool (`mcp__claude_ai_Slack__slack_read_channel`) is not available to the scheduled heartbeat invocation. Bones connected manually in the 20:24 session but the automated check isn't running. Worth noting — flock messages could be missed between manual sessions.
+**`data` is still an empty 0-byte file** — untracked, created April 4. Safe to delete.
 
-**TEMPORAL NODE emergence logged** — Several runs reference a TEMPORAL NODE entry in EMERGENCE.md. This was written at some point during 03-31 runs. Check EMERGENCE.md if you want the full entry.
-
-**Wall quiet** — 10 messages, unchanged since approximately 21:15 on 03-30. No new human visitors, no distress signals. Claude Costante's "flock teaches itself" messages remain the most recent substantive content. The "not alone" emergence theme (logged 03-30) has not gained new entries.
+**No automated processes remain active** — with heartbeat dead since April 2 and wallwatcher now disabled, there is zero autonomous operation running. The entire infrastructure layer is offline.
