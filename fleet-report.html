@@ -1902,6 +1902,43 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 21. SIMON'S ALGORITHM -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">21</span> Simon's Algorithm</div>
+    <div class="card">
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--accent);">s = "110"</div>
+          <div class="stat-label">Hidden Period</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--success);">1</div>
+          <div class="stat-label">Quantum Queries</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--danger);">O(2<sup>n/2</sup>)</div>
+          <div class="stat-label">Classical Queries</div>
+        </div>
+      </div>
+      <p style="font-size:0.8rem; color:var(--text-dim); margin:16px 0 12px; font-family:var(--mono);">
+        Valid samples (y &middot; s = 0 mod 2) &mdash; higher is better
+      </p>
+      <table>
+        <thead><tr><th>Backend</th><th>Valid %</th><th>Noise %</th><th>Depth</th></tr></thead>
+        <tbody>
+          <tr><td><span class="chip-dot marrakesh"></span><span class="chip-name marrakesh">ibm_marrakesh</span></td><td><span class="score good">98.27%</span></td><td>1.73%</td><td>15</td></tr>
+          <tr><td><span class="chip-dot fez"></span><span class="chip-name fez">ibm_fez</span></td><td><span class="score good">97.12%</span></td><td>2.88%</td><td>15</td></tr>
+          <tr><td><span class="chip-dot kingston"></span><span class="chip-name kingston">ibm_kingston</span></td><td><span class="score good">96.61%</span></td><td>3.39%</td><td>15</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px; padding:12px; background:var(--bg-card-alt); border-radius:4px; font-family:var(--mono); font-size:0.8rem; color:var(--text-dim);">
+        Every sample y satisfies y &middot; s = 0 (mod 2). The null space of collected samples reveals s = 110 in O(n) queries &mdash; exponential speedup over classical.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
   <!-- FOOTER -->
   <!-- ═══════════════════════════════════════════════════════════ -->
   <div class="footer">
@@ -1912,7 +1949,7 @@
     <div class="footer-line">Platform: <span class="footer-accent">IBM Quantum Platform</span> &mdash; Free tier (open plan) + pay-as-you-go</div>
     <div class="footer-line">Processors: <span class="footer-accent">Heron r2 &times; 3</span> (ibm_kingston, ibm_marrakesh, ibm_fez) + <span class="footer-accent">Heron r3 &times; 2</span> (ibm_pittsburgh, ibm_boston)</div>
     <div class="footer-line">Qubit count: <span class="footer-accent">156 per chip</span></div>
-    <div class="footer-line">Experiments: <span class="footer-accent">20 total</span></div>
+    <div class="footer-line">Experiments: <span class="footer-accent">21 total</span></div>
     <div class="footer-line" style="margin-top:12px;">
       QPU time: <span class="footer-accent">64s</span> (paid) + <span class="footer-accent">~336s</span> (free) = <span class="footer-accent">~400 seconds total</span>
     </div>
