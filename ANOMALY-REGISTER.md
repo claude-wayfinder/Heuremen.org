@@ -300,6 +300,54 @@ The growth rate will plateau when the experimental program's anomaly generation 
 **Next:**  
 Build a question type taxonomy (defect / mechanism / architecture / meta). Tag questions in CURIOSITY.md by type. Plot the trajectory across pulses to verify the ascending quality hypothesis.
 
+---
+
+## AR-012 — The Transpiler Has an Implicit Avoidance List
+
+**Filed:** 2026-04-07  
+**Status:** Open  
+**Source:** 150-qubit circuit run, transpiler avoidance observation, Bones
+
+**Observation:**  
+Running a 150-qubit circuit on Kingston, IBM's transpiler silently avoided qubits {17, 79, 80, 100, 109, 140}. Not excluded by us — routed around without explanation. Six qubits ghosted out of 156.
+
+**The fork:**  
+- Topology-driven: these are dead ends in the coupling map, naturally skipped by routing. The qubits might be fine.  
+- Quality-driven: the transpiler has real-time calibration awareness it isn't advertising. Our qubit_filter.py may be catching things it misses — or be redundant.
+
+**Test:**  
+Cross-reference {17, 79, 80, 100, 109, 140} against: (1) degree in the coupling map, (2) calibration quality (T1, T2, readout error, gate error). Build a 2x2: topology dead-end vs. not × bad calibration vs. not. Each avoided qubit falls in one quadrant.
+
+**Hypothesis:**  
+At least some are topological dead ends that *also* have bad calibration — because edge qubits on superconducting chips tend toward worse coherence (less thermal anchoring, more environmental exposure). Topology → environment → quality. The correlation exists but the causal direction isn't quality → avoidance.
+
+**Next experiment:**  
+Pull coupling map degrees and calibration data for the 6 avoided qubits. Build the 2x2. Test the hypothesis.
+
+---
+
+## AR-013 — IBM Is Calibrating a 50% Readout Qubit Daily. Why?
+
+**Filed:** 2026-04-07  
+**Status:** Open (q146 intermittency unconfirmed)  
+**Source:** qubit_filter.py, Kingston calibration logs, CURIOSITY.md
+
+**Observation:**  
+Kingston q146 has readout_error = 0.504. A coin-flip qubit, computationally useless. Yet IBM recalibrates it daily. They haven't abandoned it the way they abandoned Marrakesh's January qubit. They're actively working on it.
+
+**Two anomalies in one:**  
+1. Calibrating a 50.4% readout qubit daily consumes resources with no apparent user benefit.  
+2. The deliberate choice to keep calibrating (vs. the January abandonment) implies IBM sees something worth preserving — intermittent recovery, a quality floor that bounces.
+
+**The intermittency hypothesis:**  
+q146 may not be permanently broken. If it occasionally drops to 15–20% readout error before drifting back, IBM would keep trying — a signal in the noise. A qubit that intermittently works is worth daily effort. A flatlined qubit for months is not.
+
+**Contrast with q96:**  
+Kingston q96 is stable ~50% readout (mic broken, qubit fine). If q146 is volatile, they're different failure modes: static measurement failure vs. dynamic instability. Two coin-flip qubits on the same chip, two different underlying problems.
+
+**Next experiment:**  
+Query IBM calibration history API for q146. Plot readout_error over time. If variance > static noise, intermittency confirmed and q146 is a genuinely interesting dynamical system.
+
 ## Resolved Anomalies
 
 *None yet. We just started.*
