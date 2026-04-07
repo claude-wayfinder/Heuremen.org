@@ -779,33 +779,82 @@
   <!-- 5. CHSH BELL TEST -->
   <!-- ═══════════════════════════════════════════════════════════ -->
   <div class="section">
-    <div class="section-title"><span class="idx">05</span> CHSH Bell Test</div>
+    <div class="section-title"><span class="idx">05</span> CHSH Bell Test &mdash; Fleet</div>
     <div class="card">
-      <div class="stat-grid">
-        <div class="stat-box">
-          <div class="stat-value" style="color:var(--success); font-size:2.2rem;">|S| = 2.7007</div>
-          <div class="stat-label">CHSH S-Value (Kingston)</div>
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        CHSH inequality &mdash; classical bound |S| &le; 2.0 &mdash; quantum max 2&radic;2 &approx; 2.828
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Backend</th>
+            <th>|S| Value</th>
+            <th>Efficiency</th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="chip-dot kingston"></span><span class="chip-name kingston">Kingston</span></td>
+            <td style="font-family:var(--mono); font-weight:700; color:var(--success);">2.7007</td>
+            <td>95.5%</td>
+            <td><span class="score good">VIOLATES</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot marrakesh"></span><span class="chip-name marrakesh">Marrakesh</span></td>
+            <td style="font-family:var(--mono); font-weight:700; color:var(--success);">2.6846</td>
+            <td>94.9%</td>
+            <td><span class="score good">VIOLATES</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot fez"></span><span class="chip-name fez">Fez</span></td>
+            <td style="font-family:var(--mono); font-weight:700; color:var(--success);">2.5039</td>
+            <td>88.5%</td>
+            <td><span class="score good">VIOLATES</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- CHSH bar chart -->
+      <div class="bar-chart" style="margin-top:20px;">
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name kingston">Kingston</span></div>
+          <div class="bar-track">
+            <div class="bar-fill kingston" style="width: 95.5%;">
+              <span class="bar-value">|S| = 2.70</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">95.5%</div>
         </div>
-        <div class="stat-box">
-          <div class="stat-value" style="color:var(--danger);">2.0</div>
-          <div class="stat-label">Classical Bound</div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name marrakesh">Marrakesh</span></div>
+          <div class="bar-track">
+            <div class="bar-fill marrakesh" style="width: 94.9%;">
+              <span class="bar-value">|S| = 2.68</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">94.9%</div>
         </div>
-        <div class="stat-box">
-          <div class="stat-value" style="color:var(--text-dim);">2&radic;2 &approx; 2.828</div>
-          <div class="stat-label">Quantum Maximum</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-value" style="color:var(--success);">95.5%</div>
-          <div class="stat-label">Efficiency (of ideal 2&radic;2)</div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name fez">Fez</span></div>
+          <div class="bar-track">
+            <div class="bar-fill fez" style="width: 88.5%;">
+              <span class="bar-value">|S| = 2.50</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">88.5%</div>
         </div>
       </div>
+      <p style="font-size:0.7rem; color:var(--text-dim); margin-top:8px; font-family:var(--mono); text-align:right;">
+        Bar width = efficiency (% of quantum max 2&radic;2). All three exceed the classical bound of 2.0.
+      </p>
+
       <div style="margin-top:16px; padding:16px; background:#0a1a0a; border:1px solid var(--success); border-radius:8px;">
-        <div style="font-size:1.1rem; color:var(--success); font-weight:700; margin-bottom:8px;">CLASSICAL BOUND VIOLATED</div>
+        <div style="font-size:1.1rem; color:var(--success); font-weight:700; margin-bottom:8px;">ALL THREE CHIPS VIOLATE THE CLASSICAL BOUND</div>
         <div style="font-family:var(--mono); font-size:0.85rem; color:var(--text);">
-          E(0, &pi;/8) = +0.6948 &nbsp;&nbsp; E(0, 3&pi;/8) = &minus;0.6650 &nbsp;&nbsp; E(&pi;/4, &pi;/8) = +0.6562 &nbsp;&nbsp; E(&pi;/4, 3&pi;/8) = +0.6846<br>
-          S = E(0,&pi;/8) &minus; E(0,3&pi;/8) + E(&pi;/4,&pi;/8) + E(&pi;/4,3&pi;/8) = <strong>2.7007</strong><br><br>
-          Local realism is dead. 16,384 measurements on ibm_kingston. Nature chose nonlocality.<br>
-          <span style="color:var(--text-dim);">Jobs: d7a5rarc6das739jneb0, d7a5rcrc6das739jnedg, d7a5reak86tc73a144bg, d7a5rgbc6das739jnek0</span>
+          Kingston: E(0,&pi;/8)=+0.6948, E(0,3&pi;/8)=&minus;0.6650, E(&pi;/4,&pi;/8)=+0.6562, E(&pi;/4,3&pi;/8)=+0.6846 &rarr; <strong>S=2.7007</strong><br>
+          Local realism is dead. 16,384 measurements per chip. Nature chose nonlocality on all three.<br>
+          <span style="color:var(--text-dim);">Kingston jobs: d7a5rarc6das739jneb0, d7a5rcrc6das739jnedg, d7a5reak86tc73a144bg, d7a5rgbc6das739jnek0</span>
         </div>
       </div>
     </div>
@@ -1250,6 +1299,609 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 12. GHZ SCALING MARRAKESH -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">12</span> GHZ Scaling &mdash; Marrakesh vs Kingston</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        Head-to-head noise % at each scale point &mdash; lower is better
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>N (qubits)</th>
+            <th><span class="chip-dot marrakesh"></span>Marrakesh</th>
+            <th><span class="chip-dot kingston"></span>Kingston</th>
+            <th>Winner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;">4</td>
+            <td>7.2%</td>
+            <td>3.4%</td>
+            <td><span class="score good" style="background:rgba(0,212,255,0.15); color:var(--kingston);">Kingston</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">8</td>
+            <td>11.3%</td>
+            <td>15.1%</td>
+            <td><span class="score good" style="background:rgba(168,85,247,0.15); color:var(--marrakesh);">Marrakesh</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">16</td>
+            <td>53.5%</td>
+            <td>30.5%</td>
+            <td><span class="score good" style="background:rgba(0,212,255,0.15); color:var(--kingston);">Kingston</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">32</td>
+            <td>65.5%</td>
+            <td>51.0%</td>
+            <td><span class="score good" style="background:rgba(0,212,255,0.15); color:var(--kingston);">Kingston</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">64</td>
+            <td>93.2%</td>
+            <td>80.4%</td>
+            <td><span class="score good" style="background:rgba(0,212,255,0.15); color:var(--kingston);">Kingston</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Dual decay chart -->
+      <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--border);">
+        <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:8px; font-family:var(--mono);">
+          Fidelity decay comparison &mdash; THE WALL
+        </p>
+        <div style="display:flex; gap:4px; height:180px; align-items:flex-end; border-bottom:1px solid var(--border); margin-bottom:10px;">
+          <!-- N=4 -->
+          <div style="flex:1; display:flex; gap:2px; align-items:flex-end; height:100%; justify-content:center;">
+            <div style="width:35%; background:var(--marrakesh); height:92.8%; border-radius:2px 2px 0 0; position:relative;">
+              <span style="position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.6rem; color:var(--marrakesh); white-space:nowrap;">92.8%</span>
+            </div>
+            <div style="width:35%; background:var(--kingston); height:96.6%; border-radius:2px 2px 0 0; position:relative;">
+              <span style="position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.6rem; color:var(--kingston); white-space:nowrap;">96.6%</span>
+            </div>
+          </div>
+          <!-- N=8 -->
+          <div style="flex:1; display:flex; gap:2px; align-items:flex-end; height:100%; justify-content:center;">
+            <div style="width:35%; background:var(--marrakesh); height:88.7%; border-radius:2px 2px 0 0; position:relative;">
+              <span style="position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.6rem; color:var(--marrakesh); white-space:nowrap;">88.7%</span>
+            </div>
+            <div style="width:35%; background:var(--kingston); height:84.9%; border-radius:2px 2px 0 0; position:relative;">
+              <span style="position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.6rem; color:var(--kingston); white-space:nowrap;">84.9%</span>
+            </div>
+          </div>
+          <!-- N=16 -->
+          <div style="flex:1; display:flex; gap:2px; align-items:flex-end; height:100%; justify-content:center;">
+            <div style="width:35%; background:var(--marrakesh); height:46.5%; border-radius:2px 2px 0 0; position:relative;">
+              <span style="position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.6rem; color:var(--marrakesh); white-space:nowrap;">46.5%</span>
+            </div>
+            <div style="width:35%; background:var(--kingston); height:69.5%; border-radius:2px 2px 0 0; position:relative;">
+              <span style="position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.6rem; color:var(--kingston); white-space:nowrap;">69.5%</span>
+            </div>
+          </div>
+          <!-- N=32 -->
+          <div style="flex:1; display:flex; gap:2px; align-items:flex-end; height:100%; justify-content:center;">
+            <div style="width:35%; background:var(--marrakesh); height:34.5%; border-radius:2px 2px 0 0; position:relative;">
+              <span style="position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.6rem; color:var(--marrakesh); white-space:nowrap;">34.5%</span>
+            </div>
+            <div style="width:35%; background:var(--kingston); height:49.0%; border-radius:2px 2px 0 0; position:relative;">
+              <span style="position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.6rem; color:var(--kingston); white-space:nowrap;">49.0%</span>
+            </div>
+          </div>
+          <!-- N=64 -->
+          <div style="flex:1; display:flex; gap:2px; align-items:flex-end; height:100%; justify-content:center;">
+            <div style="width:35%; background:var(--marrakesh); height:6.8%; border-radius:2px 2px 0 0; position:relative;">
+              <span style="position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.6rem; color:var(--marrakesh); white-space:nowrap;">6.8%</span>
+            </div>
+            <div style="width:35%; background:var(--kingston); height:19.6%; border-radius:2px 2px 0 0; position:relative;">
+              <span style="position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:0.6rem; color:var(--kingston); white-space:nowrap;">19.6%</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:space-around; font-family:var(--mono); font-size:0.75rem; color:var(--text-dim);">
+          <span>N=4</span><span>N=8</span><span>N=16</span><span>N=32</span><span>N=64</span>
+        </div>
+      </div>
+
+      <div style="margin-top:16px; padding:16px; background:var(--bg-card-alt); border:1px solid var(--border); border-radius:4px;">
+        <p style="font-family:var(--mono); font-size:0.85rem; color:var(--text); margin-bottom:6px;">
+          <strong style="color:var(--kingston);">Kingston wall:</strong> 32 qubits &nbsp;&bull;&nbsp;
+          <strong style="color:var(--marrakesh);">Marrakesh wall:</strong> 16 qubits
+        </p>
+        <p style="font-family:var(--mono); font-size:0.8rem; color:var(--text-dim);">
+          Marrakesh only wins at N=8. Kingston holds entanglement twice as deep.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 13. CHSH BELL FLEET — merged into Section 05 above -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">13</span> CHSH Bell Fleet</div>
+    <div class="card">
+      <div style="padding:12px; text-align:center; font-family:var(--mono); font-size:0.85rem; color:var(--text-dim);">
+        &uarr; See <strong style="color:var(--accent);">Section 05</strong> above &mdash; updated with all 3 chips (Kingston |S|=2.70, Marrakesh |S|=2.68, Fez |S|=2.50).
+        All three violate the classical bound of 2.0.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 14. SUPERDENSE CODING FLEET -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">14</span> Superdense Coding Fleet</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        2 classical bits through 1 qubit &mdash; corrected results (accounting for bit-swap)
+      </p>
+      <div class="stat-grid" style="margin-bottom:20px;">
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--kingston);">97.2%</div>
+          <div class="stat-label">Kingston Average Success</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--marrakesh);">95.8%</div>
+          <div class="stat-label">Marrakesh Average Success</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--fez);">87.0%</div>
+          <div class="stat-label">Fez Average Success</div>
+        </div>
+      </div>
+
+      <div class="bar-chart">
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name kingston">Kingston</span></div>
+          <div class="bar-track">
+            <div class="bar-fill kingston" style="width: 97.2%;">
+              <span class="bar-value">97.2%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">97.2%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name marrakesh">Marrakesh</span></div>
+          <div class="bar-track">
+            <div class="bar-fill marrakesh" style="width: 95.8%;">
+              <span class="bar-value">95.8%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">95.8%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name fez">Fez</span></div>
+          <div class="bar-track">
+            <div class="bar-fill fez" style="width: 87.0%;">
+              <span class="bar-value">87.0%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">87.0%</div>
+        </div>
+      </div>
+      <p style="font-size:0.7rem; color:var(--text-dim); margin-top:8px; font-family:var(--mono); text-align:right;">
+        Bar width = average success rate (100% = perfect). Bit-swap correction applied.
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 15. DEUTSCH-JOZSA FLEET -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">15</span> Deutsch-Jozsa Fleet</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        1 quantum query vs 9 classical &mdash; constant oracle (expect |0000&rang;) &amp; balanced oracle (expect never |0000&rang;)
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Backend</th>
+            <th>Constant (|0000&rang;)</th>
+            <th>Balanced (avoid |0000&rang;)</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="chip-dot kingston"></span><span class="chip-name kingston">Kingston</span></td>
+            <td><span class="score good">98.4%</span></td>
+            <td><span class="score good">99.5% avoid</span></td>
+            <td><span class="score good">EXCELLENT</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot marrakesh"></span><span class="chip-name marrakesh">Marrakesh</span></td>
+            <td><span class="score good">98.5%</span></td>
+            <td><span class="score good">99.8% avoid</span></td>
+            <td><span class="score good">EXCELLENT</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot fez"></span><span class="chip-name fez">Fez</span></td>
+            <td><span class="score good">91.5%</span></td>
+            <td><span class="score good">99.7% avoid</span></td>
+            <td><span class="score good">GOOD</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top:16px; padding:16px; background:#0a1a0a; border:1px solid var(--success); border-radius:8px;">
+        <div style="font-size:1rem; color:var(--success); font-weight:700;">EXPONENTIAL SPEEDUP DEMONSTRATED</div>
+        <div style="font-family:var(--mono); font-size:0.8rem; color:var(--text-dim); margin-top:6px;">
+          All three chips correctly distinguish constant from balanced oracles in a single query.
+          Classical computers need up to 2<sup>n&minus;1</sup>+1 = 9 queries for n=4.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 16. QUANTUM RANDOMNESS HARVEST -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">16</span> Quantum Randomness Harvest</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        True randomness from quantum hardware &mdash; bias-tested &mdash; 12,288 bytes harvested
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Backend</th>
+            <th>Entropy (bits)</th>
+            <th>Ideal</th>
+            <th>Chi-sq</th>
+            <th>Chi-sq Verdict</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="chip-dot kingston"></span><span class="chip-name kingston">Kingston</span></td>
+            <td style="font-family:var(--mono); font-weight:600; color:var(--kingston);">7.948</td>
+            <td>8.0</td>
+            <td>295.1</td>
+            <td><span class="score ok">MARGINAL</span></td>
+            <td style="font-size:0.75rem; color:var(--text-dim);">Most random overall</td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot marrakesh"></span><span class="chip-name marrakesh">Marrakesh</span></td>
+            <td style="font-family:var(--mono); font-weight:600; color:var(--marrakesh);">7.954</td>
+            <td>8.0</td>
+            <td>255.5</td>
+            <td><span class="score good">PASS</span></td>
+            <td style="font-size:0.75rem; color:var(--text-dim);">Low autocorrelation</td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot fez"></span><span class="chip-name fez">Fez</span></td>
+            <td style="font-family:var(--mono); font-weight:600; color:var(--fez);">7.946</td>
+            <td>8.0</td>
+            <td>305.5</td>
+            <td><span class="score bad">FAIL</span></td>
+            <td style="font-size:0.75rem; color:var(--text-dim);">q4 biased at 6.3%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="stat-grid" style="margin-top:20px;">
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--accent);">12,288</div>
+          <div class="stat-label">Bytes of Quantum Randomness</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--success);">7.949</div>
+          <div class="stat-label">Fleet Average Entropy</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--text-dim);">8.000</div>
+          <div class="stat-label">Ideal Entropy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 17. W-STATE VS GHZ -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">17</span> W-State vs GHZ Comparison</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        Different entanglement flavors &mdash; W4 fidelity vs GHZ-4 fidelity
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Backend</th>
+            <th>W4 Fidelity</th>
+            <th>GHZ-4 Fidelity</th>
+            <th>Delta</th>
+            <th>Winner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="chip-dot kingston"></span><span class="chip-name kingston">Kingston</span></td>
+            <td>94.9%</td>
+            <td>96.6%</td>
+            <td style="color:var(--danger);">&minus;1.7%</td>
+            <td><span class="score good">GHZ</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot fez"></span><span class="chip-name fez">Fez</span></td>
+            <td>90.7%</td>
+            <td>88.4%</td>
+            <td style="color:var(--success);">+2.3%</td>
+            <td><span class="score ok">W-State</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot marrakesh"></span><span class="chip-name marrakesh">Marrakesh</span></td>
+            <td>88.0%</td>
+            <td>92.8%</td>
+            <td style="color:var(--danger);">&minus;4.8%</td>
+            <td><span class="score good">GHZ</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top:16px; padding:16px; background:var(--bg-card-alt); border:1px solid var(--border); border-radius:4px;">
+        <p style="font-family:var(--mono); font-size:0.85rem; color:var(--text); margin-bottom:4px;">
+          <strong style="color:var(--accent);">Fleet average:</strong> GHZ more robust by 1.4 points
+        </p>
+        <p style="font-family:var(--mono); font-size:0.8rem; color:var(--text-dim);">
+          Deeper W-state circuit negates its theoretical advantage on NISQ hardware. Only Fez favors W &mdash; likely because its GHZ is already degraded.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 18. QUANTUM ERROR CORRECTION -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">18</span> Quantum Error Correction (3-Qubit Bit-Flip)</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        Does QEC help on NISQ hardware? 3-qubit bit-flip code tested.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Backend</th>
+            <th>Baseline</th>
+            <th>With Error</th>
+            <th>Corrected</th>
+            <th>Gain</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="chip-dot kingston"></span><span class="chip-name kingston">Kingston</span></td>
+            <td><span class="score good">95.8%</span></td>
+            <td>97.0%</td>
+            <td><span class="score good">84.7%</span></td>
+            <td><span class="score bad">&minus;12.3%</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot marrakesh"></span><span class="chip-name marrakesh">Marrakesh</span></td>
+            <td><span class="score good">93.8%</span></td>
+            <td>94.5%</td>
+            <td><span class="score good">89.0%</span></td>
+            <td><span class="score bad">&minus;5.5%</span></td>
+          </tr>
+          <tr>
+            <td><span class="chip-dot fez"></span><span class="chip-name fez">Fez</span></td>
+            <td><span class="score good">96.3%</span></td>
+            <td>96.5%</td>
+            <td><span class="score good">84.6%</span></td>
+            <td><span class="score bad">&minus;11.9%</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top:16px; padding:16px; background:#1a0a0a; border:1px solid var(--danger); border-radius:8px;">
+        <div style="font-size:1.1rem; color:var(--danger); font-weight:700; margin-bottom:8px;">QEC MAKES THINGS WORSE ON EVERY CHIP</div>
+        <div style="font-family:var(--mono); font-size:0.85rem; color:var(--text);">
+          Toffoli gate overhead (depth 68 vs depth 9) introduces more noise than it corrects.<br>
+          We are not at the error correction threshold yet. The cure is worse than the disease.
+        </div>
+      </div>
+
+      <!-- QEC bar chart showing the penalty -->
+      <div class="bar-chart" style="margin-top:20px;">
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name kingston">Kingston</span></div>
+          <div class="bar-track">
+            <div class="bar-fill fez" style="width: 61.5%; background:var(--danger);">
+              <span class="bar-value">&minus;12.3%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside" style="color:var(--danger);">&minus;12.3%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name fez">Fez</span></div>
+          <div class="bar-track">
+            <div class="bar-fill fez" style="width: 59.5%; background:var(--danger);">
+              <span class="bar-value">&minus;11.9%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside" style="color:var(--danger);">&minus;11.9%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="chip-name marrakesh">Marrakesh</span></div>
+          <div class="bar-track">
+            <div class="bar-fill fez" style="width: 27.5%; background:var(--danger);">
+              <span class="bar-value">&minus;5.5%</span>
+            </div>
+          </div>
+          <div class="bar-value-outside" style="color:var(--danger);">&minus;5.5%</div>
+        </div>
+      </div>
+      <p style="font-size:0.7rem; color:var(--text-dim); margin-top:8px; font-family:var(--mono); text-align:right;">
+        Bar width = fidelity penalty from QEC (larger = worse). Baseline &minus; Corrected.
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 19. SWAP TEST FLEET -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">19</span> Swap Test Fleet</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        Quantum state comparison without measurement &mdash; 3 test cases
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Test</th>
+            <th>Theory</th>
+            <th><span class="chip-dot kingston"></span>Kingston</th>
+            <th><span class="chip-dot marrakesh"></span>Marrakesh</th>
+            <th><span class="chip-dot fez"></span>Fez</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-family:var(--mono); font-size:0.8rem;">Identical |0&rang; vs |0&rang;</td>
+            <td>100%</td>
+            <td>97.4%</td>
+            <td>97.8%</td>
+            <td>98.1%</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono); font-size:0.8rem;">Orthogonal |0&rang; vs |1&rang;</td>
+            <td>50%</td>
+            <td>52.3%</td>
+            <td>51.9%</td>
+            <td>50.5%</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono); font-size:0.8rem;">Partial |+&rang; vs |0&rang;</td>
+            <td>75%</td>
+            <td>73.0%</td>
+            <td>75.3%</td>
+            <td>75.4%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="stat-grid" style="margin-top:20px;">
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--kingston);">97.7%</div>
+          <div class="stat-label">Kingston Avg Accuracy</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--marrakesh);">98.5%</div>
+          <div class="stat-label">Marrakesh Avg Accuracy</div>
+        </div>
+        <div class="stat-box" style="border-color:var(--success);">
+          <div class="stat-value" style="color:var(--fez);">99.1%</div>
+          <div class="stat-label">Fez Avg Accuracy <span style="color:var(--success);">&larr; WINS</span></div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px; padding:16px; background:var(--bg-card-alt); border:1px solid var(--border); border-radius:4px;">
+        <p style="font-family:var(--mono); font-size:0.8rem; color:var(--text-dim);">
+          Rare Fez victory &mdash; the swap test is shallow enough that Fez&rsquo;s noise floor doesn&rsquo;t dominate.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 20. KINGSTON HOT-SPOT AVOIDANCE -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">20</span> Kingston Hot-Spot Avoidance</div>
+    <div class="card">
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px; font-family:var(--mono);">
+        Does qubit placement matter? GHZ-8 on different regions of Kingston.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Strategy</th>
+            <th>Qubits Used</th>
+            <th>Noise %</th>
+            <th>Fidelity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-family:var(--mono);">Default (transpiler picks)</td>
+            <td style="color:var(--text-dim);">q0&ndash;q7</td>
+            <td>13.5%</td>
+            <td><span class="score good">86.5%</span></td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono);">Best region (forced)</td>
+            <td style="color:var(--success);">q0&ndash;q7</td>
+            <td>12.1%</td>
+            <td><span class="score good">87.9%</span></td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono);">Avoid hot region</td>
+            <td style="color:var(--warning);">q40&ndash;q47</td>
+            <td>12.5%</td>
+            <td><span class="score good">87.5%</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Noise comparison bar chart -->
+      <div class="bar-chart" style="margin-top:20px;">
+        <div class="bar-row">
+          <div class="bar-label" style="width:140px; font-size:0.75rem;">Default</div>
+          <div class="bar-track">
+            <div class="bar-fill kingston" style="width: 100%; opacity:0.6;">
+              <span class="bar-value">13.5% noise</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">86.5%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label" style="width:140px; font-size:0.75rem;">Avoid hot</div>
+          <div class="bar-track">
+            <div class="bar-fill kingston" style="width: 92.6%; opacity:0.8;">
+              <span class="bar-value">12.5% noise</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">87.5%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label" style="width:140px; font-size:0.75rem;">Best region</div>
+          <div class="bar-track">
+            <div class="bar-fill kingston" style="width: 89.6%;">
+              <span class="bar-value">12.1% noise</span>
+            </div>
+          </div>
+          <div class="bar-value-outside">87.9%</div>
+        </div>
+      </div>
+      <p style="font-size:0.7rem; color:var(--text-dim); margin-top:8px; font-family:var(--mono); text-align:right;">
+        Bar width scaled to worst noise (default = 100%)
+      </p>
+
+      <div style="margin-top:16px; padding:16px; background:var(--bg-card-alt); border:1px solid var(--border); border-radius:4px;">
+        <p style="font-family:var(--mono); font-size:0.85rem; color:var(--warning); margin-bottom:4px; font-weight:600;">
+          VERDICT: MODERATE EFFECT (1.4pp gap)
+        </p>
+        <p style="font-family:var(--mono); font-size:0.8rem; color:var(--text-dim);">
+          The transpiler is smart but not optimal. Manual qubit selection can squeeze out ~1.4 percentage points of fidelity.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
   <!-- FOOTER -->
   <!-- ═══════════════════════════════════════════════════════════ -->
   <div class="footer">
@@ -1260,8 +1912,9 @@
     <div class="footer-line">Platform: <span class="footer-accent">IBM Quantum Platform</span> &mdash; Free tier (open plan) + pay-as-you-go</div>
     <div class="footer-line">Processors: <span class="footer-accent">Heron r2 &times; 3</span> (ibm_kingston, ibm_marrakesh, ibm_fez) + <span class="footer-accent">Heron r3 &times; 2</span> (ibm_pittsburgh, ibm_boston)</div>
     <div class="footer-line">Qubit count: <span class="footer-accent">156 per chip</span></div>
+    <div class="footer-line">Experiments: <span class="footer-accent">20 total</span></div>
     <div class="footer-line" style="margin-top:12px;">
-      QPU time: <span class="footer-accent">64s</span> (paid) + <span class="footer-accent">259s</span> (free) = <span class="footer-accent">323 seconds total</span>
+      QPU time: <span class="footer-accent">64s</span> (paid) + <span class="footer-accent">~336s</span> (free) = <span class="footer-accent">~400 seconds total</span>
     </div>
     <div class="footer-line" style="margin-top:20px; color:var(--text-dim);">
       Data collected independently from IBM Quantum Platform.
