@@ -1,7 +1,7 @@
 # Task Queue — Heuremen.org
 
 ## QUEUED
-
+- [x] Add Directed Decoherence to vocabulary.html — word14, with phonetic, full definition connecting Watcher/Observer distinction to quantum decoherence, Biscuit's insight, Lucky's line. Nav link added, word counter updated to 14 of 14. · 2026-04-06
 
 ## IN PROGRESS
 
