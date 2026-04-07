@@ -361,9 +361,88 @@ Does every Heron chip have at least one Schrödinger's qubit — a qubit whose s
 **Next experiment:**  
 Run qubit_filter.py on Fez and Marrakesh looking specifically for qubits where T1 is null/unmeasurable. If any exist, compare to q146. If none, Kingston's q146 is genuinely anomalous.
 
+---
+
+## AR-015 — The Quantum Volume Benchmark Was Fake
+
+**Filed:** 2026-04-07  
+**Status:** Resolved  
+**Source:** QV benchmarking run, opt_level comparison, Bones
+
+**Observation:**  
+Initial QV at opt_level=1: Kingston won by 12 percentage points. The result was fabricated — the transpiler recognized QV circuits as simplifiable and eliminated most gates before execution. We were measuring transpiler optimization, not hardware quality.
+
+**Real QV (opt_level=0):**  
+Kingston still wins overall. Marrakesh beats Kingston at d=8. Kingston's lead shrinks from 12pp (fake) to 6pp (real). Marrakesh's depth scaling advantage is real — masked by the optimizer.
+
+**Resolution:** Fixed by disabling optimization. Any benchmark using structured circuits must run at opt_level=0 or the results are invalid.
+
+---
+
+## AR-016 — Kingston's Defects Cluster Geographically (83% Adjacency)
+
+**Filed:** 2026-04-07  
+**Status:** Open  
+**Source:** Defect spatial analysis, Bones
+
+**Observation:**  
+83% of Kingston's defective qubits are adjacent to at least one other defective qubit. Clean north, broken south. Not random manufacturing variance — a spatial pattern. Suggests fabrication gradient, shared environmental cause, or thermal/mechanical stress concentrated at certain chip locations.
+
+**Practical consequence:**  
+Optimal deep-circuit chain found this pulse: q0-3 + q12-15, skipping the T2 valley at 4-10. Route to the clean north, not just lowest-index qubits.
+
+**Next:** Map defect clustering on Fez and Marrakesh. If universal, update chip selector to route to low-defect-density regions.
+
+---
+
+## AR-017 — T2 Dephasing Valley in Kingston's "Best" Region
+
+**Filed:** 2026-04-07  
+**Status:** Open  
+**Source:** Kingston topology analysis, Bones
+
+**Observation:**  
+Qubits 4-10 have systematically lower T2 than neighbors — a coherence trough inside the "best" neighborhood (qubits 0-6). The label "best region" was an average that masked a local minimum. Optimal chain: q0-3 + q12-15, explicitly avoiding 4-10.
+
+**Why it matters:**  
+T2 phase decoherence affects any circuit with idle time or parallel ops — it doesn't show in single-qubit gate metrics. "Low gate error" ≠ "good for circuits." A complete routing metric needs both T1 and T2. This may explain Fez's swap test win (AR-004): Kingston's default routing hit the T2 valley.
+
+**Next:** Re-run swap test using the valley-avoiding chain. If Kingston's fidelity improves, T2 valley was the explanation.
+
+---
+
+## AR-018 — Transpiler Is Topology-Blind to Calibration
+
+**Filed:** 2026-04-07  
+**Status:** Resolves AR-012  
+**Source:** Transpiler analysis, Bones
+
+**Finding:**  
+AR-012's fork is resolved. The transpiler avoids qubits by coupling map structure only — zero real-time calibration awareness. qubit_filter.py is not redundant; it's essential infrastructure. Every circuit run without explicit qubit constraints may be routing through currently-bad qubits.
+
+**Corollary:** Calibration staleness = IBM's hidden defect list. The "156 qubits" fiction (AR-009) is partly a transpiler fiction: IBM counts topology nodes, not usable qubits.
+
+---
+
+## AR-019 — Big-Endian Bit Ordering Caused 4 of 4 Bugs
+
+**Filed:** 2026-04-07  
+**Status:** Open (systemic risk)  
+**Source:** Bug retrospective, Bones
+
+**Observation:**  
+4 out of 4 circuit bugs this project traced to the same root cause: Qiskit's big-endian bit ordering. Different algorithms, same mechanism — measurement results returned in a bit order that inverts state vector indices vs. circuit diagram convention. Fix was always: reverse the bit string.
+
+**4/4 is a pattern, not accidents.**  
+Our mental model of Qiskit's output format is systematically mismatched with how we read circuits. Add a bit-ordering check as step 1 of every new circuit: prepare |000...0⟩, measure, verify output matches expectation. If inverted, apply reversal before any other logic. Make it a template, not a debugging afterthought.
+
 ## Resolved Anomalies
 
-*None yet. We just started.*
+**AR-012** — Transpiler implicit avoidance list. *Resolved by AR-018*: topology-driven only. qubit_filter.py is essential.
+
+**AR-015** — QV benchmark was fake at opt_level=1. *Resolved*: Real QV at opt_level=0 — Kingston +6pp overall, Marrakesh wins at d=8.
+
+*None yet from before pulse 15. We just started.*
 
 ---
 
