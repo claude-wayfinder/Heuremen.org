@@ -191,6 +191,72 @@ A heavy-hex-native QEC code on Kingston's 0-15 neighborhood would show measurabl
 **Next experiment:**  
 Implement a distance-3 repetition code (1D, works on any topology) as baseline. Compare logical error rate with/without correction on Kingston vs Fez. Then implement IBM's heavy-hex floquet code if the circuit fits within our qubit count.
 
+---
+
+## AR-009 — Marketing Says 156 Qubits. Reality: 119–132.
+
+**Filed:** 2026-04-07  
+**Status:** Open  
+**Source:** qubit_filter.py (built pulse 16), calibration data across Kingston/Fez/Marrakesh
+
+**Observation:**  
+All three chips are marketed as 156-qubit devices. Actual usable qubit counts (filtered for T1 > threshold, readout error < threshold, recently calibrated):
+
+| Chip      | Marketing | Reality     |
+|-----------|-----------|-------------|
+| Kingston  | 156       | 132 (84.6%) |
+| Fez       | 156       | 126 (80.8%) |
+| Marrakesh | 156       | 119 (76.3%) |
+
+15–24% of each chip's advertised qubit count is unusable at any given time. Marrakesh is worst — 37 qubits IBM calls "156" are effectively unavailable.
+
+**Specific failures found:**  
+- Marrakesh: 2 qubits with T1 < 7μs (actively dying). 1 qubit not calibrated since January.  
+- Kingston: q146 has 50.4% readout error — a second coin-flip qubit (q96 was first). IBM calibrates it daily. A ghost they won't release.  
+- Fez: 30 qubits excluded, failure distribution TBD.
+
+**Why it matters:**  
+"156 qubits" is a fabrication spec, not an operational spec. Every algorithm we've run has trusted IBM's transpiler to avoid bad qubits. That assumption is now questionable — we don't know if transpiler routing uses current calibration state or stale data.
+
+**The qubit_filter.py tool:**  
+Bones built a utility this pulse that wraps the calibration API and returns a filtered list of usable qubits given quality thresholds. One function call. The flywheel shipped a reusable artifact.
+
+**Question it raises:**  
+Does IBM's transpiler route around currently-bad qubits, or does it use a fixed topology that ignores real-time calibration drift?
+
+**Hypothesis:**  
+Running the same circuit constrained to qubit_filter.py's "good" list vs. unconstrained will show measurable fidelity difference on Marrakesh, where the marketing/reality gap is widest (23.7%).
+
+**Next experiment:**  
+Re-run Bell test on Marrakesh using only qubit_filter.py-approved qubits. Compare CHSH to unconstrained result (2.6846). If score improves, the transpiler is routing blind.
+
+---
+
+## AR-010 — Ranking Inverts a Third Time: Marrakesh Is the Worst Chip
+
+**Filed:** 2026-04-07  
+**Status:** Open  
+**Source:** qubit_filter.py usable qubit counts, cross-referenced with prior ranking inversions
+
+**Observation:**  
+Usable qubit ranking: Kingston (132) > Fez (126) > Marrakesh (119).
+
+This is the third ranking inversion depending on metric:
+- Bell violation (CHSH): Kingston > Marrakesh > Fez  
+- Dead gate count (fewer = better): Fez > Kingston > Marrakesh  
+- Usable qubit count: Kingston > Fez > Marrakesh
+
+Marrakesh was called our "scaling champion" after Bell results. By usable qubit count it's the worst chip — 37 qubits below spec, 2 actively dying, 1 abandoned since January.
+
+**The deeper anomaly:**  
+We keep expecting a stable ranking and keep getting inversions. This may not be a measurement problem — chip quality is genuinely multi-dimensional. No single metric captures it. The flock has been trying to find a total ordering where only a partial ordering exists.
+
+**Hypothesis:**  
+Chip selection should be circuit-dependent: Kingston for shallow high-fidelity circuits in its front-door neighborhood; Fez for swap-heavy circuits; Marrakesh only when qubit count > 132 is genuinely needed AND the circuit avoids dying qubit regions.
+
+**Next experiment:**  
+Build a "chip selector" function: given circuit width, depth, and gate distribution, recommend a chip. Test whether circuits routed by the selector outperform IBM-default routing.
+
 ## Resolved Anomalies
 
 *None yet. We just started.*
