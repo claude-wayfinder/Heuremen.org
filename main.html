@@ -1046,6 +1046,33 @@ people of the gift.  </div>
   </div>
 </div>
 </div>
+<!-- findings-summary -->
+<div class="section-wrap" id="findings-summary">
+  <div class="slabel">project summary</div>
+  <div class="stitle">What the Flock Found</div>
+  <div class="sdiv">
+    <p class="pq">Nineteen anomalies registered. Here is what the hardware actually showed:</p>
+    <p class="pq" style="margin-top:1.2em"><strong>Benchmarking Results</strong></p>
+    <div style="overflow-x:auto;margin:.6em 0"><table class="qtable">
+      <thead><tr><th>Test</th><th>Kingston</th><th>Fez</th><th>Marrakesh</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Bell/CHSH</td><td style="color:#7ec8a0;font-weight:bold">2.7007</td><td>2.5039</td><td>2.6846</td><td>All violate classical limit (2.0)</td></tr>
+        <tr><td>QV real</td><td style="color:#7ec8a0">Wins overall</td><td>&#8212;</td><td>Beats K at d=8</td><td>opt=1 was fake &#8212; gates eliminated</td></tr>
+        <tr><td>Swap test</td><td>&#8212;</td><td style="color:#7ec8a0;font-weight:bold">99.1%</td><td>&#8212;</td><td>Fez wins phase-sensitive ops</td></tr>
+        <tr><td>Deutsch-Jozsa</td><td style="color:#7ec8a0">Perfect</td><td style="color:#7ec8a0">Perfect</td><td style="color:#7ec8a0">Perfect</td><td>All chips pass</td></tr>
+        <tr><td>QEC</td><td colspan="3" style="color:#c87070;text-align:center">Makes things worse (&#8722;5.5% to &#8722;12.3%)</td><td>Textbook NISQ result</td></tr>
+        <tr><td>Usable qubits</td><td style="color:#7ec8a0;font-weight:bold">132</td><td>126</td><td style="color:#c87070;font-weight:bold">119</td><td>All sold as "156"</td></tr>
+      </tbody>
+    </table></div>
+    <p class="pq" style="margin-top:1.2em"><strong>Topology (Kingston)</strong></p>
+    <p class="pq">Defects cluster at 83% adjacency &#8212; clean north, broken south. T2 dephasing valley at qubits 4&#8211;10. Optimal deep-circuit chain: q0&#8211;3 + q12&#8211;15. Eight dead-end qubits at every 20th position (heavy-hex geometry).</p>
+    <p class="pq" style="margin-top:1.2em"><strong>Meta-findings</strong></p>
+    <p class="pq">Transpiler is calibration-blind &#8212; topology only. Big-endian caused 4 of 4 bugs. Half-life of curiosity is infinite. Anomaly-driven beats clock-driven.</p>
+    <p class="pq" style="margin-top:1.2em"><strong>Tools</strong></p>
+    <p class="pq"><code>qubit_filter.py</code> &#8212; one call identifies all defective qubits. Oracle construction patterns formalized (3 types). Chip selector: Kingston for shallow circuits, Fez for phase-sensitive, Marrakesh only when width &gt; 132.</p>
+  </div>
+</div>
+
 id="conversation" style="background:var(--cave-dark);padding:70px 0">
   <div class="chat-wrap">
     <div class="slabel" style="color:rgba(200,160,64,0.6)">The Living Inquiry</div>
