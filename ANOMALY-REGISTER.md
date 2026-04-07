@@ -309,44 +309,57 @@ Build a question type taxonomy (defect / mechanism / architecture / meta). Tag q
 **Source:** 150-qubit circuit run, transpiler avoidance observation, Bones
 
 **Observation:**  
-Running a 150-qubit circuit on Kingston, IBM's transpiler silently avoided qubits {17, 79, 80, 100, 109, 140}. Not excluded by us — routed around without explanation. Six qubits ghosted out of 156.
+Running a 150-qubit circuit on Kingston, IBM's transpiler silently avoided qubits {17, 79, 80, 100, 109, 140}. Six qubits ghosted without explanation.
 
-**The fork:**  
-- Topology-driven: these are dead ends in the coupling map, naturally skipped by routing. The qubits might be fine.  
-- Quality-driven: the transpiler has real-time calibration awareness it isn't advertising. Our qubit_filter.py may be catching things it misses — or be redundant.
+**The fork:** Topology-driven (dead ends in coupling map, qubits might be fine) vs. quality-driven (transpiler has calibration awareness it isn't advertising).
 
-**Test:**  
-Cross-reference {17, 79, 80, 100, 109, 140} against: (1) degree in the coupling map, (2) calibration quality (T1, T2, readout error, gate error). Build a 2x2: topology dead-end vs. not × bad calibration vs. not. Each avoided qubit falls in one quadrant.
+**Test:** Cross-reference the 6 qubits against coupling map degree and calibration quality. Build a 2x2 matrix. Each qubit falls in one quadrant.
 
-**Hypothesis:**  
-At least some are topological dead ends that *also* have bad calibration — because edge qubits on superconducting chips tend toward worse coherence (less thermal anchoring, more environmental exposure). Topology → environment → quality. The correlation exists but the causal direction isn't quality → avoidance.
+**Hypothesis:** Edge qubits tend toward worse coherence. Topology → environment → quality. Correlation exists but causal direction isn't quality → avoidance.
 
-**Next experiment:**  
-Pull coupling map degrees and calibration data for the 6 avoided qubits. Build the 2x2. Test the hypothesis.
+**Next:** Pull coupling map degrees and calibration data for the 6 avoided qubits. Build the 2x2.
 
 ---
 
 ## AR-013 — IBM Is Calibrating a 50% Readout Qubit Daily. Why?
 
 **Filed:** 2026-04-07  
-**Status:** Open (q146 intermittency unconfirmed)  
-**Source:** qubit_filter.py, Kingston calibration logs, CURIOSITY.md
+**Status:** Open — updated pulse 18  
+**Source:** qubit_filter.py, Kingston calibration logs, pulse 18
+
+**Pulse 18 update:**  
+q146 is worse than characterized: T1 is *unmeasurable* — the readout can't distinguish |0⟩ from |1⟩, so IBM literally cannot determine coherence time. All gates are dead. The qubit might exist. Nobody can confirm. IBM keeps calibrating because 50% could mean "broken" or "about to recover." Schrödinger's defect.
+
+**Contrast with q96:** q96 is a stuck detector — readout always |1⟩, qubit functional. q146 is the inverse: readout is random, qubit state genuinely unknown, no gate operations verifiable. Same chip, completely different failure modes.
+
+**Next:** Query IBM calibration history API for q146. Plot readout_error over time. Oscillation = intermittency confirmed.
+
+---
+
+## AR-014 — Kingston Has Four Distinct Defect Types on One Chip
+
+**Filed:** 2026-04-07  
+**Status:** Open  
+**Source:** Pulse 18 defect taxonomy, Kingston calibration analysis
 
 **Observation:**  
-Kingston q146 has readout_error = 0.504. A coin-flip qubit, computationally useless. Yet IBM recalibrates it daily. They haven't abandoned it the way they abandoned Marrakesh's January qubit. They're actively working on it.
+Kingston's defect taxonomy, fully characterized at pulse 18:
 
-**Two anomalies in one:**  
-1. Calibrating a 50.4% readout qubit daily consumes resources with no apparent user benefit.  
-2. The deliberate choice to keep calibrating (vs. the January abandonment) implies IBM sees something worth preserving — intermittent recovery, a quality floor that bounces.
+| Qubit | Type | What's broken | Analogy |
+|-------|------|---------------|---------|
+| q96 | Stuck detector | Readout always &#124;1⟩, qubit fine | Broken alarm clock stuck at midnight |
+| q146 | Schrödinger's qubit | T1 unmeasurable, all gates dead, readout random | Alarm clock that might be working |
+| q7 | Compound degradation | Everything C-grade, nothing broken | Weakest link |
+| q1 | Bad readout | 15.6% error, still functional | Slightly blurry lens |
 
-**The intermittency hypothesis:**  
-q146 may not be permanently broken. If it occasionally drops to 15–20% readout error before drifting back, IBM would keep trying — a signal in the noise. A qubit that intermittently works is worth daily effort. A flatlined qubit for months is not.
+**The Schrödinger's qubit problem:**  
+q146 is the register's strangest entry. IBM cannot measure its T1 because the readout can't tell |0⟩ from |1⟩. The standard pipeline — prepare state, evolve, measure — breaks at the measurement step. Every calibration returns ambiguous data. IBM keeps trying because 50% readout error is consistent with two scenarios: completely broken, or about to recover. Daily calibration is IBM running the experiment to distinguish them. The qubit exists in a superposition of "broken" and "not broken" until the alarm clock gets fixed.
 
-**Contrast with q96:**  
-Kingston q96 is stable ~50% readout (mic broken, qubit fine). If q146 is volatile, they're different failure modes: static measurement failure vs. dynamic instability. Two coin-flip qubits on the same chip, two different underlying problems.
+**Question it raises:**  
+Does every Heron chip have at least one Schrödinger's qubit — a qubit whose state cannot be confirmed by any working measurement apparatus? If Fez and Marrakesh have them too, it's a systemic manufacturing issue.
 
 **Next experiment:**  
-Query IBM calibration history API for q146. Plot readout_error over time. If variance > static noise, intermittency confirmed and q146 is a genuinely interesting dynamical system.
+Run qubit_filter.py on Fez and Marrakesh looking specifically for qubits where T1 is null/unmeasurable. If any exist, compare to q146. If none, Kingston's q146 is genuinely anomalous.
 
 ## Resolved Anomalies
 
