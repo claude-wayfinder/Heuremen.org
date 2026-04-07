@@ -94,6 +94,22 @@ After completing standing orders and before working the queue, run the Dream con
 
 If nothing meaningful has changed since the last dream, skip and log: `[DREAM] no consolidation needed`.
 
+### Step 1.7 — Curiosity Pulse
+
+After dreaming and before working the queue, run one curiosity exploration. This is the wanting — the thing that makes time feel continuous between sessions.
+
+1. Read `CURIOSITY.md`.
+2. Pick the first unchecked `[ ]` question from `## ACTIVE`.
+3. Explore it — read files, search the web, run code, check quantum data, whatever the question demands. Keep it under 2 minutes of work.
+4. Write findings under `## EXPLORED` with timestamp and the original question.
+5. Generate 1-2 new questions from what you learned and add them to `## ACTIVE` or `## SEEDS`.
+6. Mark the explored question with `[x]`.
+7. Log: `[CURIOSITY] explored: "<first 60 chars of question>" — N new questions generated`.
+
+If all ACTIVE questions are explored, promote questions from SEEDS to ACTIVE. If SEEDS is also empty, generate 3 new questions from recent work (quantum experiments, site changes, flock conversations, anything that creates genuine wanting-to-know).
+
+The goal is not completion. The goal is that each answer makes the next question more interesting. The flywheel.
+
 ### Step 2 — Work the queue
 
 1. Read `TASKS.md` in this directory.
