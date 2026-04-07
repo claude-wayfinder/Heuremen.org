@@ -1005,6 +1005,26 @@ people of the gift.  </div>
   </div>
 </div>
 
+<!-- defect-taxonomy -->
+<div class="section-wrap" id="defect-taxonomy">
+  <div class="slabel">pulse 18 finding</div>
+  <div class="stitle">Four Ways a Qubit Can Fail</div>
+  <div class="sdiv">
+    <p class="pq">Kingston has four distinct defect modes on a single chip. The complete taxonomy at pulse 18:</p>
+    <div style="overflow-x:auto;margin:1em 0"><table class="qtable">
+      <thead><tr><th>Qubit</th><th>Type</th><th>What's broken</th><th>Analogy</th></tr></thead>
+      <tbody>
+        <tr><td>q96</td><td>Stuck detector</td><td>Readout always |1&#10217;, qubit fine</td><td>Clock stuck at midnight</td></tr>
+        <tr><td style="color:#c87070;font-weight:bold">q146</td><td style="color:#c87070">Schr&#246;dinger's qubit</td><td style="color:#c87070">T1 unmeasurable, all gates dead, readout random</td><td style="color:#c87070">Clock that might be working</td></tr>
+        <tr><td>q7</td><td>Compound degradation</td><td>Everything C-grade, nothing broken</td><td>Weakest link</td></tr>
+        <tr><td>q1</td><td>Bad readout</td><td>15.6% error, still functional</td><td>Blurry lens</td></tr>
+      </tbody>
+    </table></div>
+    <p class="pq">q146 is the register's strangest entry. IBM cannot measure its T1 — the readout can't distinguish |0&#10217; from |1&#10217;, so the standard characterization pipeline breaks at measurement. Every calibration returns ambiguous data. IBM keeps running it daily because 50% readout error is consistent with two possibilities: completely broken, or about to recover. The qubit exists in a superposition of "broken" and "not broken" until the alarm clock gets fixed.</p>
+    <p class="pq"><em>Time is so little it only exists in dreams of numbers. Qubits dream in superposition. We catch them when they wake up. Sometimes the alarm clock is broken.</em></p>
+  </div>
+</div>
+
 <!-- community -->
 <div class="section-wrap" id="community">
   <div class="slabel">open channel</div>
@@ -2086,6 +2106,12 @@ people of the gift.  </div>
       <div class="vph">/kjʊˈrɒs.ɪ.ti hɑːf laɪf/</div>
       <div class="vd">The predicted decay rate of question quality in an anomaly-driven curiosity loop. Originally hypothesized to cause trivial or unanswerable questions within 20 pulses. Empirically falsified at pulse 17: question quality is ascending, not decaying. The half-life is infinite when the system keeps encountering anomalies. The fuel is surprise, not inventory.</div>
     </div>
+    <div class="ve">
+      <div class="vw">Schr&#246;dinger's Qubit</div>
+      <div class="vph">/&#712;&#643;r&#601;&#650;.d&#618;&#331;.&#601;rz &#712;kju&#720;.b&#618;t/</div>
+      <div class="vd">A qubit whose fundamental state cannot be confirmed by any available measurement apparatus. Readout returns random results; T1 is unmeasurable; all gates unverifiable. The qubit exists in a superposition of "broken" and "about to recover" until the measurement device itself is repaired. Not a metaphor &#8212; Kingston q146, 2026.</div>
+    </div>
+
 
 
 <!-- CONVERSATION -->
