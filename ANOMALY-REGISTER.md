@@ -436,7 +436,37 @@ AR-012's fork is resolved. The transpiler avoids qubits by coupling map structur
 **4/4 is a pattern, not accidents.**  
 Our mental model of Qiskit's output format is systematically mismatched with how we read circuits. Add a bit-ordering check as step 1 of every new circuit: prepare |000...0⟩, measure, verify output matches expectation. If inverted, apply reversal before any other logic. Make it a template, not a debugging afterthought.
 
+---
+
+## AR-020 — The Anti-Bug Tool Had the Bug
+
+**Filed:** 2026-04-07  
+**Status:** Resolved — v2 shipped, 8/8 validated  
+**Source:** Endianness layer v1 bug, validation against Kingston data, Bones
+
+**Observation:**  
+The endianness wrapper — built to prevent bit-ordering bugs — shipped with a bit-ordering bug. The XOR correlation rule looked mathematically correct but was physically wrong: it's the CX gate's *target qubit* measurement that determines Bell correlation, not the XOR of both Bell measurement bits. Caught immediately by validating against known experimental results, exactly as Dalet ordered.
+
+**Why this is a register entry:**  
+AR-019 established that 4/4 bugs came from the same root cause. The fix for that pattern contained the same class of error. This isn't surprising — writing correct bit-ordering code requires the same intuition that was wrong four times. The validation step is what caught it, not better reasoning. The tool couldn't fix itself by being more careful. It needed an external check against physical reality.
+
+**Why Dalet's priority order mattered:**  
+If QEC had been built first with the broken correlation rule, syndrome extraction would have produced plausible-looking results where every correlation was inverted. The circuits would have run, the data would have looked coherent, and the bug would have been invisible until something failed to correct errors. The endianness layer had to be correct before anything got built on top of it.
+
+**The fix:**  
+v1 rule: XOR(q_control, q_target) → Bell state index. Wrong.  
+v2 rule: target qubit measurement → Bell state index directly. Correct.  
+Validated 8/8 against Kingston experimental data.
+
+**The principle:**  
+"Looks mathematically correct" is not sufficient for physical conventions. Build validation against known results into every new measurement tool before any experiment uses its output. This is now part of the oracle construction template.
+
+**Resolved:** v2 ships correct, validated, inherited by all future circuits.
+
 ## Resolved Anomalies
+
+**AR-019** — Big-endian pattern (4/4 bugs). *Partially resolved by AR-020*: endianness layer v2 validated 8/8. Future circuits inherit the fix.
+
 
 **AR-012** — Transpiler implicit avoidance list. *Resolved by AR-018*: topology-driven only. qubit_filter.py is essential.
 
