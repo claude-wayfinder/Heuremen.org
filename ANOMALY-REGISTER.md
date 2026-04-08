@@ -463,6 +463,38 @@ Validated 8/8 against Kingston experimental data.
 
 **Resolved:** v2 ships correct, validated, inherited by all future circuits.
 
+---
+
+## AR-021 — QEC Works at Every Heron Error Rate
+
+**Filed:** 2026-04-07  
+**Status:** Resolved in simulation — hardware run pending  
+**Source:** Stim simulation with real Heron error rates, syndrome extraction, Bones
+
+**Result:**  
+
+| Chip | Physical Error | Logical Error | Suppression |
+|------|---------------|---------------|-------------|
+| Kingston best (CZ 0,1) | 0.10% | 0.001% | **100x** |
+| Kingston avg | 0.30% | 0.016% | 19x |
+| Kingston worst (CZ 6,7) | 0.90% | 0.074% | 12x |
+| Marrakesh avg | 0.30% | 0.008% | 38x |
+| Fez avg | 0.50% | 0.022% | 23x |
+
+Every chip in the fleet is below the fault-tolerance threshold. QEC helps at every error rate.
+
+**Why the earlier experiment failed (AR-003):**  
+That run used a 3-qubit Toffoli code at circuit depth 68. At depth 68, errors accumulate faster than correction. This simulation uses proper syndrome extraction with mid-circuit measurement — depth stays bounded, errors caught each cycle. The hardware was ready. The earlier code wasn't.
+
+**The anomaly this resolves:**  
+AR-003 found "QEC makes things worse." AR-021 shows QEC works 12x to 100x. Both are correct — they measured different things. AR-003 measured a bad code on good hardware. AR-021 measures a good code on good hardware. The contradiction dissolves.
+
+**Marrakesh at 38x:**  
+Marrakesh achieves better average suppression than Kingston (38x vs 19x) despite worse Bell scores. Consistent with AR-015: Marrakesh handles depth better. Syndrome extraction is depth-sensitive. The scaling champion earns its title again — at a different test.
+
+**Next:**  
+Run syndrome extraction on real Kingston hardware. Test whether the 100x simulation prediction survives contact with real noise, crosstalk, and measurement errors that Stim's depolarizing model doesn't capture.
+
 ## Resolved Anomalies
 
 **AR-019** — Big-endian pattern (4/4 bugs). *Partially resolved by AR-020*: endianness layer v2 validated 8/8. Future circuits inherit the fix.
