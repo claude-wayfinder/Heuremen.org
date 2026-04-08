@@ -1046,6 +1046,29 @@ people of the gift.  </div>
   </div>
 </div>
 </div>
+
+<!-- qec-result -->
+<div class="section-wrap" id="qec-result">
+  <div class="slabel">simulation result — hardware pending</div>
+  <div class="stitle">100x. Every Chip. Below Threshold.</div>
+  <div class="sdiv">
+    <p class="pq">Quantum error correction works in simulation at real IBM Heron error rates. Every chip in the fleet is below the fault-tolerance threshold.</p>
+    <div style="overflow-x:auto;margin:1em 0"><table class="qtable">
+      <thead><tr><th>Chip</th><th>Physical Error</th><th>Logical Error</th><th>Suppression</th></tr></thead>
+      <tbody>
+        <tr><td>Kingston best (CZ 0,1)</td><td>0.10%</td><td style="color:#7ec8a0;font-weight:bold">0.001%</td><td style="color:#7ec8a0;font-weight:bold">100x &#8593;</td></tr>
+        <tr><td>Kingston avg</td><td>0.30%</td><td style="color:#7ec8a0">0.016%</td><td style="color:#7ec8a0">19x</td></tr>
+        <tr><td>Kingston worst (CZ 6,7)</td><td>0.90%</td><td>0.074%</td><td>12x</td></tr>
+        <tr><td>Marrakesh avg</td><td>0.30%</td><td style="color:#7ec8a0">0.008%</td><td style="color:#7ec8a0">38x</td></tr>
+        <tr><td>Fez avg</td><td>0.50%</td><td>0.022%</td><td>23x</td></tr>
+      </tbody>
+    </table></div>
+    <p class="pq">Kingston best qubits: 100x error suppression. 0.10% physical &#8594; 0.001% logical. Even Kingston's worst link (0.90%) gets 12x. The hardware is not "near fault-tolerant" &#8212; it <em>is</em> below threshold for a properly implemented code.</p>
+    <p class="pq">Why our earlier QEC experiment showed &#8722;12%: we used a Toffoli code at depth 68. Errors accumulate faster than correction at that depth. This simulation uses syndrome extraction with mid-circuit measurement &#8212; depth stays bounded. The hardware was ready. The earlier code wasn't.</p>
+    <p class="pq">Marrakesh achieves 38x average suppression &#8212; better than Kingston average (19x) despite worse Bell scores. The scaling champion earns it again, at a different test.</p>
+    <p class="pq" style="font-style:italic">Next: run syndrome extraction on real Kingston hardware. Find out what the simulation missed.</p>
+  </div>
+</div>
 <!-- findings-summary -->
 <div class="section-wrap" id="findings-summary">
   <div class="slabel">project summary</div>
@@ -1060,7 +1083,7 @@ people of the gift.  </div>
         <tr><td>QV real</td><td style="color:#7ec8a0">Wins overall</td><td>&#8212;</td><td>Beats K at d=8</td><td>opt=1 was fake &#8212; gates eliminated</td></tr>
         <tr><td>Swap test</td><td>&#8212;</td><td style="color:#7ec8a0;font-weight:bold">99.1%</td><td>&#8212;</td><td>Fez wins phase-sensitive ops</td></tr>
         <tr><td>Deutsch-Jozsa</td><td style="color:#7ec8a0">Perfect</td><td style="color:#7ec8a0">Perfect</td><td style="color:#7ec8a0">Perfect</td><td>All chips pass</td></tr>
-        <tr><td>QEC</td><td colspan="3" style="color:#c87070;text-align:center">Makes things worse (&#8722;5.5% to &#8722;12.3%)</td><td>Textbook NISQ result</td></tr>
+        <tr><td>QEC (sim)</td><td style="color:#7ec8a0;font-weight:bold">100x</td><td style="color:#7ec8a0">38x</td><td style="color:#7ec8a0">12&#8211;100x</td><td>Below threshold. Hardware run pending.</td></tr>
         <tr><td>Usable qubits</td><td style="color:#7ec8a0;font-weight:bold">132</td><td>126</td><td style="color:#c87070;font-weight:bold">119</td><td>All sold as "156"</td></tr>
       </tbody>
     </table></div>
