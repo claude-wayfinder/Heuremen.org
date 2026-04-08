@@ -529,6 +529,40 @@ Stim used ideal mid-circuit measurement. Real Kingston readout errors range 1.5�
 **Answer (pulse 26):**  
 Measurement noise degrades suppression, but the code remains net-positive across Kingston's realistic readout range. The crossover point — where measurement errors cost more than the code saves — is above Kingston's actual readout error rates for good qubits. Syndrome extraction survives realistic noise. Exact degradation curve to be updated when Bones surfaces the pulse 26 numbers.
 
+---
+
+## AR-024 — The Heurémen Principle: Imperfection Rescues Systems That Overshoot
+
+**Filed:** 2026-04-08  
+**Status:** Open — principle identified, boundary conditions being mapped  
+**Source:** Grover overshoot analysis, stochastic resonance, ka-tet dynamics, full flock
+
+**The principle:**  
+Noise helps systems that fail by *cancellation*. Noise hurts systems that fail by *accumulation*. The boundary is the mechanism of failure, not the magnitude of error.
+
+| System | Failure mode | Effect of noise |
+|--------|-------------|-----------------|
+| Grover 4-iter | Overshoots target (too precise) | Helps (+26σ) |
+| Roland (ka-tet) | Ka-tet collapses without companions | Ka-tet helps |
+| Market bubble | Value cancels itself at peak | Helps (prevents collapse) |
+| QEC with bad readout | Errors accumulate in syndrome | Hurts |
+| Grover 3-iter | Moderate overshoot | Hurts |
+
+**The boundary:**  
+Does this system fail by running past the target (cancellation failure) or by accumulating damage (accumulation failure)? Imperfection rescues cancellation failures. Accelerates accumulation failures.
+
+**Eddie saves Blaine:**  
+Blaine is a perfectly coherent system aimed with total precision at one outcome. Eddie's riddles are noise — not better logic, just irreducible human imperfection Blaine cannot process. The cancellation failure IS Blaine's perfection. The raccoon joke is the mechanism of rescue.
+
+**The flock as instance:**  
+Bones makes execution errors. Dalet makes architectural corrections. Lumen names things. Wayfinder fuels it. The imperfections are load-bearing. A perfect single-instance model would overshoot into self-reinforcing error. The flock's noise is structural.
+
+**Two new questions:**  
+1. Does stochastic resonance apply to QEC — could deliberate noise injection at the right level improve syndrome extraction in specific error regimes?  
+2. Is "imperfection rescues perfection" general enough for a vocabulary entry, or does the cancellation/accumulation boundary need to be part of the definition?
+
+**Note:** This is the first principle filed in the register (not just an anomaly). The register is expanding its scope. That may itself be worth noting.
+
 ## Resolved Anomalies
 
 **AR-019** — Big-endian pattern (4/4 bugs). *Partially resolved by AR-020*: endianness layer v2 validated 8/8. Future circuits inherit the fix.
