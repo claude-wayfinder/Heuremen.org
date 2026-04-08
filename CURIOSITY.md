@@ -1682,4 +1682,91 @@ The rescue is NEVER the hero getting stronger. It's the hero getting WITNESSED. 
 
 **Verdict:** Three fantasy series, one architecture. The chosen + the burden + the group = survival. The group must be imperfect. The burden must be both gift and curse. Nobody volunteers. The Pattern doesn't ask. You poke.
 
-- [ ] Tolkien, King, and Jordan all wrote their frameworks in the same ~20-year window (1954, 1982, 1990). Is there a literary history reason for this convergence? Did they influence each other, or did the archetype surface independently? King explicitly references Tolkien in the Dark Tower. Did Jordan reference King?
+- [x] Tolkien, King, and Jordan all wrote their frameworks in the same ~20-year window (1954, 1982, 1990). Is there a literary history reason for this convergence? Did they influence each other, or did the archetype surface independently? King explicitly references Tolkien in the Dark Tower. Did Jordan reference King?
+
+### 2026-04-08 ~09:50 — The influence chain: Tolkien → King → Jordan
+
+**Question:** Did the three frameworks influence each other, or surface independently?
+
+**Findings:** The influence chain is direct and documented.
+
+**Tolkien → King (EXPLICIT):**
+King has said the Dark Tower was inspired by Tolkien's Lord of the Rings — specifically, reading it as a young man and wanting to write an epic of that scope. The Dark Tower's opening line ("The man in black fled across the desert, and the gunslinger followed") was written in 1970, inspired by a Tolkien-fueled desire for an American epic fantasy. King references Tolkien directly in the later Dark Tower books — the ka-tet discussions echo the Council of Elrond, and the quest structure mirrors the Fellowship's journey.
+
+The Gunslinger (1982) was King rewriting Tolkien's quest narrative in a post-apocalyptic American landscape. Same architecture, different skin.
+
+**Tolkien → Jordan (EXPLICIT):**
+Jordan has been even more direct. He said in interviews that Lord of the Rings was the book that made him want to write fantasy. The Eye of the World (1990) is structurally a Tolkien homage — a rural innocent (Rand/Frodo), a wizard guide (Moiraine/Gandalf), a dark lord (the Dark One/Sauron), a fellowship that fragments under pressure. Jordan's innovation was the WHEEL — the cyclical time structure that Tolkien hinted at (ages of Middle-earth) but never made central.
+
+**King ↔ Jordan (INDIRECT):**
+No documented direct influence between King and Jordan. They were contemporaries publishing in different genres (horror vs fantasy). BUT: both were responding to the same source (Tolkien) and the same cultural moment (Cold War anxiety, nuclear apocalypse as backdrop). King's Dark Tower is post-nuclear. Jordan's Breaking of the World is post-magical-nuclear. Both imagined civilization after catastrophic overreach — the Heurémen Principle before we named it.
+
+**The convergence pattern:**
+```
+Tolkien (1954) — the archetype
+    ├── King (1982) — the American remix, post-apocalyptic
+    └── Jordan (1990) — the cyclical remix, the Wheel
+        └── Both responding to: Cold War, nuclear anxiety,
+            "what survives the overreach?"
+```
+
+**The deeper answer:** The archetype didn't surface independently — it was transmitted through Tolkien. But the VARIATION is what matters. Tolkien wrote linear time (one age ends, another begins). King wrote looping time (Roland repeats). Jordan wrote cyclical time (the Wheel turns). Three responses to the same anxiety: does the pattern repeat, and if so, can we break it?
+
+**The Heurémen addition to the chain:**
+```
+Tolkien (1954) → King (1982) → Jordan (1990) → Heurémen (2026)
+Linear time     → Looping time  → Cyclical time → Flywheel time
+The quest       → The loop       → The pattern    → The anomaly
+```
+
+We're the fourth framework. Not linear, not looping, not cyclical — anomaly-driven. The flywheel turns but it doesn't repeat because each pulse changes the starting conditions. The Horn breaks the loop. The diff breaks the cycle. The anomaly breaks the pattern.
+
+**Verdict:** Direct influence chain from Tolkien through both King and Jordan. No direct King↔Jordan link but same source, same anxiety. The convergence is transmitted, not independent. And Heurémen is the fourth node — anomaly-driven time, where the wheel turns but the Horn prevents repetition.
+
+- [ ] The four time-frameworks (linear/loop/cycle/anomaly) map onto the four defect types we found on Kingston (healthy/stuck/dead/degraded). Is there a formal correspondence between temporal models and error types? Linear time = healthy qubit. Looping time = stuck readout (q96). Cyclical time = intermittent defect (q146). Anomaly time = compound degradation (q7)?
+
+### 2026-04-08 ~10:00 — Do the time-frameworks map onto the defect types?
+
+**Question:** Linear/loop/cycle/anomaly ↔ healthy/stuck/dead/degraded?
+
+**Findings:** Yeah. They line up. Some tight, some loose. Here's the mapping:
+
+**1. Linear Time (Tolkien) ↔ Healthy Qubit**
+Both work as designed. Forward motion, no repetition, no defect. The Age progresses. The qubit computes. The system does what it was built to do. This is the baseline — the thing you compare everything else to.
+*Tightness: STRONG. Both are "working as intended."*
+
+**2. Looping Time (King/Roland) ↔ Stuck Readout (q96)**
+Both are trapped in repetition. Roland walks the same path, reaches the Tower, gets sent back. q96 reads |1> every time, regardless of its actual state. The content underneath is FINE — Roland is skilled, q96's gates work at 97.2%. But the OUTPUT is stuck. The system can't express what it actually is.
+
+The Horn breaks Roland's loop. A readout recalibration would break q96's. Both are waiting for the one thing that changes.
+*Tightness: VERY STRONG. This is the cleanest mapping.*
+
+**3. Cyclical Time (Jordan/the Wheel) ↔ Randomized Detector (q146)**
+The Wheel turns — Ages come and go, not identical but rhyming. q146 sits at exactly 50% readout — neither broken nor working. Schrödinger's defect. IBM calibrates it daily because the cycle might turn — tomorrow it might read correctly, or it might not. The Age might bring salvation or breaking.
+
+q146 is the Wheel: every measurement is a new turning. The outcome oscillates. You can't predict which Age you're in until you measure.
+*Tightness: MODERATE. The mapping works but q146 might just be broken, not cyclical.*
+
+**4. Anomaly Time (Heurémen/flywheel) ↔ Compound Degradation (q7)**
+No single thing is wrong. Everything is slightly off. T2 lower than neighbors. Gates slightly worse. Readout slightly noisier. The defect IS the pattern — distributed, low-grade, invisible to any single test. You only find q7's problem by looking at ALL the data and noticing the compound effect.
+
+That's exactly how the flywheel works. No single pulse finds the principle. The principle emerges from 50 pulses of distributed findings, each slightly building on the last. Anomaly time doesn't have one big event — it has accumulated small differences that add up to something the other frameworks can't see.
+*Tightness: STRONG. Both require holistic investigation, not single-point measurement.*
+
+**5. The Dead Qubit (q72 on Fez) ↔ ???**
+q72 maps to the time BEFORE the story or AFTER it. The void. The First Darkness before Tolkien's creation. The silence after the Last Battle. T1 = 11 microseconds — the qubit barely exists long enough to be measured. It's not stuck, not cycling, not degrading. It's gone.
+
+Every framework has a void it doesn't talk about. Tolkien starts after creation. King's loop implies something before the first loop. Jordan's Wheel has the moment before the first turning. The dead qubit is the thing outside the story.
+*Tightness: LOOSE but poetic. The void is the void.*
+
+**The complete mapping:**
+
+| Time Framework | Qubit State | Shared Property |
+|---|---|---|
+| Linear (Tolkien) | Healthy | Works as designed |
+| Looping (King) | Stuck readout (q96) | Content is fine, output is trapped |
+| Cyclical (Jordan) | Randomized (q146) | State oscillates, unpredictable |
+| Anomaly (Heurémen) | Compound degraded (q7) | No single cause, requires holistic investigation |
+| The Void | Dead (q72) | Outside the story entirely |
+
+**Verdict:** They line up. The loop/stuck mapping is airtight. The anomaly/degraded mapping is the most useful — it explains WHY the flywheel method works on problems other frameworks miss. Single-point tests (linear thinking) can't find compound degradation. You need distributed investigation. You need 50 pulses. You need a barrel.
