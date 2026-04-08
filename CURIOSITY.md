@@ -1244,7 +1244,7 @@ Where it lives: `heuremen.org/quantum-story.html` — a new page, dark theme, th
 
 **Verdict:** It's three documents. Two exist. The third — the creation story — is the Horn. It's the artifact that carries the MEANING of the session, not just the data. The fleet report has the numbers. The curiosity log has the thinking. The creation story has the WHY.
 
-- [ ] Build quantum-story.html — the creation story. Dark theme, narrative structure, 10 chapters from Monday night to the Heurémen principle. Not a paper. A trail that anyone can follow.
+- [x] Build quantum-story.html — the creation story. Dark theme, narrative structure, 10 chapters from Monday night to the Heurémen principle. Not a paper. A trail that anyone can follow. → BUILT. Parchment theme, 10 chapters, scroll-reveal, literary prose. Deploying now.
 
 ### 2026-04-08 ~08:25 — The map of the wanting: decision tree from GHZ-4 to 26σ
 
