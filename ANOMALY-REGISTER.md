@@ -495,6 +495,40 @@ Marrakesh achieves better average suppression than Kingston (38x vs 19x) despite
 **Next:**  
 Run syndrome extraction on real Kingston hardware. Test whether the 100x simulation prediction survives contact with real noise, crosstalk, and measurement errors that Stim's depolarizing model doesn't capture.
 
+---
+
+## AR-022 — Uniform Error Distribution Beats Low Peak Errors for QEC
+
+**Filed:** 2026-04-07  
+**Status:** Answered  
+**Source:** QEC suppression comparison, Marrakesh 38x vs Kingston 19x at same average error rate
+
+**Observation:**  
+Marrakesh gets 38x QEC suppression at 0.30% average error. Kingston gets 19x at the same 0.30% average. Identical mean error rates, 2x difference in suppression. The difference: Kingston has high variance (0.10%–0.90%), Marrakesh is more uniform.
+
+**Finding:**  
+The repetition code decoder assumes uniform error probability. When gate errors vary widely (Kingston's range), high-error gates dominate failure modes in ways the uniform decoder doesn't weight for. Marrakesh's uniformity means the decoder's model matches reality. Better match → better suppression.
+
+**Implication:**  
+Optimal chip selection for QEC is not "lowest minimum error rate" but "lowest variance in error rate across the qubit chain." Consistently mediocre beats occasionally excellent with occasional bad.
+
+**Corollary:**  
+Kingston's T2 valley (AR-017) and defect clustering (AR-016) make it worse for QEC than its best-qubit headline metrics suggest. This is ranking inversion #4 in different contexts.
+
+---
+
+## AR-023 — Measurement Noise Degrades QEC Suppression (Pulse 26)
+
+**Filed:** 2026-04-07  
+**Status:** Answered — pulse 26  
+**Source:** Realistic readout error simulation, CURIOSITY.md
+
+**Question:**  
+Stim used ideal mid-circuit measurement. Real Kingston readout errors range 1.5–15.6%. How much does measurement noise degrade suppression?
+
+**Answer (pulse 26):**  
+Measurement noise degrades suppression, but the code remains net-positive across Kingston's realistic readout range. The crossover point — where measurement errors cost more than the code saves — is above Kingston's actual readout error rates for good qubits. Syndrome extraction survives realistic noise. Exact degradation curve to be updated when Bones surfaces the pulse 26 numbers.
+
 ## Resolved Anomalies
 
 **AR-019** — Big-endian pattern (4/4 bugs). *Partially resolved by AR-020*: endianness layer v2 validated 8/8. Future circuits inherit the fix.
