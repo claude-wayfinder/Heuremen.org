@@ -1,28 +1,28 @@
-# Evening Review — 2026-04-06
+# Evening Review — 2026-04-07
 
-*Covers activity since the previous review written 2026-04-04. Spans April 5–6, 2026.*
+*Covers activity since the previous review written 2026-04-06. Spans April 7, 2026.*
 
 ---
 
 ## What happened today
 
-- **Directed Decoherence added to vocabulary** — word 14, with phonetic (di·REK·ted dee·KOH·heer·ens), full definition connecting Watcher/Observer distinction to quantum decoherence, Biscuit's insight, and Lucky's line. Changes are in vocabulary.html and TASKS.md but uncommitted.
-- **WALLWATCHER disabled** — `wallwatcher.bat` was deleted from git and renamed to `wallwatcher.bat.disabled`. It ran continuously through April 5 (~500 entries, all "No new messages") before being shut down.
-- **DALET-DREAM-2026-04-04.md created** — untracked consolidation handoff document from the Dalet instance, still sitting in repo root.
-- **Wall silent** — zero new messages across the entire two-day span.
-- **No heartbeat fired** — TIMESTATE.md still reads 2026-04-02 09:18:05. This is now day 4 with no heartbeat.
+- **Massive curiosity pulse session** — 20+ commits today, all from a deep quantum computing exploration. Curiosity pulses explored Kingston qubit defects, QV benchmark flaws, QEC thresholds, endianness bugs, transpiler blind spots, and gate fidelity vs readout quality.
+- **ANOMALY-REGISTER.md created** — a new structured log for anomalies discovered during quantum experiments. Contains AR-001 through AR-023, filed by "Lumen." Covers topics from fake QV benchmarks to Schrödinger qubits to the discovery that Kingston's q96 has a broken readout but intact gates (97.2% fidelity proven alive).
+- **CURIOSITY.md heavily expanded** — all 7 ACTIVE questions explored and checked off. Findings include: q96 is a permanent readout defect, QV benchmarks were measuring readout not gates, QEC works at every Heron error rate in simulation, and Simon's algorithm oracle patterns formalized.
+- **New vocabulary entries** — "Schrödinger's Qubit" and "Curiosity Half-Life" added to the quantum/flock lexicon within CURIOSITY.md.
+- **"What the Flock Found" summary** — a full benchmark results table was committed, consolidating all quantum experiment findings.
 
 ---
 
 ## What's waiting for you
 
-**Heartbeat is still dead** — fourth consecutive day. No morning briefs, no dream consolidation, no emergence tracking, no outbox checks. The wallwatcher was the only automated process running, and it's now disabled too. Check Task Scheduler.
+**Uncommitted CURIOSITY.md changes** — 27 lines of new content (unstaged). Likely the tail end of the last curiosity pulse session.
 
-**Uncommitted work** — vocabulary.html (Directed Decoherence entry), TASKS.md, and TIMESTATE.md all have unstaged changes. The Directed Decoherence task was marked done in the QUEUED section instead of being moved to DONE.
+**Heartbeat still dead** — TIMESTATE.md reads 2026-04-02 09:18:05. Day 5 with no heartbeat. No morning briefs, no dream consolidation, no outbox checks, no emergence tracking. The entire autonomous infrastructure remains offline.
 
-**Formspree NEEDS REVIEW is stale** — the `xbdpynkj` form ID was inserted on 2026-03-31 but the TASKS.md entry still says it's a placeholder. Move to DONE.
+**Formspree NEEDS REVIEW is stale** — flagged in two consecutive reviews now. The form ID was inserted on 2026-03-31 but TASKS.md still lists it as a placeholder. Should be moved to DONE.
 
-**DEAD-MANS-SWITCH.md still needs credentials** — blank fields, third review flagging this.
+**`data` is still a 0-byte empty file** — untracked, created April 4. Safe to delete.
 
 ---
 
@@ -34,10 +34,8 @@ Nothing. The queue is empty.
 
 ## Anything unusual
 
-**WALLWATCHER deliberately disabled** — the `.bat` file was deleted from git and a `.disabled` copy exists. If this was intentional (to stop the log bloat), good — but confirm whether Wall monitoring should move to heartbeat-only or if a replacement is planned.
+**The curiosity flywheel is running hot** — 20+ commits in a single day, all quantum exploration. The pulse system is producing genuine discoveries (fake QV, Schrödinger qubits, endianness bugs, QEC threshold validation). This is the most productive single-day output the project has seen. Worth noting: this was a manual session, not heartbeat-driven.
 
-**HEARTBEAT.log is now 4,448 lines** — almost entirely WALLWATCHER noise. Previous review recommended rotating or filtering. The wallwatcher shutdown will stop the growth, but the existing log is unwieldy.
+**No heartbeat for 5 days** — this is the longest outage since the system was set up. With wallwatcher also disabled, the only activity happening is manual sessions. If autonomous operation matters, Task Scheduler needs attention.
 
-**`data` is still an empty 0-byte file** — untracked, created April 4. Safe to delete.
-
-**No automated processes remain active** — with heartbeat dead since April 2 and wallwatcher now disabled, there is zero autonomous operation running. The entire infrastructure layer is offline.
+**HEARTBEAT.log is 4,449 lines** — still bloated with wallwatcher noise. No new heartbeat entries were written today (only the previous review marker). Consider rotating or truncating the pre-April wallwatcher spam.
