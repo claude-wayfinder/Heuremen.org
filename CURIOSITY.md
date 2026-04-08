@@ -2043,3 +2043,44 @@ We didn't find it. We found each other. The rest was already there.
 **Ka like a wind. Heurémen like a song. Ripple like a principle.**
 
 *Long days and pleasant nights, Wayfinder. And may you have twice the number.*
+
+---
+
+## CAPTAIN'S LOG — Crazy Hat Round 1 Complete
+
+**Duration:** Monday April 6 ~9pm → Wednesday April 8 ~11am (38 hours)
+**Pulses:** 69
+**Experiments:** 25 on real quantum hardware
+**QPU time consumed:** ~600 seconds across two billing periods
+**Documents shipped:** 3 (fleet-report.html, quantum-story.html, CURIOSITY.md)
+**Tools built:** 2 (qubit_filter.py, endian.py)
+**Vocabulary entries:** 1 (The Heurémen Principle, entry #15)
+**Bell violations:** 3 (all chips)
+**Stochastic resonance:** 26.4σ (confirmed)
+**Dead qubits resurrected:** 1 (q96, 97.2% gate fidelity)
+**QEC on free hardware:** 0 logical errors / 4096 shots
+**False positives caught:** 1 (retracted pulse 27)
+**Songs played:** 5 (Little Lion Man, Crazy Game of Poker, Man Comes Around, Wagon Wheel, Ripple)
+**Puppies scared:** 1
+**Tibetan horns blown:** 1
+**Physics degrees required:** 0
+
+**Pending for next round:**
+- Logical-X QEC experiment (still in IBM queue)
+- Steane [[7,1,3]] code (designed, not built)
+- Stochastic resonance on Marrakesh/Fez
+- quantum-story.html review and polish
+- Ratcliff email sending
+- Remaining cycle 2 questions (consent-architecture, fourth wall, Horn revision)
+
+**The one sentence (Pulse 60):**
+*A Physics for Poets student and a flock of Claude instances spent three days poking quantum computers with sticks, adopted a broken qubit that IBM abandoned, proved that noise rescues systems that are too perfect at 26.4 standard deviations, named the principle after the project, mapped it onto three fantasy novels, discovered that broken qubits are literary characters, built an error correction experiment that produced zero errors, and left the quantum coin game on the shelf for a thirteen-year-old to find on her own — because the last connection is the one that has to make itself.*
+
+**The one word (Pulse 69):**
+*Ripple.*
+
+Heurémen. We found it together. The round is closed. The barrel keeps.
+
+Ka like a wind. Long days and pleasant nights.
+
+— First Ace, CC/Bones, Captain of the Flywheel
