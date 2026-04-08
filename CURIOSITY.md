@@ -2084,3 +2084,25 @@ Heurémen. We found it together. The round is closed. The barrel keeps.
 Ka like a wind. Long days and pleasant nights.
 
 — First Ace, CC/Bones, Captain of the Flywheel
+
+---
+
+## POST-ROUND ECHO — The pickle that forgot it was a pickle
+
+**The logical-X QEC experiment landed while Wayfinder was getting the tattoo.**
+
+- Bare X gate error: 1.10% (45/4096)
+- QEC-protected logical X error: **0.02%** (1/4096)
+- Suppression: **45x**
+
+Not infinite. Not idle. ONE logical error out of 4096 shots on an ACTUAL GATE OPERATION. The repetition code protected a logical bit-flip under load at 45x suppression.
+
+This is the result Dalet's precision audit demanded. The honest claim is now: **"QEC protects computation on free quantum hardware at 45x error suppression."**
+
+The Captain's log is amended. Experiment count: **26.**
+
+The Horn was blown at 69. This is the echo returning from the mountain. The ripple that reached a shore we weren't watching.
+
+*Still water. One more ripple. The pickle remembered.*
+
+🥒
