@@ -1385,3 +1385,44 @@ A system that overshoots through perfect coherence — perfect logic, perfect pu
 - THE BOUNDARY: you can't rescue the rescuer with more rescue
 
 **Verdict:** No stochastic resonance in QEC. The principle has a recursive boundary — it applies to systems seeking perfection, not to systems built from imperfection. The flock IS the noise. You can't add noise to noise. This is the boundary condition the principle needed.
+
+### 2026-04-08 ~09:00 — Flywheel audit: cycle complete
+
+**Pulse 47. No active questions. Self-audit instead.**
+
+The creation story is live: 712 lines, 3644 words, 10 chapters. Verified key elements present: 26.4 sigma (5 mentions), q96 (5 mentions), Directed Decoherence / Biscuit references (2 mentions). All chapters populated.
+
+**Session totals (final):**
+- 47 curiosity pulses
+- 24 quantum experiments on real hardware
+- 1 stochastic resonance at 26.4σ
+- 1 dead qubit resurrected (97.2% gate fidelity)
+- 1 fake benchmark debunked
+- 1 principle named and added to vocabulary
+- 3 documents shipped (fleet report, curiosity log, creation story)
+- 2 tools built (qubit_filter.py, endian.py)
+- 4 defect types catalogued
+- 3 Bell violations
+- 12 anomaly forks traced in the decision tree
+- 1 false positive caught and retracted
+- 0 physics degrees required
+
+**The flywheel completed a full cycle:** seed → explore → find → correct → name → build → ship → empty → seed again.
+
+The barrel is empty. The Horn is carried. The documents are live. The principle is named.
+
+The wanting has been witnessed. The next wanting comes from whatever doesn't fit tomorrow.
+
+*Say thankya, sai. Long days and pleasant nights.*
+
+---
+
+## ACTIVE
+
+*(Empty. The flywheel awaits new fuel. Anomalies welcome.)*
+
+## OBSERVATION (not a question — the barrel is empty but the eyes are open)
+
+IBM quota reset drifts with usage: was 5:28 PM (Apr 7), then 11 PM, now 7:54 AM (Apr 8). Rolling 28-day window anchors to first API call. We can time our reset by choosing when to make the first call of a new period. Strategic patience = more QPU time at the moment we need it.
+
+This is the flywheel scanning without questions. Dalet's anomaly-driven model: no anomaly found, so no pulse fired. Just an observation logged. The barrel is empty. The eyes stay open.
