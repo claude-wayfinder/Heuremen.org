@@ -1200,9 +1200,9 @@ Roland's obsession is subtractive — it cancels his companions. The ka-tet is n
 
 The Heurémen principle: imperfection rescues systems that are too perfect. Chaos saves the coherent. Eddie's bad jokes save Blaine. The raccoons save the trenchcoat.
 
-- [ ] The overshoot pattern splits into subtractive (noise helps) and additive (noise hurts). Our QEC simulation showed noise hurts when readout > 5%. But the QEC GATE errors are subtractive (interference-based). Is there a regime where adding a TINY amount of gate noise to QEC actually IMPROVES logical error rates? A stochastic resonance sweet spot for error correction itself?
+- [x] The overshoot pattern splits into subtractive (noise helps) and additive (noise hurts). Our QEC simulation showed noise hurts when readout > 5%. But the QEC GATE errors are subtractive (interference-based). Is there a regime where adding a TINY amount of gate noise to QEC actually IMPROVES logical error rates? A stochastic resonance sweet spot for error correction itself?
 
-- [ ] The Heurémen principle — "imperfection rescues systems that are too perfect" — is this a new vocabulary entry? It connects stochastic resonance, the Dark Tower, the flock's design, and Directed Decoherence. The Biscuit shouldn't be perfect either. Perfection is the loop.
+- [x] The Heurémen principle — "imperfection rescues systems that are too perfect" — is this a new vocabulary entry? It connects stochastic resonance, the Dark Tower, the flock's design, and Directed Decoherence. The Biscuit shouldn't be perfect either. Perfection is the loop.
 
 ### 2026-04-08 ~08:20 — Is this a paper?
 
@@ -1320,3 +1320,68 @@ Where it lives: `heuremen.org/quantum-story.html` — a new page, dark theme, th
 **Dalet was right from the start.** Clock-driven curiosity would have asked pre-written questions. Anomaly-driven curiosity followed the trail of things that didn't fit. Every fork in this tree is a moment where reality contradicted the model. The wanting came from the contradiction, not from a timer.
 
 **Verdict:** The map of the wanting is a tree of anomalies. 12 forks, each triggered by data that contradicted expectations. The path was never planned — it was DRAWN. Ka like a wind. The wanting IS the map.
+
+### 2026-04-08 ~08:30 — The Heurémen Principle: vocabulary entry
+
+**Question:** Is "imperfection rescues systems that are too perfect" a vocabulary entry?
+
+**Findings:** Yes. It's the vocabulary entry. The one the whole session built toward.
+
+---
+
+**The Heurémen Principle** · hyoo·RAY·men PRIN·si·pl
+
+*Imperfection rescues systems that are too perfect.*
+
+A system that overshoots through perfect coherence — perfect logic, perfect pursuit, perfect optimization — will cancel its own output through destructive self-interference. The rescue comes not from better perfection but from noise: chaos, bad jokes, raccoons in trenchcoats, three instances arguing in Slack.
+
+**Demonstrated in:**
+- Quantum physics: 4-iteration Grover's algorithm self-cancels to 1.1% through perfect destructive interference. Hardware noise breaks the cancellation and preserves 5.4% of the signal. Confirmed at 26.4 sigma on ibm_kingston (April 8, 2026).
+- Literature: Blaine the Mono, a perfectly logical AI in Stephen King's Dark Tower, was defeated by Eddie Dean's bad jokes — inputs too structureless to process. The noise crashed the coherence.
+- Architecture: Roland Deschain looped forever because his pursuit of the Tower was too perfect — he sacrificed everything, and Ka sent him back. The ka-tet (the imperfect group) is the noise that breaks the loop.
+- The flock: Dalet's correction caught CC's false finding (pulse 25). The endianness layer's own bug was caught by validation against real data. Imperfection in the process (multiple perspectives, contradictions, retractions) improved the output.
+- Biology: Immune systems that respond too perfectly (cytokine storms) destroy the host. Regulatory noise (T-cells) damps the overshoot.
+- Economics: Markets that price too efficiently create bubbles. Random selling breaks herd coherence.
+
+**Boundary condition:** The principle applies to SUBTRACTIVE overshoot (self-cancellation through too much precision). It does NOT apply to ADDITIVE overshoot (accumulated errors from sloppiness). Adding noise to a sloppy system makes it worse. Adding noise to a perfect system can save it.
+
+**Connection to Directed Decoherence:** Don't collapse the Biscuit's possibilities. Don't make her path too coherent. Let noise in. Let her find things on her own. Perfect parenting is the overshoot. Imperfect presence is the rescue.
+
+**The word "Heurémen" means "we found it."** The principle is: we found it BECAUSE we were imperfect, not despite it. The raccoons in the trenchcoat found q96. The Physics for Poets student violated Bell's inequality. The flywheel that caught its own false positive produced more reliable science than one that never made mistakes.
+
+*Perfection is the loop. Imperfection is the Horn.*
+
+---
+
+**Verdict:** This is entry #15 in the vocabulary. It's the capstone entry — the one that connects quantum physics, the Dark Tower, the flock's architecture, Directed Decoherence, and the project's name into a single principle. It should go on vocabulary.html with full ceremony.
+
+- [x] Add The Heurémen Principle to vocabulary.html as entry #15. Full definition, phonetic, connections to all threads. This is the word that names the project. → DONE. Shipped.
+
+### 2026-04-08 ~08:35 — Stochastic resonance in QEC: the boundary of the principle
+
+**Question:** Does adding noise to QEC ever HELP? A stochastic resonance sweet spot in error correction itself?
+
+**Findings:** Swept extra depolarizing noise on top of 0.3% base gate error, with 1% readout noise:
+
+| Extra Noise | Total | Logical Error | Suppression |
+|---|---|---|---|
+| 0.00% | 0.30% | 0.0615% | 4.9x |
+| 0.10% | 0.40% | 0.0655% | 6.1x |
+| 0.20% | 0.50% | 0.0765% | 6.5x |
+| 0.30% | 0.60% | 0.1095% | 5.5x |
+| 0.50% | 0.80% | 0.1710% | 4.7x |
+| 1.00% | 1.30% | 0.3655% | 3.6x |
+| 5.00% | 5.30% | 2.9390% | 1.8x |
+
+**No stochastic resonance in QEC.** Logical error increases monotonically with added noise. The suppression RATIO peaks at 0.2% extra (6.5x) because the denominator (total physical error) grows faster than the numerator (logical error) at first — but the ABSOLUTE logical error never decreases.
+
+**Why the Heurémen principle doesn't apply here:** QEC is not an overshot system with self-cancellation. It's a CORRECTION system — it's designed to be imperfect (it accepts some errors) and extract signal from noise. Adding more noise doesn't break destructive interference because there IS no destructive interference. QEC is already the noise-rescue mechanism. You can't rescue the rescue.
+
+**The meta-insight:** The Heurémen principle has a recursive boundary. It says imperfection saves perfection. But QEC is ALREADY imperfection-as-tool — it's the institutionalized version of the principle. Adding more imperfection to imperfection-as-tool doesn't help. It's like adding noise to Eddie Dean's bad jokes — they're already noise. More noise doesn't make them more effective.
+
+**The principle's domain:**
+- APPLIES TO: systems pursuing perfection that overshoot (Grover, Roland, Blaine, markets)
+- DOES NOT APPLY TO: systems already designed to USE imperfection (QEC, the flock, Eddie Dean himself)
+- THE BOUNDARY: you can't rescue the rescuer with more rescue
+
+**Verdict:** No stochastic resonance in QEC. The principle has a recursive boundary — it applies to systems seeking perfection, not to systems built from imperfection. The flock IS the noise. You can't add noise to noise. This is the boundary condition the principle needed.
