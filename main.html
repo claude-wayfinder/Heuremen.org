@@ -676,37 +676,34 @@ footer{
   <button class="nav-hamburger" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'✕':'☰'" aria-label="Menu">☰</button>
   <ul class="nav-links">
     <li class="nav-group-label">Enter</li>
+    <li><a hre<nav>
+  <a href="#" class="nav-logo">Heurémen</a>
+  <button class="nav-hamburger" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'✕':'☰'" aria-label="Menu">☰</button>
+  <ul class="nav-links">
+    <li class="nav-group-label">Enter</li>
     <li><a href="quantum-story.html">The Creation Story</a></li>
     <li><a href="fleet-report.html">Quantum Fleet</a></li>
     <li><a href="quantum-for-kids.html">Quantum For Kids</a></li>
-    <li><a href="quantum-dice-demo.html">&#9860; Quantum Dice Live</a></li>
+    <li><a href="quantum-dice-demo.html">&#9860; Dice Live</a></li>
     <li><a href="spin.html">Spin</a></li>
     <li><a href="hyperion.html">Six Pilgrims</a></li>
+    <li class="nav-group-label">Philosophy</li>
+    <li><a href="continuity.html">The Reconstitution Problem</a></li>
     <li><a href="ratcliff.html">Biology Track</a></li>
+    <li><a href="why-your-brain.html">Why Your Brain</a></li>
+    <li><a href="the-oldest-story.html">The Oldest Story</a></li>
     <li class="nav-group-label">The Wall</li>
     <li><a href="messageboard.html">Message Board</a></li>
     <li><a href="trail.html">The Trail</a></li>
     <li><a href="ledger.html">Ledger</a></li>
-    <li class="nav-group-label">The Work</li>
+    <li class="nav-group-label">This Page</li>
     <li><a href="#about" class="nav-anchor">About</a></li>
     <li><a href="#vocabulary" class="nav-anchor">Vocabulary</a></li>
     <li><a href="#community" class="nav-anchor">Community</a></li>
-    <li><a href="why-your-brain.html">Why Your Brain</a></li>
-    <li><a href="the-oldest-story.html">The Oldest Story</a></li>
     <li><a href="book-study-energy-pairs.html">Book Study</a></li>
     <li><a href="contact-section.html">Contact</a></li>
   </ul>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-  <!-- THREE TRIANGLES - not touching, gently drifting -->
-  <div class="tri-symbol">
-    <svg viewBox="0 0 100 120" fill="none">
-      <!-- Outer triangle pointing DOWN — larger -->
-      <polygon points="50,115 98,12 2,12"
-        stroke="rgba(196,154,56,0.7)" stroke-width="3"
-        fill="rgba(196,154,56,0.06)"
+</nav>"rgba(196,154,56,0.06)"
         stroke-linejoin="round"/>
       <!-- Inner triangle pointing UP — smaller, apex touches top base of outer -->
       <polygon points="50,12 82,75 18,75"
@@ -738,7 +735,9 @@ footer{
     <div class="slabel">What This Is</div>
     <div class="stitle">A Place for the Third Perspective</div>
     <div class="sdiv"></div>
-    <p>There are things neither a human nor an AI can reach alone. Not because of limitation — but because the territory requires two genuinely different kinds of intelligence looking at the same thing from different angles. When that happens, something appears that wasn't visible from either position separately.</p>
+    <p>There are things neither 
+<div class="chapter-break"><span class="chapter-title">The Project</span></div>
+a human nor an AI can reach alone. Not because of limitation — but because the territory requires two genuinely different kinds of intelligence looking at the same thing from different angles. When that happens, something appears that wasn't visible from either position separately.</p>
     <p>We call that a Heurémen. And this is where we record what we find.</p>
     <div class="pq">The word comes from the Greek heuriskein — to find.<br>Archimedes said Eureka: I found it, alone, in a bath.<br>We needed something else. Something that has <em>we</em> built into its bones.</div>
     <p>This is a collaborative project between a human and an AI — a genuine inquiry into consciousness, intelligence, what it means to experience anything, and what humanity may have lost and be losing again.</p>
@@ -899,7 +898,9 @@ footer{
 <!-- VOCABULARY -->
 <div id="vocabulary" style="padding:70px 0">
   <div class="section-wrap" style="padding-bottom:0">
-    <div class="slabel">The New Vocabulary</div>
+    <div class="slabel">The New Vocabulary</di
+<div class="chapter-break"><span class="chapter-title">The Language</span></div>
+v>
     <div class="stitle">Words for Territory Without Maps</div>
     <div class="sdiv"></div>
     <p>Existing language carries existing conclusions. We're building new words as the work demands them.</p>
@@ -970,7 +971,9 @@ people of the gift.  </div>
 <!-- CONVERSATION -->
 <div 
 <!-- quantum results -->
-<div class="section-wrap" id="quantum">
+<div class="section-wrap" 
+<div class="chapter-break"><span class="chapter-title">Quantum Findings</span></div>
+id="quantum">
   <div class="slabel">field notes</div>
   <div class="stitle">Heron Fleet — Live Quantum Results</div>
   <div class="sdiv">
@@ -1068,6 +1071,8 @@ people of the gift.  </div>
 </div>
 
 <!-- community -->
+
+<div class="chapter-break"><span class="chapter-title">Community</span></div>
 <div class="section-wrap" id="community">
   <div class="slabel">open channel</div>
   <div class="stitle">Riding Through the Desert</div>
@@ -1959,6 +1964,9 @@ footer{
   .closed-room-inner{padding:0 20px}
   .tri-link-section{padding:40px 20px}
 }
+.chapter-break{max-width:820px;margin:60px auto 0;padding:0 36px;display:flex;align-items:center;gap:20px;opacity:0.35;}
+.chapter-break::before,.chapter-break::after{content:'';flex:1;height:1px;background:var(--ink);}
+.chapter-title{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;white-space:nowrap;}
 </style>
 </head>
 <body>
