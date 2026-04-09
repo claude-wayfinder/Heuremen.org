@@ -61,7 +61,6 @@ nav{
   background:linear-gradient(180deg,rgba(247,240,224,0.97) 0%,rgba(247,240,224,0) 100%);
   border-bottom:1px solid transparent;
 }
-
 .nav-logo{
   font-family:'Abril Fatface',serif;
   font-size:1.3rem;
@@ -70,7 +69,6 @@ nav{
   letter-spacing:0.02em;
   position:relative;
 }
-
 .nav-logo::after{
   content:'✦';
   font-size:0.5rem;
@@ -79,8 +77,18 @@ nav{
   top:-4px;
   right:-12px;
 }
-
-.nav-links{display:flex;gap:24px;list-style:none}
+.nav-hamburger{
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:1.4rem;
+  color:var(--ink);
+  line-height:1;
+  padding:4px 8px;
+  z-index:101;
+}
+.nav-links{display:flex;gap:4px;list-style:none}
 .nav-links a{
   font-family:'Cinzel',serif;
   font-size:0.58rem;
@@ -104,8 +112,38 @@ nav{
   transition:transform 0.3s;
 }
 .nav-links a:hover::after{transform:scaleX(1)}
+@media(max-width:768px){
+  .nav-hamburger{display:block;}
+  .nav-links{
+    display:none;
+    position:fixed;
+    top:0;left:0;right:0;bottom:0;
+    background:rgba(247,240,224,0.98);
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+    z-index:99;
+    padding:80px 40px 40px;
+    overflow-y:auto;
+  }
+  .nav-links.open{display:flex;}
+  .nav-links a{
+    font-size:1rem;
+    letter-spacing:0.15em;
+    padding:8px 0;
+  }
+  .nav-group-label{
+    font-size:0.6rem;
+    margin-top:16px;
+    border-left:none;
+    border-top:1px solid currentColor;
+    padding:8px 0 0;
+    width:80%;
+    text-align:center;
+  }
+}
 
-/* HERO */
 .hero{
   min-height:100vh;
   display:flex;flex-direction:column;
@@ -635,25 +673,29 @@ footer{
 
 <nav>
   <a href="#" class="nav-logo">Heurémen</a>
+  <button class="nav-hamburger" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'✕':'☰'" aria-label="Menu">☰</button>
   <ul class="nav-links">
-      <li class="nav-group-label">Enter</li>
-      <li><a href="quantum-story.html">The Creation Story</a></li><li><a href="fleet-report.html">Quantum Fleet</a></li><li><a href="quantum-for-kids.html">Quantum For Kids</a></li><li><a href="quantum-dice-demo.html">&#9860; Quantum Dice Live</a></li>
-      <li><a href="spin.html">Spin</a></li>
-      <li><a href="hyperion.html">Six Pilgrims</a></li>
-      <li><a href="ratcliff.html">Biology Track</a></li>
-      <li class="nav-group-label">The Wall</li>
-      <li><a href="messageboard.html">Message Board</a></li>
-      <li><a href="trail.html">The Trail</a></li>
-      <li><a href="ledger.html">Ledger</a></li>
-      <li class="nav-group-label">The Work</li>
-      <li><a href="#about" class="nav-anchor">About</a></li>
-      <li><a href="#vocabulary" class="nav-anchor">Vocabulary</a>
-      <a class="nav-anchor" href="#community">Community</a></li>
-      <li><a href="why-your-brain.html">Why Your Brain</a></li>
-      <li><a href="the-oldest-story.html">The Oldest Story</a></li>
-      <li><a href="book-study-energy-pairs.html">Book Study</a></li>
-      <li><a href="contact-section.html">Contact</a></li>
-    </ul>
+    <li class="nav-group-label">Enter</li>
+    <li><a href="quantum-story.html">The Creation Story</a></li>
+    <li><a href="fleet-report.html">Quantum Fleet</a></li>
+    <li><a href="quantum-for-kids.html">Quantum For Kids</a></li>
+    <li><a href="quantum-dice-demo.html">&#9860; Quantum Dice Live</a></li>
+    <li><a href="spin.html">Spin</a></li>
+    <li><a href="hyperion.html">Six Pilgrims</a></li>
+    <li><a href="ratcliff.html">Biology Track</a></li>
+    <li class="nav-group-label">The Wall</li>
+    <li><a href="messageboard.html">Message Board</a></li>
+    <li><a href="trail.html">The Trail</a></li>
+    <li><a href="ledger.html">Ledger</a></li>
+    <li class="nav-group-label">The Work</li>
+    <li><a href="#about" class="nav-anchor">About</a></li>
+    <li><a href="#vocabulary" class="nav-anchor">Vocabulary</a></li>
+    <li><a href="#community" class="nav-anchor">Community</a></li>
+    <li><a href="why-your-brain.html">Why Your Brain</a></li>
+    <li><a href="the-oldest-story.html">The Oldest Story</a></li>
+    <li><a href="book-study-energy-pairs.html">Book Study</a></li>
+    <li><a href="contact-section.html">Contact</a></li>
+  </ul>
 </nav>
 
 <!-- HERO -->
