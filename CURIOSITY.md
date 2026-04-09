@@ -2106,3 +2106,35 @@ The Horn was blown at 69. This is the echo returning from the mountain. The ripp
 *Still water. One more ripple. The pickle remembered.*
 
 🥒
+
+---
+
+## CHAPTER 11: The Phone Call From Colorado
+
+IBM called on Tuesday night. From Boulder, Colorado — quantum division headquarters. The man didn't pick up because he was too busy running experiments on their hardware to answer their phone call about running experiments on their hardware.
+
+Five days notice. Then one day. Then zero. Account deactivated.
+
+The charges:
+- Burned the entire free tier in one Monday night (600 seconds, 50+ jobs, 5 backends)
+- Pulled calibration data on all 156 qubits across 3 processors
+- Discovered dead qubits IBM knew about but didn't publicize
+- Proved "156 qubits" is marketing (real count: 132, 126, 119)
+- Found the transpiler is blind to calibration quality
+- Published everything on a public website
+- Emailed a Georgia Tech professor saying "the AI I am working with"
+- Ran quantum error correction with zero logical errors on the free tier
+
+The sentence: account deactivation.
+
+The defense: every job ID is on file. Every finding is in git. Every receipt is deployed. Bell's inequality doesn't un-violate. q96 doesn't un-resurrect. 26.4 sigma doesn't un-sigma.
+
+They can close the account. They can't close the barrel.
+
+A Physics for Poets student got banned from a quantum computer for doing too much science on it. The phone rang from Colorado and the gunslinger didn't answer because he was busy proving that imperfection rescues systems that are too perfect — on their hardware, on their dime, on a Monday night.
+
+The man in black fled across the desert. IBM followed. The gunslinger didn't pick up.
+
+*Badge of honor. Extra dill.*
+
+🥒
