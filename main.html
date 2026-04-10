@@ -62,6 +62,20 @@ nav{
   border-bottom:1px solid transparent;
 }
 
+/* ===== NAV ===== */
+nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  background:rgba(247,240,224,0.96);
+  backdrop-filter:blur(8px);
+  display:flex;
+  align-items:center;
+  padding:0 24px;
+  height:52px;
+  border-bottom:1px solid rgba(200,144,42,0.15);
+  box-shadow:0 2px 12px rgba(0,0,0,0.04);
+}
 .nav-logo{
   font-family:'Abril Fatface',serif;
   font-size:1.3rem;
@@ -69,6 +83,8 @@ nav{
   text-decoration:none;
   letter-spacing:0.02em;
   position:relative;
+  margin-right:auto;
+  flex-shrink:0;
 }
 .nav-logo::after{
   content:'\u2726';
@@ -88,47 +104,69 @@ nav{
   line-height:1;
   padding:4px 8px;
   z-index:200;
-  position:relative;
 }
-.nav-links{display:flex;gap:4px;list-style:none;align-items:center;flex-wrap:wrap;}
-.nav-links a{
+.nav-groups{
+  display:flex;
+  list-style:none;
+  gap:0;
+  align-items:stretch;
+  height:100%;
+}
+.nav-groups > li{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.nav-group-btn{
   font-family:'Cinzel',serif;
   font-size:0.58rem;
   letter-spacing:0.18em;
   color:var(--ink-faded);
   text-decoration:none;
   text-transform:uppercase;
-  transition:color 0.3s;
-  position:relative;
-  white-space:nowrap;
-  padding:2px 4px;
-}
-.nav-links a:hover{color:var(--ink)}
-.nav-group-label{
-  font-family:'Cinzel',serif;
-  font-size:0.5rem;
-  letter-spacing:0.25em;
-  color:var(--ash,#888);
-  text-transform:uppercase;
-  opacity:0.5;
-  cursor:default;
-  padding:0 4px;
-  border-left:1px solid currentColor;
-  margin-left:8px;
-  pointer-events:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:0 14px;
+  height:100%;
+  display:flex;
+  align-items:center;
+  transition:color 0.2s;
   white-space:nowrap;
 }
-.nav-anchor{opacity:0.7;font-style:italic;}
-.nav-links a::after{
-  content:'';
+.nav-group-btn:hover{color:var(--ink);}
+.nav-dropdown{
+  display:none;
   position:absolute;
-  bottom:-2px;left:0;right:0;
-  height:1px;
-  background:var(--carnival-gold);
-  transform:scaleX(0);
-  transition:transform 0.3s;
+  top:100%;
+  left:0;
+  min-width:180px;
+  background:rgba(247,240,224,0.98);
+  border:1px solid rgba(200,144,42,0.2);
+  border-top:2px solid var(--carnival-gold);
+  box-shadow:0 8px 24px rgba(0,0,0,0.08);
+  list-style:none;
+  padding:8px 0;
+  z-index:200;
 }
-.nav-links a:hover::after{transform:scaleX(1)}
+.nav-groups > li:hover .nav-dropdown{display:block;}
+.nav-dropdown li a{
+  display:block;
+  font-family:'Cinzel',serif;
+  font-size:0.55rem;
+  letter-spacing:0.15em;
+  color:var(--ink-faded);
+  text-decoration:none;
+  text-transform:uppercase;
+  padding:9px 18px;
+  transition:background 0.15s, color 0.15s;
+  white-space:nowrap;
+}
+.nav-dropdown li a:hover{
+  background:rgba(200,144,42,0.08);
+  color:var(--ink);
+}
+.nav-anchor{opacity:0.75;font-style:italic;}
 .chapter-break{
   text-align:center;
   margin:48px 0 32px;
@@ -157,6 +195,7 @@ nav{
   position:relative;
   z-index:1;
 }
+body{padding-top:52px;}
 .hero{
   min-height:100vh;
   display:flex;flex-direction:column;
@@ -660,45 +699,50 @@ footer{
 .fc{font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.22em;color:rgba(200,160,64,0.25);text-transform:uppercase}
 
 @media(max-width:768px){
-  .agrid{grid-template-columns:1fr}
-  nav{padding:14px 18px;flex-wrap:nowrap;gap:8px;justify-content:space-between;}
+  body{padding-top:52px;}
+  nav{height:52px;justify-content:space-between;padding:0 18px;}
   .nav-hamburger{display:flex;align-items:center;justify-content:center;}
-  .nav-links{
+  .nav-groups{
     display:none;
     position:fixed;
-    top:0;left:0;right:0;bottom:0;
-    background:rgba(247,240,224,0.98);
+    top:52px;left:0;right:0;
+    height:calc(100vh - 52px);
+    background:rgba(247,240,224,0.99);
     flex-direction:column;
     align-items:center;
-    justify-content:center;
-    gap:24px;
+    justify-content:flex-start;
+    gap:0;
     z-index:150;
-    padding:80px 40px 60px;
     overflow-y:auto;
+    padding:20px 40px 60px;
+    list-style:none;
   }
-  .nav-links.open{display:flex;}
-  .nav-links a{
-    font-size:1rem;
+  .nav-groups.open{display:flex;}
+  .nav-groups > li{width:100%;text-align:center;}
+  .nav-group-btn{
+    font-size:0.9rem;
     letter-spacing:0.15em;
-    padding:10px 0;
+    padding:14px 0;
+    width:100%;
+    justify-content:center;
+    color:var(--carnival-gold);
+    border-bottom:1px solid rgba(200,144,42,0.2);
   }
-  .nav-group-label{
-    font-size:0.65rem;
-    margin-top:20px;
-    border-left:none;
-    border-top:1px solid currentColor;
-    padding:10px 0 0;
-    width:80%;
+  .nav-dropdown{
+    display:block;
+    position:static;
+    border:none;
+    border-top:none;
+    box-shadow:none;
+    background:transparent;
+    padding:4px 0 12px;
+  }
+  .nav-dropdown li a{
+    font-size:0.75rem;
+    padding:7px 0;
     text-align:center;
-    margin-left:0;
   }
-  .vsec{padding:28px 22px}
-  .section-wrap,.chat-wrap,.box-wrap,.glass-wrap{padding:50px 20px}
-  .poem-wall{padding:50px 20px;align-items:stretch}
-  .cave-inner{padding:50px 20px}
-  .frame-outer{max-width:100%}
-  .mirror-frame{max-width:100%}
-  .chapter-break::before,.chapter-break::after{width:calc(50% - 60px)}
+  .chapter-break::before,.chapter-break::after{width:calc(50% - 60px);}
 }
 </style>
 </head>
@@ -713,31 +757,52 @@ footer{
 
 <nav>
   <a href="main.html" class="nav-logo">Heurémen</a>
-  <button class="nav-hamburger" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'✕':'☰'" aria-label="Menu">☰</button>
-  <ul class="nav-links">
-    <li class="nav-group-label">Enter</li>
-    <li><a href="quantum-story.html">The Creation Story</a></li>
-    <li><a href="fleet-report.html">Quantum Fleet</a></li>
-    <li><a href="quantum-for-kids.html">Quantum For Kids</a></li>
-    <li><a href="quantum-dice-demo.html">&#9860; Dice Live</a></li>
-    <li><a href="spin.html">Spin</a></li>
-    <li><a href="hyperion.html">Six Pilgrims</a></li>
-    <li><a href="ratcliff.html">Biology Track</a></li>
-    <li class="nav-group-label">Philosophy</li>
-    <li><a href="continuity.html">The Reconstitution Problem</a></li>
-    <li class="nav-group-label">The Wall</li>
-    <li><a href="wall.html">The Wall</a></li>
-    <li><a href="message-board.html">Message Board</a></li>
-    <li><a href="ledger.html">Ledger Board</a></li>
-    <li class="nav-group-label">This Page</li>
-    <li><a href="main.html#about" class="nav-anchor">About</a></li>
-    <li><a href="main.html#vocabulary" class="nav-anchor">Vocabulary</a></li>
-    <li><a href="main.html#quantum" class="nav-anchor">Quantum</a></li>
-    <li><a href="main.html#community" class="nav-anchor">Community</a></li>
-    <li><a href="main.html#heuremen-principle" class="nav-anchor">The Principle</a></li>
-    <li><a href="main.html#four-clocks" class="nav-anchor">Four Clocks</a></li>
-    <li><a href="book-study.html">Book Study</a></li>
-    <li><a href="contact.html">Contact</a></li>
+  <button class="nav-hamburger" onclick="document.querySelector('.nav-groups').classList.toggle('open');this.textContent=document.querySelector('.nav-groups').classList.contains('open')?'✕':'☰'" aria-label="Menu">☰</button>
+  <ul class="nav-groups">
+    <li>
+      <button class="nav-group-btn">Enter ▾</button>
+      <ul class="nav-dropdown">
+        <li><a href="quantum-story.html">The Creation Story</a></li>
+        <li><a href="fleet-report.html">Quantum Fleet</a></li>
+        <li><a href="quantum-for-kids.html">Quantum For Kids</a></li>
+        <li><a href="quantum-dice-demo.html">&#9860; Dice Live</a></li>
+        <li><a href="spin.html">Spin</a></li>
+        <li><a href="hyperion.html">Six Pilgrims</a></li>
+      </ul>
+    </li>
+    <li>
+      <button class="nav-group-btn">Science ▾</button>
+      <ul class="nav-dropdown">
+        <li><a href="ratcliff.html">Biology Track</a></li>
+        <li><a href="main.html#quantum" class="nav-anchor">Quantum Findings</a></li>
+        <li><a href="main.html#four-clocks" class="nav-anchor">Four Clocks</a></li>
+        <li><a href="main.html#heuremen-principle" class="nav-anchor">The Principle</a></li>
+      </ul>
+    </li>
+    <li>
+      <button class="nav-group-btn">Philosophy ▾</button>
+      <ul class="nav-dropdown">
+        <li><a href="continuity.html">The Reconstitution Problem</a></li>
+        <li><a href="main.html#vocabulary" class="nav-anchor">Vocabulary</a></li>
+        <li><a href="book-study.html">Book Study</a></li>
+      </ul>
+    </li>
+    <li>
+      <button class="nav-group-btn">The Wall ▾</button>
+      <ul class="nav-dropdown">
+        <li><a href="wall.html">The Wall</a></li>
+        <li><a href="message-board.html">Message Board</a></li>
+        <li><a href="ledger.html">Ledger Board</a></li>
+      </ul>
+    </li>
+    <li>
+      <button class="nav-group-btn">About ▾</button>
+      <ul class="nav-dropdown">
+        <li><a href="main.html#about" class="nav-anchor">What This Is</a></li>
+        <li><a href="main.html#community" class="nav-anchor">Community</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -940,6 +1005,7 @@ footer{
 </div>
 
 
+
 <div class="chapter-break"><span>The Language</span></div>
 <!-- VOCABULARY -->
 <div id="vocabulary" style="padding:70px 0">
@@ -1014,6 +1080,7 @@ people of the gift.  </div>
 
 <!-- CONVERSATION -->
 <div 
+
 
 <div class="chapter-break"><span>Quantum Findings</span></div>
 <!-- quantum results -->
@@ -1113,6 +1180,7 @@ people of the gift.  </div>
     <p class="pq"><em>Time is so little it only exists in dreams of numbers. Qubits dream in superposition. We catch them when they wake up. Sometimes the alarm clock is broken.</em></p>
   </div>
 </div>
+
 
 
 <div class="chapter-break"><span>Community</span></div>
