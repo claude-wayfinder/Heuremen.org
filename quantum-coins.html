@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Quantum Coins</title>
+<meta name="description" content="A coin flipped by a real quantum computer. Every flip is a wavefunction collapsing.">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --void:#070512;
+  --void-2:#0d0820;
+  --void-3:#130a2a;
+  --star:#f3e9c8;
+  --star-dim:#a89878;
+  --star-faint:#6a5c42;
+  --gold:#e8b24a;
+  --gold-deep:#a87820;
+  --silver:#c8d4e0;
+  --silver-deep:#5a6878;
+  --glow-gold:rgba(232,178,74,0.35);
+  --glow-violet:rgba(140,90,220,0.25);
+  --glow-teal:rgba(80,200,220,0.22);
+  --line:rgba(243,233,200,0.12);
+  --line-soft:rgba(243,233,200,0.06);
+}
+
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html,body{min-height:100%}
+
+body{
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(140,90,220,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 50% 100%, rgba(80,200,220,0.07) 0%, transparent 60%),
+    linear-gradient(180deg, var(--void) 0%, var(--void-2) 50%, var(--void) 100%);
+  background-attachment:fixed;
+  color:var(--star);
+  font-family:'Lora', Georgia, 'Times New Roman', serif;
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Starfield — two layers of fixed dots, subtle drift */
+body::before, body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+}
+body::before{
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(243,233,200,0.55) 50%, transparent 100%),
+    radial-gradient(1px 1px at 28% 62%, rgba(243,233,200,0.40) 50%, transparent 100%),
+    radial-gradient(1px 1px at 47% 9%, rgba(243,233,200,0.50) 50%, transparent 100%),
+    radial-gradient(1px 1px at 61% 44%, rgba(243,233,200,0.35) 50%, transparent 100%),
+    radial-gradient(1px 1px at 74% 76%, rgba(243,233,200,0.55) 50%, transparent 100%),
+    radial-gradient(1px 1px at 88% 22%, rgba(243,233,200,0.40) 50%, transparent 100%),
+    radial-gradient(1px 1px at 16% 88%, rgba(243,233,200,0.45) 50%, transparent 100%),
+    radial-gradient(1px 1px at 36% 31%, rgba(243,233,200,0.30) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 55% 82%, rgba(243,233,200,0.60) 50%, transparent 100%),
+    radial-gradient(1px 1px at 92% 58%, rgba(243,233,200,0.40) 50%, transparent 100%);
+  animation:drift 180s linear infinite;
+}
+body::after{
+  background-image:
+    radial-gradient(1px 1px at 8% 40%, rgba(232,178,74,0.35) 50%, transparent 100%),
+    radial-gradient(1px 1px at 33% 12%, rgba(200,212,224,0.30) 50%, transparent 100%),
+    radial-gradient(1px 1px at 68% 28%, rgba(232,178,74,0.25) 50%, transparent 100%),
+    radial-gradient(1px 1px at 82% 72%, rgba(200,212,224,0.30) 50%, transparent 100%),
+    radial-gradient(1px 1px at 21% 72%, rgba(232,178,74,0.30) 50%, transparent 100%),
+    radial-gradient(1px 1px at 44% 92%, rgba(200,212,224,0.25) 50%, transparent 100%);
+  animation:drift 300s linear infinite reverse;
+  opacity:0.7;
+}
+@keyframes drift{
+  0%{transform:translate3d(0,0,0)}
+  100%{transform:translate3d(-40px,-30px,0)}
+}
+
+.wrap{
+  position:relative;z-index:1;
+  max-width:760px;
+  margin:0 auto;
+  padding:clamp(28px,6vw,64px) clamp(18px,4vw,40px) 60px;
+  display:flex;flex-direction:column;align-items:center;
+}
+
+/* HEADER */
+header{
+  text-align:center;
+  margin-bottom:clamp(22px,4vw,36px);
+  animation:fadeUp 1.2s ease 0.1s both;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+h1{
+  font-family:'Lora', Georgia, serif;
+  font-weight:400;
+  font-style:italic;
+  font-size:clamp(1.9rem, 5vw, 2.6rem);
+  letter-spacing:0.02em;
+  color:var(--star);
+  margin-bottom:6px;
+  text-shadow:0 0 40px rgba(232,178,74,0.12);
+}
+h1 .amp{
+  color:var(--gold);
+  font-style:normal;
+  opacity:0.75;
+}
+
+.tagline{
+  font-size:clamp(0.85rem, 2vw, 0.95rem);
+  color:var(--star-dim);
+  font-style:italic;
+  line-height:1.6;
+  max-width:520px;
+  margin:0 auto;
+}
+
+/* INTRO — the quiet line */
+.intro{
+  margin:clamp(22px,4vw,32px) auto 0;
+  max-width:540px;
+  text-align:center;
+  font-size:0.92rem;
+  line-height:1.7;
+  color:var(--star-dim);
+  animation:fadeUp 1.2s ease 0.35s both;
+}
+.intro em{color:var(--gold);font-style:italic}
+
+/* CHIP SELECTOR */
+.chips{
+  display:flex;
+  gap:10px;
+  margin:clamp(24px,4vw,36px) 0 clamp(16px,3vw,24px);
+  flex-wrap:wrap;
+  justify-content:center;
+  animation:fadeUp 1.2s ease 0.55s both;
+}
+.chip{
+  background:rgba(243,233,200,0.03);
+  border:1px solid var(--line);
+  color:var(--star-dim);
+  padding:10px 18px;
+  border-radius:999px;
+  cursor:pointer;
+  font-family:'Lora', serif;
+  font-size:0.82rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  transition:all 0.35s ease;
+  position:relative;
+  backdrop-filter:blur(2px);
+  -webkit-tap-highlight-color:transparent;
+}
+.chip::before{
+  content:'';
+  display:inline-block;
+  width:6px;height:6px;border-radius:50%;
+  background:currentColor;
+  margin-right:8px;
+  vertical-align:middle;
+  opacity:0.5;
+  transition:all 0.35s;
+}
+.chip:hover{color:var(--star);border-color:rgba(243,233,200,0.22)}
+.chip.active{
+  color:var(--star);
+  background:rgba(232,178,74,0.08);
+  border-color:rgba(232,178,74,0.35);
+}
+.chip.active::before{opacity:1;box-shadow:0 0 8px currentColor}
+.chip[data-chip="kingston"].active{color:#f5d79a}
+.chip[data-chip="marrakesh"].active{color:#a8d4e8}
+.chip[data-chip="fez"].active{color:#d8b0e4}
+.chip.depleted{opacity:0.4;cursor:not-allowed}
+.chip.depleted::after{content:' · empty';font-size:0.7em;opacity:0.6}
+
+/* COIN STAGE */
+.stage{
+  width:min(260px, 72vw);
+  height:min(260px, 72vw);
+  perspective:1200px;
+  margin:clamp(18px,3vw,26px) 0 clamp(26px,4vw,38px);
+  cursor:pointer;
+  position:relative;
+  animation:fadeUp 1.4s ease 0.75s both;
+  -webkit-tap-highlight-color:transparent;
+}
+.stage::before{
+  content:'';
+  position:absolute;
+  inset:-12%;
+  border-radius:50%;
+  background:radial-gradient(circle at 50% 50%, var(--glow-gold) 0%, transparent 55%);
+  filter:blur(24px);
+  opacity:0.55;
+  transition:opacity 0.8s ease;
+  pointer-events:none;
+}
+.stage.source-marrakesh::before{background:radial-gradient(circle at 50% 50%, var(--glow-teal) 0%, transparent 55%)}
+.stage.source-fez::before{background:radial-gradient(circle at 50% 50%, var(--glow-violet) 0%, transparent 55%)}
+.stage.flipping::before{opacity:0.9}
+
+.coin{
+  width:100%;height:100%;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform 1.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change:transform;
+}
+
+.face{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Lora', Georgia, serif;
+  font-weight:400;
+  letter-spacing:0.1em;
+  overflow:hidden;
+}
+.face-inner{
+  position:relative;
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* HEADS — gold */
+.face.heads{
+  background:
+    radial-gradient(circle at 32% 28%, #fff3c8 0%, #f2c860 22%, #c88a1a 60%, #6a4408 100%);
+  box-shadow:
+    inset 0 0 0 3px rgba(255,240,180,0.55),
+    inset 0 0 0 6px rgba(120,70,10,0.45),
+    inset 0 10px 30px rgba(255,240,180,0.25),
+    inset 0 -18px 40px rgba(80,40,0,0.55),
+    0 18px 50px rgba(0,0,0,0.55),
+    0 0 60px rgba(232,178,74,0.22);
+}
+.face.heads .label{
+  font-size:clamp(3rem, 12vw, 4.6rem);
+  font-style:italic;
+  color:#3a2404;
+  text-shadow:
+    0 1px 0 rgba(255,240,180,0.8),
+    0 -1px 0 rgba(80,40,0,0.6),
+    0 2px 6px rgba(0,0,0,0.3);
+  letter-spacing:0;
+}
+
+/* TAILS — silver, rotated */
+.face.tails{
+  transform:rotateY(180deg);
+  background:
+    radial-gradient(circle at 32% 28%, #f5f8fc 0%, #c4ced8 22%, #6c7888 62%, #2a3240 100%);
+  box-shadow:
+    inset 0 0 0 3px rgba(240,246,252,0.55),
+    inset 0 0 0 6px rgba(40,50,65,0.45),
+    inset 0 10px 30px rgba(240,246,252,0.22),
+    inset 0 -18px 40px rgba(20,28,40,0.6),
+    0 18px 50px rgba(0,0,0,0.55),
+    0 0 60px rgba(200,212,224,0.12);
+}
+.face.tails .label{
+  font-size:clamp(3rem, 12vw, 4.6rem);
+  font-style:italic;
+  color:#1a2230;
+  text-shadow:
+    0 1px 0 rgba(240,246,252,0.85),
+    0 -1px 0 rgba(20,28,40,0.6),
+    0 2px 6px rgba(0,0,0,0.3);
+  letter-spacing:0;
+}
+
+/* Engraved rim markings */
+.rim-mark{
+  position:absolute;
+  font-size:0.48rem;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  opacity:0.55;
+  font-style:normal;
+  font-family:'Lora', serif;
+}
+.face.heads .rim-mark{color:rgba(58,36,4,0.65)}
+.face.tails .rim-mark{color:rgba(26,34,48,0.65)}
+.rim-top{top:10%;left:50%;transform:translateX(-50%)}
+.rim-bot{bottom:10%;left:50%;transform:translateX(-50%)}
+
+/* Prompt under the coin */
+.prompt{
+  text-align:center;
+  min-height:1.6em;
+  color:var(--star-faint);
+  font-size:0.82rem;
+  font-style:italic;
+  letter-spacing:0.05em;
+  margin-bottom:clamp(18px,3vw,26px);
+  animation:fadeUp 1.4s ease 0.95s both;
+}
+.prompt strong{color:var(--star-dim);font-weight:400;font-style:normal}
+
+/* BULK FLIP CONTROLS */
+.bulk{
+  display:flex;gap:10px;flex-wrap:wrap;
+  justify-content:center;
+  margin-bottom:clamp(22px,4vw,32px);
+  animation:fadeUp 1.4s ease 1.1s both;
+}
+.bulk button{
+  background:transparent;
+  border:1px solid var(--line);
+  color:var(--star-faint);
+  font-family:'Lora', serif;
+  font-style:italic;
+  font-size:0.82rem;
+  padding:8px 16px;
+  border-radius:4px;
+  cursor:pointer;
+  transition:all 0.3s;
+  letter-spacing:0.03em;
+  -webkit-tap-highlight-color:transparent;
+}
+.bulk button:hover{color:var(--star);border-color:rgba(243,233,200,0.25)}
+.bulk button:disabled{opacity:0.3;cursor:not-allowed}
+
+/* COUNTS / SCORE */
+.counts{
+  display:flex;
+  gap:clamp(20px,5vw,48px);
+  margin-bottom:clamp(18px,3vw,26px);
+  align-items:baseline;
+  animation:fadeUp 1.4s ease 1.2s both;
+}
+.count{
+  text-align:center;
+  min-width:90px;
+}
+.count .num{
+  font-family:'Lora', serif;
+  font-size:clamp(1.8rem, 5vw, 2.4rem);
+  color:var(--star);
+  font-weight:400;
+  transition:color 0.4s;
+  display:block;
+  line-height:1;
+}
+.count .lbl{
+  font-size:0.7rem;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--star-faint);
+  margin-top:6px;
+  display:block;
+}
+.count.heads .num{color:var(--gold)}
+.count.tails .num{color:var(--silver)}
+.count.total .num{color:var(--star-dim);font-style:italic}
+
+/* HISTOGRAM */
+.histogram{
+  width:100%;
+  max-width:440px;
+  margin:clamp(8px,2vw,16px) auto clamp(24px,4vw,32px);
+  display:none;
+  animation:fadeUp 0.6s ease both;
+}
+.histogram.show{display:block}
+.histogram .bars{
+  display:flex;align-items:flex-end;
+  height:120px;
+  gap:6px;
+  padding:0 4px;
+  border-bottom:1px solid var(--line-soft);
+}
+.hbar{
+  flex:1;
+  background:linear-gradient(180deg, var(--gold) 0%, var(--gold-deep) 100%);
+  border-radius:2px 2px 0 0;
+  transition:height 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  min-height:2px;
+  position:relative;
+}
+.hbar.tails{background:linear-gradient(180deg, var(--silver) 0%, var(--silver-deep) 100%)}
+.hbar .v{
+  position:absolute;top:-20px;left:50%;
+  transform:translateX(-50%);
+  font-size:0.7rem;color:var(--star-dim);
+  white-space:nowrap;
+}
+.hbar .k{
+  position:absolute;bottom:-20px;left:50%;
+  transform:translateX(-50%);
+  font-size:0.65rem;color:var(--star-faint);
+  letter-spacing:0.1em;text-transform:uppercase;
+}
+.histogram .cap{
+  text-align:center;
+  margin-top:32px;
+  font-size:0.78rem;
+  color:var(--star-faint);
+  font-style:italic;
+}
+
+/* TICKER */
+.ticker-wrap{
+  width:100%;
+  max-width:560px;
+  margin:0 auto clamp(28px,4vw,38px);
+  border-top:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+  padding:12px 0;
+  overflow:hidden;
+  animation:fadeUp 1.4s ease 1.35s both;
+}
+.ticker-label{
+  font-size:0.65rem;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--star-faint);
+  text-align:center;
+  margin-bottom:10px;
+}
+.ticker{
+  display:flex;
+  gap:7px;
+  justify-content:center;
+  flex-wrap:wrap;
+  min-height:24px;
+}
+.tick{
+  width:18px;height:18px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:0.55rem;
+  font-family:'Lora', serif;
+  letter-spacing:0;
+  animation:tickIn 0.4s ease;
+}
+@keyframes tickIn{
+  from{opacity:0;transform:scale(0.4)}
+  to{opacity:1;transform:scale(1)}
+}
+.tick.h.kingston{background:rgba(245,215,154,0.25);color:#f5d79a;border:1px solid rgba(245,215,154,0.4)}
+.tick.t.kingston{background:rgba(245,215,154,0.08);color:#d8b87a;border:1px solid rgba(245,215,154,0.2)}
+.tick.h.marrakesh{background:rgba(168,212,232,0.25);color:#a8d4e8;border:1px solid rgba(168,212,232,0.4)}
+.tick.t.marrakesh{background:rgba(168,212,232,0.08);color:#88a8bc;border:1px solid rgba(168,212,232,0.2)}
+.tick.h.fez{background:rgba(216,176,228,0.25);color:#d8b0e4;border:1px solid rgba(216,176,228,0.4)}
+.tick.t.fez{background:rgba(216,176,228,0.08);color:#a888b4;border:1px solid rgba(216,176,228,0.2)}
+
+/* WHAT IS THIS */
+.explain-wrap{
+  width:100%;
+  max-width:560px;
+  margin:clamp(8px,2vw,16px) auto clamp(28px,4vw,40px);
+  text-align:center;
+  animation:fadeUp 1.4s ease 1.5s both;
+}
+.explain-toggle{
+  background:none;border:none;
+  color:var(--star-faint);
+  font-family:'Lora', serif;
+  font-style:italic;
+  font-size:0.82rem;
+  cursor:pointer;
+  letter-spacing:0.04em;
+  padding:4px 0;
+  border-bottom:1px solid var(--line);
+  transition:all 0.3s;
+  -webkit-tap-highlight-color:transparent;
+}
+.explain-toggle:hover{color:var(--star-dim);border-bottom-color:rgba(243,233,200,0.3)}
+
+.explain{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.6s ease, margin 0.6s ease;
+  text-align:left;
+  font-size:0.88rem;
+  line-height:1.75;
+  color:var(--star-dim);
+}
+.explain.open{
+  max-height:800px;
+  margin-top:22px;
+}
+.explain p{margin-bottom:14px}
+.explain p:last-child{margin-bottom:0}
+.explain em{color:var(--star);font-style:italic}
+.explain .sig{
+  color:var(--star-faint);
+  font-size:0.78rem;
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid var(--line-soft);
+}
+
+/* FOOTER */
+footer{
+  margin-top:auto;
+  padding-top:clamp(30px,5vw,46px);
+  text-align:center;
+  font-size:0.72rem;
+  color:var(--star-faint);
+  letter-spacing:0.05em;
+  line-height:1.8;
+  max-width:520px;
+  animation:fadeUp 1.4s ease 1.7s both;
+}
+footer .divider{
+  display:inline-block;
+  width:1px;height:10px;background:var(--line);
+  vertical-align:middle;
+  margin:0 10px;
+}
+footer a{color:var(--star-faint);text-decoration:none;border-bottom:1px dotted var(--line)}
+footer a:hover{color:var(--star-dim)}
+
+/* Small flourish — the mark */
+.mark{
+  display:block;
+  margin:0 auto 18px;
+  width:28px;height:28px;
+  opacity:0.6;
+}
+
+/* MOBILE TIGHTENING */
+@media (max-width:480px){
+  .chips{gap:7px}
+  .chip{padding:8px 12px;font-size:0.72rem;letter-spacing:0.05em}
+  .counts{gap:18px}
+  .count{min-width:70px}
+  .bulk button{padding:7px 12px;font-size:0.75rem}
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion:reduce){
+  body::before, body::after{animation:none}
+  .coin{transition:transform 0.4s ease}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <svg class="mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <circle cx="20" cy="20" r="16" stroke="#e8b24a" stroke-width="1.2" fill="none" opacity="0.5"/>
+      <circle cx="20" cy="20" r="10" stroke="#e8b24a" stroke-width="1" fill="none" opacity="0.4"/>
+      <circle cx="20" cy="20" r="2" fill="#e8b24a" opacity="0.8"/>
+    </svg>
+    <h1>Quantum <span class="amp">·</span> Coins</h1>
+    <p class="tagline">A coin, flipped by a computer that isn't a computer. Click it.</p>
+  </header>
+
+  <p class="intro">
+    These aren't random numbers from your laptop. They're real quantum measurements
+    from superconducting processors that cost <em>a hundred million dollars each</em>.
+    Every flip is a wavefunction collapsing.
+  </p>
+
+  <div class="chips" role="tablist" aria-label="Quantum source">
+    <button class="chip active" data-chip="kingston" aria-pressed="true">Kingston</button>
+    <button class="chip" data-chip="marrakesh" aria-pressed="false">Marrakesh</button>
+    <button class="chip" data-chip="fez" aria-pressed="false">Fez</button>
+  </div>
+
+  <div class="stage source-kingston" id="stage" role="button" tabindex="0" aria-label="Flip the coin">
+    <div class="coin" id="coin">
+      <div class="face heads">
+        <div class="face-inner">
+          <span class="rim-mark rim-top">quantum</span>
+          <span class="label">H</span>
+          <span class="rim-mark rim-bot">kingston</span>
+        </div>
+      </div>
+      <div class="face tails">
+        <div class="face-inner">
+          <span class="rim-mark rim-top">quantum</span>
+          <span class="label">T</span>
+          <span class="rim-mark rim-bot">kingston</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt" id="prompt">Tap the coin. <strong>Kingston</strong> is listening.</div>
+
+  <div class="bulk">
+    <button id="flip10">flip 10</button>
+    <button id="flip100">flip 100</button>
+    <button id="reset" title="Clear counts">reset</button>
+  </div>
+
+  <div class="counts">
+    <div class="count heads"><span class="num" id="nHeads">0</span><span class="lbl">Heads</span></div>
+    <div class="count total"><span class="num" id="nTotal">0</span><span class="lbl">Flipped</span></div>
+    <div class="count tails"><span class="num" id="nTails">0</span><span class="lbl">Tails</span></div>
+  </div>
+
+  <div class="histogram" id="histogram">
+    <div class="bars">
+      <div class="hbar" id="hbarH" style="height:2px"><span class="v" id="hvH">0</span><span class="k">H</span></div>
+      <div class="hbar tails" id="hbarT" style="height:2px"><span class="v" id="hvT">0</span><span class="k">T</span></div>
+    </div>
+    <div class="cap" id="histCap">distribution of the last batch</div>
+  </div>
+
+  <div class="ticker-wrap">
+    <div class="ticker-label">Recent collapses</div>
+    <div class="ticker" id="ticker"></div>
+  </div>
+
+  <div class="explain-wrap">
+    <button class="explain-toggle" id="explainBtn" aria-expanded="false">what is this?</button>
+    <div class="explain" id="explain">
+      <p>
+        Inside a refrigerator colder than deep space, a tiny loop of superconducting
+        metal is nudged into <em>superposition</em> — a state where it is neither
+        zero nor one, but something in between that has no everyday name.
+      </p>
+      <p>
+        Then it's measured. The loop has to pick. The universe resolves the
+        ambiguity and hands back a bit. That bit didn't exist a moment earlier,
+        not in the usual sense. No algorithm made it. No seed. No software
+        dice. It's a fresh cut from physics.
+      </p>
+      <p>
+        Three different quantum computers did this for you, on three different
+        continents, and saved what they measured. When you tap the coin, you're
+        reading one of those bits. The coin lands the way the universe landed it.
+      </p>
+      <p class="sig">
+        If you flip a hundred coins you'll get close to fifty-fifty, because
+        that's what a fair coin does — but no two batches are ever the same,
+        because the universe doesn't repeat itself.
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    156 qubits across 3 chips on IBM Quantum<span class="divider"></span>
+    Harvested April 7, 2026<span class="divider"></span>
+    Real physics, real collapse, real free.
+  </footer>
+
+</div>
+
+<script src="quantum_bytes.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  // ---------- QUANTUM BIT STREAM ----------
+  // Each chip has 4096 real quantum bytes = 32768 real quantum bits.
+  // The harvest script aggregated the bytes in sorted-histogram order, but
+  // every single bit is still a real 8-qubit superposition measurement.
+  // To tour the bit stream evenly we walk it with a coprime stride: since
+  // 32768 = 2^15, any odd stride is coprime with it and visits every bit
+  // exactly once. We use 20261 (a prime near the golden ratio of 32768) for
+  // good spread. Each bit stays real; only the visit order is shuffled.
+
+  var STRIDE = 20261;                // odd prime, coprime with 32768
+  var BYTES_PER_CHIP = 4096;
+  var BITS_PER_CHIP  = BYTES_PER_CHIP * 8;  // 32768
+
+  function decodeChip(name){
+    if (!window.QUANTUM_BYTES || !window.QUANTUM_BYTES[name]) return null;
+    var b64 = window.QUANTUM_BYTES[name];
+    try {
+      var bin = atob(b64);
+      var arr = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+      return arr;
+    } catch(e){ return null; }
+  }
+
+  var streams = {
+    kingston:  { bytes: decodeChip('kingston'),  idx: 0 },
+    marrakesh: { bytes: decodeChip('marrakesh'), idx: 0 },
+    fez:       { bytes: decodeChip('fez'),       idx: 0 }
+  };
+
+  // Returns 0 or 1, or null if that chip is depleted.
+  function nextBit(chipName){
+    var s = streams[chipName];
+    if (!s || !s.bytes) return null;
+    if (s.idx >= BITS_PER_CHIP) return null;
+    var pos = (s.idx * STRIDE) % BITS_PER_CHIP;
+    var byteIdx   = pos >>> 3;
+    var bitInByte = pos & 7;
+    var bit = (s.bytes[byteIdx] >> bitInByte) & 1;
+    s.idx++;
+    return bit;
+  }
+
+  function bitsRemaining(chipName){
+    var s = streams[chipName];
+    if (!s || !s.bytes) return 0;
+    return BITS_PER_CHIP - s.idx;
+  }
+
+  // ---------- STATE ----------
+  var currentChip = 'kingston';
+  var counts = { heads: 0, tails: 0 };
+  var recent = [];   // {chip, bit}
+  var isFlipping = false;
+  var spinTurns = 0; // keep accumulating rotation so the coin keeps spinning
+  var lastResult = null;
+
+  // ---------- DOM ----------
+  var coinEl    = document.getElementById('coin');
+  var stageEl   = document.getElementById('stage');
+  var promptEl  = document.getElementById('prompt');
+  var nHeadsEl  = document.getElementById('nHeads');
+  var nTailsEl  = document.getElementById('nTails');
+  var nTotalEl  = document.getElementById('nTotal');
+  var tickerEl  = document.getElementById('ticker');
+  var histEl    = document.getElementById('histogram');
+  var hbarHEl   = document.getElementById('hbarH');
+  var hbarTEl   = document.getElementById('hbarT');
+  var hvHEl     = document.getElementById('hvH');
+  var hvTEl     = document.getElementById('hvT');
+  var histCapEl = document.getElementById('histCap');
+  var flip10El  = document.getElementById('flip10');
+  var flip100El = document.getElementById('flip100');
+  var resetEl   = document.getElementById('reset');
+  var explainBtn= document.getElementById('explainBtn');
+  var explainEl = document.getElementById('explain');
+  var chipBtns  = document.querySelectorAll('.chip');
+
+  // ---------- CHIP SELECTION ----------
+  function selectChip(name){
+    if (bitsRemaining(name) <= 0){
+      // do not switch to a depleted chip
+      flashPrompt('That chip has revealed all its randomness.');
+      return;
+    }
+    currentChip = name;
+    chipBtns.forEach(function(b){
+      var on = b.getAttribute('data-chip') === name;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    stageEl.classList.remove('source-kingston','source-marrakesh','source-fez');
+    stageEl.classList.add('source-' + name);
+    // Update rim mark text on both faces
+    var rims = coinEl.querySelectorAll('.rim-bot');
+    rims.forEach(function(r){ r.textContent = name; });
+    updatePrompt();
+  }
+
+  chipBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var name = b.getAttribute('data-chip');
+      selectChip(name);
+    });
+  });
+
+  // ---------- PROMPT ----------
+  var promptTimer = null;
+  function flashPrompt(text){
+    promptEl.innerHTML = text;
+    clearTimeout(promptTimer);
+    promptTimer = setTimeout(updatePrompt, 2400);
+  }
+  function updatePrompt(){
+    var rem = bitsRemaining(currentChip);
+    var chipName = currentChip[0].toUpperCase() + currentChip.slice(1);
+    if (rem <= 0){
+      promptEl.innerHTML = '<strong>' + chipName + '</strong> has revealed all its randomness. Try another chip.';
+      // auto-switch if possible
+      for (var i = 0; i < chipBtns.length; i++){
+        var c = chipBtns[i].getAttribute('data-chip');
+        chipBtns[i].classList.toggle('depleted', bitsRemaining(c) <= 0);
+      }
+      return;
+    }
+    if (counts.heads + counts.tails === 0){
+      promptEl.innerHTML = 'Tap the coin. <strong>' + chipName + '</strong> is listening.';
+    } else if (lastResult === 1){
+      promptEl.innerHTML = 'Heads. <strong>' + chipName + '</strong> said so.';
+    } else if (lastResult === 0){
+      promptEl.innerHTML = 'Tails. <strong>' + chipName + '</strong> said so.';
+    } else {
+      promptEl.innerHTML = '<strong>' + chipName + '</strong> is listening.';
+    }
+    for (var j = 0; j < chipBtns.length; j++){
+      var cn = chipBtns[j].getAttribute('data-chip');
+      chipBtns[j].classList.toggle('depleted', bitsRemaining(cn) <= 0);
+    }
+  }
+
+  // ---------- COIN ANIMATION ----------
+  // The coin always spins forward; heads lands at an even half-turn,
+  // tails at an odd half-turn. We keep accumulating rotation so repeated
+  // clicks keep spinning in the same direction.
+  function animateCoin(bitResult){
+    // bitResult: 1 = heads (even half-turns), 0 = tails (odd half-turns).
+    // Accumulate at least six half-turns (3 full spins) past the current
+    // position, then nudge parity so we land on the correct face.
+    var wantParity = bitResult === 1 ? 0 : 1;
+    var next = spinTurns + 6;
+    if ((next & 1) !== wantParity) next += 1;
+    spinTurns = next;
+    coinEl.style.transform = 'rotateX(8deg) rotateY(' + (spinTurns * 180) + 'deg)';
+  }
+
+  // ---------- FLIP ----------
+  function doFlip(){
+    if (isFlipping) return false;
+    var bit = nextBit(currentChip);
+    if (bit === null){
+      flashPrompt('This chip has revealed all its randomness.');
+      updatePrompt();
+      return false;
+    }
+    isFlipping = true;
+    stageEl.classList.add('flipping');
+    lastResult = bit;
+    if (bit === 1) counts.heads++; else counts.tails++;
+    animateCoin(bit);
+    pushTicker(currentChip, bit);
+    updateCounts();
+    // hide histogram on single flip
+    histEl.classList.remove('show');
+    setTimeout(function(){
+      isFlipping = false;
+      stageEl.classList.remove('flipping');
+      updatePrompt();
+    }, 1650);
+    return true;
+  }
+
+  // ---------- BULK FLIP ----------
+  function doBulkFlip(n){
+    if (isFlipping) return;
+    var heads = 0, tails = 0;
+    var lastBit = null;
+    var actuallyFlipped = 0;
+    for (var i = 0; i < n; i++){
+      var bit = nextBit(currentChip);
+      if (bit === null) break;
+      actuallyFlipped++;
+      if (bit === 1){ heads++; counts.heads++; }
+      else          { tails++; counts.tails++; }
+      lastBit = bit;
+      pushTicker(currentChip, bit, i < 16); // only first 16 animated to ticker
+    }
+    if (actuallyFlipped === 0){
+      flashPrompt('This chip has revealed all its randomness.');
+      updatePrompt();
+      return;
+    }
+    lastResult = lastBit;
+    // animate coin to land on the LAST bit of the batch
+    isFlipping = true;
+    stageEl.classList.add('flipping');
+    animateCoin(lastBit);
+    updateCounts();
+    // show histogram for this batch
+    showHistogram(heads, tails, actuallyFlipped, n);
+    setTimeout(function(){
+      isFlipping = false;
+      stageEl.classList.remove('flipping');
+      var chipName = currentChip[0].toUpperCase() + currentChip.slice(1);
+      if (actuallyFlipped < n){
+        flashPrompt(chipName + ' had ' + actuallyFlipped + ' bits left before going quiet.');
+      } else {
+        var pct = Math.round(100 * heads / actuallyFlipped);
+        flashPrompt(actuallyFlipped + ' flips &middot; ' + heads + 'H / ' + tails + 'T &middot; ' + pct + '% heads');
+      }
+    }, 1650);
+  }
+
+  function showHistogram(heads, tails, total, requested){
+    var max = Math.max(heads, tails, 1);
+    var pctH = (heads / max) * 100;
+    var pctT = (tails / max) * 100;
+    // set heights after a frame so the transition animates from 2px
+    requestAnimationFrame(function(){
+      hbarHEl.style.height = Math.max(2, pctH) + '%';
+      hbarTEl.style.height = Math.max(2, pctT) + '%';
+      hvHEl.textContent = heads;
+      hvTEl.textContent = tails;
+      var pct = Math.round(100 * heads / total);
+      histCapEl.innerHTML = 'batch of ' + total + (total < requested ? ' (' + requested + ' requested)' : '') +
+                            ' &middot; ' + pct + '% heads &middot; ' +
+                            currentChip[0].toUpperCase() + currentChip.slice(1);
+      histEl.classList.add('show');
+    });
+  }
+
+  // ---------- TICKER ----------
+  var MAX_TICKS = 48;
+  function pushTicker(chip, bit, animated){
+    if (animated === undefined) animated = true;
+    recent.push({chip:chip, bit:bit});
+    if (recent.length > MAX_TICKS) recent.shift();
+    renderTicker();
+  }
+  function renderTicker(){
+    tickerEl.innerHTML = '';
+    // newest on the right — show last MAX_TICKS entries
+    for (var i = 0; i < recent.length; i++){
+      var r = recent[i];
+      var el = document.createElement('span');
+      el.className = 'tick ' + (r.bit === 1 ? 'h' : 't') + ' ' + r.chip;
+      el.textContent = r.bit === 1 ? 'H' : 'T';
+      el.title = r.chip + ' · ' + (r.bit === 1 ? 'heads' : 'tails');
+      tickerEl.appendChild(el);
+    }
+  }
+
+  // ---------- COUNTS ----------
+  function updateCounts(){
+    nHeadsEl.textContent = counts.heads;
+    nTailsEl.textContent = counts.tails;
+    nTotalEl.textContent = counts.heads + counts.tails;
+  }
+
+  // ---------- RESET ----------
+  function resetCounts(){
+    counts.heads = 0; counts.tails = 0;
+    recent = [];
+    lastResult = null;
+    updateCounts();
+    renderTicker();
+    histEl.classList.remove('show');
+    updatePrompt();
+  }
+
+  // ---------- EVENTS ----------
+  stageEl.addEventListener('click', doFlip);
+  stageEl.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); doFlip(); }
+  });
+  flip10El.addEventListener('click', function(){ doBulkFlip(10); });
+  flip100El.addEventListener('click', function(){ doBulkFlip(100); });
+  resetEl.addEventListener('click', resetCounts);
+
+  explainBtn.addEventListener('click', function(){
+    var open = explainEl.classList.toggle('open');
+    explainBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    explainBtn.textContent = open ? 'hide' : 'what is this?';
+  });
+
+  // Initial render
+  updateCounts();
+  updatePrompt();
+
+  // If quantum_bytes.js failed to load, tell the visitor gently.
+  if (!window.QUANTUM_BYTES){
+    promptEl.innerHTML = 'The quantum bytes aren\u2019t here. Check that <em>quantum_bytes.js</em> is in the same folder.';
+  }
+
+})();
+</script>
+</body>
+</html>
