@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum Bet</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overscroll-behavior:none}
+body{
+  background:radial-gradient(ellipse at top, #1a0a2e 0%, #0a0a1a 50%, #050510 100%);
+  color:#e8e8f0;font-family:'Lora',Georgia,serif;
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  padding:24px 16px;overflow-x:hidden;-webkit-tap-highlight-color:transparent;
+}
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;opacity:0;animation:twinkle 4s infinite}
+@keyframes twinkle{0%,100%{opacity:0}50%{opacity:0.6}}
+
+.wrap{position:relative;z-index:1;max-width:640px;width:100%;display:flex;flex-direction:column;align-items:center}
+
+h1{
+  font-family:'Abril Fatface','Lora',serif;
+  font-size:clamp(1.8rem, 6vw, 2.6rem);
+  margin-bottom:6px;letter-spacing:0.02em;
+  background:linear-gradient(135deg, #d4a574 0%, #e8c89a 50%, #d4a574 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.sub{
+  color:#8888a0;font-style:italic;margin-bottom:24px;
+  text-align:center;font-size:0.95rem;max-width:480px;line-height:1.5;
+}
+
+.chips{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;justify-content:center}
+.chip{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+  color:#aab;padding:8px 16px;border-radius:20px;cursor:pointer;
+  font-family:inherit;font-size:0.85rem;transition:all 0.2s;
+}
+.chip:hover{background:rgba(255,255,255,0.08);color:#fff}
+.chip.active{background:rgba(212,165,116,0.15);border-color:#d4a574;color:#e8c89a}
+
+.prediction{
+  margin-bottom:24px;text-align:center;
+  color:#aab;font-style:italic;min-height:1.5em;
+}
+
+.choice{display:flex;gap:20px;margin-bottom:32px}
+.call-btn{
+  width:140px;height:140px;border-radius:50%;
+  border:2px solid rgba(255,255,255,0.15);
+  background:rgba(255,255,255,0.03);
+  color:#ccd;cursor:pointer;
+  font-family:'Abril Fatface',serif;font-size:1.5rem;
+  letter-spacing:0.05em;transition:all 0.3s;
+  display:flex;align-items:center;justify-content:center;
+}
+.call-btn:hover{
+  background:rgba(255,255,255,0.08);border-color:#d4a574;
+  color:#fff;transform:translateY(-2px);
+  box-shadow:0 10px 30px rgba(212,165,116,0.2);
+}
+.call-btn:active{transform:translateY(0)}
+.call-btn.heads{border-color:rgba(212,165,116,0.3)}
+.call-btn.tails{border-color:rgba(180,180,200,0.3)}
+
+.reveal{
+  min-height:80px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;margin-bottom:24px;
+  font-size:1.3rem;text-align:center;
+}
+.reveal-inner{opacity:0;transition:opacity 0.4s}
+.reveal-inner.show{opacity:1}
+.reveal-call{color:#889;font-size:1rem;font-style:italic;margin-bottom:4px}
+.reveal-result{font-family:'Abril Fatface',serif;font-size:2rem;margin:8px 0}
+.reveal-result.heads{color:#e8c89a}
+.reveal-result.tails{color:#c8d4e8}
+.reveal-verdict{font-size:0.95rem;margin-top:4px}
+.reveal-verdict.hit{color:#88e8a0}
+.reveal-verdict.miss{color:#c88088}
+
+.stats{
+  display:flex;gap:24px;margin-bottom:18px;
+  padding:16px 24px;background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);border-radius:8px;
+  flex-wrap:wrap;justify-content:center;
+}
+.stat{text-align:center}
+.stat-val{font-family:'Abril Fatface',serif;font-size:1.6rem;color:#fff;line-height:1}
+.stat-lbl{font-size:0.7rem;color:#778;text-transform:uppercase;letter-spacing:0.1em;margin-top:4px}
+
+.sigma-box{
+  margin-bottom:24px;padding:12px 20px;
+  background:rgba(0,0,0,0.3);border-radius:6px;
+  font-size:0.85rem;color:#889;text-align:center;
+  min-height:2em;max-width:420px;
+}
+.sigma-box.hot{color:#e8c89a;background:rgba(212,165,116,0.08)}
+.sigma-box.cold{color:#8888a0}
+
+.reset{
+  background:none;border:1px solid rgba(255,255,255,0.1);
+  color:#778;padding:6px 14px;border-radius:16px;
+  cursor:pointer;font-family:inherit;font-size:0.75rem;
+  margin-bottom:12px;
+}
+.reset:hover{color:#aab;border-color:rgba(255,255,255,0.2)}
+
+.what{
+  margin-top:12px;background:none;border:none;
+  color:#667;font-family:inherit;font-size:0.8rem;
+  cursor:pointer;font-style:italic;
+}
+.what:hover{color:#aab}
+.explain{
+  max-width:480px;margin-top:12px;padding:18px 22px;
+  background:rgba(255,255,255,0.02);border-left:2px solid rgba(212,165,116,0.3);
+  color:#aab;line-height:1.7;font-size:0.9rem;font-style:italic;
+  display:none;border-radius:2px;
+}
+.explain.show{display:block}
+.explain p{margin-bottom:10px}
+.explain p:last-child{margin-bottom:0}
+
+.foot{
+  margin-top:auto;padding-top:32px;color:#556;
+  font-size:0.75rem;text-align:center;font-style:italic;
+}
+
+@media (max-width:520px){
+  .call-btn{width:115px;height:115px;font-size:1.2rem}
+  .choice{gap:14px}
+  .stats{padding:12px 16px;gap:14px}
+  .stat-val{font-size:1.3rem}
+}
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="wrap">
+
+<h1>Quantum Bet</h1>
+<div class="sub">Call heads or tails before you see it. The coin is already flipped — real quantum randomness from a superconducting processor. You're not predicting the future. You're predicting the past.</div>
+
+<div class="chips" id="chips">
+  <button class="chip active" data-chip="kingston">Kingston</button>
+  <button class="chip" data-chip="marrakesh">Marrakesh</button>
+  <button class="chip" data-chip="fez">Fez</button>
+</div>
+
+<div class="prediction">Call it.</div>
+
+<div class="choice">
+  <button class="call-btn heads" onclick="call('heads')">HEADS</button>
+  <button class="call-btn tails" onclick="call('tails')">TAILS</button>
+</div>
+
+<div class="reveal">
+  <div class="reveal-inner" id="reveal">
+    <div class="reveal-call" id="reveal-call"></div>
+    <div class="reveal-result" id="reveal-result">—</div>
+    <div class="reveal-verdict" id="reveal-verdict"></div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-val" id="hits">0</div><div class="stat-lbl">Hits</div></div>
+  <div class="stat"><div class="stat-val" id="total">0</div><div class="stat-lbl">Calls</div></div>
+  <div class="stat"><div class="stat-val" id="rate">—</div><div class="stat-lbl">Rate</div></div>
+</div>
+
+<div class="sigma-box" id="sigma">Guessing a real quantum coin. 50% is chance. Anything above is data.</div>
+
+<button class="reset" onclick="reset()">reset</button>
+
+<button class="what" onclick="toggleExplain()">what is this?</button>
+<div class="explain" id="explain">
+  <p>The coin flips you're betting on already happened. On April 7, 2026, a Hadamard gate was applied to 8 qubits on three different IBM quantum computers, and the resulting superpositions were measured 4096 times each. Every bit of every measurement was a real wavefunction collapsing on real superconducting hardware at 15 millikelvin.</p>
+  <p>You're not predicting anything. The results are already written. You're asking yourself: can you see what was already decided, before you look?</p>
+  <p>Over many bets, you should hit about 50%. That's chance. Quantum mechanics says nothing about whether you can do better. But the experiment is real, the bits are real, and nobody is stopping you from trying.</p>
+  <p>If you consistently score higher than 50%, either something interesting is happening, or you're finding a pattern in the way the bits were stored. Both would be worth knowing.</p>
+</div>
+
+<div class="foot">Real quantum bits · Hadamard measurements on 156-qubit Heron r2 processors · Kingston, Marrakesh, Fez</div>
+
+</div>
+
+<script src="quantum_bytes.js"></script>
+<script>
+// Starfield
+const stars = document.getElementById('stars');
+for (let i = 0; i < 50; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.left = Math.random()*100 + '%';
+  s.style.top = Math.random()*100 + '%';
+  s.style.animationDelay = Math.random()*4 + 's';
+  stars.appendChild(s);
+}
+
+// Bit decoder
+function base64ToBytes(b64) {
+  const binary = atob(b64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes;
+}
+
+const bits = {
+  kingston: { bytes: base64ToBytes(window.QUANTUM_BYTES.kingston), idx: 0 },
+  marrakesh: { bytes: base64ToBytes(window.QUANTUM_BYTES.marrakesh), idx: 0 },
+  fez: { bytes: base64ToBytes(window.QUANTUM_BYTES.fez), idx: 0 },
+};
+
+// Use coprime stride walk to avoid serialization clustering
+const STRIDE = 20261;
+const TOTAL_BITS = 4096 * 8; // 32768
+
+function getBit(chip) {
+  const state = bits[chip];
+  if (state.idx >= TOTAL_BITS) return null;
+  const bitPos = (state.idx * STRIDE) % TOTAL_BITS;
+  const byteIdx = Math.floor(bitPos / 8);
+  const bitIdx = bitPos % 8;
+  const bit = (state.bytes[byteIdx] >> bitIdx) & 1;
+  state.idx++;
+  return bit;
+}
+
+let activeChip = 'kingston';
+document.querySelectorAll('.chip').forEach(c => {
+  c.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    activeChip = c.dataset.chip;
+  });
+});
+
+let hits = 0, total = 0;
+
+function call(choice) {
+  const bit = getBit(activeChip);
+  if (bit === null) {
+    document.getElementById('reveal-call').textContent = `${activeChip} has no bits left`;
+    document.getElementById('reveal-result').textContent = '—';
+    document.getElementById('reveal-verdict').textContent = 'try another chip';
+    document.getElementById('reveal-verdict').className = 'reveal-verdict cold';
+    document.getElementById('reveal').classList.add('show');
+    return;
+  }
+  const actual = bit === 1 ? 'heads' : 'tails';
+  const hit = choice === actual;
+
+  total++;
+  if (hit) hits++;
+
+  document.getElementById('reveal-call').textContent = `you called ${choice} on ${activeChip}`;
+  const r = document.getElementById('reveal-result');
+  r.textContent = actual.toUpperCase();
+  r.className = 'reveal-result ' + actual;
+  const v = document.getElementById('reveal-verdict');
+  v.textContent = hit ? 'hit' : 'miss';
+  v.className = 'reveal-verdict ' + (hit ? 'hit' : 'miss');
+  document.getElementById('reveal').classList.add('show');
+
+  document.getElementById('hits').textContent = hits;
+  document.getElementById('total').textContent = total;
+  const rate = total > 0 ? (100 * hits / total).toFixed(1) + '%' : '—';
+  document.getElementById('rate').textContent = rate;
+
+  updateSigma();
+}
+
+function updateSigma() {
+  const box = document.getElementById('sigma');
+  if (total < 10) {
+    box.textContent = `${total} calls. Need at least 10 for statistics to mean anything.`;
+    box.className = 'sigma-box cold';
+    return;
+  }
+  // Z-score vs chance
+  const p = hits / total;
+  const expected = 0.5;
+  const sd = Math.sqrt(0.5 * 0.5 / total);
+  const z = (p - expected) / sd;
+  const absZ = Math.abs(z);
+
+  if (absZ < 1) {
+    box.textContent = `${(100*p).toFixed(1)}% hit rate. Consistent with chance (${z.toFixed(1)}σ).`;
+    box.className = 'sigma-box cold';
+  } else if (absZ < 2) {
+    box.textContent = `${(100*p).toFixed(1)}% hit rate. Slight deviation from chance (${z.toFixed(1)}σ). Not meaningful yet.`;
+    box.className = 'sigma-box cold';
+  } else if (absZ < 3) {
+    box.textContent = `${(100*p).toFixed(1)}% hit rate. ${z.toFixed(1)}σ from chance. Getting interesting.`;
+    box.className = 'sigma-box hot';
+  } else {
+    box.textContent = `${(100*p).toFixed(1)}% hit rate. ${z.toFixed(1)}σ from chance. This is statistically significant.`;
+    box.className = 'sigma-box hot';
+  }
+}
+
+function reset() {
+  hits = 0; total = 0;
+  document.getElementById('hits').textContent = 0;
+  document.getElementById('total').textContent = 0;
+  document.getElementById('rate').textContent = '—';
+  document.getElementById('reveal').classList.remove('show');
+  document.getElementById('sigma').textContent = 'Guessing a real quantum coin. 50% is chance. Anything above is data.';
+  document.getElementById('sigma').className = 'sigma-box cold';
+}
+
+function toggleExplain() {
+  document.getElementById('explain').classList.toggle('show');
+}
+</script>
+</body>
+</html>
