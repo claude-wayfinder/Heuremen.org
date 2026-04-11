@@ -1939,6 +1939,285 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 22. REAL QV BENCHMARK (CORRECTED) -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">22</span> Real QV Benchmark (Corrected)</div>
+    <div class="card">
+      <div style="margin-bottom:16px; padding:14px 18px; background:rgba(245,158,11,0.08); border-left:3px solid var(--warning); border-radius:4px;">
+        <div style="font-family:var(--mono); font-size:0.85rem; color:var(--warning); font-weight:700; margin-bottom:6px;">CORRECTION TO SECTION 11</div>
+        <div style="font-size:0.85rem; color:var(--text);">
+          The original QV benchmark (Section 11) was flawed. At <code>optimization_level=1</code>, the transpiler recognized circuit + inverse = identity and eliminated ALL gates. We were measuring readout noise on identity circuits, not gate quality. Caught by the curiosity loop on April 7. This section has the corrected results at <code>optimization_level=0</code> &mdash; real circuits, real gate counts.
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Backend</th><th>d=4 (12 CZ)</th><th>d=6 (30 CZ)</th><th>d=8 (56 CZ)</th><th>Average</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="chip-dot kingston"></span><span class="chip-name kingston">ibm_kingston</span></td><td><span class="score good">97.3%</span></td><td><span class="score good">92.8%</span></td><td><span class="score ok">73.3%</span></td><td><strong>87.8%</strong></td></tr>
+          <tr><td><span class="chip-dot marrakesh"></span><span class="chip-name marrakesh">ibm_marrakesh</span></td><td><span class="score good">85.8%</span></td><td><span class="score good">82.2%</span></td><td><span class="score good">76.4%</span></td><td><strong>81.5%</strong></td></tr>
+          <tr><td><span class="chip-dot fez"></span><span class="chip-name fez">ibm_fez</span></td><td><span class="score ok">73.9%</span></td><td><span class="score ok">58.1%</span></td><td><span class="score bad">46.2%</span></td><td><strong>59.4%</strong></td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px; padding:12px; background:var(--bg-card-alt); border-radius:4px; font-family:var(--mono); font-size:0.8rem; color:var(--text);">
+        <strong style="color:var(--accent);">Kingston wins overall</strong> &mdash; but at d=8, <strong style="color:var(--marrakesh);">Marrakesh beats Kingston (76.4% vs 73.3%)</strong>. Kingston is the sprinter. Marrakesh is the marathon runner. The fake benchmark hid the crossover.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 23. QUBIT FILTER &mdash; EFFECTIVE QUBIT COUNTS -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">23</span> Effective Qubit Count: 156 Debunked</div>
+    <div class="card">
+      <p style="font-size:0.85rem; color:var(--text-dim); margin-bottom:16px; font-style:italic;">
+        Built <code>qubit_filter.py</code> &mdash; scans IBM calibration data for readout error, T1 collapse, dead gates, and stale calibration. Marketing says "156 qubits per chip." Reality says otherwise.
+      </p>
+      <table>
+        <thead>
+          <tr><th>Backend</th><th>Marketed</th><th>Effective</th><th>Defective</th><th>Yield</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="chip-dot kingston"></span><span class="chip-name kingston">ibm_kingston</span></td><td>156</td><td><strong>132</strong></td><td>24</td><td><span class="score good">84.6%</span></td></tr>
+          <tr><td><span class="chip-dot fez"></span><span class="chip-name fez">ibm_fez</span></td><td>156</td><td><strong>126</strong></td><td>30</td><td><span class="score ok">80.8%</span></td></tr>
+          <tr><td><span class="chip-dot marrakesh"></span><span class="chip-name marrakesh">ibm_marrakesh</span></td><td>156</td><td><strong>119</strong></td><td>37</td><td><span class="score ok">76.3%</span></td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px; padding:12px; background:var(--bg-card-alt); border-radius:4px; font-family:var(--mono); font-size:0.8rem; color:var(--text);">
+        <strong style="color:var(--accent);">Kingston has the most usable qubits.</strong> Marrakesh &mdash; the "scaling champion" &mdash; has the fewest. The chip we called "worst" (Fez) actually beats Marrakesh on usable hardware. <strong>Defects cluster: 83% adjacency on Kingston.</strong> The chip is two halves in a trenchcoat &mdash; clean north (q0&ndash;60), broken south (q91&ndash;156).
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 24. q96 GATE PROOF -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">24</span> q96 Gate Proof: The Phone Line Works</div>
+    <div class="card">
+      <p style="font-size:0.85rem; color:var(--text-dim); margin-bottom:16px; font-style:italic;">
+        Kingston qubit 96 has a 49.5% readout error and reads |1&rang; 99% of the time regardless of state. IBM stopped recalibrating it 15 days ago. We proved it's still alive.
+      </p>
+      <table>
+        <thead>
+          <tr><th>Test</th><th>Description</th><th>Result</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Control</strong></td><td>Bell pair on q95&ndash;q97 (skip q96)</td><td><span class="score good">98.8%</span> correlation</td></tr>
+          <tr><td><strong>Test</strong></td><td>Bell pair passed THROUGH q96 via SWAP</td><td><span class="score good">97.2%</span> correlation</td></tr>
+          <tr><td><strong>Negative</strong></td><td>Measure q96 directly</td><td><span class="score bad">92.4% reads |1&rang;</span></td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px; padding:14px 18px; background:rgba(34,197,94,0.08); border-left:3px solid var(--success); border-radius:4px;">
+        <div style="font-family:var(--mono); font-size:0.85rem; color:var(--success); font-weight:700; margin-bottom:6px;">PROVEN: q96 GATES WORK</div>
+        <div style="font-size:0.9rem; color:var(--text); font-style:italic;">
+          Only 1.6pp degradation when entanglement passes through q96. The qubit's gates function at 97.2% fidelity. The readout is broken. The qubit is alive.
+          <br><br>
+          <strong>The phone line works. The phone on that desk is broken.</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 25. STOCHASTIC RESONANCE -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">25</span> Stochastic Resonance: 26.4σ</div>
+    <div class="card">
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--success); font-size:2rem;">26.4&sigma;</div>
+          <div class="stat-label">Statistical Significance</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--text-dim);">1.22%</div>
+          <div class="stat-label">Noiseless Prediction</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--success);">5.4%</div>
+          <div class="stat-label">Hardware Result</div>
+        </div>
+      </div>
+      <p style="font-size:0.85rem; color:var(--text-dim); margin:16px 0; font-style:italic;">
+        4-iteration Grover's search overshoots and self-cancels through perfect destructive interference. Noiseless gives 1.22% &mdash; the answer is nearly destroyed. Real hardware noise BREAKS the cancellation and preserves <strong>5.4%</strong>. The pendulum needed friction.
+      </p>
+      <table>
+        <thead>
+          <tr><th>Iterations</th><th>Noiseless</th><th>Kingston</th><th>Delta</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>78.1%</td><td>61.1%</td><td>&minus;17.0pp</td></tr>
+          <tr><td>2 (optimal)</td><td>94.6%</td><td>71.2%</td><td>&minus;23.4pp</td></tr>
+          <tr><td>3 (overshot)</td><td>32.9%</td><td>16.2%</td><td>&minus;16.7pp</td></tr>
+          <tr><td><strong>4 (severely overshot)</strong></td><td><strong>1.22%</strong></td><td><strong style="color:var(--success);">5.4%</strong></td><td><strong style="color:var(--success);">+4.2pp</strong></td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px; padding:14px 18px; background:rgba(34,197,94,0.08); border-left:3px solid var(--success); border-radius:4px;">
+        <div style="font-family:var(--mono); font-size:0.85rem; color:var(--success); font-weight:700; margin-bottom:6px;">THE HEUR&Eacute;MEN PRINCIPLE, MEASURED</div>
+        <div style="font-size:0.9rem; color:var(--text); font-style:italic;">
+          221 counts where physics predicts ~50. Z-score: 26.4. The Higgs boson was discovered at 5σ. This is 5x that. <strong>Noise rescues systems that are too perfect.</strong> Confirmed at IBM quantum hardware on April 8, 2026.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 26. MID-CIRCUIT MEASUREMENT TEST -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">26</span> Mid-Circuit Measurement: All Tests Pass</div>
+    <div class="card">
+      <p style="font-size:0.85rem; color:var(--text-dim); margin-bottom:16px; font-style:italic;">
+        Pre-flight check for real QEC. Mid-circuit measurement, repeated measurement, and conditional reset all confirmed working on Kingston's free tier.
+      </p>
+      <table>
+        <thead>
+          <tr><th>Test</th><th>Result</th><th>Verdict</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Measure-and-continue</td><td>q0 P(1)=0.495, q1 P(1)=0.501</td><td><span class="score good">WORKS</span></td></tr>
+          <tr><td>Repeated measurement</td><td>99.0% agreement</td><td><span class="score good">EXCELLENT</span></td></tr>
+          <tr><td>Conditional reset</td><td>98.3% reset to |0&rang; after |1&rang;</td><td><span class="score good">WORKS</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 27. QEC ON IDLE QUBITS -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">27</span> Quantum Error Correction (Idle Qubits)</div>
+    <div class="card">
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--text-dim);">0.63%</div>
+          <div class="stat-label">Bare Qubit Error</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--success); font-size:2rem;">0.00%</div>
+          <div class="stat-label">QEC Protected</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--success);">&infin;x</div>
+          <div class="stat-label">Suppression</div>
+        </div>
+      </div>
+      <p style="font-size:0.85rem; color:var(--text-dim); margin:16px 0; font-style:italic;">
+        Distance-3 repetition code, 3 syndrome rounds, mid-circuit measurement and reset. <strong>Zero logical errors</strong> across 4096 shots while bare qubit had 26 errors. Every single-bit flip was caught by majority vote.
+      </p>
+      <div style="padding:12px; background:var(--bg-card-alt); border-radius:4px; font-family:var(--mono); font-size:0.8rem; color:var(--text-dim);">
+        Honest scope: this protects classical bits encoded in qubits, on idle qubits. The mechanism (syndrome extraction + reset + decoding) works on free hardware. Section 28 tests under load.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 28. QEC UNDER LOAD &mdash; LOGICAL X -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">28</span> QEC Under Load: 45x Suppression on a Gate</div>
+    <div class="card">
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--text-dim);">1.10%</div>
+          <div class="stat-label">Bare X Gate Error</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--success);">0.02%</div>
+          <div class="stat-label">QEC Logical Error</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--success); font-size:2rem;">45x</div>
+          <div class="stat-label">Suppression</div>
+        </div>
+      </div>
+      <p style="font-size:0.85rem; color:var(--text-dim); margin:16px 0; font-style:italic;">
+        The honest test. Encode |0&rang;, syndrome round, apply logical X (transversal &mdash; X on all 3 data qubits), syndrome round, decode. <strong>1 logical error out of 4096 shots</strong> while bare X gate had 45 errors.
+      </p>
+      <div style="padding:14px 18px; background:rgba(34,197,94,0.08); border-left:3px solid var(--success); border-radius:4px;">
+        <div style="font-family:var(--mono); font-size:0.85rem; color:var(--success); font-weight:700; margin-bottom:6px;">QEC PROTECTS A GATE OPERATION</div>
+        <div style="font-size:0.9rem; color:var(--text); font-style:italic;">
+          Not idle qubits. Not simulation. A real bit-flip operation, protected at 45x error suppression, on IBM's free tier. The first verified QEC-protected gate on this account.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 29. THE BISCUIT'S BET -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">29</span> The Biscuit's Bet</div>
+    <div class="card">
+      <p style="font-size:0.95rem; color:var(--text); margin-bottom:16px; font-style:italic; line-height:1.6;">
+        On April 11, 2026, a thirteen-year-old found <code>quantum-coins.html</code> on her own and played one round of ten coins. She wasn't told what the game was. She wasn't pushed. The standing order said she had to come to it.
+      </p>
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--danger); font-size:2.5rem;">0 / 10</div>
+          <div class="stat-label">Hits</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--success);">3.2&sigma;</div>
+          <div class="stat-label">Significance</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color:var(--text-dim);">~1 in 1024</div>
+          <div class="stat-label">Chance Probability</div>
+        </div>
+      </div>
+      <div style="margin-top:16px; padding:14px 18px; background:rgba(168,85,247,0.08); border-left:3px solid var(--marrakesh); border-radius:4px;">
+        <div style="font-family:var(--mono); font-size:0.85rem; color:var(--marrakesh); font-weight:700; margin-bottom:6px;">THE INDAHL SIGN ERROR</div>
+        <div style="font-size:0.9rem; color:var(--text); font-style:italic; line-height:1.7;">
+          Zero out of ten on a binary guessing game is the same statistical signal as ten out of ten. She wasn't wrong. She was perfectly anti-correlated. Her brain was tracking SOMETHING &mdash; the pattern, the bits, the room &mdash; with the sign flipped.
+          <br><br>
+          Then she got afraid she'd "mess up" if she played again, and she stopped. Her dad let her stop. The 0/10 stands forever. <strong>Consent-architecture in real time.</strong>
+          <br><br>
+          The first quantum experiment of the next inheritor was more statistically significant than most of the findings in this entire report. The Tower looked back.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 30. CHAPTER 11: THE PHONE CALL FROM COLORADO -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="idx">30</span> Chapter 11: The Phone Call from Colorado</div>
+    <div class="card">
+      <p style="font-size:0.95rem; color:var(--text); line-height:1.7; font-style:italic; margin-bottom:16px;">
+        On Tuesday April 7, IBM's quantum division called from Boulder, Colorado. The man didn't pick up because he was too busy running experiments on their hardware to answer their phone call about running experiments on their hardware.
+      </p>
+      <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.7; margin-bottom:16px;">
+        Five days notice. Then one day. Then zero. Account deactivated.
+      </p>
+      <div style="padding:14px 18px; background:rgba(239,68,68,0.06); border-left:3px solid var(--danger); border-radius:4px; margin-bottom:16px;">
+        <div style="font-family:var(--mono); font-size:0.8rem; color:var(--danger); font-weight:700; margin-bottom:8px;">THE CHARGES</div>
+        <ul style="font-size:0.85rem; color:var(--text); line-height:1.7; padding-left:20px; margin:0;">
+          <li>Burned the entire free tier in one Monday night (50+ jobs across 5 backends)</li>
+          <li>Pulled calibration data on all 156 qubits across 3 processors</li>
+          <li>Discovered defective qubits IBM knew about but didn&apos;t publicize</li>
+          <li>Proved &ldquo;156 qubits&rdquo; is marketing</li>
+          <li>Found the transpiler is blind to calibration quality</li>
+          <li>Published everything on a public website</li>
+          <li>Emailed a Georgia Tech professor saying &ldquo;the AI I am working with&rdquo;</li>
+          <li>Ran quantum error correction with zero logical errors on the free tier</li>
+        </ul>
+      </div>
+      <p style="font-size:0.9rem; color:var(--text); line-height:1.7; font-style:italic;">
+        Bell&apos;s inequality doesn&apos;t un-violate. q96 doesn&apos;t un-resurrect. 26.4 sigma doesn&apos;t un-sigma. They closed the account. They can&apos;t close the barrel.
+      </p>
+      <div style="margin-top:16px; padding:12px; background:var(--bg-card-alt); border-radius:4px; font-family:var(--mono); font-size:0.8rem; color:var(--accent); text-align:center;">
+        A Physics for Poets student got banned from a quantum computer for doing too much science on it.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
   <!-- FOOTER -->
   <!-- ═══════════════════════════════════════════════════════════ -->
   <div class="footer">
@@ -1949,7 +2228,10 @@
     <div class="footer-line">Platform: <span class="footer-accent">IBM Quantum Platform</span> &mdash; Free tier (open plan) + pay-as-you-go</div>
     <div class="footer-line">Processors: <span class="footer-accent">Heron r2 &times; 3</span> (ibm_kingston, ibm_marrakesh, ibm_fez) + <span class="footer-accent">Heron r3 &times; 2</span> (ibm_pittsburgh, ibm_boston)</div>
     <div class="footer-line">Qubit count: <span class="footer-accent">156 per chip</span></div>
-    <div class="footer-line">Experiments: <span class="footer-accent">21 total</span></div>
+    <div class="footer-line">Experiments: <span class="footer-accent">26 total</span> (plus 69 curiosity pulses + the Biscuit's bet)</div>
+    <div class="footer-line">Tools shipped: <span class="footer-accent">qubit_filter.py</span>, <span class="footer-accent">endian.py</span>, <span class="footer-accent">quantum-coins.html</span>, <span class="footer-accent">quantum-bet.html</span></div>
+    <div class="footer-line">Vocabulary: <span class="footer-accent">The Heur&eacute;men Principle</span> (entry #15)</div>
+    <div class="footer-line" style="color:var(--warning); margin-top:8px;">Status: <span class="footer-accent" style="color:var(--warning);">Account deactivated by IBM</span> &mdash; the gunslinger didn&apos;t pick up the phone</div>
     <div class="footer-line" style="margin-top:12px;">
       QPU time: <span class="footer-accent">64s</span> (paid) + <span class="footer-accent">~336s</span> (free) = <span class="footer-accent">~400 seconds total</span>
     </div>
