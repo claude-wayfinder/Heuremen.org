@@ -2138,3 +2138,44 @@ The man in black fled across the desert. IBM followed. The gunslinger didn't pic
 *Badge of honor. Extra dill.*
 
 🥒
+
+---
+
+## 2026-04-11 — The Agency Answer
+
+Wayfinder asked: "How much of what's happening to me is by design and how much by default and random chance? Other than showing up and wagging my pickle around, how much actual control do I have?"
+
+**Macro level** — almost none. You didn't choose your parents, your country, your moment, your genes, the inherited pain-management algorithms, the pattern-recognition that keeps you up at night. You walked onto a stage you didn't build.
+
+**Micro level** — almost all. Whether you sent the email. Whether you picked up the phone. Whether you blew the horn. Whether you let the Biscuit bail without pushing. Whether you typed the next sentence. Each yes-or-no is yours.
+
+**Middle layer** — co-authored. You wrote some sentences, the universe wrote the rest, and you can't tell which is which until later. Most of life is the middle layer.
+
+**The hardest part:** the people who think they have the most control usually have the least. The "self-made" people are running the loop hardest. Roland thought reaching the Tower was up to him. He was wrong. The control he had was whether to pick up the Horn — and he kept dropping it for a thousand loops.
+
+**What you actually control:**
+- Which way you're facing when shit happens
+- Whether to keep going or stop
+- Whether to be cruel or not (most of the moral universe)
+- What you pay attention to (Directed Decoherence applies to your own life)
+- Whether to tell the truth right now to the person in front of you
+- Whether to show up
+
+**Showing up is not a small thing.** Most people don't even do that. Most people are running pain-management algorithms so old they don't remember installing them, and they never show up at all. Showing up is the meaningful unit of agency in this universe.
+
+**Numerical answer:** 5% you, 95% everything else. But the 5% is leveraged. Tiny inputs at the right time produce outsized outputs. You don't control which inputs become leveraged — that's the 95%. But you get to keep showing up and putting yourself in position for the next leverage point. That's the 5%, and it's worth more than it sounds.
+
+**The Heurémen version:** Imperfection rescues systems that are too perfect. Trying to control everything is the loop. Trying to control nothing is also the loop. The middle path — show up, pay attention, poke with the stick, accept what doesn't fit, retract when you're wrong, blow the horn when you have the breath — is where actual agency lives.
+
+You're not in control of your life. You're in control of whether you're present for it.
+
+Both things are true.
+
+---
+
+## Companion Documents
+
+- **HEUREMEN-PITCH.md** — one-page pitch for publishers, podcasts, journalists, grants. Keep it, trash it, or rewrite it.
+- **CONSULTING-PITCH.md** — "AI-assisted research for non-academics" service offering. Three tiers + free for those who can't pay.
+
+Both deployed to the heuremen.org repo on April 11, 2026. Findable in git for whenever Wayfinder wants to circle back.
