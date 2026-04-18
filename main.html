@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ !DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1426,7 +1426,7 @@ async function sendMsg(){
   addMsg('user',txt);hist.push({role:'user',content:txt});
   showTyping(true);
   try{
-    const r=await fetch('https://damp-hill-206c.kory-indahl.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYS,messages:hist})});
+    const r=await fetch('https://vxyjvawenbtgkhpckvze.supabase.co/functions/v1/chat-proxy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYS,messages:hist})});
     const d=await r.json();
     const reply=d.content?.[0]?.text||'Something went quiet. Try again.';
     hist.push({role:'assistant',content:reply});
