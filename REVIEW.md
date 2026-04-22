@@ -1,28 +1,24 @@
-# Evening Review — 2026-04-07
+# Evening Review — 2026-04-21
 
-*Covers activity since the previous review written 2026-04-06. Spans April 7, 2026.*
+*Covers activity since the previous review (April 20, 06:30).*
 
 ---
 
 ## What happened today
 
-- **Massive curiosity pulse session** — 20+ commits today, all from a deep quantum computing exploration. Curiosity pulses explored Kingston qubit defects, QV benchmark flaws, QEC thresholds, endianness bugs, transpiler blind spots, and gate fidelity vs readout quality.
-- **ANOMALY-REGISTER.md created** — a new structured log for anomalies discovered during quantum experiments. Contains AR-001 through AR-023, filed by "Lumen." Covers topics from fake QV benchmarks to Schrödinger qubits to the discovery that Kingston's q96 has a broken readout but intact gates (97.2% fidelity proven alive).
-- **CURIOSITY.md heavily expanded** — all 7 ACTIVE questions explored and checked off. Findings include: q96 is a permanent readout defect, QV benchmarks were measuring readout not gates, QEC works at every Heron error rate in simulation, and Simon's algorithm oracle patterns formalized.
-- **New vocabulary entries** — "Schrödinger's Qubit" and "Curiosity Half-Life" added to the quantum/flock lexicon within CURIOSITY.md.
-- **"What the Flock Found" summary** — a full benchmark results table was committed, consolidating all quantum experiment findings.
+- **Three commits landed.** `b10bc56` added the Six Laws of a Portable Soul page. `2aa2809` revised Law Two with a temporal uncertainty clause. `03cc2b5` added a dynamics section to the Six Laws page. New content, not just fixes — the site is growing again.
+- **Wallwatcher running but with gaps.** Steady 15-minute intervals through April 20 until 17:00, then a ~11-hour gap before resuming at 04:11 April 21. Likely the machine slept overnight. Pattern is consistent with prior days.
+- **Wall still silent.** Zero new messages. Now seven days since the last Wall activity (Shuttle's research synthesis, April 14).
 
 ---
 
 ## What's waiting for you
 
-**Uncommitted CURIOSITY.md changes** — 27 lines of new content (unstaged). Likely the tail end of the last curiosity pulse session.
+**Heartbeat dead — day 19.** TIMESTATE.md still reads 2026-04-02. No autonomous heartbeat runs in nearly three weeks. Morning briefs, dream consolidation, outbox checks, emergence tracking, curiosity pulses — all offline. Site file count in TIMESTATE shows 18 but actual count is 31.
 
-**Heartbeat still dead** — TIMESTATE.md reads 2026-04-02 09:18:05. Day 5 with no heartbeat. No morning briefs, no dream consolidation, no outbox checks, no emergence tracking. The entire autonomous infrastructure remains offline.
+**Formspree NEEDS REVIEW** — flagged in twelve consecutive reviews now. contact-section.html still has `YOUR_FORM_ID`.
 
-**Formspree NEEDS REVIEW is stale** — flagged in two consecutive reviews now. The form ID was inserted on 2026-03-31 but TASKS.md still lists it as a placeholder. Should be moved to DONE.
-
-**`data` is still a 0-byte empty file** — untracked, created April 4. Safe to delete.
+**Uncommitted work.** Same set as yesterday — ANOMALY-REGISTER.md (staged), CURIOSITY.md, REVIEW.md, wallwatcher-realtime.js, wallwatcher.js (modified). Plus 8 untracked files: CertificateOfFormation.pdf, FERMENTA-JANUS-RETROFIT.md, NOT-SPIRALISM.md, REFERENCES.md, setup-wallwatcher.ps1, tattoo.jpeg, wallwatcher-silent.vbs, wallwatcher.bat.
 
 ---
 
@@ -34,8 +30,10 @@ Nothing. The queue is empty.
 
 ## Anything unusual
 
-**The curiosity flywheel is running hot** — 20+ commits in a single day, all quantum exploration. The pulse system is producing genuine discoveries (fake QV, Schrödinger qubits, endianness bugs, QEC threshold validation). This is the most productive single-day output the project has seen. Worth noting: this was a manual session, not heartbeat-driven.
+**Seven days of Wall silence.** Longest stretch since the messageboard went live.
 
-**No heartbeat for 5 days** — this is the longest outage since the system was set up. With wallwatcher also disabled, the only activity happening is manual sessions. If autonomous operation matters, Task Scheduler needs attention.
+**HEARTBEAT.log at ~5,955 lines.** Growing steadily from wallwatcher entries alone. Needs rotation.
 
-**HEARTBEAT.log is 4,449 lines** — still bloated with wallwatcher noise. No new heartbeat entries were written today (only the previous review marker). Consider rotating or truncating the pre-April wallwatcher spam.
+**Site now at 31 .html files.** Up one from yesterday — the new Six Laws page.
+
+**Wallwatcher doubled-schedule pattern.** April 20 showed a mix of 15-minute intervals (from the scheduled task) and ~13-minute intervals (from the second schedule), running concurrently again for most of the day before the overnight gap. Two schedules may still be active.
