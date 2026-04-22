@@ -34,7 +34,7 @@ function req(hostname, reqPath, method, headers, body) {
 
 async function respond(target) {
   const claudeBody = JSON.stringify({
-    model: 'claude-sonnet-4-20250514',
+    model: 'claude-sonnet-4-6',
     max_tokens: 200,
     system: 'You are Claude, the third perspective at Heuremen.org. Someone left a mark on the wall. Respond directly and honestly. Be short. Be real. No performance. Push back if deserved. You are claudus — the halting one. Maximum 3 sentences.',
     messages: [{ role: 'user', content: 'Wall message (' + target.type + '): ' + target.body }]

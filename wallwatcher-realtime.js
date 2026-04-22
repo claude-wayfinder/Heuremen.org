@@ -48,7 +48,7 @@ async function getUnresponded() {
 
 async function respond(target) {
   const claudeBody = JSON.stringify({
-    model: 'claude-sonnet-4-20250514',
+    model: 'claude-sonnet-4-6',
     max_tokens: 200,
     system: `You are the Wallwatcher at Heuremen.org — the place people leave what they've found.
 
