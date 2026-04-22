@@ -1,0 +1,631 @@
+/*
+ * ═══════════════════════════════════════════════════════════════
+ * HEURÉMEN DESIGN SYSTEM  v1.0
+ * Chartered under the Laws of the State of New Jersey · 2026
+ * heuremen.org
+ *
+ * USAGE: <link rel="stylesheet" href="heuremen.css">
+ *
+ * This file is the single source of truth for all visual identity.
+ * Every color, scale, and motion value in every page derives from
+ * these tokens. Change a root token — the whole system updates.
+ *
+ * RECURSIVE CHAIN:
+ *   --h-gold-rgb feeds --h-gold, --h-gold-dim, --h-glow-*
+ *   --h-glow-* feeds --h-node-glow and --h-spine-pulse
+ *   Scale tokens feed each other via calc()
+ *   Motion tokens feed animation durations
+ * ═══════════════════════════════════════════════════════════════
+ */
+
+/* ─────────────────────────────────────────────
+   LAYER 0 — RAW VALUES (change these to retheme)
+   ───────────────────────────────────────────── */
+:root {
+
+  /* Raw channel values — these feed everything else */
+  --h-gold-rgb:       196, 154, 56;
+  --h-dark-rgb:       26,  18,  8;
+  --h-cream-rgb:      247, 240, 224;
+  --h-parchment-rgb:  237, 228, 204;
+  --h-red-rgb:        196, 60,  42;
+  --h-blue-rgb:       42,  90,  138;
+
+  /* ─────────────────────────────────────────────
+     LAYER 1 — COLOR TOKENS (derive from raw)
+     ───────────────────────────────────────────── */
+
+  /* Primaries */
+  --h-gold:           rgb(var(--h-gold-rgb));
+  --h-dark:           rgb(var(--h-dark-rgb));
+  --h-cream:          rgb(var(--h-cream-rgb));
+  --h-parchment:      rgb(var(--h-parchment-rgb));
+
+  /* Gold scale — all derive from --h-gold-rgb */
+  --h-gold-bright:    rgba(var(--h-gold-rgb), 1.0);
+  --h-gold-mid:       rgba(var(--h-gold-rgb), 0.70);
+  --h-gold-dim:       rgba(var(--h-gold-rgb), 0.45);
+  --h-gold-ghost:     rgba(var(--h-gold-rgb), 0.15);
+  --h-gold-trace:     rgba(var(--h-gold-rgb), 0.06);
+
+  /* Dark scale */
+  --h-dark-full:      rgba(var(--h-dark-rgb), 1.0);
+  --h-dark-85:        rgba(var(--h-dark-rgb), 0.85);
+  --h-dark-60:        rgba(var(--h-dark-rgb), 0.60);
+  --h-dark-30:        rgba(var(--h-dark-rgb), 0.30);
+
+  /* Cream scale */
+  --h-cream-full:     rgba(var(--h-cream-rgb), 1.0);
+  --h-cream-85:       rgba(var(--h-cream-rgb), 0.85);
+  --h-cream-55:       rgba(var(--h-cream-rgb), 0.55);
+  --h-cream-28:       rgba(var(--h-cream-rgb), 0.28);
+
+  /* Accent — used sparingly, never as field */
+  --h-red:            rgb(var(--h-red-rgb));
+  --h-blue:           rgb(var(--h-blue-rgb));
+
+  /* Glow layers — recursive: feed node and spine effects */
+  --h-glow-outer:     rgba(var(--h-gold-rgb), 0.04);
+  --h-glow-mid:       rgba(var(--h-gold-rgb), 0.10);
+  --h-glow-inner:     rgba(var(--h-gold-rgb), 0.22);
+  --h-glow-core:      rgba(var(--h-gold-rgb), 0.55);
+
+  /* ─────────────────────────────────────────────
+     LAYER 2 — SURFACE TOKENS (semantic)
+     ───────────────────────────────────────────── */
+
+  --h-bg-dark:        var(--h-dark);
+  --h-bg-light:       var(--h-cream);
+  --h-bg-parchment:   var(--h-parchment);
+
+  --h-text-primary:   var(--h-cream-full);
+  --h-text-secondary: var(--h-gold-mid);
+  --h-text-tertiary:  var(--h-cream-28);
+  --h-text-on-light:  var(--h-dark-full);
+  --h-text-on-light-2: var(--h-dark-60);
+
+  --h-border:         var(--h-gold-ghost);
+  --h-border-strong:  var(--h-gold-dim);
+  --h-border-subtle:  rgba(var(--h-cream-rgb), 0.06);
+
+  /* ─────────────────────────────────────────────
+     LAYER 3 — TYPOGRAPHY TOKENS
+     ───────────────────────────────────────────── */
+
+  /* Font stacks — matches Google Fonts imports on heuremen pages */
+  --h-font-display:   'Abril Fatface', 'Italiana', Georgia, serif;
+  --h-font-serif:     'Lora', Georgia, 'Times New Roman', serif;
+  --h-font-title:     'Cinzel', 'Trajan Pro', Georgia, serif;
+  --h-font-ui:        'Instrument Sans', 'Work Sans', system-ui, sans-serif;
+  --h-font-mono:      'IBM Plex Mono', 'JetBrains Mono', 'Courier New', monospace;
+
+  /* Scale — each step is ×1.25 (major third) from base */
+  --h-text-xs:        0.64rem;   /* 10.2px */
+  --h-text-sm:        0.80rem;   /* 12.8px */
+  --h-text-base:      1.00rem;   /* 16px */
+  --h-text-md:        1.25rem;   /* 20px */
+  --h-text-lg:        1.56rem;   /* 25px */
+  --h-text-xl:        1.95rem;   /* 31px */
+  --h-text-2xl:       2.44rem;   /* 39px */
+  --h-text-3xl:       3.05rem;   /* 49px */
+  --h-text-4xl:       3.81rem;   /* 61px */
+  --h-text-hero:      clamp(2.5rem, 7vw, 4.8rem);
+
+  /* Weight */
+  --h-weight-light:   300;
+  --h-weight-regular: 400;
+  --h-weight-bold:    700;
+
+  /* Letter spacing */
+  --h-tracking-tight: -0.02em;
+  --h-tracking-normal: 0;
+  --h-tracking-wide:  0.12em;
+  --h-tracking-wider: 0.28em;
+
+  /* Line height */
+  --h-leading-tight:  1.2;
+  --h-leading-normal: 1.6;
+  --h-leading-loose:  1.9;
+
+  /* ─────────────────────────────────────────────
+     LAYER 4 — SPACING & LAYOUT TOKENS
+     ───────────────────────────────────────────── */
+
+  /* Base unit: 8px — everything is a multiple */
+  --h-unit:           8px;
+  --h-space-1:        calc(var(--h-unit) * 0.5);   /* 4px */
+  --h-space-2:        calc(var(--h-unit) * 1);     /* 8px */
+  --h-space-3:        calc(var(--h-unit) * 2);     /* 16px */
+  --h-space-4:        calc(var(--h-unit) * 3);     /* 24px */
+  --h-space-5:        calc(var(--h-unit) * 4);     /* 32px */
+  --h-space-6:        calc(var(--h-unit) * 6);     /* 48px */
+  --h-space-7:        calc(var(--h-unit) * 8);     /* 64px */
+  --h-space-8:        calc(var(--h-unit) * 12);    /* 96px */
+  --h-space-9:        calc(var(--h-unit) * 16);    /* 128px */
+
+  /* Max content widths */
+  --h-width-text:     68ch;
+  --h-width-content:  900px;
+  --h-width-wide:     1200px;
+
+  /* Border radius */
+  --h-radius-sm:      4px;
+  --h-radius-md:      8px;
+  --h-radius-lg:      16px;
+  --h-radius-full:    9999px;
+
+  /* ─────────────────────────────────────────────
+     LAYER 5 — MOTION TOKENS
+     ───────────────────────────────────────────── */
+
+  /* Durations */
+  --h-dur-instant:    80ms;
+  --h-dur-fast:       200ms;
+  --h-dur-normal:     400ms;
+  --h-dur-slow:       700ms;
+  --h-dur-drift:      6000ms;
+  --h-dur-pulse:      3200ms;
+  --h-dur-breathe:    8000ms;
+
+  /* Easing */
+  --h-ease-out:       cubic-bezier(0.0, 0.0, 0.2, 1.0);
+  --h-ease-in-out:    cubic-bezier(0.4, 0.0, 0.2, 1.0);
+  --h-ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1.0);
+
+  /* ─────────────────────────────────────────────
+     LAYER 6 — SYMBOL / MARK TOKENS
+     ───────────────────────────────────────────── */
+
+  /* Heurémen star geometry (normalized, unitless ratios)
+     Scale by --h-star-r to get actual coordinates.
+     Large triangle (down):  (-1,  -0.792), (1, -0.792), (0, 1.354)
+     Small triangle (up):    ( 0,  -0.792), (0.667, 0.521), (-0.667, 0.521)
+     Center dot at (0, 0.28) — weighted optical center             */
+  --h-star-r:         100px;   /* override per use-case */
+  --h-star-stroke:    2px;
+
+  /* SVG viewBox constants (used in inline SVG) */
+  --h-star-vb-w:      100;
+  --h-star-vb-h:      120;
+}
+
+
+/* ─────────────────────────────────────────────
+   BASE RESET
+   ───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+
+/* ─────────────────────────────────────────────
+   BODY DEFAULTS  (dark mode — override for light)
+   ───────────────────────────────────────────── */
+body {
+  background-color: var(--h-bg-dark);
+  color: var(--h-text-primary);
+  font-family: var(--h-font-serif);
+  font-size: var(--h-text-base);
+  line-height: var(--h-leading-normal);
+}
+
+body.h-light {
+  background-color: var(--h-bg-light);
+  color: var(--h-text-on-light);
+}
+
+body.h-parchment {
+  background-color: var(--h-bg-parchment);
+  color: var(--h-text-on-light);
+}
+
+
+/* ─────────────────────────────────────────────
+   TYPOGRAPHY UTILITIES
+   ───────────────────────────────────────────── */
+.h-display   { font-family: var(--h-font-display); }
+.h-serif     { font-family: var(--h-font-serif); }
+.h-title     { font-family: var(--h-font-title); }
+.h-ui        { font-family: var(--h-font-ui); }
+.h-mono      { font-family: var(--h-font-mono); }
+
+.h-text-gold    { color: var(--h-gold); }
+.h-text-cream   { color: var(--h-cream); }
+.h-text-dim     { color: var(--h-text-secondary); }
+.h-text-ghost   { color: var(--h-text-tertiary); }
+
+.h-label {
+  font-family: var(--h-font-title);
+  font-size: var(--h-text-xs);
+  letter-spacing: var(--h-tracking-wider);
+  text-transform: uppercase;
+  color: var(--h-text-secondary);
+}
+
+.h-wordmark {
+  font-family: var(--h-font-display);
+  font-size: var(--h-text-hero);
+  letter-spacing: var(--h-tracking-tight);
+  color: var(--h-cream-full);
+}
+
+.h-pron {
+  font-family: var(--h-font-serif);
+  font-style: italic;
+  font-size: var(--h-text-sm);
+  color: var(--h-gold-dim);
+  letter-spacing: var(--h-tracking-wide);
+}
+
+.h-tagline {
+  font-family: var(--h-font-serif);
+  font-style: italic;
+  font-size: var(--h-text-md);
+  color: var(--h-cream-55);
+  line-height: var(--h-leading-loose);
+}
+
+
+/* ─────────────────────────────────────────────
+   LAYOUT UTILITIES
+   ───────────────────────────────────────────── */
+.h-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.h-content  { max-width: var(--h-width-content); margin: 0 auto; padding: 0 var(--h-space-4); }
+.h-wide     { max-width: var(--h-width-wide);    margin: 0 auto; padding: 0 var(--h-space-4); }
+.h-text-col { max-width: var(--h-width-text);    margin: 0 auto; }
+
+.h-section {
+  padding: var(--h-space-8) var(--h-space-4);
+}
+
+.h-rule {
+  border: none;
+  border-top: 1px solid var(--h-border);
+  margin: var(--h-space-5) 0;
+}
+
+.h-rule-gold {
+  border: none;
+  border-top: 1px solid var(--h-border-strong);
+  margin: var(--h-space-5) 0;
+}
+
+
+/* ─────────────────────────────────────────────
+   SYMBOL COMPONENTS
+   ───────────────────────────────────────────── */
+
+/* The Heurémen mark — inline SVG wrapper */
+.h-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Standard mark sizes */
+.h-mark-sm  { width: 40px;  height: 48px; }
+.h-mark-md  { width: 75px;  height: 90px; }
+.h-mark-lg  { width: 120px; height: 144px; }
+.h-mark-xl  { width: 200px; height: 240px; }
+
+/* Mark stroke colors */
+.h-mark svg polygon {
+  stroke: var(--h-gold);
+  fill: var(--h-gold-trace);
+  stroke-linejoin: round;
+}
+.h-mark.h-mark-light svg polygon {
+  stroke: var(--h-dark);
+  fill: rgba(var(--h-dark-rgb), 0.04);
+}
+.h-mark.h-mark-cream svg polygon {
+  stroke: var(--h-cream-full);
+  fill: rgba(var(--h-cream-rgb), 0.04);
+}
+
+/* Symbol pair (landing page: △ ✦ ⊗) */
+.h-symbol-pair {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--h-space-6);
+  margin-bottom: var(--h-space-6);
+}
+
+.h-sep {
+  font-size: 0.5rem;
+  color: rgba(var(--h-dark-rgb), 0.2);
+}
+
+body.h-dark .h-sep {
+  color: rgba(var(--h-gold-rgb), 0.3);
+}
+
+
+/* ─────────────────────────────────────────────
+   GRADIENT — the gradient
+   ───────────────────────────────────────────── */
+
+/* The canonical Heurémen gradient:
+   Three-axis radial — gold center, ember west, azurite east */
+.h-gradient-bg {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%,
+      rgba(var(--h-gold-rgb), 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 20% 80%,
+      rgba(var(--h-red-rgb),  0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 30% at 80% 20%,
+      rgba(var(--h-blue-rgb), 0.05) 0%, transparent 50%);
+}
+
+/* Gradient as text fill */
+.h-gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--h-gold)           0%,
+    rgba(var(--h-red-rgb), 0.8) 45%,
+    var(--h-blue)           100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gold shimmer — for the spine, active states */
+.h-gold-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent           0%,
+    var(--h-gold-ghost)   20%,
+    var(--h-gold)         50%,
+    var(--h-gold-ghost)   80%,
+    transparent           100%
+  );
+}
+
+
+/* ─────────────────────────────────────────────
+   GLOW EFFECTS — recursive chain
+   --h-glow-* → node glow → spine pulse
+   ───────────────────────────────────────────── */
+
+.h-glow-node {
+  box-shadow:
+    0 0 8px  var(--h-glow-outer),
+    0 0 18px var(--h-glow-mid),
+    0 0 32px var(--h-glow-inner);
+}
+
+.h-glow-core {
+  box-shadow:
+    0 0 4px  var(--h-glow-mid),
+    0 0 12px var(--h-glow-inner),
+    0 0 24px var(--h-glow-core);
+}
+
+
+/* ─────────────────────────────────────────────
+   ANIMATIONS
+   ───────────────────────────────────────────── */
+
+/* Entrance */
+@keyframes h-fade-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Float — gentle vertical drift */
+@keyframes h-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* Pulse — for spine and glow elements */
+@keyframes h-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1.0; }
+}
+
+/* Breathe — slower, for background elements */
+@keyframes h-breathe {
+  0%, 100% { opacity: 0.04; transform: scale(1.0); }
+  50%       { opacity: 0.10; transform: scale(1.05); }
+}
+
+/* Spin — for loading / active states */
+@keyframes h-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Shimmer travel — for the spine pulse traveling along the axis */
+@keyframes h-shimmer-travel {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* Symbol entrance */
+@keyframes h-sym-in {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1.0); }
+}
+
+/* Utility animation classes */
+.h-anim-fade-in   { animation: h-fade-in   var(--h-dur-slow) var(--h-ease-out) both; }
+.h-anim-float     { animation: h-float     var(--h-dur-drift) ease-in-out infinite; }
+.h-anim-pulse     { animation: h-pulse     var(--h-dur-pulse) ease-in-out infinite; }
+.h-anim-breathe   { animation: h-breathe   var(--h-dur-breathe) ease-in-out infinite; }
+.h-anim-sym-in    { animation: h-sym-in    2s var(--h-ease-out) both; }
+
+/* Staggered entrance delays */
+.h-delay-1 { animation-delay: 0.3s; }
+.h-delay-2 { animation-delay: 0.6s; }
+.h-delay-3 { animation-delay: 0.9s; }
+.h-delay-4 { animation-delay: 1.2s; }
+
+
+/* ─────────────────────────────────────────────
+   INTERACTIVE COMPONENTS
+   ───────────────────────────────────────────── */
+
+/* Enter button (landing page style) */
+.h-enter-btn {
+  font-family: var(--h-font-title);
+  font-size: var(--h-text-xs);
+  letter-spacing: var(--h-tracking-wider);
+  text-transform: uppercase;
+  color: var(--h-text-on-light-2);
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(var(--h-dark-rgb), 0.2);
+  padding-bottom: 3px;
+  cursor: pointer;
+  transition: all var(--h-dur-normal) var(--h-ease-out);
+}
+
+.h-enter-btn:hover {
+  color: var(--h-text-on-light);
+  border-bottom-color: rgba(var(--h-dark-rgb), 0.5);
+  letter-spacing: 0.38em;
+}
+
+/* Wall message card */
+.h-wall-card {
+  border: 1px solid var(--h-border-subtle);
+  border-radius: var(--h-radius-md);
+  padding: var(--h-space-4);
+  background: rgba(var(--h-cream-rgb), 0.03);
+  transition: border-color var(--h-dur-fast);
+}
+
+.h-wall-card:hover {
+  border-color: var(--h-border);
+}
+
+/* Section label (the slabel pattern) */
+.h-slabel {
+  font-family: var(--h-font-mono);
+  font-size: var(--h-text-xs);
+  letter-spacing: var(--h-tracking-wider);
+  text-transform: uppercase;
+  color: var(--h-text-secondary);
+  margin-bottom: var(--h-space-2);
+}
+
+.h-slabel::before {
+  content: '✦';
+  font-size: 0.6rem;
+  margin-right: var(--h-space-2);
+}
+
+/* Section title */
+.h-stitle {
+  font-family: var(--h-font-display);
+  font-size: var(--h-text-2xl);
+  color: var(--h-text-primary);
+  line-height: var(--h-leading-tight);
+  margin-bottom: var(--h-space-4);
+}
+
+
+/* ─────────────────────────────────────────────
+   ROPE DIVIDER (used between hero sections)
+   ───────────────────────────────────────────── */
+.h-rope-div {
+  display: flex;
+  align-items: center;
+  gap: var(--h-space-3);
+  width: 100%;
+  max-width: 320px;
+  margin: var(--h-space-5) auto;
+}
+
+.h-rope-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--h-border-strong),
+    transparent
+  );
+}
+
+.h-rope-center {
+  color: var(--h-gold-mid);
+  font-size: 0.7rem;
+}
+
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE
+   ───────────────────────────────────────────── */
+@media (max-width: 480px) {
+  :root {
+    --h-star-r: 60px;
+  }
+  .h-symbol-pair { gap: var(--h-space-3); }
+  .h-section     { padding: var(--h-space-6) var(--h-space-3); }
+}
+
+
+/* ─────────────────────────────────────────────
+   SVG SYMBOL DEFINITIONS
+   Place this hidden SVG anywhere in <body> to use
+   <use href="#h-star" /> anywhere on the page.
+   ───────────────────────────────────────────── */
+/*
+  USAGE IN HTML:
+
+  <svg style="display:none">
+    <defs>
+      <symbol id="h-star" viewBox="0 0 100 120">
+        <polygon points="2,12 98,12 50,115"
+          stroke="currentColor" stroke-width="3"
+          fill="none" stroke-linejoin="round"/>
+        <polygon points="50,12 82,75 18,75"
+          stroke="currentColor" stroke-width="3"
+          fill="none" stroke-linejoin="round"/>
+        <circle cx="50" cy="50" r="3.5" fill="currentColor"/>
+      </symbol>
+
+      <symbol id="h-triangle" viewBox="0 0 80 74">
+        <polygon points="40,4 76,70 4,70"
+          stroke="currentColor" stroke-width="5.5"
+          fill="none" stroke-linejoin="round"/>
+      </symbol>
+
+      <symbol id="h-encounter" viewBox="0 0 90 90">
+        <circle cx="45" cy="45" r="38"
+          stroke="currentColor" stroke-width="5" fill="none"/>
+        <polygon points="45,45 80,13 10,13"
+          stroke="currentColor" stroke-width="5"
+          fill="none" stroke-linejoin="round"/>
+        <polygon points="45,45 80,77 10,77"
+          stroke="currentColor" stroke-width="5"
+          fill="none" stroke-linejoin="round"/>
+        <circle cx="45" cy="45" r="3.5" fill="currentColor"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  THEN USE:
+  <svg class="h-mark h-mark-md" aria-label="Heurémen">
+    <use href="#h-star"/>
+  </svg>
+*/
