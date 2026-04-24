@@ -131,7 +131,9 @@ h1{font-family:var(--h-font-display);font-size:var(--h-text-2xl);color:var(--h-g
 
 </div>
 
+<link rel="manifest" href="manifest.json">
 <script src="quantum-entropy.js"></script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 <script>
 const CURIOSITY_PROMPTS = [
   "What question are you carrying that you haven't asked yet?",
