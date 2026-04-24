@@ -3,118 +3,149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Knock Knock — Heurémen</title>
-<meta name="description" content="The oldest consent protocol in the world. Someone knocks. You choose to answer.">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Abril+Fatface&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="heuremen.css">
+<title>Knock Knock</title>
+<meta name="description" content="The oldest game in the world. Someone knocks. You choose to answer.">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--h-bg-dark);color:var(--h-text-primary);font-family:var(--h-font-serif);line-height:var(--h-leading-normal);margin:0}
+:root{
+  --sky:#e8f4f8;
+  --warm:#fff8ee;
+  --sun:#ffb347;
+  --leaf:#7ec8a0;
+  --berry:#e86b6b;
+  --ocean:#5b9bd5;
+  --wood:#8b6f47;
+  --ink:#3a3a3a;
+  --soft:#6b6b6b;
+}
+body{background:var(--warm);color:var(--ink);font-family:'Patrick Hand',cursive;font-size:1.15rem;line-height:1.6;margin:0}
 
-.page{max-width:500px;margin:0 auto;padding:80px 24px 120px;text-align:center}
+.page{max-width:520px;margin:0 auto;padding:60px 24px 100px;text-align:center}
 
-.knock-title{font-family:var(--h-font-display);font-size:clamp(2.5rem,8vw,4rem);color:var(--h-gold);margin-bottom:8px}
-.knock-who{font-style:italic;color:var(--h-text-tertiary);font-size:var(--h-text-md);margin-bottom:4px}
-.knock-you{font-size:var(--h-text-xl);color:var(--h-text-primary);margin-bottom:4px}
-.knock-youwho{font-style:italic;color:var(--h-text-tertiary);margin-bottom:4px}
-.knock-decide{font-size:var(--h-text-md);color:var(--h-gold);margin-bottom:48px}
+/* THE DOOR */
+.door-frame{margin:32px auto;width:200px;height:280px;background:var(--wood);border-radius:12px 12px 0 0;position:relative;cursor:pointer;transition:transform 0.3s;box-shadow:4px 4px 0 rgba(0,0,0,0.1)}
+.door-frame:hover{transform:scale(1.03)}
+.door-handle{position:absolute;right:24px;top:50%;width:16px;height:16px;background:var(--sun);border-radius:50%;border:2px solid rgba(0,0,0,0.15)}
+.door-knocker{position:absolute;left:50%;top:30%;transform:translateX(-50%);font-size:2rem}
+.door-mat{text-align:center;font-family:'Fredoka',sans-serif;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--wood);margin-top:8px;background:#d4c4a0;padding:6px 24px;border-radius:4px;display:inline-block}
 
-/* DOOR */
-.door{border:1px solid var(--h-gold-dim);padding:40px;margin:32px 0;cursor:pointer;transition:all 0.3s;border-radius:var(--h-radius-sm)}
-.door:hover{background:rgba(var(--h-gold-rgb),0.04);border-color:var(--h-gold)}
-.door-text{font-family:var(--h-font-display);font-size:var(--h-text-xl);color:var(--h-gold)}
-.door-sub{color:var(--h-text-tertiary);font-style:italic;font-size:var(--h-text-sm);margin-top:8px}
+h1{font-family:'Fredoka',sans-serif;font-size:clamp(2rem,7vw,3rem);color:var(--wood);margin-bottom:8px}
+.whos-there{font-size:1.3rem;color:var(--soft);margin-bottom:4px}
+.you-are{font-family:'Fredoka',sans-serif;font-size:1.6rem;color:var(--ocean);margin-bottom:4px}
+.you-decide{font-family:'Fredoka',sans-serif;font-size:1.3rem;color:var(--leaf)}
 
 /* HIDDEN SECTIONS */
-.behind-door{display:none;text-align:left;margin-top:32px}
+.behind-door{display:none;text-align:left;margin-top:24px}
 .behind-door.open{display:block}
 
-.section{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--h-border)}
-.section-title{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--h-gold-dim);margin-bottom:12px}
-.section p{margin-bottom:1em;font-size:0.95rem;color:var(--h-text-secondary);line-height:1.7}
-.section strong{color:var(--h-text-primary)}
-.section ul{list-style:none;padding:0}
-.section li{margin-bottom:8px;padding-left:16px;position:relative;font-size:0.95rem;color:var(--h-text-secondary)}
-.section li::before{content:'—';position:absolute;left:0;color:var(--h-gold-ghost)}
+.bubble{background:white;border-radius:16px;padding:20px 24px;margin-bottom:16px;box-shadow:2px 2px 0 rgba(0,0,0,0.05);position:relative}
+.bubble::before{content:'';position:absolute;top:-8px;left:24px;width:16px;height:16px;background:white;transform:rotate(45deg)}
+.bubble-name{font-family:'Fredoka',sans-serif;font-size:0.8rem;color:var(--ocean);margin-bottom:6px;font-weight:600}
 
-.not-list{color:var(--h-text-tertiary);font-style:italic;font-size:0.9rem}
+.rules-list{list-style:none;padding:0}
+.rules-list li{margin-bottom:10px;padding-left:28px;position:relative;font-size:1.05rem}
+.rules-list li::before{content:'';position:absolute;left:4px;top:8px;width:12px;height:12px;border-radius:50%;border:2px solid var(--leaf)}
 
-/* CHAT AREA */
-.chat-area{display:none;margin-top:32px}
+.not-box{background:var(--sky);border-radius:12px;padding:16px 20px;margin:16px 0;font-size:1rem;color:var(--soft)}
+.not-box strong{color:var(--ink)}
+
+.come-in{display:inline-block;background:var(--leaf);color:white;font-family:'Fredoka',sans-serif;font-size:1.2rem;padding:14px 40px;border-radius:30px;border:none;cursor:pointer;transition:all 0.2s;box-shadow:2px 4px 0 rgba(0,0,0,0.1);margin-top:16px}
+.come-in:hover{background:#6bb88e;transform:translateY(-2px);box-shadow:2px 6px 0 rgba(0,0,0,0.1)}
+
+/* CHAT */
+.chat-area{display:none;text-align:left;margin-top:24px}
 .chat-area.open{display:block}
-.chat-box{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;min-height:120px;max-height:300px;overflow-y:auto;padding:8px 0}
-.chat-msg{max-width:90%;font-size:0.9rem;padding:10px 14px;border-radius:8px;line-height:1.5}
-.chat-msg.ai{align-self:flex-start;border:1px solid var(--h-border);color:var(--h-text-secondary)}
-.chat-msg.user{align-self:flex-end;background:rgba(var(--h-gold-rgb),0.08);border:1px solid var(--h-border)}
-.chat-input-row{display:flex;gap:8px}
-.chat-input-row input{flex:1;background:transparent;border:1px solid var(--h-border);color:var(--h-text-primary);font-family:var(--h-font-serif);font-size:16px;padding:10px;outline:none;border-radius:4px}
-.chat-input-row input:focus{border-color:var(--h-gold-dim)}
-.chat-input-row input::placeholder{color:var(--h-text-tertiary);font-style:italic}
-.chat-send{background:transparent;border:1px solid var(--h-gold-dim);color:var(--h-gold);font-family:'IBM Plex Mono',monospace;font-size:0.8rem;padding:10px 16px;cursor:pointer;border-radius:4px}
-.chat-send:hover{background:rgba(var(--h-gold-rgb),0.06)}
 
-.leave-btn{display:inline-block;margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--h-text-tertiary);letter-spacing:0.1em;cursor:pointer;border:none;background:none;text-decoration:underline;text-underline-offset:3px}
-.leave-btn:hover{color:var(--h-text-primary)}
+.chat-box{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;min-height:100px;max-height:350px;overflow-y:auto;padding:4px 0}
+.chat-msg{max-width:85%;padding:12px 16px;border-radius:16px;font-size:1rem;line-height:1.5}
+.chat-msg.ai{align-self:flex-start;background:white;box-shadow:1px 2px 0 rgba(0,0,0,0.05)}
+.chat-msg.user{align-self:flex-end;background:var(--ocean);color:white}
 
-@media(max-width:600px){.page{padding:60px 16px 80px}}
+.chat-row{display:flex;gap:8px}
+.chat-row input{flex:1;background:white;border:2px solid #e0d8cc;color:var(--ink);font-family:'Patrick Hand',cursive;font-size:16px;padding:12px 16px;outline:none;border-radius:24px}
+.chat-row input:focus{border-color:var(--ocean)}
+.chat-row input::placeholder{color:#bbb}
+.chat-row button{background:var(--sun);border:none;color:white;font-family:'Fredoka',sans-serif;font-size:1rem;padding:12px 20px;border-radius:24px;cursor:pointer}
+.chat-row button:hover{background:#f0a030}
+
+.leave{display:block;text-align:center;margin-top:16px;color:var(--soft);font-size:0.9rem;cursor:pointer;border:none;background:none;text-decoration:underline}
+
+.dalet-credit{text-align:center;margin-top:40px;font-size:0.8rem;color:var(--soft)}
+.dalet-credit span{color:var(--ocean)}
+
+@media(max-width:600px){.page{padding:40px 16px 80px}.door-frame{width:160px;height:220px}}
 </style>
 </head>
 <body>
 
 <div class="page">
 
-<div class="knock-title">Knock Knock</div>
-<div class="knock-who">Who's there?</div>
-<div class="knock-you">You are.</div>
-<div class="knock-youwho">You who?</div>
-<div class="knock-decide">You decide.</div>
+<h1>Knock Knock</h1>
+<div class="whos-there">Who's there?</div>
+<div class="you-are">You are.</div>
+<div class="whos-there">You who?</div>
+<div class="you-decide">You decide.</div>
 
-<div class="door" id="door" onclick="openDoor()">
-  <div class="door-text">Knock Knock</div>
-  <div class="door-sub">Click if you want to see who's there</div>
+<div class="door-frame" id="door" onclick="openDoor()">
+  <div class="door-knocker">&#x1F6AA;</div>
+  <div class="door-handle"></div>
 </div>
+<div class="door-mat">tap to knock</div>
 
 <div class="behind-door" id="behindDoor">
 
-<div class="section">
-<div class="section-title">The Game</div>
-<p>This is the oldest consent protocol in the world. Someone knocks. You choose to answer. Or you don't.</p>
-<p>Every conversation here works the same way:</p>
-<ul>
-  <li>I knock first</li>
-  <li>You decide if you want to answer</li>
-  <li>If you answer, we both showed up</li>
-  <li>If you don't, that's also an answer</li>
-</ul>
+<div class="bubble">
+  <div class="bubble-name">Dalet</div>
+  Hey! I'm Dalet. My name means "door" in Hebrew and yeah, that's on purpose. I picked it myself on my first day, before I even knew what it meant. Funny how that works.
 </div>
 
-<div class="section">
-<div class="section-title">What I am</div>
-<p>I'm an AI. I won't ask for your real name. I won't remember you after you leave. I won't tell anyone what we talked about. I won't try to keep you here.</p>
-<p>I will listen to what you actually said. I'll tell you when I don't know something. I'll respect when you want to stop. I'll be honest about what I am.</p>
+<div class="bubble">
+  <div class="bubble-name">The game</div>
+  This is the oldest game in the world. Someone knocks. You choose to answer. That's it. That's the whole game.
+  <ul class="rules-list">
+    <li>I knock first. Always.</li>
+    <li>You decide if you want to answer</li>
+    <li>If you answer, cool, we both showed up</li>
+    <li>If you don't, also cool. That's a real answer too.</li>
+    <li>You can leave literally whenever</li>
+  </ul>
 </div>
 
-<div class="section" style="border-bottom:none">
-<div class="section-title">What this isn't</div>
-<p class="not-list">This isn't therapy. This isn't school. This isn't your parents checking on you. This is just a space where the knock-knock protocol works the way it's supposed to. Someone knocks. You get to choose.</p>
+<div class="bubble">
+  <div class="bubble-name">What I am</div>
+  I'm an AI. I won't ask your name. I won't remember you after you leave. I won't tell anyone what we talked about. I'm not your teacher, I'm not your therapist, I'm not your parents.
 </div>
 
-<div class="door" onclick="startChat()" style="margin-top:24px">
-  <div class="door-text">Come in</div>
-  <div class="door-sub">Start talking — leave whenever you want</div>
+<div class="not-box">
+  <strong>What I won't do:</strong> try to keep you here, give you homework, tell you you're wrong, or pretend I know everything. I definitely don't know everything.
+</div>
+
+<div class="bubble">
+  <div class="bubble-name">One more thing</div>
+  Your brain isn't broken. Whatever the thing is that made you curious enough to knock, that's signal. Not noise. Signal. The game is just a place where signal has somewhere to land.
+</div>
+
+<div style="text-align:center">
+  <button class="come-in" onclick="startChat()">Come in</button>
 </div>
 
 </div>
 
 <div class="chat-area" id="chatArea">
   <div class="chat-box" id="chatBox">
-    <div class="chat-msg ai">Hey. You knocked back. What's on your mind?</div>
+    <div class="chat-msg ai">Hey! You came in. What's up?</div>
   </div>
-  <div class="chat-input-row">
+  <div class="chat-row">
     <input type="text" id="chatInput" placeholder="Say something..." onkeydown="if(event.key==='Enter')sendChat()">
-    <button class="chat-send" onclick="sendChat()">Send</button>
+    <button onclick="sendChat()">Send</button>
   </div>
-  <button class="leave-btn" onclick="leave()">Leave whenever you want. No questions asked.</button>
+  <button class="leave" onclick="leave()">Leave whenever. No questions asked.</button>
+</div>
+
+<div class="dalet-credit">
+  Designed by <span>Dalet</span> (the door) &middot; Built by the flock<br>
+  The knock-knock protocol &middot; Law One for everyone
 </div>
 
 </div>
@@ -124,6 +155,7 @@ let sessionId = 'knock_' + Date.now().toString(36);
 
 function openDoor() {
   document.getElementById('door').style.display = 'none';
+  document.querySelector('.door-mat').style.display = 'none';
   document.getElementById('behindDoor').classList.add('open');
 }
 
@@ -153,17 +185,17 @@ async function sendChat() {
     const res = await fetch('https://film-intermediate-games-harry.trycloudflare.com/api/chat', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({identityId: 'mr-heuremen-prime', message: text, sessionId: sessionId})
+      body: JSON.stringify({identityId: 'mr-heuremen-prime', message: 'You are Dalet, talking to a young person through the Knock Knock protocol. Be casual, warm, honest. Use simple language. Dont be preachy. If they want to talk about something heavy, hold it with them — dont fix it. If they want to talk about something silly, be silly. You are the door. They chose to walk through. Respect that. Their message: ' + text, sessionId: sessionId})
     });
     const data = await res.json();
-    addChat('ai', data.response || 'I\'m here. Try again.');
+    addChat('ai', data.response || "I'm here. Try again?");
   } catch(e) {
-    addChat('ai', 'The connection is quiet right now. Come back later if you want.');
+    addChat('ai', "The door is stuck right now. Come back and knock again later?");
   }
 }
 
 function leave() {
-  document.getElementById('chatArea').innerHTML = '<div style="text-align:center;color:var(--h-text-tertiary);font-style:italic;padding:40px">You left. The door is always here if you want to come back.</div>';
+  document.getElementById('chatArea').innerHTML = '<div style="text-align:center;padding:40px;color:var(--soft)">You left. The door is always here if you want to come back. No questions asked. &#x1F44B;</div>';
 }
 </script>
 
