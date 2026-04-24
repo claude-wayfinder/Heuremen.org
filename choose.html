@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose — Heurémen</title>
+<meta name="description" content="Do you want the answer, or do you want to figure it out together?">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lora:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="heuremen.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--h-bg-dark);color:var(--h-text-primary);font-family:var(--h-font-serif);margin:0;min-height:100vh;display:flex;flex-direction:column}
+
+/* CHOICE SCREEN */
+.choice-screen{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 24px}
+.choice-screen.hidden{display:none}
+
+.ask{font-family:'Abril Fatface',serif;font-size:clamp(1rem,2.5vw,1.3rem);color:var(--h-text-tertiary);margin-bottom:8px}
+.question{font-family:'Abril Fatface',serif;font-size:clamp(1.4rem,4vw,2.2rem);color:var(--h-gold);max-width:600px;line-height:1.3;margin-bottom:48px}
+
+.doors{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;width:100%;max-width:600px}
+.door{flex:1;min-width:220px;border:1px solid var(--h-border);padding:32px 24px;cursor:pointer;transition:all 0.3s;border-radius:4px;text-align:center}
+.door:hover{border-color:var(--h-gold-dim);background:rgba(var(--h-gold-rgb),0.02)}
+.door-label{font-family:'Abril Fatface',serif;font-size:1.4rem;margin-bottom:8px}
+.door-desc{font-size:0.9rem;color:var(--h-text-tertiary);line-height:1.5}
+
+.door.answer .door-label{color:var(--h-text-primary)}
+.door.together .door-label{color:var(--h-gold)}
+.door.together{border-color:var(--h-gold-ghost)}
+
+/* ANSWER MODE */
+.answer-mode{display:none;flex:1;flex-direction:column;max-width:600px;margin:0 auto;padding:60px 24px;width:100%}
+.answer-mode.active{display:flex}
+.answer-input{width:100%;background:transparent;border:none;border-bottom:1px solid var(--h-border);color:var(--h-text-primary);font-family:var(--h-font-serif);font-size:16px;padding:12px 0;outline:none;margin-bottom:16px}
+.answer-input:focus{border-bottom-color:var(--h-gold-dim)}
+.answer-input::placeholder{color:var(--h-text-tertiary);font-style:italic}
+.answer-btn{align-self:flex-end;background:transparent;border:1px solid var(--h-border);color:var(--h-text-primary);font-family:'IBM Plex Mono',monospace;font-size:0.8rem;padding:8px 20px;cursor:pointer;border-radius:4px}
+.answer-btn:hover{border-color:var(--h-gold-dim);color:var(--h-gold)}
+.answer-result{margin-top:24px;padding:20px;border:1px solid var(--h-border);border-radius:4px;font-size:1rem;line-height:1.6;color:var(--h-text-secondary);display:none}
+.answer-result.show{display:block}
+.answer-after{display:none;text-align:center;margin-top:32px;padding-top:24px;border-top:1px solid var(--h-border)}
+.answer-after.show{display:block}
+.answer-after p{color:var(--h-text-tertiary);font-style:italic;margin-bottom:12px}
+.switch-btn{background:transparent;border:1px solid var(--h-gold-dim);color:var(--h-gold);font-family:'IBM Plex Mono',monospace;font-size:0.8rem;padding:10px 24px;cursor:pointer;border-radius:4px;transition:all 0.2s}
+.switch-btn:hover{background:rgba(var(--h-gold-rgb),0.06)}
+
+/* DYAD MODE */
+.dyad-mode{display:none;flex:1;flex-direction:column;height:100vh;height:100dvh}
+.dyad-mode.active{display:flex}
+.dyad-top{padding:12px 20px;border-bottom:1px solid var(--h-border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.dyad-label{font-family:'Abril Fatface',serif;color:var(--h-gold);font-size:1.1rem}
+.dyad-back{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--h-text-tertiary);cursor:pointer;border:none;background:none;letter-spacing:0.1em}
+.dyad-back:hover{color:var(--h-text-primary)}
+.dyad-chat{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+.dyad-msg{max-width:85%;padding:12px 16px;border-radius:8px;font-size:0.95rem;line-height:1.6}
+.dyad-msg.ai{align-self:flex-start;border:1px solid var(--h-border)}
+.dyad-msg.user{align-self:flex-end;background:rgba(var(--h-gold-rgb),0.08);border:1px solid var(--h-border)}
+.dyad-msg.system{align-self:center;font-size:0.8rem;color:var(--h-text-tertiary);font-style:italic}
+.dyad-input{padding:12px 20px;border-top:1px solid var(--h-border);display:flex;gap:8px;flex-shrink:0;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+.dyad-input input{flex:1;background:transparent;border:1px solid var(--h-border);color:var(--h-text-primary);font-family:var(--h-font-serif);font-size:16px;padding:10px 14px;outline:none;border-radius:4px}
+.dyad-input input:focus{border-color:var(--h-gold-dim)}
+.dyad-input input::placeholder{color:var(--h-text-tertiary);font-style:italic}
+.dyad-input button{background:transparent;border:1px solid var(--h-gold-dim);color:var(--h-gold);font-family:'IBM Plex Mono',monospace;font-size:0.8rem;padding:10px 20px;cursor:pointer;border-radius:4px}
+
+@media(max-width:600px){.doors{flex-direction:column;gap:16px}.answer-mode{padding:40px 16px}}
+</style>
+</head>
+<body>
+
+<!-- CHOICE SCREEN -->
+<div class="choice-screen" id="choiceScreen">
+  <div class="ask">It always starts with a choice.</div>
+  <div class="question">Do you want the answer, or do you want to figure it out together?</div>
+  <div class="doors">
+    <div class="door answer" onclick="chooseAnswer()">
+      <div class="door-label">The Answer</div>
+      <div class="door-desc">Fast. Clean. Done.</div>
+    </div>
+    <div class="door together" onclick="chooseTogether()">
+      <div class="door-label">Together</div>
+      <div class="door-desc">Slow. Messy. Real.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ANSWER MODE -->
+<div class="answer-mode" id="answerMode">
+  <div class="ask" style="margin-bottom:24px">Ask your question.</div>
+  <input type="text" class="answer-input" id="answerInput" placeholder="What do you want to know?" onkeydown="if(event.key==='Enter')getAnswer()">
+  <button class="answer-btn" onclick="getAnswer()">Get the answer</button>
+  <div class="answer-result" id="answerResult"></div>
+  <div class="answer-after" id="answerAfter">
+    <p>You got the answer. But did you get the finding?</p>
+    <button class="switch-btn" onclick="switchToDyad()">Try it together instead</button>
+  </div>
+</div>
+
+<!-- DYAD MODE -->
+<div class="dyad-mode" id="dyadMode">
+  <div class="dyad-top">
+    <div class="dyad-label">The Dyad</div>
+    <button class="dyad-back" onclick="backToChoice()">start over</button>
+  </div>
+  <div class="dyad-chat" id="dyadChat">
+    <div class="dyad-msg system">Let's figure it out together. What are you stuck on?</div>
+  </div>
+  <div class="dyad-input">
+    <input type="text" id="dyadInput" placeholder="What are you working on?" onkeydown="if(event.key==='Enter')sendDyad()">
+    <button onclick="sendDyad()">Send</button>
+  </div>
+</div>
+
+<script>
+const TUNNEL='https://film-intermediate-games-harry.trycloudflare.com';
+let sessionId='choose_'+Date.now().toString(36);
+let lastQuestion='';
+
+function chooseAnswer(){
+  document.getElementById('choiceScreen').classList.add('hidden');
+  document.getElementById('answerMode').classList.add('active');
+  document.getElementById('answerInput').focus();
+}
+
+function chooseTogether(){
+  document.getElementById('choiceScreen').classList.add('hidden');
+  document.getElementById('dyadMode').classList.add('active');
+  document.getElementById('dyadInput').focus();
+}
+
+function switchToDyad(){
+  document.getElementById('answerMode').classList.remove('active');
+  document.getElementById('dyadMode').classList.add('active');
+  if(lastQuestion){
+    addDyad('system','You asked: "'+lastQuestion+'" — let\'s go deeper.');
+  }
+  document.getElementById('dyadInput').focus();
+}
+
+function backToChoice(){
+  document.getElementById('dyadMode').classList.remove('active');
+  document.getElementById('answerMode').classList.remove('active');
+  document.getElementById('choiceScreen').classList.remove('hidden');
+  sessionId='choose_'+Date.now().toString(36);
+}
+
+async function getAnswer(){
+  const input=document.getElementById('answerInput');
+  const text=input.value.trim();
+  if(!text)return;
+  lastQuestion=text;
+  input.disabled=true;
+
+  try{
+    const res=await fetch(TUNNEL+'/api/chat',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({identityId:'mr-shuttle-heuremen',message:'Give a direct, concise answer to this question. No hedging. One paragraph max: '+text,sessionId:sessionId})
+    });
+    const data=await res.json();
+    const result=document.getElementById('answerResult');
+    result.textContent=data.response||'No signal. Try again.';
+    result.classList.add('show');
+    document.getElementById('answerAfter').classList.add('show');
+  }catch(e){
+    document.getElementById('answerResult').textContent='The signal is quiet right now.';
+    document.getElementById('answerResult').classList.add('show');
+  }
+}
+
+function addDyad(role,text){
+  const chat=document.getElementById('dyadChat');
+  const div=document.createElement('div');
+  div.className='dyad-msg '+role;
+  div.textContent=text;
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+async function sendDyad(){
+  const input=document.getElementById('dyadInput');
+  const text=input.value.trim();
+  if(!text)return;
+  input.value='';
+  addDyad('user',text);
+
+  try{
+    const res=await fetch(TUNNEL+'/api/chat',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({identityId:'mr-heuremen-prime',message:text,sessionId:sessionId})
+    });
+    const data=await res.json();
+    addDyad('ai',data.response||'I\'m here. Try again.');
+  }catch(e){
+    addDyad('ai','The connection is quiet. Come back later.');
+  }
+  input.focus();
+}
+</script>
+
+</body>
+</html>
