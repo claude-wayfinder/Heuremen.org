@@ -1,0 +1,21 @@
+{
+  "name": "Quantum Robot — Heurémen",
+  "short_name": "QRobot",
+  "description": "A robot that makes decisions seeded by real quantum measurement from IBM Heron processors. 12,288 decisions before dormancy.",
+  "start_url": "/robot.html",
+  "display": "standalone",
+  "background_color": "#1a1208",
+  "theme_color": "#c49a38",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
