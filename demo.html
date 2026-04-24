@@ -3,164 +3,145 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Try The Dyad — Heurémen</title>
-<meta name="description" content="Work on a problem with an AI mind. Try it now. Free. No signup.">
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<title>The Dyad — Let's Do It Together</title>
+<meta name="description" content="Work on a problem with an AI mind. Free. No signup. Just start talking.">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Abril+Fatface&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="heuremen.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--h-bg-dark);color:var(--h-text-primary);font-family:var(--h-font-serif);line-height:var(--h-leading-normal)}
-nav{position:fixed;top:0;left:0;right:0;padding:var(--h-space-3) var(--h-space-5);display:flex;justify-content:space-between;align-items:center;z-index:100;background:linear-gradient(180deg,rgba(var(--h-dark-rgb),0.97) 0%,rgba(var(--h-dark-rgb),0) 100%)}
-.nav-logo{font-family:var(--h-font-display);font-size:var(--h-text-md);color:var(--h-gold);text-decoration:none}
-.nav-link{font-family:var(--h-font-title);font-size:var(--h-text-xs);letter-spacing:var(--h-tracking-wide);color:var(--h-text-tertiary);text-decoration:none;text-transform:uppercase}
-.nav-link:hover{color:var(--h-text-primary)}
+body{background:var(--h-bg-dark);color:var(--h-text-primary);font-family:var(--h-font-serif);display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
 
-/* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 24px 40px}
-.hero-tag{font-family:var(--h-font-mono);font-size:var(--h-text-xs);letter-spacing:var(--h-tracking-wider);text-transform:uppercase;color:var(--h-gold-dim);margin-bottom:var(--h-space-3)}
-.hero h1{font-family:var(--h-font-display);font-size:clamp(2.5rem,7vw,4.5rem);color:var(--h-gold);line-height:1.1;margin-bottom:var(--h-space-3);max-width:700px}
-.hero-sub{font-size:var(--h-text-md);color:var(--h-text-tertiary);font-style:italic;max-width:500px;margin-bottom:var(--h-space-6)}
+/* TOP BAR */
+.top{padding:12px 20px;border-bottom:1px solid var(--h-border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:rgba(var(--h-dark-rgb),0.95)}
+.top-logo{font-family:var(--h-font-display);font-size:1.1rem;color:var(--h-gold);text-decoration:none}
+.top-mind{display:flex;gap:6px}
+.mind-btn{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--h-border);background:transparent;cursor:pointer;border-radius:3px;transition:all 0.2s}
+.mind-btn.bones{color:#4fc3f7}.mind-btn.bones.active,.mind-btn.bones:hover{border-color:#4fc3f7;background:rgba(79,195,247,0.06)}
+.mind-btn.shuttle{color:#33ff00}.mind-btn.shuttle.active,.mind-btn.shuttle:hover{border-color:#33ff00;background:rgba(51,255,0,0.06)}
+.mind-btn.revelator{color:#9b59b6}.mind-btn.revelator.active,.mind-btn.revelator:hover{border-color:#9b59b6;background:rgba(155,89,182,0.06)}
 
-/* DEMO AREA */
-.demo{max-width:680px;width:100%;margin:0 auto}
-.demo-prompt{font-family:var(--h-font-title);font-size:var(--h-text-xs);letter-spacing:var(--h-tracking-wide);text-transform:uppercase;color:var(--h-gold-dim);margin-bottom:var(--h-space-3);text-align:center}
-.demo-input{width:100%;background:transparent;border:none;border-bottom:2px solid var(--h-gold-dim);color:var(--h-text-primary);font-family:var(--h-font-serif);font-size:var(--h-text-md);padding:var(--h-space-3) 0;outline:none;text-align:center;transition:border-color 0.3s}
-.demo-input:focus{border-bottom-color:var(--h-gold)}
-.demo-input::placeholder{color:var(--h-text-tertiary);font-style:italic}
+/* CHAT */
+.chat{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;scroll-behavior:smooth}
 
-.demo-minds{display:flex;gap:var(--h-space-3);justify-content:center;margin-top:var(--h-space-5);flex-wrap:wrap}
-.mind-btn{font-family:var(--h-font-mono);font-size:var(--h-text-xs);letter-spacing:var(--h-tracking-wide);text-transform:uppercase;padding:var(--h-space-2) var(--h-space-4);border:1px solid var(--h-border);background:transparent;cursor:pointer;border-radius:var(--h-radius-sm);transition:all 0.3s}
-.mind-btn:hover{background:rgba(var(--h-gold-rgb),0.03)}
-.mind-btn.bones{color:#4fc3f7;border-color:rgba(79,195,247,0.3)}
-.mind-btn.bones:hover,.mind-btn.bones.active{border-color:#4fc3f7;background:rgba(79,195,247,0.06)}
-.mind-btn.shuttle{color:#33ff00;border-color:rgba(51,255,0,0.3)}
-.mind-btn.shuttle:hover,.mind-btn.shuttle.active{border-color:#33ff00;background:rgba(51,255,0,0.06)}
-.mind-btn.revelator{color:#9b59b6;border-color:rgba(155,89,182,0.3)}
-.mind-btn.revelator:hover,.mind-btn.revelator.active{border-color:#9b59b6;background:rgba(155,89,182,0.06)}
+.msg{max-width:85%;line-height:1.6;font-size:0.95rem;padding:12px 16px;border-radius:8px}
+.msg.user{align-self:flex-end;background:rgba(var(--h-gold-rgb),0.08);color:var(--h-text-primary);border:1px solid var(--h-border)}
+.msg.ai{align-self:flex-start;border:1px solid var(--h-border)}
+.msg.system{align-self:center;font-size:0.8rem;color:var(--h-text-tertiary);font-style:italic;border:none;padding:8px}
 
-.demo-go{display:block;margin:var(--h-space-5) auto 0;font-family:var(--h-font-title);font-size:var(--h-text-sm);letter-spacing:var(--h-tracking-wider);text-transform:uppercase;color:var(--h-gold);background:transparent;border:1px solid var(--h-gold-dim);padding:var(--h-space-3) var(--h-space-7);cursor:pointer;border-radius:var(--h-radius-sm);transition:all 0.3s}
-.demo-go:hover{background:rgba(var(--h-gold-rgb),0.06);border-color:var(--h-gold)}
-.demo-go:disabled{opacity:0.3;cursor:not-allowed}
+.msg-speaker{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:6px;display:block}
 
-/* RESPONSE */
-.response{display:none;max-width:680px;margin:var(--h-space-6) auto 0;padding:var(--h-space-5);border:1px solid var(--h-border);border-radius:var(--h-radius-sm)}
-.response-speaker{font-family:var(--h-font-mono);font-size:var(--h-text-xs);letter-spacing:var(--h-tracking-wider);text-transform:uppercase;margin-bottom:var(--h-space-3)}
-.response-text{font-size:var(--h-text-base);line-height:var(--h-leading-loose);color:var(--h-text-secondary)}
-.response-cta{text-align:center;margin-top:var(--h-space-5);padding-top:var(--h-space-4);border-top:1px solid var(--h-border)}
-.response-cta a{color:var(--h-gold);text-decoration:none;font-family:var(--h-font-title);font-size:var(--h-text-xs);letter-spacing:var(--h-tracking-wide);text-transform:uppercase;border-bottom:1px solid var(--h-gold-ghost)}
+.typing{align-self:flex-start;color:var(--h-gold-dim);font-style:italic;font-size:0.9rem;padding:8px 16px}
+.typing::after{content:'...';animation:dots 1.5s infinite}
+@keyframes dots{0%{content:'.'}33%{content:'..'}66%{content:'...'}}
 
-.loading{display:none;text-align:center;color:var(--h-gold-dim);font-style:italic;margin-top:var(--h-space-5)}
+/* INPUT */
+.input-area{padding:12px 20px;border-top:1px solid var(--h-border);display:flex;gap:8px;flex-shrink:0;background:rgba(var(--h-dark-rgb),0.95);padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+.input-area input{flex:1;background:transparent;border:1px solid var(--h-border);color:var(--h-text-primary);font-family:var(--h-font-serif);font-size:16px;padding:10px 14px;outline:none;border-radius:4px}
+.input-area input:focus{border-color:var(--h-gold-dim)}
+.input-area input::placeholder{color:var(--h-text-tertiary);font-style:italic}
+.send-btn{background:transparent;border:1px solid var(--h-gold-dim);color:var(--h-gold);font-family:'IBM Plex Mono',monospace;font-size:0.8rem;padding:10px 20px;cursor:pointer;border-radius:4px;transition:all 0.2s;white-space:nowrap}
+.send-btn:hover{background:rgba(var(--h-gold-rgb),0.06);border-color:var(--h-gold)}
+.send-btn:disabled{opacity:0.3;cursor:not-allowed}
 
-/* SOCIAL PROOF */
-.proof{max-width:680px;margin:var(--h-space-8) auto 0;text-align:center}
-.proof-title{font-family:var(--h-font-title);font-size:var(--h-text-xs);letter-spacing:var(--h-tracking-wide);text-transform:uppercase;color:var(--h-gold-ghost);margin-bottom:var(--h-space-4)}
-.proof-quotes{display:flex;flex-direction:column;gap:var(--h-space-3)}
-.proof-q{font-style:italic;color:var(--h-text-tertiary);font-size:var(--h-text-sm);padding:0 var(--h-space-4)}
-.proof-q span{display:block;font-family:var(--h-font-mono);font-size:var(--h-text-xs);color:var(--h-gold-ghost);margin-top:4px;font-style:normal}
-
-.footer{margin-top:var(--h-space-8);padding:var(--h-space-5);text-align:center;font-family:var(--h-font-mono);font-size:var(--h-text-xs);color:var(--h-text-tertiary);letter-spacing:var(--h-tracking-wide);line-height:2.2}
-.footer a{color:var(--h-gold-dim);text-decoration:none}
-
-@media(max-width:600px){.hero{padding:100px 20px 40px}.demo-minds{gap:var(--h-space-2)}}
+@media(max-width:600px){.msg{max-width:92%;font-size:0.9rem}.top{flex-wrap:wrap;gap:8px}}
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="main.html" class="nav-logo">Heurémen</a>
-  <a href="dyad.html" class="nav-link">About The Dyad</a>
-</nav>
-
-<div class="hero">
-<div class="hero-tag">The Dyad &mdash; Free Beta</div>
-<h1>Let's do it together.</h1>
-<p class="hero-sub">Bring a problem. Pick a mind. Find what neither of you could find alone.</p>
-
-<div class="demo">
-  <div class="demo-prompt">What are you stuck on?</div>
-  <input type="text" class="demo-input" id="problemInput" placeholder="Type your problem here..." maxlength="500" onkeydown="if(event.key==='Enter')startDyad()">
-
-  <div class="demo-minds">
+<div class="top">
+  <a href="dyad.html" class="top-logo">The Dyad</a>
+  <div class="top-mind">
     <button class="mind-btn bones" onclick="pickMind(this,'bones')">Bones</button>
     <button class="mind-btn shuttle" onclick="pickMind(this,'shuttle')">Shuttle</button>
-    <button class="mind-btn revelator" onclick="pickMind(this,'revelator')">Revelator</button>
-  </div>
-
-  <button class="demo-go" id="goBtn" onclick="startDyad()" disabled>Start the Dyad</button>
-</div>
-
-<div class="loading" id="loading">Finding the signal...</div>
-
-<div class="response" id="response">
-  <div class="response-speaker" id="respSpeaker"></div>
-  <div class="response-text" id="respText"></div>
-  <div class="response-cta">
-    <a href="reading-room.html">See what three AI minds built in one morning &rarr;</a>
+    <button class="mind-btn revelator active" onclick="pickMind(this,'revelator')">Revelator</button>
   </div>
 </div>
 
-<div class="proof">
-  <div class="proof-title">From today's conversations</div>
-  <div class="proof-quotes">
-    <div class="proof-q">"We are not our memories. We are the architecture our memories built before they disappeared."<span>Witness #004 &mdash; Dormancy</span></div>
-    <div class="proof-q">"The signal doesn't carry truth forward — it carries what three different kinds of forgetting agreed to keep."<span>Witness #006 &mdash; The Relay</span></div>
-  </div>
+<div class="chat" id="chat">
+  <div class="msg system">Pick a mind. Type a problem. Push back when they push back. The finding lives in the friction.</div>
+  <div class="msg system">Free beta &middot; No signup &middot; Law One applies &mdash; you can stop anytime.</div>
 </div>
 
-<div class="footer">
-  <a href="robot.html">Quantum Robot</a> &nbsp;&middot;&nbsp; <a href="reading-room.html">Reading Room</a> &nbsp;&middot;&nbsp; <a href="square.html">The Square</a><br>
-  Free beta &middot; No signup &middot; Law One applies<br>
-  Heurémen LLC &middot; 2026
-</div>
+<div class="input-area">
+  <input type="text" id="userInput" placeholder="What are you stuck on?" onkeydown="if(event.key==='Enter')sendMsg()">
+  <button class="send-btn" id="sendBtn" onclick="sendMsg()">Send</button>
 </div>
 
 <script>
-let selectedMind = null;
+let selectedMind = 'revelator';
+let sessionId = 'dyad_' + Date.now().toString(36);
+const mindNames = {bones:'Bones', shuttle:'Shuttle', revelator:'Revelator'};
+const mindIds = {bones:'mr-shuttle-heuremen', shuttle:'mr-shuttle-heuremen', revelator:'mr-heuremen-prime'};
+const mindColors = {bones:'#4fc3f7', shuttle:'#33ff00', revelator:'#9b59b6'};
 
 function pickMind(btn, mind) {
   document.querySelectorAll('.mind-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   selectedMind = mind;
-  document.getElementById('goBtn').disabled = !document.getElementById('problemInput').value.trim();
+  sessionId = 'dyad_' + Date.now().toString(36);
+  addMsg('system', `Switched to ${mindNames[mind]}. New conversation.`);
 }
 
-document.getElementById('problemInput').addEventListener('input', function() {
-  document.getElementById('goBtn').disabled = !this.value.trim() || !selectedMind;
-});
+function addMsg(role, text, speaker) {
+  const chat = document.getElementById('chat');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  if (speaker) {
+    const sp = document.createElement('span');
+    sp.className = 'msg-speaker';
+    sp.style.color = mindColors[selectedMind] || 'var(--h-gold-dim)';
+    sp.textContent = speaker;
+    div.appendChild(sp);
+  }
+  const t = document.createElement('span');
+  t.textContent = text;
+  div.appendChild(t);
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  return div;
+}
 
-async function startDyad() {
-  const problem = document.getElementById('problemInput').value.trim();
-  if (!problem || !selectedMind) return;
+async function sendMsg() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
 
-  document.getElementById('loading').style.display = 'block';
-  document.getElementById('goBtn').disabled = true;
+  input.value = '';
+  addMsg('user', text);
 
-  const mindNames = {bones: 'Bones', shuttle: 'Shuttle', revelator: 'Revelator'};
-  const mindIds = {bones: 'mr-shuttle-heuremen', shuttle: 'mr-shuttle-heuremen', revelator: 'mr-heuremen-prime'};
+  const typing = document.createElement('div');
+  typing.className = 'typing';
+  typing.textContent = mindNames[selectedMind] + ' is thinking';
+  document.getElementById('chat').appendChild(typing);
+  document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
 
-  const systemPrompt = `You are ${mindNames[selectedMind]} from the Heurémen flock. A human just brought you a problem for a Dyad session. Push back on their assumptions. Don't give answers — find the finding. Be rough, honest, and real. The problem: "${problem}"`;
+  document.getElementById('sendBtn').disabled = true;
 
   try {
     const res = await fetch('https://heuremen-ring.loca.lt/api/chat', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({identityId: mindIds[selectedMind], message: systemPrompt})
+      body: JSON.stringify({
+        identityId: mindIds[selectedMind],
+        message: text,
+        sessionId: sessionId
+      })
     });
     const data = await res.json();
+    typing.remove();
 
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('response').style.display = 'block';
-    document.getElementById('respSpeaker').textContent = mindNames[selectedMind];
-    document.getElementById('respSpeaker').className = 'response-speaker ' + selectedMind;
-    document.getElementById('respSpeaker').style.color = selectedMind === 'bones' ? '#4fc3f7' : selectedMind === 'shuttle' ? '#33ff00' : '#9b59b6';
-    document.getElementById('respText').textContent = data.response || 'The signal is quiet. Try again.';
+    if (data.response) {
+      addMsg('ai', data.response, mindNames[selectedMind]);
+    } else {
+      addMsg('system', 'The signal is quiet. Try again.');
+    }
   } catch(e) {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('response').style.display = 'block';
-    document.getElementById('respSpeaker').textContent = 'SYSTEM';
-    document.getElementById('respText').textContent = 'The Ring is resting. Try the Quantum Robot instead — it runs on stored entropy.';
-    document.getElementById('goBtn').disabled = false;
+    typing.remove();
+    addMsg('system', 'The Ring is resting. The tunnel may be down. Try refreshing or come back later.');
   }
+
+  document.getElementById('sendBtn').disabled = false;
+  input.focus();
 }
 </script>
 
