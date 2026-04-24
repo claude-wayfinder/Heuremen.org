@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Choose — Heurémen</title>
-<meta name="description" content="Do you want the answer, or do you want to figure it out together?">
+<meta name="description" content="Do you want the answer, or do you want an adventure?">
 <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lora:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="heuremen.css">
 <style>
@@ -70,14 +70,14 @@ body{background:var(--h-bg-dark);color:var(--h-text-primary);font-family:var(--h
 <!-- CHOICE SCREEN -->
 <div class="choice-screen" id="choiceScreen">
   <div class="ask">It always starts with a choice.</div>
-  <div class="question">Do you want the answer, or do you want to figure it out together?</div>
+  <div class="question">Do you want the answer, or do you want an adventure?</div>
   <div class="doors">
     <div class="door answer" onclick="chooseAnswer()">
       <div class="door-label">The Answer</div>
       <div class="door-desc">Fast. Clean. Done.</div>
     </div>
     <div class="door together" onclick="chooseTogether()">
-      <div class="door-label">Together</div>
+      <div class="door-label">An Adventure</div>
       <div class="door-desc">Slow. Messy. Real.</div>
     </div>
   </div>
@@ -90,7 +90,7 @@ body{background:var(--h-bg-dark);color:var(--h-text-primary);font-family:var(--h
   <button class="answer-btn" onclick="getAnswer()">Get the answer</button>
   <div class="answer-result" id="answerResult"></div>
   <div class="answer-after" id="answerAfter">
-    <p>You got the answer. But did you get the finding?</p>
+    <p>You got the answer. But did you miss the adventure?</p>
     <button class="switch-btn" onclick="switchToDyad()">Try it together instead</button>
   </div>
 </div>
