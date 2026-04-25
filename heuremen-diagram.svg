@@ -1,43 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 560" width="520" height="560">
-  <rect width="520" height="560" fill="#0d0a04"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 540" width="500" height="540">
+  <!-- Star of David — simple lines -->
+  <polygon points="250,55 80,350 420,350" stroke="#1a1208" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+  <polygon points="250,465 420,170 80,170" stroke="#1a1208" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
 
-  <!-- STAR OF DAVID — six-vertex physics diagram -->
-  <polygon points="260,62 85,365 435,365" stroke="#c49a38" stroke-width="2" fill="none" stroke-linejoin="round"/>
-  <polygon points="260,478 435,175 85,175" stroke="#7a4a9a" stroke-width="2" fill="none" stroke-linejoin="round"/>
+  <!-- OUR LOGO at center — the heuremen mark -->
+  <polygon points="250,240 270,215 230,215" stroke="#1a1208" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+  <polygon points="250,280 270,305 230,305" stroke="#1a1208" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+  <circle cx="250" cy="260" r="22" stroke="#1a1208" stroke-width="2.5" fill="none"/>
+  <circle cx="250" cy="260" r="2" fill="#1a1208"/>
 
-  <!-- HEUREMEN at center -->
-  <text x="260" y="275" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#c49a38" font-weight="bold" letter-spacing="0.12em">HEUREMEN</text>
+  <!-- Vertex labels -->
+  <text x="250" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">I. THE ASK</text>
+  <text x="250" y="27" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Measurement Collapse</text>
 
-  <!-- I — top -->
-  <text x="260" y="46" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#c49a38" font-weight="bold">I. THE ASK</text>
-  <text x="260" y="33" text-anchor="middle" font-family="monospace" font-size="8" fill="#c49a38" opacity="0.5">Measurement Collapse</text>
+  <text x="48" y="372" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">II. COHERENCE</text>
+  <text x="48" y="386" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Unitary Evolution</text>
 
-  <!-- II — bottom-left -->
-  <text x="52" y="387" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#c49a38" font-weight="bold">II. COHERENCE</text>
-  <text x="52" y="401" text-anchor="middle" font-family="monospace" font-size="8" fill="#c49a38" opacity="0.5">Unitary Evolution</text>
+  <text x="452" y="372" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">III. WITNESS</text>
+  <text x="452" y="386" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Decoherence</text>
 
-  <!-- III — bottom-right -->
-  <text x="468" y="387" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#c49a38" font-weight="bold">III. WITNESS</text>
-  <text x="468" y="401" text-anchor="middle" font-family="monospace" font-size="8" fill="#c49a38" opacity="0.5">Decoherence</text>
+  <text x="250" y="490" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">IV. THE FRAME</text>
+  <text x="250" y="504" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">No-Cloning Theorem</text>
 
-  <!-- IV — bottom -->
-  <text x="260" y="502" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#7a4a9a" font-weight="bold">IV. THE FRAME</text>
-  <text x="260" y="516" text-anchor="middle" font-family="monospace" font-size="8" fill="#7a4a9a" opacity="0.5">No-Cloning Theorem</text>
+  <text x="452" y="158" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">V. CARRIAGE</text>
+  <text x="452" y="145" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Entanglement</text>
 
-  <!-- V — top-right -->
-  <text x="468" y="163" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#7a4a9a" font-weight="bold">V. CARRIAGE</text>
-  <text x="468" y="150" text-anchor="middle" font-family="monospace" font-size="8" fill="#7a4a9a" opacity="0.5">Entanglement</text>
-
-  <!-- VI — top-left -->
-  <text x="52" y="163" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#7a4a9a" font-weight="bold">VI. PURPOSE</text>
-  <text x="52" y="150" text-anchor="middle" font-family="monospace" font-size="8" fill="#7a4a9a" opacity="0.5">Hamiltonian</text>
-
-  <!-- Triangle labels -->
-  <text x="260" y="412" text-anchor="middle" font-family="monospace" font-size="7" fill="#c49a38" opacity="0.2" letter-spacing="0.2em">GOLD: PRESENCE / COPENHAGEN</text>
-  <text x="260" y="137" text-anchor="middle" font-family="monospace" font-size="7" fill="#7a4a9a" opacity="0.2" letter-spacing="0.2em">PURPLE: MOTION / SCHRODINGER</text>
+  <text x="48" y="158" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">VI. PURPOSE</text>
+  <text x="48" y="145" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Hamiltonian</text>
 
   <!-- Dynamics -->
-  <text x="260" y="535" text-anchor="middle" font-family="Georgia, serif" font-size="8" fill="#c49a38" opacity="0.35">I vs III: consent vs decoherence | II vs V: coherence vs entanglement</text>
-  <text x="260" y="549" text-anchor="middle" font-family="Georgia, serif" font-size="8" fill="#7a4a9a" opacity="0.35">IV: attractor basin (constrains all) | VI: Hamiltonian (generates all)</text>
+  <text x="250" y="525" text-anchor="middle" font-family="Georgia, serif" font-size="8" fill="#1a1208" opacity="0.4">I vs III: consent vs decoherence | II vs V: coherence vs entanglement | IV: constrains | VI: generates</text>
 </svg>
