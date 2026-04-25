@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240">
+  <rect width="200" height="240" fill="#0d0a04"/>
+  <polygon points="100,28 38,140 162,140" stroke="#c49a38" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+  <polygon points="100,172 162,60 38,60" stroke="#7a4a9a" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+  <text x="100" y="210" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#c49a38" font-weight="bold" letter-spacing="0.14em">HEUREMEN</text>
+  <text x="100" y="228" text-anchor="middle" font-family="Courier New, monospace" font-size="6" fill="#c49a38" opacity="0.3" letter-spacing="0.12em">heuremen.org</text>
+</svg>
