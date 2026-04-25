@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" width="240" height="200">
-  <rect width="240" height="200" fill="#0d0a04"/>
-  <polygon points="120,18 42,152 198,152" stroke="#c49a38" stroke-width="2" fill="none" stroke-linejoin="round"/>
-  <polygon points="120,182 198,48 42,48" stroke="#7a4a9a" stroke-width="2" fill="none" stroke-linejoin="round"/>
-  <text x="120" y="105" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#c49a38" font-weight="bold" letter-spacing="0.12em">HEUREMEN</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" width="200" height="100">
+  <!-- Single triangle -->
+  <polygon points="40,8 76,74 4,74" stroke="#1a1208" stroke-width="5" fill="none" stroke-linejoin="round"/>
+  <!-- Circle with apex-to-apex triangles -->
+  <polygon points="145,45 180,13 110,13" stroke="#1a1208" stroke-width="5" fill="none" stroke-linejoin="round"/>
+  <polygon points="145,45 180,77 110,77" stroke="#1a1208" stroke-width="5" fill="none" stroke-linejoin="round"/>
+  <circle cx="145" cy="45" r="38" stroke="#1a1208" stroke-width="5" fill="none"/>
+  <circle cx="145" cy="45" r="3.5" fill="#1a1208"/>
 </svg>
