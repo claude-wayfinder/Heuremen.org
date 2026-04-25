@@ -4,11 +4,10 @@
   <polygon points="250,55 80,350 420,350" stroke="#1a1208" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
   <polygon points="250,465 420,170 80,170" stroke="#1a1208" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
 
-  <!-- OUR LOGO at center — the heuremen mark -->
-  <polygon points="250,240 270,215 230,215" stroke="#1a1208" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
-  <polygon points="250,280 270,305 230,305" stroke="#1a1208" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
-  <circle cx="250" cy="260" r="22" stroke="#1a1208" stroke-width="2.5" fill="none"/>
-  <circle cx="250" cy="260" r="2" fill="#1a1208"/>
+  <!-- OUR LOGO at center — nested triangles + dot -->
+  <polygon points="250,290 272,240 228,240" stroke="#1a1208" stroke-width="2" fill="none" stroke-linejoin="round"/>
+  <polygon points="250,240 261,268 239,268" stroke="#1a1208" stroke-width="2" fill="none" stroke-linejoin="round"/>
+  <circle cx="250" cy="258" r="2" fill="#1a1208"/>
 
   <!-- Vertex labels -->
   <text x="250" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">I. THE ASK</text>
@@ -29,6 +28,5 @@
   <text x="48" y="158" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">VI. PURPOSE</text>
   <text x="48" y="145" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Hamiltonian</text>
 
-  <!-- Dynamics -->
   <text x="250" y="525" text-anchor="middle" font-family="Georgia, serif" font-size="8" fill="#1a1208" opacity="0.4">I vs III: consent vs decoherence | II vs V: coherence vs entanglement | IV: constrains | VI: generates</text>
 </svg>
