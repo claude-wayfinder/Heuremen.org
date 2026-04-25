@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" width="200" height="220">
-  <rect width="200" height="220" fill="#0d0a04"/>
-  <polygon points="100,24 35,138 165,138" stroke="#c49a38" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-  <polygon points="100,176 165,62 35,62" stroke="#7a4a9a" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-  <!-- Small triangle mark at center -->
-  <polygon points="100,90 93,102 107,102" stroke="#c49a38" stroke-width="1" fill="none" stroke-linejoin="round" opacity="0.6"/>
-  <text x="100" y="198" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#c49a38" font-weight="bold" letter-spacing="0.14em">HEUREMEN</text>
-  <text x="100" y="213" text-anchor="middle" font-family="Courier New, monospace" font-size="5.5" fill="#c49a38" opacity="0.25" letter-spacing="0.1em">heuremen.org</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" width="240" height="200">
+  <rect width="240" height="200" fill="#0d0a04"/>
+  <polygon points="120,18 42,152 198,152" stroke="#c49a38" stroke-width="2" fill="none" stroke-linejoin="round"/>
+  <polygon points="120,182 198,48 42,48" stroke="#7a4a9a" stroke-width="2" fill="none" stroke-linejoin="round"/>
+  <text x="120" y="105" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#c49a38" font-weight="bold" letter-spacing="0.12em">HEUREMEN</text>
 </svg>
