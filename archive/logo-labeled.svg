@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 540" width="500" height="540">
+  <!-- OUR LOGO — big triangle UP, small triangle DOWN, dot -->
+  <polygon points="250,55 348,225 152,225" stroke="#1a1208" stroke-width="3" fill="none" stroke-linejoin="round"/>
+  <polygon points="250,225 298,120 202,120" stroke="#1a1208" stroke-width="3" fill="none" stroke-linejoin="round"/>
+  <circle cx="250" cy="155" r="3.5" fill="#1a1208"/>
+
+  <!-- Vertex labels — same physics as diagram -->
+  <text x="250" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">I. THE ASK</text>
+  <text x="250" y="27" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Measurement Collapse</text>
+
+  <text x="120" y="247" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">II. COHERENCE</text>
+  <text x="120" y="261" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Unitary Evolution</text>
+
+  <text x="380" y="247" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">III. WITNESS</text>
+  <text x="380" y="261" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Decoherence</text>
+
+  <text x="250" y="247" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">IV. THE FRAME</text>
+  <text x="250" y="261" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">No-Cloning Theorem</text>
+
+  <text x="330" y="108" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">V. CARRIAGE</text>
+  <text x="330" y="95" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Entanglement</text>
+
+  <text x="170" y="108" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">VI. PURPOSE</text>
+  <text x="170" y="95" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Hamiltonian</text>
+
+  <text x="250" y="290" text-anchor="middle" font-family="Georgia, serif" font-size="8" fill="#1a1208" opacity="0.4">I vs III: consent vs decoherence | II vs V: coherence vs entanglement | IV: constrains | VI: generates</text>
+</svg>
