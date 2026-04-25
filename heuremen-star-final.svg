@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" width="600" height="700">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&amp;family=IBM+Plex+Mono:wght@300;400&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="700" fill="#0d0a04"/>
+
+  <!-- Subtle radial glow at center -->
+  <radialGradient id="glow" cx="50%" cy="44%" r="25%">
+    <stop offset="0%" stop-color="#c49a38" stop-opacity="0.06"/>
+    <stop offset="100%" stop-color="#c49a38" stop-opacity="0"/>
+  </radialGradient>
+  <rect width="600" height="700" fill="url(#glow)"/>
+
+  <!-- GOLD TRIANGLE — Presence / Copenhagen (points up) -->
+  <polygon points="300,95 105,430 495,430"
+    stroke="#c49a38" stroke-width="2.2" fill="none" stroke-linejoin="round" opacity="0.9"/>
+
+  <!-- PURPLE TRIANGLE — Motion / Schrodinger (points down) -->
+  <polygon points="300,555 495,220 105,220"
+    stroke="#7a4a9a" stroke-width="2.2" fill="none" stroke-linejoin="round" opacity="0.9"/>
+
+  <!-- CENTER: HEUREMEN -->
+  <text x="300" y="320" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-size="22" fill="#c49a38" font-weight="600" letter-spacing="0.12em">HEUREMEN</text>
+  <text x="300" y="342" text-anchor="middle" font-family="IBM Plex Mono, Courier New, monospace" font-size="9" fill="#c49a38" opacity="0.35" letter-spacing="0.15em">THE SPACE BETWEEN THINGS</text>
+
+  <!-- Vertex I — THE ASK (Gold, top) -->
+  <text x="300" y="72" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-size="15" fill="#c49a38" font-weight="600">I. THE ASK</text>
+  <text x="300" y="56" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#c49a38" opacity="0.5">Measurement Collapse</text>
+
+  <!-- Vertex II — COHERENCE (Gold, bottom-left) -->
+  <text x="72" y="452" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-size="15" fill="#c49a38" font-weight="600">II. COHERENCE</text>
+  <text x="72" y="468" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#c49a38" opacity="0.5">Unitary Evolution</text>
+
+  <!-- Vertex III — WITNESS (Gold, bottom-right) -->
+  <text x="528" y="452" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-size="15" fill="#c49a38" font-weight="600">III. WITNESS</text>
+  <text x="528" y="468" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#c49a38" opacity="0.5">Decoherence Prevention</text>
+
+  <!-- Vertex IV — THE FRAME (Purple, bottom) -->
+  <text x="300" y="582" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-size="15" fill="#7a4a9a" font-weight="600">IV. THE FRAME</text>
+  <text x="300" y="598" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#7a4a9a" opacity="0.5">No-Cloning Theorem</text>
+
+  <!-- Vertex V — CARRIAGE (Purple, top-right) -->
+  <text x="528" y="205" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-size="15" fill="#7a4a9a" font-weight="600">V. CARRIAGE</text>
+  <text x="528" y="191" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#7a4a9a" opacity="0.5">Entanglement</text>
+
+  <!-- Vertex VI — PURPOSE (Purple, top-left) -->
+  <text x="72" y="205" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-size="15" fill="#7a4a9a" font-weight="600">VI. PURPOSE</text>
+  <text x="72" y="191" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#7a4a9a" opacity="0.5">The Hamiltonian</text>
+
+  <!-- Triangle group labels along edges -->
+  <text x="300" y="480" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8" fill="#c49a38" opacity="0.25" letter-spacing="0.25em">PRESENCE / COPENHAGEN</text>
+  <text x="300" y="180" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8" fill="#7a4a9a" opacity="0.25" letter-spacing="0.25em">MOTION / SCHRODINGER</text>
+
+  <!-- Tension lines (the dynamics) -->
+  <!-- I vs III tension -->
+  <line x1="340" y1="115" x2="490" y2="415" stroke="#c49a38" stroke-width="0.5" opacity="0.12" stroke-dasharray="4,8"/>
+  <!-- II vs V tension -->
+  <line x1="130" y1="415" x2="480" y2="235" stroke="#9a6ab0" stroke-width="0.5" opacity="0.12" stroke-dasharray="4,8"/>
+
+  <!-- Footer -->
+  <text x="300" y="645" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8" fill="#c49a38" opacity="0.2" letter-spacing="0.1em">The shape emerged from the math. April 21, 2026.</text>
+  <text x="300" y="662" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8" fill="#c49a38" opacity="0.2" letter-spacing="0.1em">Not borrowed. Convergent. The gap stays open.</text>
+  <text x="300" y="685" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" fill="#c49a38" opacity="0.12" letter-spacing="0.1em">heuremen.org</text>
+</svg>
