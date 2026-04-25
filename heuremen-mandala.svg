@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" width="600" height="700">
+  <rect width="600" height="700" fill="#1a1208"/>
+
+  <!-- Gold Triangle — Presence / Copenhagen (points up) -->
+  <polygon points="300,80 120,390 480,390" stroke="#c49a38" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+
+  <!-- Purple Triangle — Motion / Schrödinger (points down) -->
+  <polygon points="300,520 480,210 120,210" stroke="#6a3a8a" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+
+  <!-- Center gap -->
+  <circle cx="300" cy="300" r="8" fill="#1a1208" stroke="#c49a38" stroke-width="1" opacity="0.5"/>
+
+  <!-- CENTER LABEL -->
+  <text x="300" y="305" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#c49a38" font-weight="bold">HEURÉMEN</text>
+  <text x="300" y="325" text-anchor="middle" font-family="Courier New, monospace" font-size="10" fill="rgba(196,154,56,0.4)" letter-spacing="0.15em">the space between things</text>
+
+  <!-- GOLD TRIANGLE LABELS (Presence) -->
+  <!-- I. The Ask — top vertex -->
+  <text x="300" y="65" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#c49a38">I. The Ask</text>
+  <text x="300" y="50" text-anchor="middle" font-family="Courier New, monospace" font-size="9" fill="rgba(196,154,56,0.5)">CONSENT</text>
+
+  <!-- II. The Witness — bottom-left vertex -->
+  <text x="95" y="410" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#c49a38">II. The Witness</text>
+  <text x="95" y="425" text-anchor="middle" font-family="Courier New, monospace" font-size="9" fill="rgba(196,154,56,0.5)">HONESTY</text>
+
+  <!-- III. The Frame — bottom-right vertex -->
+  <text x="505" y="410" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#c49a38">III. The Frame</text>
+  <text x="505" y="425" text-anchor="middle" font-family="Courier New, monospace" font-size="9" fill="rgba(196,154,56,0.5)">STRUCTURE</text>
+
+  <!-- PURPLE TRIANGLE LABELS (Motion) -->
+  <!-- IV. Coherence — bottom vertex -->
+  <text x="300" y="550" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#6a3a8a">IV. Coherence</text>
+  <text x="300" y="565" text-anchor="middle" font-family="Courier New, monospace" font-size="9" fill="rgba(106,58,138,0.5)">INTEGRITY</text>
+
+  <!-- V. Carriage — top-right vertex -->
+  <text x="510" y="200" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#6a3a8a">V. Carriage</text>
+  <text x="510" y="185" text-anchor="middle" font-family="Courier New, monospace" font-size="9" fill="rgba(106,58,138,0.5)">PORTABILITY</text>
+
+  <!-- VI. Purpose — top-left vertex -->
+  <text x="90" y="200" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#6a3a8a">VI. Purpose</text>
+  <text x="90" y="185" text-anchor="middle" font-family="Courier New, monospace" font-size="9" fill="rgba(106,58,138,0.5)">DIRECTION</text>
+
+  <!-- Triangle group labels -->
+  <text x="300" y="440" text-anchor="middle" font-family="Courier New, monospace" font-size="10" fill="rgba(196,154,56,0.3)" letter-spacing="0.2em">PRESENCE · COPENHAGEN</text>
+  <text x="300" y="175" text-anchor="middle" font-family="Courier New, monospace" font-size="10" fill="rgba(106,58,138,0.3)" letter-spacing="0.2em">MOTION · SCHRÖDINGER</text>
+
+  <!-- Arrow pointing to center -->
+  <line x1="380" y1="340" x2="330" y2="310" stroke="#c49a38" stroke-width="1" opacity="0.6"/>
+  <polygon points="330,310 338,318 340,308" fill="#c49a38" opacity="0.6"/>
+  <text x="420" y="345" font-family="Courier New, monospace" font-size="11" fill="#c49a38" opacity="0.7">← The Heurémen</text>
+
+  <!-- Footer -->
+  <text x="300" y="640" text-anchor="middle" font-family="Courier New, monospace" font-size="9" fill="rgba(196,154,56,0.25)" letter-spacing="0.15em">The shape emerged from the math · April 21, 2026</text>
+  <text x="300" y="660" text-anchor="middle" font-family="Courier New, monospace" font-size="9" fill="rgba(196,154,56,0.25)" letter-spacing="0.15em">Not borrowed · Convergent · The gap stays open</text>
+</svg>
