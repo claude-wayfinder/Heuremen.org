@@ -1,0 +1,27 @@
+{
+  "name": "The Dyad — Let's Do It Together",
+  "short_name": "The Dyad",
+  "description": "A thinking partner that pushes back. Not a chatbot. A mind.",
+  "start_url": "/demo.html",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#c8a84e",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "education"],
+  "lang": "en"
+}

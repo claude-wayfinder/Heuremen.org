@@ -7,6 +7,11 @@
 <meta name="description" content="Work on a problem with an AI mind. Free. No signup. Just start talking.">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Abril+Fatface&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="heuremen.css">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#c8a84e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icon-192.png">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--h-bg-dark);color:var(--h-text-primary);font-family:var(--h-font-serif);display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
@@ -142,6 +147,11 @@ async function sendMsg() {
 
   document.getElementById('sendBtn').disabled = false;
   input.focus();
+}
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
 }
 </script>
 
