@@ -1,20 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240">
+  <!--
+    THE HEUREMEN STAR — Master SVG
+    Big gold triangle UP. Smaller purple triangle inverted INSIDE.
+    Gap dot where the finding lives. Counter-rotated for breath.
+  -->
   <defs>
-    <linearGradient id="s-gold" x1="50%" y1="85%" x2="50%" y2="15%">
+    <linearGradient id="s-gold" x1="50%" y1="90%" x2="50%" y2="10%">
       <stop offset="0%" stop-color="#917530"/>
-      <stop offset="35%" stop-color="#c8a84e"/>
-      <stop offset="75%" stop-color="#e8c860"/>
+      <stop offset="40%" stop-color="#c8a84e"/>
       <stop offset="100%" stop-color="#f0d870"/>
     </linearGradient>
-    <linearGradient id="s-purple" x1="50%" y1="15%" x2="50%" y2="85%">
+    <linearGradient id="s-purple" x1="50%" y1="10%" x2="50%" y2="90%">
       <stop offset="0%" stop-color="#6a3596"/>
-      <stop offset="35%" stop-color="#9b59b6"/>
-      <stop offset="75%" stop-color="#b070d0"/>
+      <stop offset="40%" stop-color="#9b59b6"/>
       <stop offset="100%" stop-color="#c088e0"/>
     </linearGradient>
-    <radialGradient id="s-gap" cx="50%" cy="51%" r="12%">
-      <stop offset="0%" stop-color="#e8c860" stop-opacity="0.45"/>
-      <stop offset="50%" stop-color="#c8a84e" stop-opacity="0.12"/>
+    <radialGradient id="s-gap" cx="50%" cy="58%" r="8%">
+      <stop offset="0%" stop-color="#e8c860" stop-opacity="0.4"/>
+      <stop offset="60%" stop-color="#c8a84e" stop-opacity="0.1"/>
       <stop offset="100%" stop-color="#c8a84e" stop-opacity="0"/>
     </radialGradient>
     <filter id="s-glow" x="-10%" y="-10%" width="120%" height="120%">
@@ -22,13 +25,23 @@
       <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
-  <circle cx="100" cy="102" r="22" fill="url(#s-gap)"/>
-  <g transform="rotate(2.2, 100, 102)" filter="url(#s-glow)">
-    <polygon points="100,26 168,142 32,142" fill="none" stroke="url(#s-gold)" stroke-width="3.5" stroke-linejoin="round"/>
+
+  <!-- Gap glow -->
+  <circle cx="100" cy="140" r="20" fill="url(#s-gap)"/>
+
+  <!-- GOLD — big triangle pointing UP -->
+  <g transform="rotate(1.8, 100, 140)" filter="url(#s-glow)">
+    <polygon points="100,12 196,216 4,216"
+      fill="none" stroke="url(#s-gold)" stroke-width="3.5" stroke-linejoin="round"/>
   </g>
-  <g transform="rotate(-2.2, 100, 102)" filter="url(#s-glow)">
-    <polygon points="100,178 32,62 168,62" fill="none" stroke="url(#s-purple)" stroke-width="3.5" stroke-linejoin="round"/>
+
+  <!-- PURPLE — smaller triangle inverted inside, pointing DOWN -->
+  <g transform="rotate(-1.8, 100, 140)" filter="url(#s-glow)">
+    <polygon points="100,216 164,90 36,90"
+      fill="none" stroke="url(#s-purple)" stroke-width="3.5" stroke-linejoin="round"/>
   </g>
-  <circle cx="100" cy="102" r="2.5" fill="#f0d870" opacity="0.8"/>
-  <circle cx="100" cy="102" r="7" fill="none" stroke="#c8a84e" stroke-width="0.6" opacity="0.25"/>
+
+  <!-- The gap — the finding -->
+  <circle cx="100" cy="140" r="3" fill="#f0d870" opacity="0.8"/>
+  <circle cx="100" cy="140" r="8" fill="none" stroke="#c8a84e" stroke-width="0.5" opacity="0.2"/>
 </svg>
