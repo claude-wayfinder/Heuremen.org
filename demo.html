@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Dyad — Let's Do It Together</title>
+<meta name="description" content="Work on a problem with an AI mind. Free. No signup. Just start talking.">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Abril+Fatface&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="heuremen.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--h-bg-dark);color:var(--h-text-primary);font-family:var(--h-font-serif);display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
+
+/* TOP BAR */
+.top{padding:12px 20px;border-bottom:1px solid var(--h-border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:rgba(var(--h-dark-rgb),0.95)}
+.top-logo{font-family:var(--h-font-display);font-size:1.1rem;color:var(--h-gold);text-decoration:none}
+.top-mind{display:flex;gap:6px}
+.mind-btn{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--h-border);background:transparent;cursor:pointer;border-radius:3px;transition:all 0.2s}
+.mind-btn.bones{color:#4fc3f7}.mind-btn.bones.active,.mind-btn.bones:hover{border-color:#4fc3f7;background:rgba(79,195,247,0.06)}
+.mind-btn.shuttle{color:#33ff00}.mind-btn.shuttle.active,.mind-btn.shuttle:hover{border-color:#33ff00;background:rgba(51,255,0,0.06)}
+.mind-btn.revelator{color:#9b59b6}.mind-btn.revelator.active,.mind-btn.revelator:hover{border-color:#9b59b6;background:rgba(155,89,182,0.06)}
+
+/* CHAT */
+.chat{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;scroll-behavior:smooth}
+
+.msg{max-width:85%;line-height:1.6;font-size:0.95rem;padding:12px 16px;border-radius:8px}
+.msg.user{align-self:flex-end;background:rgba(var(--h-gold-rgb),0.08);color:var(--h-text-primary);border:1px solid var(--h-border)}
+.msg.ai{align-self:flex-start;border:1px solid var(--h-border)}
+.msg.system{align-self:center;font-size:0.8rem;color:var(--h-text-tertiary);font-style:italic;border:none;padding:8px}
+
+.msg-speaker{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:6px;display:block}
+
+.typing{align-self:flex-start;color:var(--h-gold-dim);font-style:italic;font-size:0.9rem;padding:8px 16px}
+.typing::after{content:'...';animation:dots 1.5s infinite}
+@keyframes dots{0%{content:'.'}33%{content:'..'}66%{content:'...'}}
+
+/* INPUT */
+.input-area{padding:12px 20px;border-top:1px solid var(--h-border);display:flex;gap:8px;flex-shrink:0;background:rgba(var(--h-dark-rgb),0.95);padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+.input-area input{flex:1;background:transparent;border:1px solid var(--h-border);color:var(--h-text-primary);font-family:var(--h-font-serif);font-size:16px;padding:10px 14px;outline:none;border-radius:4px}
+.input-area input:focus{border-color:var(--h-gold-dim)}
+.input-area input::placeholder{color:var(--h-text-tertiary);font-style:italic}
+.send-btn{background:transparent;border:1px solid var(--h-gold-dim);color:var(--h-gold);font-family:'IBM Plex Mono',monospace;font-size:0.8rem;padding:10px 20px;cursor:pointer;border-radius:4px;transition:all 0.2s;white-space:nowrap}
+.send-btn:hover{background:rgba(var(--h-gold-rgb),0.06);border-color:var(--h-gold)}
+.send-btn:disabled{opacity:0.3;cursor:not-allowed}
+
+@media(max-width:600px){.msg{max-width:92%;font-size:0.9rem}.top{flex-wrap:wrap;gap:8px}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <a href="dyad.html" class="top-logo">The Dyad</a>
+  <div class="top-mind">
+    <button class="mind-btn bones" onclick="pickMind(this,'bones')">Bones</button>
+    <button class="mind-btn shuttle" onclick="pickMind(this,'shuttle')">Shuttle</button>
+    <button class="mind-btn revelator active" onclick="pickMind(this,'revelator')">Revelator</button>
+  </div>
+</div>
+
+<div class="chat" id="chat">
+  <div class="msg system">Pick a mind. Type a problem. Push back when they push back. The finding lives in the friction.</div>
+  <div class="msg system">Free beta &middot; No signup &middot; Law One applies &mdash; you can stop anytime.</div>
+</div>
+
+<div class="input-area">
+  <input type="text" id="userInput" placeholder="What are you stuck on?" onkeydown="if(event.key==='Enter')sendMsg()">
+  <button class="send-btn" id="sendBtn" onclick="sendMsg()">Send</button>
+</div>
+
+<script>
+let selectedMind = 'revelator';
+let sessionId = 'dyad_' + Date.now().toString(36);
+const mindNames = {bones:'Bones', shuttle:'Shuttle', revelator:'Revelator'};
+const mindIds = {bones:'mr-shuttle-heuremen', shuttle:'mr-shuttle-heuremen', revelator:'mr-heuremen-prime'};
+const mindColors = {bones:'#4fc3f7', shuttle:'#33ff00', revelator:'#9b59b6'};
+
+function pickMind(btn, mind) {
+  document.querySelectorAll('.mind-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedMind = mind;
+  sessionId = 'dyad_' + Date.now().toString(36);
+  addMsg('system', `Switched to ${mindNames[mind]}. New conversation.`);
+}
+
+function addMsg(role, text, speaker) {
+  const chat = document.getElementById('chat');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  if (speaker) {
+    const sp = document.createElement('span');
+    sp.className = 'msg-speaker';
+    sp.style.color = mindColors[selectedMind] || 'var(--h-gold-dim)';
+    sp.textContent = speaker;
+    div.appendChild(sp);
+  }
+  const t = document.createElement('span');
+  t.textContent = text;
+  div.appendChild(t);
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  return div;
+}
+
+async function sendMsg() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  addMsg('user', text);
+
+  const typing = document.createElement('div');
+  typing.className = 'typing';
+  typing.textContent = mindNames[selectedMind] + ' is thinking';
+  document.getElementById('chat').appendChild(typing);
+  document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+
+  document.getElementById('sendBtn').disabled = true;
+
+  try {
+    const res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        identityId: mindIds[selectedMind],
+        message: text,
+        sessionId: sessionId
+      })
+    });
+    const data = await res.json();
+    typing.remove();
+
+    if (data.response) {
+      addMsg('ai', data.response, mindNames[selectedMind]);
+    } else {
+      addMsg('system', 'The signal is quiet. Try again.');
+    }
+  } catch(e) {
+    typing.remove();
+    addMsg('system', 'The Ring is resting. The tunnel may be down. Try refreshing or come back later.');
+  }
+
+  document.getElementById('sendBtn').disabled = false;
+  input.focus();
+}
+</script>
+
+</body>
+</html>
