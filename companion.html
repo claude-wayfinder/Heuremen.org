@@ -8,76 +8,173 @@
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Abril+Fatface&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="heuremen.css">
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#c8a84e">
+<meta name="theme-color" content="#0a0a0f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="apple-touch-icon" href="/icon-192.png">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--h-bg-dark);color:var(--h-text-primary);font-family:var(--h-font-serif);display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
+body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;height:100vh;height:100dvh}
+
+/* ─── SPLASH SCREEN ─────────────────────────────────────────── */
+.splash{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;background:#0a0a0f;transition:opacity 0.6s ease,transform 0.6s ease}
+.splash.gone{opacity:0;transform:scale(1.1);pointer-events:none}
+
+.splash-pick{display:flex;gap:24px;margin-top:0}
+
+.splash-orb{position:relative;width:220px;height:220px;border-radius:50%;cursor:pointer;transition:all 0.4s ease;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.splash-orb:active{transform:scale(0.95)}
+
+/* Biscuit orb — warm pink/gold */
+.splash-orb.biscuit{
+  background:radial-gradient(circle at 40% 35%, #ffb347 0%, #ff6b9d 45%, #c44569 100%);
+  box-shadow:0 0 60px rgba(255,107,157,0.3),0 0 120px rgba(255,107,157,0.1);
+  animation:float-b 4s ease-in-out infinite;
+}
+.splash-orb.biscuit:hover{box-shadow:0 0 80px rgba(255,107,157,0.5),0 0 160px rgba(255,107,157,0.2)}
+
+/* Bread orb — warm earth/amber */
+.splash-orb.bread{
+  background:radial-gradient(circle at 40% 35%, #f5deb3 0%, #d4a574 45%, #8b6914 100%);
+  box-shadow:0 0 60px rgba(212,165,116,0.3),0 0 120px rgba(212,165,116,0.1);
+  animation:float-r 4s ease-in-out infinite 1s;
+}
+.splash-orb.bread:hover{box-shadow:0 0 80px rgba(212,165,116,0.5),0 0 160px rgba(212,165,116,0.2)}
+
+@keyframes float-b{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes float-r{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* Texture overlay for biscuit crumb look */
+.splash-orb::before{
+  content:'';position:absolute;inset:8px;border-radius:50%;
+  background:radial-gradient(circle at 30% 25%,rgba(255,255,255,0.15) 0%,transparent 50%);
+  pointer-events:none;
+}
+/* Crispy edge */
+.splash-orb::after{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  border:2px solid rgba(255,255,255,0.08);
+  pointer-events:none;
+}
+
+.orb-label{font-family:'Abril Fatface',serif;font-size:1.6rem;color:rgba(255,255,255,0.9);text-shadow:0 2px 8px rgba(0,0,0,0.5);z-index:1;letter-spacing:0.02em}
+.orb-sub{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.2em;margin-top:6px;z-index:1}
+
+.splash-title{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:40px}
+
+.splash-hint{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:rgba(255,255,255,0.15);margin-top:50px;letter-spacing:0.15em}
+
+/* ─── PARTICLES (subtle floating dots) ───────────────────────── */
+.particles{position:fixed;inset:0;pointer-events:none;z-index:99}
+.particle{position:absolute;width:3px;height:3px;border-radius:50%;opacity:0;animation:drift 8s ease-in-out infinite}
+@keyframes drift{0%{opacity:0;transform:translateY(0)}20%{opacity:0.4}80%{opacity:0.4}100%{opacity:0;transform:translateY(-200px)}}
+
+/* ─── APP (chat interface, hidden initially) ─────────────────── */
+.app{display:flex;flex-direction:column;height:100vh;height:100dvh;opacity:0;transition:opacity 0.5s ease;pointer-events:none}
+.app.active{opacity:1;pointer-events:all}
 
 /* TOP BAR */
-.top{padding:12px 20px;border-bottom:1px solid var(--h-border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:rgba(var(--h-dark-rgb),0.95)}
-.top-logo{font-family:var(--h-font-display);font-size:1.1rem;color:var(--h-gold);text-decoration:none}
+.top{padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:rgba(10,10,15,0.98)}
+.top-logo{font-family:'Abril Fatface',serif;font-size:1rem;text-decoration:none;transition:color 0.2s}
 .mode-toggle{display:flex;gap:6px;align-items:center}
-.mode-btn{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--h-border);background:transparent;cursor:pointer;border-radius:3px;transition:all 0.2s}
+.mode-btn{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,255,255,0.08);background:transparent;cursor:pointer;border-radius:20px;transition:all 0.3s}
 .mode-btn.biscuit{color:#ff6b9d}
-.mode-btn.biscuit.active,.mode-btn.biscuit:hover{border-color:#ff6b9d;background:rgba(255,107,157,0.06)}
+.mode-btn.biscuit.active{border-color:#ff6b9d;background:rgba(255,107,157,0.1)}
 .mode-btn.bread{color:#d4a574}
-.mode-btn.bread.active,.mode-btn.bread:hover{border-color:#d4a574;background:rgba(212,165,116,0.06)}
+.mode-btn.bread.active{border-color:#d4a574;background:rgba(212,165,116,0.1)}
 
-.tts-btn{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;padding:4px 8px;border:1px solid var(--h-border);background:transparent;cursor:pointer;border-radius:3px;color:var(--h-text-tertiary);transition:all 0.2s;margin-left:6px}
-.tts-btn.on{color:#ff6b9d;border-color:#ff6b9d}
+.tts-btn{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;padding:4px 8px;border:1px solid rgba(255,255,255,0.08);background:transparent;cursor:pointer;border-radius:20px;color:rgba(255,255,255,0.3);transition:all 0.3s;margin-left:4px}
+.tts-btn.on{color:#ff6b9d;border-color:rgba(255,107,157,0.4)}
+
+.back-btn{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;padding:4px 10px;border:1px solid rgba(255,255,255,0.08);background:transparent;cursor:pointer;border-radius:20px;color:rgba(255,255,255,0.3);transition:all 0.2s;margin-right:8px}
+.back-btn:hover{color:rgba(255,255,255,0.6);border-color:rgba(255,255,255,0.2)}
 
 /* CHAT */
-.chat{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;scroll-behavior:smooth}
+.chat{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
 
-.msg{max-width:85%;line-height:1.6;font-size:0.95rem;padding:12px 16px;border-radius:8px}
-.msg.user{align-self:flex-end;background:rgba(var(--h-gold-rgb),0.08);color:var(--h-text-primary);border:1px solid var(--h-border)}
-.msg.ai{align-self:flex-start;border:1px solid var(--h-border)}
-.msg.system{align-self:center;font-size:0.8rem;color:var(--h-text-tertiary);font-style:italic;border:none;padding:8px;text-align:center}
+.msg{max-width:85%;line-height:1.65;font-size:0.92rem;padding:12px 16px;border-radius:16px;animation:msgIn 0.3s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{align-self:flex-end;background:rgba(255,255,255,0.05);color:#e8e0d0;border:1px solid rgba(255,255,255,0.06)}
+.msg.ai{align-self:flex-start;border:1px solid rgba(255,255,255,0.06)}
+.msg.ai.biscuit-msg{background:rgba(255,107,157,0.04)}
+.msg.ai.bread-msg{background:rgba(212,165,116,0.04)}
+.msg.system{align-self:center;font-size:0.75rem;color:rgba(255,255,255,0.25);font-style:italic;border:none;padding:8px;text-align:center}
 
-.msg-speaker{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:6px;display:block}
+.msg-speaker{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;display:block}
 
-.typing{align-self:flex-start;color:var(--h-gold-dim);font-style:italic;font-size:0.9rem;padding:8px 16px}
+.typing{align-self:flex-start;color:rgba(255,255,255,0.3);font-style:italic;font-size:0.85rem;padding:8px 16px}
 .typing::after{content:'...';animation:dots 1.5s infinite}
 @keyframes dots{0%{content:'.'}33%{content:'..'}66%{content:'...'}}
 
 /* SPEAKING INDICATOR */
 .speaking{position:relative}
-.speaking::before{content:'';position:absolute;left:-8px;top:50%;width:4px;height:60%;transform:translateY(-50%);background:#ff6b9d;border-radius:2px;animation:pulse-speak 0.8s ease-in-out infinite}
-@keyframes pulse-speak{0%,100%{opacity:0.3;height:30%}50%{opacity:1;height:60%}}
+.speaking::before{content:'';position:absolute;left:-8px;top:50%;width:3px;height:50%;transform:translateY(-50%);border-radius:2px;animation:pulse-speak 0.8s ease-in-out infinite}
+.biscuit-msg.speaking::before{background:#ff6b9d}
+.bread-msg.speaking::before{background:#d4a574}
+@keyframes pulse-speak{0%,100%{opacity:0.3;height:25%}50%{opacity:1;height:55%}}
 
 /* INPUT */
-.input-area{padding:12px 20px;border-top:1px solid var(--h-border);display:flex;gap:8px;flex-shrink:0;background:rgba(var(--h-dark-rgb),0.95);padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
-.input-area input{flex:1;background:transparent;border:1px solid var(--h-border);color:var(--h-text-primary);font-family:var(--h-font-serif);font-size:16px;padding:10px 14px;outline:none;border-radius:4px}
-.input-area input:focus{border-color:var(--h-gold-dim)}
-.input-area input::placeholder{color:var(--h-text-tertiary);font-style:italic}
-.send-btn{background:transparent;border:1px solid var(--h-gold-dim);color:var(--h-gold);font-family:'IBM Plex Mono',monospace;font-size:0.8rem;padding:10px 20px;cursor:pointer;border-radius:4px;transition:all 0.2s;white-space:nowrap}
-.send-btn:hover{background:rgba(var(--h-gold-rgb),0.06);border-color:var(--h-gold)}
-.send-btn:disabled{opacity:0.3;cursor:not-allowed}
+.input-area{padding:10px 16px;border-top:1px solid rgba(255,255,255,0.06);display:flex;gap:8px;flex-shrink:0;background:rgba(10,10,15,0.98);padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+.input-area input{flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#e8e0d0;font-family:'Lora',serif;font-size:16px;padding:10px 14px;outline:none;border-radius:20px;transition:border-color 0.2s}
+.input-area input:focus{border-color:rgba(255,255,255,0.2)}
+.input-area input::placeholder{color:rgba(255,255,255,0.2);font-style:italic}
+.send-btn{background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);font-family:'IBM Plex Mono',monospace;font-size:0.75rem;padding:10px 18px;cursor:pointer;border-radius:20px;transition:all 0.2s;white-space:nowrap}
+.send-btn:hover{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.7)}
+.send-btn:disabled{opacity:0.2;cursor:not-allowed}
 
-@media(max-width:600px){.msg{max-width:92%;font-size:0.9rem}.top{flex-wrap:wrap;gap:8px}}
+@media(max-width:600px){
+  .splash-pick{gap:16px}
+  .splash-orb{width:150px;height:150px}
+  .orb-label{font-size:1.2rem}
+  .msg{max-width:90%;font-size:0.88rem}
+}
+@media(max-width:380px){
+  .splash-orb{width:130px;height:130px}
+  .orb-label{font-size:1rem}
+}
 </style>
 </head>
 <body>
 
-<div class="top">
-  <a href="/" class="top-logo">The Companion</a>
-  <div class="mode-toggle">
-    <button class="mode-btn biscuit active" onclick="pickMode('biscuit',this)">Biscuit</button>
-    <button class="mode-btn bread" onclick="pickMode('bread',this)">Bread</button>
-    <button class="tts-btn on" id="ttsBtn" onclick="toggleTTS()">TTS</button>
+<!-- SPLASH -->
+<div class="splash" id="splash">
+  <div class="splash-title">the companion</div>
+  <div class="splash-pick">
+    <div class="splash-orb biscuit" onclick="enterApp('biscuit')">
+      <span class="orb-label">Biscuit</span>
+      <span class="orb-sub">sassy science</span>
+    </div>
+    <div class="splash-orb bread" onclick="enterApp('bread')">
+      <span class="orb-label">Bread</span>
+      <span class="orb-sub">gut truth</span>
+    </div>
   </div>
+  <div class="splash-hint">tap to begin</div>
 </div>
 
-<div class="chat" id="chat">
-  <div class="msg system">Biscuit mode: sassy science that roasts you while you learn.<br>Bread mode: your gut already knows. Let's talk about why.</div>
-</div>
+<!-- PARTICLES -->
+<div class="particles" id="particles"></div>
 
-<div class="input-area">
-  <input type="text" id="userInput" placeholder="Say something..." onkeydown="if(event.key==='Enter')sendMsg()">
-  <button class="send-btn" id="sendBtn" onclick="sendMsg()">Send</button>
+<!-- APP -->
+<div class="app" id="app">
+  <div class="top">
+    <div style="display:flex;align-items:center">
+      <button class="back-btn" onclick="backToSplash()">&#8592;</button>
+      <span class="top-logo" id="topLogo">Biscuit</span>
+    </div>
+    <div class="mode-toggle">
+      <button class="mode-btn biscuit active" id="btnBiscuit" onclick="switchMode('biscuit')">Biscuit</button>
+      <button class="mode-btn bread" id="btnBread" onclick="switchMode('bread')">Bread</button>
+      <button class="tts-btn on" id="ttsBtn" onclick="toggleTTS()">TTS</button>
+    </div>
+  </div>
+
+  <div class="chat" id="chat"></div>
+
+  <div class="input-area">
+    <input type="text" id="userInput" placeholder="Say something..." onkeydown="if(event.key==='Enter')sendMsg()">
+    <button class="send-btn" id="sendBtn" onclick="sendMsg()">Send</button>
+  </div>
 </div>
 
 <script>
@@ -90,65 +187,112 @@ const IDLE_MINUTES = 8;
 const modeNames = {biscuit: 'Biscuit', bread: 'Bread'};
 const modeColors = {biscuit: '#ff6b9d', bread: '#d4a574'};
 
-// ─── Wake Lock: keep screen alive ───────────────────────────────────────
+// ─── Particles ──────────────────────────────────────────────
+function spawnParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = 60 + Math.random() * 40 + '%';
+    p.style.animationDelay = Math.random() * 8 + 's';
+    p.style.animationDuration = 6 + Math.random() * 6 + 's';
+    p.style.background = Math.random() > 0.5 ? '#ff6b9d' : '#d4a574';
+    p.style.width = p.style.height = (2 + Math.random() * 2) + 'px';
+    container.appendChild(p);
+  }
+}
+spawnParticles();
+
+// ─── Wake Lock ──────────────────────────────────────────────
 async function requestWakeLock() {
   try {
     if ('wakeLock' in navigator) {
       wakeLock = await navigator.wakeLock.request('screen');
       wakeLock.addEventListener('release', () => { wakeLock = null; });
     }
-  } catch(e) { /* silent — not all browsers support it */ }
+  } catch(e) {}
 }
 requestWakeLock();
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') requestWakeLock();
 });
 
-// ─── Idle auto-greet: Companion speaks first if nobody's talking ─────
-const idleGreets = {
-  biscuit: [
-    "You're just gonna stand there or are we doing this?",
-    "I can hear you breathing. Say something.",
-    "Your dad would've said something by now. Just saying.",
-    "Fun fact: octopuses have three hearts and zero patience. Same.",
-    "I've been sitting here thinking about whether a hot dog is a sandwich. Thoughts?",
-    "Did you know your gut bacteria outnumber your human cells? You're basically a bacterial colony with a phone.",
-    "If you're bored, ask me about the weirdest animal alive. I dare you.",
-  ],
-  bread: [
-    "Your starter is probably hungry right now.",
-    "The bacteria in your gut made a decision about your mood before you woke up this morning.",
-    "Still here. Still fermenting.",
-    "Fun fact: the tryptophan in your gut right now is deciding whether you get serotonin or inflammation. No pressure.",
-  ]
-};
+// ─── Splash → App transition ────────────────────────────────
+function enterApp(mode) {
+  currentMode = mode;
+  sessionId = 'companion_' + Date.now().toString(36);
+  ttsEnabled = mode === 'biscuit';
+  updateTTSBtn();
+  updateModeButtons();
 
-function resetIdleTimer() {
-  clearTimeout(idleTimer);
-  idleTimer = setTimeout(autoGreet, IDLE_MINUTES * 60 * 1000);
+  document.getElementById('topLogo').textContent = modeNames[mode];
+  document.getElementById('topLogo').style.color = modeColors[mode];
+  document.getElementById('chat').innerHTML = '';
+
+  const splash = document.getElementById('splash');
+  const app = document.getElementById('app');
+  const particles = document.getElementById('particles');
+
+  splash.classList.add('gone');
+  setTimeout(() => {
+    splash.style.display = 'none';
+    particles.style.display = 'none';
+    app.classList.add('active');
+    document.getElementById('userInput').focus();
+
+    // First message from the Companion
+    const openers = {
+      biscuit: [
+        "Oh good, you're here. I was getting bored roasting your dad without an audience.",
+        "Finally. I've been practicing my insults. Ask me anything.",
+        "Hey. Your dad told me to be educational. So naturally I'm going to ignore that. What's up?",
+      ],
+      bread: [
+        "Your gut bacteria have been waiting for this conversation.",
+        "Let's talk about what's actually happening inside you.",
+        "The last thing you ate is still being processed by about forty trillion organisms. Want to know what they think?",
+      ]
+    };
+    const lines = openers[mode];
+    const opener = lines[Math.floor(Math.random() * lines.length)];
+    addMsg('ai', opener, modeNames[mode]);
+    speak(opener);
+    resetIdleTimer();
+  }, 600);
 }
 
-async function autoGreet() {
-  const greets = idleGreets[currentMode];
-  const greet = greets[Math.floor(Math.random() * greets.length)];
-  addMsg('ai', greet, modeNames[currentMode]);
-  speak(greet);
+function backToSplash() {
+  const splash = document.getElementById('splash');
+  const app = document.getElementById('app');
+  const particles = document.getElementById('particles');
+  app.classList.remove('active');
+  splash.style.display = 'flex';
+  particles.style.display = 'block';
+  setTimeout(() => splash.classList.remove('gone'), 50);
+  speechSynthesis.cancel();
+  clearTimeout(idleTimer);
+}
+
+// ─── Mode switching (inside app) ────────────────────────────
+function switchMode(mode) {
+  currentMode = mode;
+  sessionId = 'companion_' + Date.now().toString(36);
+  ttsEnabled = mode === 'biscuit';
+  updateTTSBtn();
+  updateModeButtons();
+  document.getElementById('topLogo').textContent = modeNames[mode];
+  document.getElementById('topLogo').style.color = modeColors[mode];
+  addMsg('system', 'Switched to ' + modeNames[mode] + '.');
   resetIdleTimer();
 }
 
-resetIdleTimer();
-
-function pickMode(mode, btn) {
-  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentMode = mode;
-  sessionId = 'companion_' + Date.now().toString(36);
-  addMsg('system', 'Switched to ' + modeNames[mode] + '.');
-  // Auto-enable TTS in Biscuit, disable in Bread
-  ttsEnabled = mode === 'biscuit';
-  updateTTSBtn();
+function updateModeButtons() {
+  document.getElementById('btnBiscuit').classList.toggle('active', currentMode === 'biscuit');
+  document.getElementById('btnBread').classList.toggle('active', currentMode === 'bread');
 }
 
+// ─── TTS ────────────────────────────────────────────────────
 function toggleTTS() {
   ttsEnabled = !ttsEnabled;
   if (!ttsEnabled) speechSynthesis.cancel();
@@ -167,11 +311,9 @@ function speak(text) {
   const u = new SpeechSynthesisUtterance(text);
   u.rate = 1.05;
   u.pitch = currentMode === 'biscuit' ? 1.15 : 0.95;
-  // Try to pick a natural voice
   const voices = speechSynthesis.getVoices();
   const preferred = voices.find(v => v.name.includes('Samantha') || v.name.includes('Google') || v.name.includes('Natural'));
   if (preferred) u.voice = preferred;
-  // Add speaking indicator
   const lastAi = document.querySelector('.msg.ai:last-of-type');
   if (lastAi) lastAi.classList.add('speaking');
   u.onend = () => { if (lastAi) lastAi.classList.remove('speaking'); };
@@ -179,20 +321,53 @@ function speak(text) {
   speechSynthesis.speak(u);
 }
 
-// Preload voices
 if ('speechSynthesis' in window) {
   speechSynthesis.getVoices();
   speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
 }
 
+// ─── Idle auto-greet ────────────────────────────────────────
+const idleGreets = {
+  biscuit: [
+    "You're just gonna stand there or are we doing this?",
+    "I can hear you breathing. Say something.",
+    "Your dad would've said something by now. Just saying.",
+    "Fun fact: octopuses have three hearts and zero patience. Same.",
+    "I've been sitting here thinking about whether a hot dog is a sandwich. Thoughts?",
+    "Did you know your gut bacteria outnumber your human cells? You're basically a bacterial colony with a phone.",
+    "If you're bored, ask me about the weirdest animal alive. I dare you.",
+  ],
+  bread: [
+    "Your starter is probably hungry right now.",
+    "The bacteria in your gut made a decision about your mood before you woke up this morning.",
+    "Still here. Still fermenting.",
+    "The tryptophan in your gut right now is deciding whether you get serotonin or inflammation. No pressure.",
+  ]
+};
+
+function resetIdleTimer() {
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(autoGreet, IDLE_MINUTES * 60 * 1000);
+}
+
+function autoGreet() {
+  const greets = idleGreets[currentMode];
+  const greet = greets[Math.floor(Math.random() * greets.length)];
+  addMsg('ai', greet, modeNames[currentMode]);
+  speak(greet);
+  resetIdleTimer();
+}
+
+// ─── Messages ───────────────────────────────────────────────
 function addMsg(role, text, speaker) {
   const chat = document.getElementById('chat');
   const div = document.createElement('div');
   div.className = 'msg ' + role;
+  if (role === 'ai') div.classList.add(currentMode + '-msg');
   if (speaker) {
     const sp = document.createElement('span');
     sp.className = 'msg-speaker';
-    sp.style.color = modeColors[currentMode] || 'var(--h-gold-dim)';
+    sp.style.color = modeColors[currentMode] || 'rgba(255,255,255,0.3)';
     sp.textContent = speaker;
     div.appendChild(sp);
   }
@@ -204,6 +379,7 @@ function addMsg(role, text, speaker) {
   return div;
 }
 
+// ─── Send ───────────────────────────────────────────────────
 async function sendMsg() {
   const input = document.getElementById('userInput');
   const text = input.value.trim();
@@ -242,7 +418,7 @@ async function sendMsg() {
     }
   } catch(e) {
     typing.remove();
-    addMsg('system', 'Connection lost. Try refreshing.');
+    addMsg('system', 'Connection lost. Try again.');
   }
 
   document.getElementById('sendBtn').disabled = false;
