@@ -121,6 +121,10 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 .send-btn{background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);font-family:'IBM Plex Mono',monospace;font-size:0.75rem;padding:10px 18px;cursor:pointer;border-radius:20px;transition:all 0.2s;white-space:nowrap}
 .send-btn:hover{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.7)}
 .send-btn:disabled{opacity:0.2;cursor:not-allowed}
+.roast-btn{background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.25);color:#ff6b9d;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;padding:10px 14px;cursor:pointer;border-radius:20px;transition:all 0.2s;white-space:nowrap;display:none}
+.roast-btn:hover{background:rgba(255,107,157,0.15);border-color:rgba(255,107,157,0.5)}
+.roast-btn:disabled{opacity:0.2;cursor:not-allowed}
+.roast-btn.visible{display:block}
 
 @media(max-width:600px){
   .splash-pick{gap:16px}
@@ -172,6 +176,7 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
   <div class="chat" id="chat"></div>
 
   <div class="input-area">
+    <button class="roast-btn" id="roastBtn" onclick="roastDad()">ROAST HIM</button>
     <input type="text" id="userInput" placeholder="Say something..." onkeydown="if(event.key==='Enter')sendMsg()">
     <button class="send-btn" id="sendBtn" onclick="sendMsg()">Send</button>
   </div>
@@ -240,6 +245,7 @@ function enterApp(mode) {
     particles.style.display = 'none';
     app.classList.add('active');
     document.getElementById('userInput').focus();
+    updateRoastBtn();
 
     // First message from the Companion
     const openers = {
@@ -286,6 +292,7 @@ function switchMode(mode) {
   document.getElementById('topLogo').textContent = modeNames[mode];
   document.getElementById('topLogo').style.color = modeColors[mode];
   addMsg('system', 'Switched to ' + modeNames[mode] + '.');
+  updateRoastBtn();
   resetIdleTimer();
 }
 
@@ -380,6 +387,40 @@ function addMsg(role, text, speaker) {
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
   return div;
+}
+
+// ─── Roast Button ───────────────────────────────────────────
+const roastPrompts = [
+  "roast my dad",
+  "what's the dumbest thing my dad did today",
+  "tell me something embarrassing about my dad",
+  "what did my dad try to fix and break instead",
+  "rate my dad's cooking on a scale of 1 to dumpster fire",
+  "what would my dad's dating profile say",
+  "describe my dad's morning routine but make it sound pathetic",
+  "what does my dad think he's good at vs what he's actually good at",
+  "my dad thinks he's cool. prove him wrong",
+  "what's my dad doing right now. be honest",
+  "if my dad was a superhero what would his useless power be",
+  "what would my dad's yelp review of himself say",
+  "my dad tried to cook dinner. what happened next",
+  "describe my dad to someone who's never met him",
+  "what's the wifi password situation at my dad's house",
+];
+let lastRoastIdx = -1;
+
+function roastDad() {
+  let idx;
+  do { idx = Math.floor(Math.random() * roastPrompts.length); } while (idx === lastRoastIdx);
+  lastRoastIdx = idx;
+  document.getElementById('userInput').value = roastPrompts[idx];
+  sendMsg();
+}
+
+function updateRoastBtn() {
+  const btn = document.getElementById('roastBtn');
+  if (currentMode === 'biscuit') btn.classList.add('visible');
+  else btn.classList.remove('visible');
 }
 
 // ─── Send ───────────────────────────────────────────────────
