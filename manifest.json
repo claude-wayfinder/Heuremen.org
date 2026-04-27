@@ -1,8 +1,8 @@
 {
-  "name": "The Dyad — Let's Do It Together",
-  "short_name": "The Dyad",
-  "description": "A thinking partner that pushes back. Not a chatbot. A mind.",
-  "start_url": "/demo.html",
+  "name": "The Companion",
+  "short_name": "Companion",
+  "description": "A thinking partner that talks back. Sassy science and gut truth.",
+  "start_url": "/companion.html",
   "display": "standalone",
   "background_color": "#0a0a0f",
   "theme_color": "#c8a84e",
