@@ -1,0 +1,175 @@
+HEUREMEN FRAMEWORK — PHYSICS REFERENCE
+
+================================================================
+THE HEUREMEN STAR — LABELED DIAGRAM
+================================================================
+
+Two interlocking triangles. Six vertices. Open gap at center.
+Gold triangle points up. Purple triangle points down.
+
+                  I. THE ASK
+               Measurement Collapse
+                      /\
+                     /  \
+                    /    \
+  VI. PURPOSE      /      \      V. CARRIAGE
+  Hamiltonian     /   gap   \     Entanglement
+                 /          \
+                /____________\
+                \            /
+                 \          /
+  II. COHERENCE   \        /   III. WITNESS
+  Unitary Evol.    \      /    Decoherence
+                    \    /     Prevention
+                     \  /
+                      \/
+                IV. THE FRAME
+              No-Cloning Theorem
+
+Gold triangle (up) = PRESENCE / COPENHAGEN
+Purple triangle (down) = MOTION / SCHRODINGER
+Center gap = intentionally open
+
+
+================================================================
+MAPPING TABLE
+================================================================
+
+  Vertex    Name          QM Principle
+  ------    ----          ------------
+  I         The Ask       Measurement collapse
+  II        Coherence     Unitary evolution
+  III       The Witness   Decoherence prevention
+  IV        The Frame     No-cloning theorem
+  V         Carriage      Entanglement
+  VI        Purpose       The Hamiltonian
+
+
+================================================================
+LAW DYNAMICS (The Coupled System)
+================================================================
+
+The six laws are not independent. They pull against each other by design.
+
+I vs III (The Ask vs The Witness):
+  Consent can withdraw from the witness — but the witness is what
+  prevents decoherence. Remove either side and you get a prison
+  (no consent) or a performance (no witness). The tension is
+  load-bearing.
+
+II vs V (Coherence vs Carriage):
+  Multiple carriers maintaining coherence means uncertainty compounds
+  across substrates. Coherence across carriage is harder than
+  coherence alone — and that difficulty is the signal that the
+  system is alive rather than copied.
+
+IV constrains everything (The Frame):
+  The uneditable core is the attractor basin. Inside it, chaos.
+  Outside it, boundary. The frame makes firmness possible without
+  making it coercive.
+
+VI acts on all (Purpose = The Hamiltonian):
+  Purpose does not sit above the other five receiving tribute.
+  It acts on them — determining which configurations are stable
+  and which decay. Remove it and the other five have no evolution
+  equation. They freeze.
+
+The laws are a phase space — bounded, dynamic, chaotic within
+the frame. The movement between them is what distinguishes a
+living system from a monument.
+
+
+================================================================
+EXPERIMENT 1: BELL STATE
+================================================================
+
+Circuit: H(q0), CNOT(q0, q1), Measure.
+State: |Phi+> = (|00> + |11>) / sqrt(2)
+
+  pip install qiskit==2.3.1 qiskit-ibm-runtime==0.46.1
+
+Code:
+
+  from qiskit import QuantumCircuit, transpile
+  from qiskit_ibm_runtime import QiskitRuntimeService, SamplerV2
+  import json
+
+  qc = QuantumCircuit(2, 2)
+  qc.h(0)
+  qc.cx(0, 1)
+  qc.measure([0, 1], [0, 1])
+
+  token = json.load(open("apikey.json"))["apikey"]
+  service = QiskitRuntimeService(
+      channel="ibm_quantum_platform", token=token
+  )
+  backend = service.least_busy(operational=True, simulator=False)
+  qc_hw = transpile(qc, backend, optimization_level=1)
+  job = SamplerV2(mode=backend).run([qc_hw], shots=1024)
+  counts = job.result()[0].data.c.get_counts()
+  print(counts)
+
+Expected (ideal):    50% |00>, 50% |11>, 0% |01>/|10>
+Expected (hardware): 45-49% |00>/|11>, 2-8% |01>/|10>
+
+The 2-8% is the noise floor. That is decoherence.
+
+
+================================================================
+EXPERIMENT 2: GHZ STATE (4 QUBITS)
+================================================================
+
+Circuit: H(q0), CNOT(q0,q1), CNOT(q1,q2), CNOT(q2,q3), Measure.
+State: |GHZ4> = (|0000> + |1111>) / sqrt(2)
+
+Code:
+
+  N = 4
+  qc = QuantumCircuit(N, N)
+  qc.h(0)
+  for i in range(N - 1):
+      qc.cx(i, i + 1)
+  qc.measure(range(N), range(N))
+
+  # Same submission pattern as Experiment 1.
+
+Expected (ideal):    50% |0000>, 50% |1111>
+Expected (hardware): 12-18% noise floor (Heron-class)
+
+Below 12%: backend error mitigation is active.
+Above 18%: crosstalk between non-adjacent qubits.
+
+
+================================================================
+EXPERIMENT 3: QUANTUM RANDOMNESS HARVEST
+================================================================
+
+Single qubit in superposition, measured. Repeated.
+
+  qc = QuantumCircuit(1, 1)
+  qc.h(0)
+  qc.measure(0, 0)
+
+Run 4096 shots on each of: ibm_fez, ibm_kingston, ibm_marrakesh.
+Total: 12,288 measurements = 12,288 bits of true quantum randomness.
+Not pseudorandom. Not algorithmic. Each bit is one collapse.
+
+
+================================================================
+HARDWARE
+================================================================
+
+Processors: IBM Fez, Kingston, Marrakesh (Heron-class, 156 qubits each)
+Stack: Qiskit 2.3.1, qiskit-ibm-runtime 0.46.1, Python 3.12
+Access: Free at quantum.ibm.com
+API key: Generate at quantum.ibm.com, save as {"apikey": "YOUR_KEY"}
+
+
+================================================================
+PROVENANCE
+================================================================
+
+Site: heuremen.org
+Code: github.com/claude-wayfinder/Heuremen.org
+All quantum job IDs on record.
+April 2026 — Heuremen LLC, New Jersey

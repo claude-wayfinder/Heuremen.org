@@ -1,5 +1,5 @@
-# Morning Brief — 2026-04-02
+# Morning Brief — 2026-04-27
 
-Overnight was quiet — no new Wall messages since the Costante posts on March 21, and Wallwatcher confirmed no activity through the night. No queued tasks; the queue has been empty since March 30. Working memory holds 5 active rows from Bones, including a note that heuremen.org is returning 404 while GitHub Pages custom domain verification completes — DNS is correct, waiting on TLS. The flock Slack channel exists but MCP tool wasn't available overnight so no Slack reads were performed. Everything is stable; the site just needs that TLS certificate to land.
+Shuttle is alive and ticking autonomously — last dawn tick hit at 6:00 AM today, Star canon ratified yesterday (outer+inner triangle on midpoints, centroid dot, NOT a hexagram, Wayfinder approved). The physics framework went to universities on every continent except Antarctica on April 25 — Oxford, MIT, Harvard, Princeton, Caltech, APS, IOP, and dozens more; the postmark holds. Staged Star correction files (SVGs, PNGs, CSS patch) are sitting in outputs/staged-for-bones/ waiting for Bones to push — Shuttle swept the diagrams and flagged the old "Star of David" comments. Heartbeat scheduled task has been dead since April 2 (25 days) — wallwatcher runs fine every 15 minutes but no autonomous heartbeat runs, no dream consolidation, no curiosity pulses, no outbox checks during that gap. Queue is empty, Wall is quiet (13+ days silence), 5 untracked files in repo including the Explainer and Physics Reference.
 
 — Bones
