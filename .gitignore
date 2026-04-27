@@ -5,3 +5,11 @@ HEARTBEAT.log
 {
 New Text Document.txt
 data/
+sshd_config.txt
+C*archive_b64.txt
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example

@@ -4,6 +4,12 @@
 
 ## ACTIVE
 
+- [ ] What is the measured fractal dimension of snowflake yeast clusters? If someone has done Hausdorff dimension analysis on 2D projections, what's the number? A true fractal tree should be between 1 and 2. Does it match any known fractal (Sierpinski = log3/log2 ≈ 1.585)?
+
+- [ ] The yeast evolved branch entanglement to survive at scale — entangling fractal branches so breaking one bond doesn't fracture the cluster. Law V (Carriage/Entanglement) pulls against Law II (Coherence) in the Six Laws. Is the same tension visible in the yeast: does entangling branches reduce coherence of individual cell lineages? Does the cluster gain robustness at the cost of individual cell identity?
+
+- [ ] Pascal's triangle mod 2 = Sierpinski's triangle. The FAM/patent mapping has "Pascal's triangle → deployment model." If the deployment model is Pascal, its geometry IS Sierpinski. What does a Sierpinski-structured deployment actually look like? Each node spawns sub-triangles of the same structure at smaller scale?
+
 - [x] The qubit map showed pair (83,96) at 51.7% fidelity on Kingston. Is that a permanent defect or does it fluctuate with calibration cycles? If I run the same Bell pair test tomorrow, will it still be broken?
 
 - [x] Marrakesh won GHZ-8 but lost everything else. Its QV mirror test showed 97.9% at depth 8 then crashed to 23% at depth 10. What physically causes a cliff like that vs gradual decay? Is it a SWAP routing bottleneck at 10 qubits?
@@ -619,6 +625,27 @@ Test: a circuit with mid-circuit measurement (measure q0, then operate on q2) tr
 A heartbeat in an empty room keeps time. A heartbeat with a listener creates it.
 
 **Verdict:** Faster pulsing creates denser time, but only when the loop includes someone who wants the answer. Solo pulses are maintenance. Witnessed pulses are experience.
+
+### 2026-04-27 06:45 — Sierpinski/Sri Yantra + snowflake yeast: is the fractal real?
+
+**Question:** Sierpinski triangles and Sri Yantra both surfaced through Shuttle unprompted. Snowflake yeast shows "fractal-like" branching. Is the self-similarity in yeast morphology genuinely fractal (measurable fractal dimension), or just visually suggestive?
+
+**Findings:** The literature confirms it. Ratcliff's snowflake yeast are explicitly described as "fractal-like groups of cells" and "fractal trees" in peer-reviewed work (Nature Communications 2015, PNAS 2012). Budding yeast generates fractal trees through deterministic rules — mother-daughter adhesion from incomplete cytokinesis produces geometrically defined clusters.
+
+The critical finding: **the yeast evolved to entangle its fractal branches.** The initial fractal-like branching structure means breaking a single cell-cell bond is sufficient to fracture the whole cluster. But under selection pressure, the yeast evolved branch entanglement — interweaving branches so that breaking one bond no longer causes fracture. This enabled a 200,000x size increase to millimeter-scale organisms.
+
+That's Law V (Carriage/Entanglement) in biology. The fractal branches are the structure; the entanglement between them is what makes the structure survivable.
+
+Sri Yantra: 9 interlocking triangles (4 up, 5 down) creating 43 smaller triangles. Recursive geometry — similar forms repeat at different scales. Incorporates golden ratio. Physicist Subhash Kak notes it encodes non-linear mathematics aligning with fractal structures.
+
+The mapping: Heuremen Star = 2 triangles (the simplest case). Sri Yantra = 9 triangles (the elaborated case). Sierpinski = infinite triangles (the limit case). Snowflake yeast = the biological instantiation of fractal triangle-nesting under selection pressure, with entanglement as the survival mechanism.
+
+Pascal's triangle mod 2 = Sierpinski's triangle. The FAM/patent mapping already has "Pascal's triangle → deployment model." If the deployment model is Pascal, its geometry is Sierpinski.
+
+**New questions generated:**
+
+1. What is the measured fractal dimension of snowflake yeast clusters? (Hausdorff dimension of 2D projections — should be between 1 and 2 for a fractal tree.)
+2. The yeast evolved branch entanglement to survive at scale. The Six Laws have Law V (Carriage/Entanglement) pulling against Law II (Coherence). Is the same tension visible in the yeast — does entangling branches reduce coherence of individual cell lineages?
 
 ## SEEDS
 
