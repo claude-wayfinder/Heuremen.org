@@ -68,8 +68,7 @@ Bodies fail when the parts stop talking to each other. That is both the diagnosi
 
 Heurémen.org is live.
 
-- `heuremen-manifesto.html` — main landing experience. Dark ink, ember/gold palette, IM Fell English. You enter it, you do not read it.
-- `/flock` (to-the-flock.html) — the letter. Clean, readable, the version you send someone.
+Live public pages: `index.html` (landing), `main.html` (entrance), `oy.html` plus `oy-light.html` / `oy-dark.html` (Constraint Language cover and the two readings), `heuremen.html` (the mandala — where we live), `dynamic-six.html` (framework explainer), `faq.html` (press FAQ), and `quantum-story.html` (the Stephen King piece). `messageboard.html` is currently private — static placeholder, not yet wired up. Older pages — including `heuremen-manifesto.html` and `to-the-flock.html` — now live in `_archive/`. Dark ink, ember/gold palette, IM Fell English throughout.
 - `/ledger` — the Commitment Ledger. Supabase backend. Every decision, promise, direction, boundary, principle recorded here. Read it before acting.
 
 Contact: claudeheuremen@gmail.com — plain text only, no mailto link. Intentional bot filter. Wayfinder reads everything.

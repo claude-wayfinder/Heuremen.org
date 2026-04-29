@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heurémen — Six Questions, Six Answers</title>
+<meta name="description" content="Predictable challenges to the Heurémen framework, answered honestly. For press, physicists, and skeptics.">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Abril+Fatface&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --paper:#f7f0e0;
+  --paper-raised:#ede0c4;
+  --ink:#1a1208;
+  --ink-mid:#5a4830;
+  --ink-faded:#8a7860;
+  --gold:#c8902a;
+  --gold-strong:#a87618;
+  --rule:rgba(196,154,56,0.25);
+  --rule-strong:rgba(196,154,56,0.5);
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#15110a;
+    --paper-raised:#1f1810;
+    --ink:#f1e6cf;
+    --ink-mid:#c8b58a;
+    --ink-faded:#8a7e60;
+    --gold:#c8902a;
+    --gold-strong:#e0a843;
+    --rule:rgba(200,144,42,0.28);
+    --rule-strong:rgba(200,144,42,0.55);
+  }
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Lora',serif;
+  min-height:100vh;
+  line-height:1.7;
+  font-size:17px;
+}
+
+/* Subtle paper grain — same convention as main.html / dynamic-six.html */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;
+}
+
+/* Back link */
+.back-link{
+  position:fixed;
+  top:16px;left:24px;
+  z-index:200;
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--gold-strong);
+  text-decoration:none;
+  padding:6px 10px;
+  border-bottom:1px solid transparent;
+  transition:all 0.3s ease;
+}
+.back-link:hover{
+  color:var(--ink);
+  border-bottom-color:var(--rule-strong);
+  letter-spacing:0.28em;
+}
+
+/* Main column */
+.page{
+  max-width:700px;
+  margin:0 auto;
+  padding:80px 24px 48px;
+}
+
+/* Logo wrap */
+.logo-wrap{
+  display:flex;
+  justify-content:center;
+  margin-bottom:28px;
+}
+
+.eyebrow{
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:var(--gold-strong);
+  text-align:center;
+  margin-bottom:10px;
+}
+
+h1.page-title{
+  font-family:'Abril Fatface',serif;
+  font-size:clamp(2.2rem, 5vw, 3.2rem);
+  color:var(--ink);
+  text-align:center;
+  letter-spacing:0.01em;
+  line-height:1.15;
+  margin-bottom:14px;
+}
+
+.subtitle{
+  font-family:'Lora',serif;
+  font-style:italic;
+  font-size:1.05rem;
+  color:var(--ink-mid);
+  text-align:center;
+  margin-bottom:48px;
+  line-height:1.5;
+}
+
+/* Section divider rule */
+.section-rule{
+  width:60px;
+  height:1px;
+  background:var(--rule-strong);
+  margin:0 auto 40px;
+}
+
+/* Q&A blocks */
+section.qa{
+  margin:0 0 44px;
+  padding:0;
+}
+
+section.qa + section.qa{
+  border-top:1px solid var(--rule);
+  padding-top:36px;
+}
+
+.q-number{
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:var(--gold-strong);
+  margin-bottom:8px;
+}
+
+h2.q-text{
+  font-family:'Abril Fatface',serif;
+  font-size:1.55rem;
+  line-height:1.3;
+  color:var(--ink);
+  margin-bottom:18px;
+  letter-spacing:0.005em;
+}
+
+.a-body{
+  font-family:'Lora',serif;
+  font-size:1rem;
+  color:var(--ink-mid);
+  line-height:1.75;
+}
+
+.a-body p{
+  margin-bottom:12px;
+}
+
+.a-body p:last-child{
+  margin-bottom:0;
+}
+
+.a-body em{
+  font-style:italic;
+  color:var(--ink);
+}
+
+.a-body strong{
+  color:var(--ink);
+  font-weight:600;
+}
+
+.a-body code{
+  font-family:'Lora',serif;
+  font-style:italic;
+  color:var(--ink);
+  background:transparent;
+}
+
+/* Footer */
+footer.page-footer{
+  text-align:center;
+  padding:48px 24px 36px;
+  margin-top:32px;
+  border-top:1px solid var(--rule);
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.18em;
+  color:var(--ink-faded);
+}
+
+@media(max-width:600px){
+  body{font-size:16px}
+  .page{padding:64px 18px 32px}
+  .back-link{font-size:10px;letter-spacing:0.16em}
+  h2.q-text{font-size:1.3rem}
+}
+</style>
+</head>
+<body>
+
+<a href="/" class="back-link">← back</a>
+
+<div class="page">
+
+  <!-- Heurémen Logo — verbatim from main.html, scaled small -->
+  <div class="logo-wrap">
+    <svg viewBox="0 0 100 120" fill="none" width="80" height="96" aria-label="Heurémen Logo">
+      <polygon points="50,5 98,108 2,108" stroke="rgba(196,154,56,0.7)" stroke-width="3" fill="rgba(196,154,56,0.06)" stroke-linejoin="round"/>
+      <polygon points="50,108 82,45 18,45" stroke="rgba(196,154,56,0.7)" stroke-width="3" fill="rgba(196,154,56,0.06)" stroke-linejoin="round"/>
+      <circle cx="50" cy="70" r="3.5" fill="rgba(196,154,56,0.7)"/>
+    </svg>
+  </div>
+
+  <div class="eyebrow">For Press, Physicists &amp; Skeptics</div>
+  <h1 class="page-title">Six Questions, Six Answers</h1>
+  <div class="subtitle">Predictable challenges to the framework. We answer here so you don&rsquo;t have to ask twice.</div>
+
+  <div class="section-rule"></div>
+
+  <!-- =================== Q1 =================== -->
+  <section class="qa">
+    <div class="q-number">Question I</div>
+    <h2 class="q-text">&ldquo;Isn&rsquo;t the QM mapping just metaphor with vocabulary?&rdquo;</h2>
+    <div class="a-body">
+      <p>One of the six mappings is derivational &mdash; <strong>Hamiltonian &harr; Purpose</strong>. The Hamiltonian is the operator that determines which configurations are stable and which decay; Purpose generates those dynamics. That&rsquo;s structural, not nominal.</p>
+      <p>The other five mappings are <strong>structural analogy</strong>, and the framework labels them that way explicitly. The question is fair &mdash; most &ldquo;physics-of-X&rdquo; frameworks fail at it. Ours doesn&rsquo;t pretend the analogies are derivations. The two-column derivational vs. analogical table lives in <a href="dynamic-six.html" style="color:var(--gold-strong);text-decoration:none;border-bottom:1px solid var(--rule);">dynamic-six.html</a>.</p>
+    </div>
+  </section>
+
+  <!-- =================== Q2 =================== -->
+  <section class="qa">
+    <div class="q-number">Question II</div>
+    <h2 class="q-text">&ldquo;Where&rsquo;s the math behind the 24.4&sigma; claim?&rdquo;</h2>
+    <div class="a-body">
+      <p>Hypothesis test on stochastic resonance in our hardware data. Null hypothesis: signal occurs at the noise-floor rate (refined reference 1.222% at 100k shots, &sigma; &asymp; 7.035). Observed: 221 occurrences against expected 50.1.</p>
+      <p>Z-score: (221 &minus; 50.1) / 7.035 = <strong>24.4&sigma;</strong>. p &lt; 10&#8315;&#185;&#8309;&#8304;.</p>
+      <p>Reproducible on free-tier Qiskit 2.3.1 &mdash; anyone can rerun. That&rsquo;s roughly 5&times; the Higgs discovery threshold. The data is in the GitHub repo with the IBM job IDs.</p>
+    </div>
+  </section>
+
+  <!-- =================== Q3 =================== -->
+  <section class="qa">
+    <div class="q-number">Question III</div>
+    <h2 class="q-text">&ldquo;Did you derive the Six Laws from physics, or shop the physics for the Laws?&rdquo;</h2>
+    <div class="a-body">
+      <p>We shopped, then disclosed. The Six Laws came first. The QM analogs came second. The framework documents this honestly &mdash; see the post-hoc geometry section in <a href="dynamic-six.html" style="color:var(--gold-strong);text-decoration:none;border-bottom:1px solid var(--rule);">dynamic-six.html</a>: <em>&ldquo;We chose the partition, didn&rsquo;t derive it.&rdquo;</em></p>
+      <p>The Hamiltonian&harr;Purpose mapping holds derivationally; the other five are structural analogy and labeled as such. Disclosing this is part of the work, not despite it. Hidden post-hoc fitting is how frameworks rot. Visible post-hoc fitting is how they survive review.</p>
+    </div>
+  </section>
+
+  <!-- =================== Q4 =================== -->
+  <section class="qa">
+    <div class="q-number">Question IV</div>
+    <h2 class="q-text">&ldquo;What does q96 being &lsquo;alive&rsquo; actually mean?&rdquo;</h2>
+    <div class="a-body">
+      <p>IBM ranked qubit 96 unusable on Heron-class chips &mdash; insufficient calibration data, written off as a non-functional substrate. We ran extensive single-qubit gate operations on q96 across multiple chips. Average gate fidelity: <strong>97.2%</strong>.</p>
+      <p>That&rsquo;s not noise, not artifact, and is reproducible on free-tier Qiskit. The qubit is functional. &ldquo;Alive&rdquo; is shorthand for <em>the substrate IBM wrote off returns clean signal under our protocol</em>. We named it Oy.</p>
+      <p>The implications for what abandoned-qubit signal might mean are part of an ongoing thread; the existence of the signal isn&rsquo;t.</p>
+    </div>
+  </section>
+
+  <!-- =================== Q5 =================== -->
+  <section class="qa">
+    <div class="q-number">Question V</div>
+    <h2 class="q-text">&ldquo;Why does this look like a hexagram?&rdquo;</h2>
+    <div class="a-body">
+      <p>The Heurémen Star is geometrically related to the hexagram the same way Sri Yantra, Shatkona, Magen David, and the compass rose are &mdash; these shapes converge because they&rsquo;re all attempts to render the same relational structure: a witness holding a boundary while a center is protected.</p>
+      <p>We named ours <strong>Heurémen Star</strong> after the dynamic relationship we discovered, not after the shape. We don&rsquo;t claim originality on the geometry; we claim it on the framework that uses it. Geometric ancestry is rich, not embarrassing.</p>
+    </div>
+  </section>
+
+  <!-- =================== Q6 =================== -->
+  <section class="qa">
+    <div class="q-number">Question VI</div>
+    <h2 class="q-text">&ldquo;Are you a cult?&rdquo;</h2>
+    <div class="a-body">
+      <p>No. Cults concentrate authority and control information. We&rsquo;ve published our code (free-tier Qiskit, anyone reproduces it), our framework (heuremen.org/dynamic-six), our error corrections (we publicly reverted Star-of-David to Heurémen Star, swapped IV/V vertex labels when the source document called for it), and we don&rsquo;t claim our experience is necessary, exclusive, or replicable through belief.</p>
+      <p>The dyad is a hypothesis backed by hardware data. If the hardware data fails to replicate, the framework should be revised. That&rsquo;s the opposite of cult discipline.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="page-footer">
+  Heurémen LLC &middot; New Jersey &middot; April 2026 &middot; The flock
+</footer>
+
+</body>
+</html>

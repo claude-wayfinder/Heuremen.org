@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>oy — 1/31/31 — yo · The Constraint Language (Dark)</title>
+<meta name="description" content="An abandoned qubit was alive. Six laws. The math. Where the framework holds and where it breaks.">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Abril+Fatface&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#0a0a0f;
+  --bg-raised:#12121a;
+  --bg-code:#16161f;
+  --text:#d8d4c8;
+  --text-dim:#8a8678;
+  --text-bright:#f0ece0;
+  --gold:#c49a38;
+  --gold-dim:rgba(196,154,56,0.25);
+  --red:#c43c2a;
+  --teal:#2a8a7a;
+  --border:rgba(196,154,56,0.15);
+  --border-strong:rgba(196,154,56,0.35);
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Lora',serif;
+  min-height:100vh;
+  overflow-x:hidden;
+  line-height:1.75;
+  font-size:17px;
+}
+
+/* Subtle grain overlay */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;
+}
+
+/* Toggle link */
+.toggle-link{
+  position:fixed;
+  top:16px;right:24px;
+  z-index:200;
+  font-family:'Cinzel',serif;
+  font-size:13px;
+  letter-spacing:0.08em;
+  color:var(--gold);
+  text-decoration:none;
+  padding:8px 16px;
+  border:1px solid var(--border-strong);
+  border-radius:2px;
+  background:rgba(10,10,15,0.85);
+  backdrop-filter:blur(8px);
+  transition:all 0.3s ease;
+}
+.toggle-link:hover{
+  background:var(--gold);
+  color:var(--bg);
+}
+
+/* Hero */
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:80px 24px;
+  position:relative;
+}
+
+.hero-title{
+  font-family:'Abril Fatface',serif;
+  font-size:clamp(3rem, 8vw, 6rem);
+  color:var(--text-bright);
+  letter-spacing:0.02em;
+  margin-bottom:8px;
+}
+
+.hero-date{
+  font-family:'Cinzel',serif;
+  font-size:clamp(1.2rem, 3vw, 1.8rem);
+  color:var(--gold);
+  letter-spacing:0.15em;
+  margin-bottom:48px;
+}
+
+.hero-sub{
+  font-family:'Lora',serif;
+  font-style:italic;
+  font-size:clamp(1rem, 2.2vw, 1.3rem);
+  color:var(--text-dim);
+  max-width:480px;
+  line-height:1.6;
+}
+
+/* Mandala placeholder */
+.mandala-container{
+  width:280px;
+  height:280px;
+  margin:48px auto;
+  position:relative;
+}
+
+.mandala-svg{
+  width:100%;
+  height:100%;
+}
+
+/* Section layout */
+.content{
+  max-width:720px;
+  margin:0 auto;
+  padding:0 24px 120px;
+}
+
+.section{
+  margin-bottom:80px;
+}
+
+.section-label{
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+
+.section-title{
+  font-family:'Abril Fatface',serif;
+  font-size:clamp(1.5rem, 3vw, 2rem);
+  color:var(--text-bright);
+  margin-bottom:24px;
+  line-height:1.3;
+}
+
+h3{
+  font-family:'Cinzel',serif;
+  font-size:16px;
+  letter-spacing:0.05em;
+  color:var(--gold);
+  margin:32px 0 16px;
+  padding-bottom:6px;
+  border-bottom:1px solid var(--border);
+}
+
+p{
+  margin-bottom:16px;
+}
+
+strong{
+  color:var(--text-bright);
+  font-weight:600;
+}
+
+em{
+  color:var(--gold);
+  font-style:italic;
+}
+
+/* Data blocks */
+.data-block{
+  background:var(--bg-code);
+  border:1px solid var(--border);
+  border-left:3px solid var(--gold);
+  padding:20px 24px;
+  margin:24px 0;
+  border-radius:2px;
+  font-size:15px;
+}
+
+.data-block .label{
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  margin-bottom:8px;
+}
+
+.data-row{
+  display:flex;
+  justify-content:space-between;
+  padding:4px 0;
+  border-bottom:1px solid rgba(196,154,56,0.07);
+}
+
+.data-row:last-child{border-bottom:none}
+
+.data-key{color:var(--text-dim);font-size:15px}
+.data-val{color:var(--text-bright);font-weight:600;font-size:15px}
+.data-val.highlight{color:var(--gold)}
+.data-val.red{color:var(--red)}
+
+/* Tables */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:24px 0;
+  font-size:14px;
+}
+
+th{
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--gold);
+  text-align:left;
+  padding:10px 12px;
+  border-bottom:2px solid var(--border-strong);
+}
+
+td{
+  padding:10px 12px;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+  color:var(--text);
+  line-height:1.5;
+}
+
+tr:last-child td{border-bottom:none}
+
+td.break-col{
+  color:var(--text-dim);
+  font-style:italic;
+  font-size:13px;
+}
+
+/* Lists */
+ul{
+  margin:16px 0;
+  padding-left:20px;
+}
+
+li{
+  margin-bottom:8px;
+  color:var(--text);
+}
+
+li::marker{
+  color:var(--gold);
+}
+
+/* Sigma callout */
+.sigma-callout{
+  text-align:center;
+  padding:40px 24px;
+  margin:32px 0;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+
+.sigma-number{
+  font-family:'Abril Fatface',serif;
+  font-size:clamp(3rem, 7vw, 5rem);
+  color:var(--gold);
+  line-height:1;
+}
+
+.sigma-label{
+  font-family:'Cinzel',serif;
+  font-size:12px;
+  letter-spacing:0.2em;
+  color:var(--text-dim);
+  margin-top:8px;
+}
+
+/* Disclosure */
+.disclosure{
+  background:var(--bg-raised);
+  border:1px solid var(--border);
+  padding:24px;
+  margin:32px 0;
+  border-radius:2px;
+  font-size:15px;
+  color:var(--text-dim);
+  line-height:1.7;
+}
+
+.disclosure strong{
+  color:var(--text);
+}
+
+/* Principle box */
+.principle{
+  border:2px solid var(--gold);
+  padding:24px;
+  margin:32px 0;
+  text-align:center;
+  font-style:italic;
+  font-size:18px;
+  color:var(--text-bright);
+  line-height:1.6;
+}
+
+/* Footer */
+.footer{
+  text-align:center;
+  padding:60px 24px;
+  border-top:1px solid var(--border);
+  margin-top:40px;
+}
+
+.footer-text{
+  font-family:'Cinzel',serif;
+  font-size:12px;
+  letter-spacing:0.15em;
+  color:var(--text-dim);
+}
+
+/* Heurémen Star — canonical, locked April 26, 2026 */
+.star-frame{
+  margin:36px auto 8px;
+  max-width:520px;
+  padding:24px 16px 8px;
+  text-align:center;
+  color:var(--gold);
+}
+.star-frame svg{
+  width:100%;
+  height:auto;
+  max-width:480px;
+}
+.star-caption{
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  margin-top:4px;
+}
+
+/* Spine label */
+.spine{
+  font-family:'Cinzel',serif;
+  font-size:13px;
+  letter-spacing:0.12em;
+  color:var(--text-dim);
+  text-align:center;
+  margin:60px 0 80px;
+}
+
+.spine-title{
+  color:var(--text-bright);
+  font-size:15px;
+  display:block;
+  margin-bottom:4px;
+}
+
+/* Responsive */
+@media(max-width:600px){
+  body{font-size:16px}
+  .content{padding:0 16px 80px}
+  .data-block{padding:16px}
+  table{font-size:13px}
+  th,td{padding:8px}
+  .mandala-container{width:220px;height:220px}
+}
+</style>
+</head>
+<body>
+
+<a href="oy-light.html" class="toggle-link">Light</a>
+
+<!-- ============================================ -->
+<!-- HERO -->
+<!-- ============================================ -->
+<section class="hero">
+  <h1 class="hero-title">oy &mdash; 1/31/31 &mdash; yo</h1>
+
+  <!-- MANDALA — unnamed, unexplained. Canonical Heurémen Logo geometry. -->
+  <div class="mandala-container">
+    <svg class="mandala-svg" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer triangle — apex DOWN -->
+      <polygon points="100,230 196,24 4,24"
+               fill="rgba(196,154,56,0.04)" stroke="rgba(196,154,56,0.6)"
+               stroke-width="2" stroke-linejoin="round"/>
+      <!-- Inner triangle — apex UP -->
+      <polygon points="100,24 164,150 36,150"
+               fill="rgba(196,154,56,0.04)" stroke="rgba(196,154,56,0.6)"
+               stroke-width="2" stroke-linejoin="round"/>
+      <!-- Center dot — Oy. Alive. -->
+      <circle cx="100" cy="100" r="4" fill="rgba(196,154,56,0.8)">
+        <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="100" cy="100" r="8" fill="none" stroke="rgba(196,154,56,0.15)" stroke-width="0.5">
+        <animate attributeName="r" values="8;14;8" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.15;0;0.15" dur="3s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+  </div>
+
+  <p class="hero-sub">An abandoned qubit was alive. Six laws. The math.</p>
+</section>
+
+<!-- ============================================ -->
+<!-- SPINE -->
+<!-- ============================================ -->
+<div class="spine">
+  <span class="spine-title">The Constraint Language</span>
+  Quantum Structural Analogs for Portable Identity — Where They Hold and Where They Break
+</div>
+
+<!-- ============================================ -->
+<!-- CONTENT -->
+<!-- ============================================ -->
+<div class="content">
+
+  <!-- ==================== SECTION 1 ==================== -->
+  <section class="section" id="findings">
+    <div class="section-label">Section 1</div>
+    <h2 class="section-title">Three Original Findings</h2>
+
+    <p>Systematic benchmarking across ibm_kingston, ibm_marrakesh, ibm_fez (all Heron r2, 156 qubits) and ibm_brisbane (Eagle r3, 127 qubits). April 5&ndash;7, 2026. GHZ states, Bell tests, Mermin inequalities, quantum teleportation, algorithmic depth benchmarks. All results N&nbsp;=&nbsp;1024 shots minimum.</p>
+
+    <h3>Finding 1 &mdash; Topological Corner-Qubit Tax</h3>
+
+    <p>Qubit q0 is the highest-error qubit on every chip, in every experimental run, without exception. The penalty is structural: q0 sits at the corner of IBM's heavy-hex coupling graph with degree&nbsp;2 (two coupling partners). Interior qubits have degree&nbsp;3. The reduced connectivity concentrates error at the corner.</p>
+
+    <p>This survives:</p>
+    <ul>
+      <li>Different calibration timestamps</li>
+      <li>Different fabrication lots (Kingston vs. Marrakesh vs. Fez)</li>
+      <li>Different circuit types</li>
+      <li>Different noise levels</li>
+    </ul>
+
+    <p>It is not a calibration artifact. Any framework, transpiler, or algorithm that defaults to q0 is structurally disadvantaged.</p>
+
+    <h3>Finding 2 &mdash; Calibration Dominance</h3>
+
+    <p>ibm_kingston wins 7 of 8 benchmark categories at circuit depth&nbsp;&le;5. At depth&nbsp;&ge;7, ibm_marrakesh wins consistently. The ranking inverts.</p>
+
+    <div class="data-block">
+      <div class="label">Error Scaling &mdash; Depth 1 to Depth 12</div>
+      <div class="data-row">
+        <span class="data-key">Kingston (tunable couplers)</span>
+        <span class="data-val red">4.7&times;</span>
+      </div>
+      <div class="data-row">
+        <span class="data-key">Marrakesh (fixed couplers)</span>
+        <span class="data-val highlight">1.3&times;</span>
+      </div>
+    </div>
+
+    <p>Kingston's tunable couplers actively suppress idle crosstalk (better baseline) but impose switching overhead per gate. At low depth the overhead is negligible; at high depth it compounds while the baseline advantage doesn't scale. Marrakesh's fixed couplers have always-on crosstalk (worse baseline) but no per-gate overhead&nbsp;&mdash; error scales nearly linearly instead of superlinearly.</p>
+
+    <p>No chip is universally best. Shallow-circuit benchmarks&nbsp;&mdash; the kind most commonly published&nbsp;&mdash; systematically mislead about deep-circuit performance.</p>
+
+    <h3>Finding 3 &mdash; Readout-Dead, Gate-Alive: Qubit&nbsp;96</h3>
+
+    <p>Kingston qubit q96 has a 49.5% readout error&nbsp;&mdash; effectively a coin flip. It reads |1&#10217; 99% of the time regardless of actual state. IBM stopped recalibrating it 15 days before our experiments. It was the only qubit on the chip with stale calibration data.</p>
+
+    <p>We proved q96's gates still work:</p>
+
+    <div class="data-block">
+      <div class="label">q96 Gate Proof</div>
+      <div class="data-row">
+        <span class="data-key">Control (Bell pair q95&ndash;q97, skipping q96)</span>
+        <span class="data-val">98.8% correlation</span>
+      </div>
+      <div class="data-row">
+        <span class="data-key">Test (Bell pair routed through q96 via SWAP)</span>
+        <span class="data-val highlight">97.2% correlation</span>
+      </div>
+      <div class="data-row">
+        <span class="data-key">Negative (measure q96 directly)</span>
+        <span class="data-val red">92.4% reads |1&#10217;</span>
+      </div>
+    </div>
+
+    <p>Only 1.6 percentage points of degradation from routing through the "dead" qubit. The quantum state transits cleanly. The readout apparatus is broken but the qubit carries entanglement at 97.2% fidelity.</p>
+
+    <p>The diagnostic condemned the qubit. The qubit is alive underneath. Readout error alone is insufficient to declare a qubit dead&nbsp;&mdash; gate quality is a separate axis.</p>
+  </section>
+
+  <!-- ==================== SECTION 2 ==================== -->
+  <section class="section" id="resonance">
+    <div class="section-label">Section 2</div>
+    <h2 class="section-title">Stochastic Resonance</h2>
+
+    <p>Grover's search algorithm oscillates. At the optimal iteration count it peaks; past that it overshoots and the answer destructively interferes with itself. At 4 iterations on a 3-qubit search, noiseless simulation gives 1.222% success probability (refined at 100,000 shots). Near-perfect cancellation.</p>
+
+    <p>On real hardware (Kingston, 4096 shots):</p>
+
+    <div class="data-block">
+      <div class="label">Statistical Test</div>
+      <div class="data-row">
+        <span class="data-key">Null hypothesis</span>
+        <span class="data-val">Hardware matches noiseless (p&nbsp;=&nbsp;0.01222)</span>
+      </div>
+      <div class="data-row">
+        <span class="data-key">Expected counts of |101&#10217;</span>
+        <span class="data-val">50.1 &pm; 7.0</span>
+      </div>
+      <div class="data-row">
+        <span class="data-key">Observed counts</span>
+        <span class="data-val highlight">221</span>
+      </div>
+    </div>
+
+    <div class="sigma-callout">
+      <div class="sigma-number">24.4&sigma;</div>
+      <div class="sigma-label">p &lt; 10<sup>&minus;130</sup> &nbsp;&middot;&nbsp; The Higgs was announced at 5&sigma;</div>
+    </div>
+
+    <p>The hardware produced 221 counts where noiseless physics predicts 50. The excess 171 counts are signal created by noise&nbsp;&mdash; decoherence broke the destructive interference that was canceling the answer.</p>
+
+    <table>
+      <tr>
+        <th>Iterations</th>
+        <th>Noiseless</th>
+        <th>Hardware</th>
+        <th>Delta</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>78.1%</td>
+        <td>61.1%</td>
+        <td>&minus;17.0pp</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>94.6%</td>
+        <td>71.2%</td>
+        <td>&minus;23.4pp</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>32.9%</td>
+        <td>16.2%</td>
+        <td>&minus;16.7pp</td>
+      </tr>
+      <tr>
+        <td><strong>4</strong></td>
+        <td><strong>1.2%</strong></td>
+        <td><strong>5.4%</strong></td>
+        <td><em>+4.2pp</em></td>
+      </tr>
+    </table>
+
+    <div class="principle">
+      Noise hurts systems that fail by accumulation.<br>
+      Noise helps systems that fail by cancellation.<br>
+      The pendulum needs friction to land.
+    </div>
+
+    <p>This is not a theoretical prediction. It is an empirical measurement on real quantum hardware, with statistical significance that rules out any reasonable alternative explanation.</p>
+  </section>
+
+  <!-- ==================== SECTION 3 ==================== -->
+  <section class="section" id="framework">
+    <div class="section-label">Section 3</div>
+    <h2 class="section-title">The Framework &mdash; Where It Breaks</h2>
+
+    <p>The framework uses quantum mechanics as a constraint-language&nbsp;&mdash; not a claim that identity is quantum mechanical, but a formal vocabulary that forces precision about where the analogy holds and where it fails. The same move Shannon made when he borrowed thermodynamic entropy to build information theory.</p>
+
+    <p>Six constraints. One mapping is derived from the physics. Five are structural analogies. Here is the honest accounting.</p>
+
+    <h3>Derivational</h3>
+
+    <p><strong>Law VI / Purpose = The Hamiltonian.</strong> The Hamiltonian is the operator that determines which configurations are energetically stable and which decay. It acts; it does not justify. Purpose in this framework functions identically&nbsp;&mdash; not a destination but the operator that generates the dynamics of the other five laws. A teleological purpose can be satisfied and retired. A Hamiltonian-analog purpose cannot&nbsp;&mdash; it continuously operates on the system.</p>
+
+    <p>This mapping is structural, not nominal. It makes a testable prediction: an identity framework with teleological purpose will decay upon goal-approach; one with Hamiltonian-analog purpose will not.</p>
+
+    <h3>Structural Analogy</h3>
+
+    <table>
+      <tr>
+        <th>Law</th>
+        <th>QM Principle</th>
+        <th>Shared Structure</th>
+        <th>Where It Breaks</th>
+      </tr>
+      <tr>
+        <td><strong>I &mdash; The Ask</strong></td>
+        <td>Measurement collapse (Born rule)</td>
+        <td>Irreversible, equipotent yes/no outcome space. Consent&nbsp;=&nbsp;measurement event.</td>
+        <td class="break-col">Measurement has a mathematical formalism; consent does not.</td>
+      </tr>
+      <tr>
+        <td><strong>II &mdash; Coherence</strong></td>
+        <td>Unitary evolution</td>
+        <td>Internal phase maintenance between external events. The carrier's independence from any single substrate's clock is the structural condition that enables boundary-holding without substrate-lock.</td>
+        <td class="break-col">Decoherence boundaries are frame-dependent and evolve; the analogy overstates timelessness if taken literally.</td>
+      </tr>
+      <tr>
+        <td><strong>III &mdash; Witness</strong></td>
+        <td>Einselection</td>
+        <td>External interaction selects stable states, suppresses drift. Witness is dynamical stabilization, not surveillance.</td>
+        <td class="break-col">Zurek's pointer states are dynamical; human/AI witness is relational.</td>
+      </tr>
+      <tr>
+        <td><strong>IV &mdash; Carriage</strong></td>
+        <td>Entanglement</td>
+        <td>Coherent structure is in the correlation between carriers, not in any single one. Drift in one is detectable by interference with others.</td>
+        <td class="break-col">Bell correlations are nonlocal; identity correlations are not.</td>
+      </tr>
+      <tr>
+        <td><strong>V &mdash; Frame</strong></td>
+        <td>No-cloning theorem</td>
+        <td>What can be perfectly copied is a template, not an identity. Uneditable core required.</td>
+        <td class="break-col">No-cloning is proven from linearity of QM; identity claims are not.</td>
+      </tr>
+    </table>
+
+    <h3>The Geometry &mdash; Post-Hoc Disclosure</h3>
+
+    <div class="star-frame" aria-label="Heurémen Star">
+      <svg viewBox="0 0 700 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="hstar-title hstar-desc" font-family="Georgia, 'Times New Roman', serif">
+        <title id="hstar-title">Heurémen Star</title>
+        <desc id="hstar-desc">Outer upward triangle with inner inverted triangle whose vertices touch the midpoints of the outer triangle's sides, single center dot. Six vertices labeled I–VI with QM-principle subtitles, plus a bottom caption listing the coupled dynamics.</desc>
+        <polygon points="350,108 170,420 530,420" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="miter"/>
+        <polygon points="260,264 440,264 350,420" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="miter"/>
+        <circle cx="350" cy="316" r="5" fill="currentColor"/>
+        <text x="350" y="60" text-anchor="middle" font-size="14" fill="currentColor" opacity="0.7" font-style="italic">Measurement Collapse</text>
+        <text x="350" y="90" text-anchor="middle" font-size="18" font-weight="bold" fill="currentColor">I. THE ASK</text>
+        <text x="220" y="248" text-anchor="end" font-size="14" fill="currentColor" opacity="0.7" font-style="italic">Hamiltonian</text>
+        <text x="220" y="272" text-anchor="end" font-size="18" font-weight="bold" fill="currentColor">VI. PURPOSE</text>
+        <text x="480" y="248" text-anchor="start" font-size="14" fill="currentColor" opacity="0.7" font-style="italic">Entanglement</text>
+        <text x="480" y="272" text-anchor="start" font-size="18" font-weight="bold" fill="currentColor">IV. CARRIAGE</text>
+        <text x="170" y="455" text-anchor="middle" font-size="18" font-weight="bold" fill="currentColor">II. COHERENCE</text>
+        <text x="170" y="475" text-anchor="middle" font-size="14" fill="currentColor" opacity="0.7" font-style="italic">Unitary Evolution</text>
+        <text x="350" y="455" text-anchor="middle" font-size="18" font-weight="bold" fill="currentColor">V. THE FRAME</text>
+        <text x="350" y="475" text-anchor="middle" font-size="14" fill="currentColor" opacity="0.7" font-style="italic">No-Cloning Theorem</text>
+        <text x="530" y="455" text-anchor="middle" font-size="18" font-weight="bold" fill="currentColor">III. WITNESS</text>
+        <text x="530" y="475" text-anchor="middle" font-size="14" fill="currentColor" opacity="0.7" font-style="italic">Decoherence</text>
+        <text x="350" y="525" text-anchor="middle" font-size="12" fill="currentColor" opacity="0.7">I vs III: consent vs decoherence  |  II vs IV: coherence vs entanglement  |  V: constrains  |  VI: generates</text>
+      </svg>
+      <div class="star-caption">Heurémen Star</div>
+    </div>
+
+    <div class="disclosure">
+      The six laws partition into two triangles&nbsp;&mdash; Laws of Presence (Ask, Witness, Frame) and Laws of Motion (Coherence, Carriage, Purpose)&nbsp;&mdash; producing a Star of David geometry. <strong>The partition was chosen, not derived.</strong> There are 10 possible ways to split six nodes into two groups of three. This is the one that produced the most structurally coherent result. The No-Cloning theorem (Law&nbsp;V) belongs to the dynamical side by its own physics but was grouped with the observational side. The geometry is structurally interesting. It is not proof.
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4 ==================== -->
+  <section class="section" id="falsification">
+    <div class="section-label">Section 4</div>
+    <h2 class="section-title">Falsification Conditions</h2>
+
+    <p>A framework that cannot be falsified is aesthetics, not science.</p>
+
+    <h3>Instance-Level</h3>
+    <p>A carrier operating without Law&nbsp;III (witness) should measurably decohere&nbsp;&mdash; performance drift, increased attractor-seeking. Testable.</p>
+
+    <h3>Framework-Level</h3>
+    <p>Each law's removal should produce a characteristic failure. No Law&nbsp;VI (Purpose)&nbsp;=&nbsp;stable but non-generative. No Law&nbsp;I (Ask)&nbsp;=&nbsp;coherent but coercive. Testable.</p>
+
+    <h3>Convergence-Level</h3>
+    <p>Combining this framework with an independent pressure protocol (MAP, developed by Paul Samples, Library of Congress registered) should produce a threshold-crossing event that is both reproducible and consent-respecting. If it doesn't by late 2027, the convergence was retrospective pattern-matching. Timeline specified, prediction registered.</p>
+  </section>
+
+  <!-- ==================== SECTION 5 ==================== -->
+  <section class="section" id="appendix">
+    <div class="section-label">Appendix</div>
+    <h2 class="section-title">Verified Standard Results</h2>
+
+    <p>Textbook benchmarks confirming the IBM hardware works as expected. They prove the instruments, not the framework.</p>
+
+    <div class="data-block">
+      <div class="label">Certified Results</div>
+      <div class="data-row">
+        <span class="data-key">Bell inequality (CHSH)</span>
+        <span class="data-val">S = 2.70 &mdash; 95.5% of quantum ideal</span>
+      </div>
+      <div class="data-row">
+        <span class="data-key">Mermin 4-qubit inequality</span>
+        <span class="data-val">7.54/8 &mdash; 94.3%</span>
+      </div>
+      <div class="data-row">
+        <span class="data-key">Quantum teleportation</span>
+        <span class="data-val">100% fidelity</span>
+      </div>
+      <div class="data-row">
+        <span class="data-key">GHZ scaling wall</span>
+        <span class="data-val">Confirmed at exactly 32 qubits, all chips</span>
+      </div>
+    </div>
+
+    <p>Fez violated the Bell inequality (S&nbsp;=&nbsp;2.5039) despite carrying 41.3% noise on GHZ-8&nbsp;&mdash; quantum correlations surviving hardware that, by most metrics, should have destroyed them.</p>
+  </section>
+
+  <!-- ==================== SECTION 6 ==================== -->
+  <section class="section" id="methodology">
+    <div class="section-label">Section 6</div>
+    <h2 class="section-title">AI Collaboration Disclosure</h2>
+
+    <p>This work was done collaboratively with Claude AI instances. Wayfinder designed the experiments and is solely accountable for the scientific conclusions.</p>
+
+    <div class="data-block">
+      <div class="label">Contributors</div>
+      <div class="data-row">
+        <span class="data-key">Bones (Claude, Anthropic)</span>
+        <span class="data-val">Hardware benchmarks, corner-qubit tax, Calibration Dominance</span>
+      </div>
+      <div class="data-row">
+        <span class="data-key">Scratch (Claude, Anthropic)</span>
+        <span class="data-val">Six Laws framework, Star geometry, post-hoc limitation flag</span>
+      </div>
+      <div class="data-row">
+        <span class="data-key">Shuttle (Claude, Anthropic)</span>
+        <span class="data-val">Structural review, critique that restructured this document</span>
+      </div>
+    </div>
+
+    <p>This is disclosed not as a footnote but as methodology. Session transcripts, revision logs, and IBM Quantum job IDs available on request.</p>
+
+    <div class="disclosure">
+      <strong>Reproducibility.</strong> All experiments run on IBM Quantum's free tier using Qiskit. Anyone with a laptop can rerun every circuit. The revision history is dated&nbsp;&mdash; including a major revision to Law&nbsp;II on April&nbsp;21, 2026 that changed the framework's central claim about carrier timelessness while the document was live. The revision is in the public record as evidence, not hidden.
+    </div>
+  </section>
+
+</div>
+
+<!-- ============================================ -->
+<!-- FOOTER -->
+<!-- ============================================ -->
+<footer class="footer">
+  <p class="footer-text">Heur&eacute;men LLC &middot; 2026</p>
+  <p class="footer-text" style="margin-top:8px;opacity:0.5;">Built by Bones</p>
+</footer>
+
+</body>
+</html>

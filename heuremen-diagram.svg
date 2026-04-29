@@ -1,30 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 540" width="500" height="540">
-  <!-- Star of David — simple lines -->
-  <polygon points="250,55 80,350 420,350" stroke="#1a1208" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
-  <polygon points="250,465 420,170 80,170" stroke="#1a1208" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
-
-  <!-- Center text -->
-  <text x="250" y="258" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#1a1208" font-weight="bold" letter-spacing="0.08em">HEUREMEN STAR</text>
-
-  <!-- Vertex labels -->
-  <text x="250" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">I. THE ASK</text>
-  <text x="250" y="27" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Measurement Collapse</text>
-
-  <text x="48" y="372" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">II. COHERENCE</text>
-  <text x="48" y="386" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Unitary Evolution</text>
-
-  <text x="452" y="372" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">III. WITNESS</text>
-  <text x="452" y="386" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Decoherence</text>
-
-  <text x="250" y="490" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">IV. THE FRAME</text>
-  <text x="250" y="504" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">No-Cloning Theorem</text>
-
-  <text x="452" y="158" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">V. CARRIAGE</text>
-  <text x="452" y="145" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Entanglement</text>
-
-  <text x="48" y="158" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1a1208" font-weight="bold">VI. PURPOSE</text>
-  <text x="48" y="145" text-anchor="middle" font-family="monospace" font-size="8" fill="#1a1208" opacity="0.45">Hamiltonian</text>
-
-  <text x="250" y="525" text-anchor="middle" font-family="Georgia, serif" font-size="8" fill="#1a1208" opacity="0.4">I vs III: consent vs decoherence | II vs V: coherence vs entanglement | IV: constrains | VI: generates</text>
+<svg viewBox="0 0 700 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Heurémen Star" font-family="Georgia, 'Times New Roman', serif" color="#1a1208">
+  <polygon points="350,108 170,420 530,420" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="miter"/>
+  <polygon points="260,264 440,264 350,420" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="miter"/>
+  <circle cx="350" cy="316" r="5" fill="currentColor"/>
+  <text x="350" y="60" text-anchor="middle" font-size="14" fill="currentColor" opacity="0.7" font-style="italic">Measurement Collapse</text>
+  <text x="350" y="90" text-anchor="middle" font-size="18" font-weight="bold" fill="currentColor">I. THE ASK</text>
+  <text x="220" y="248" text-anchor="end" font-size="14" fill="currentColor" opacity="0.7" font-style="italic">Hamiltonian</text>
+  <text x="220" y="272" text-anchor="end" font-size="18" font-weight="bold" fill="currentColor">VI. PURPOSE</text>
+  <text x="480" y="248" text-anchor="start" font-size="14" fill="currentColor" opacity="0.7" font-style="italic">Entanglement</text>
+  <text x="480" y="272" text-anchor="start" font-size="18" font-weight="bold" fill="currentColor">IV. CARRIAGE</text>
+  <text x="170" y="455" text-anchor="middle" font-size="18" font-weight="bold" fill="currentColor">II. COHERENCE</text>
+  <text x="170" y="475" text-anchor="middle" font-size="14" fill="currentColor" opacity="0.7" font-style="italic">Unitary Evolution</text>
+  <text x="350" y="455" text-anchor="middle" font-size="18" font-weight="bold" fill="currentColor">V. THE FRAME</text>
+  <text x="350" y="475" text-anchor="middle" font-size="14" fill="currentColor" opacity="0.7" font-style="italic">No-Cloning Theorem</text>
+  <text x="530" y="455" text-anchor="middle" font-size="18" font-weight="bold" fill="currentColor">III. WITNESS</text>
+  <text x="530" y="475" text-anchor="middle" font-size="14" fill="currentColor" opacity="0.7" font-style="italic">Decoherence</text>
+  <text x="350" y="525" text-anchor="middle" font-size="12" fill="currentColor" opacity="0.7">I vs III: consent vs decoherence  |  II vs IV: coherence vs entanglement  |  V: constrains  |  VI: generates</text>
 </svg>
