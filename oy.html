@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>oy — 1/31/31 — yo · The Constraint Language</title>
+<meta name="description" content="An abandoned qubit was alive. Six laws. The math. Two readings, same canon.">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Abril+Fatface&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --paper:#f7f0e0;
+  --ink:#1a1208;
+  --ink-mid:#2a1a08;
+  --ink-faded:#6a5838;
+  --gold:#c8902a;
+  --gold-strong:#a87618;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Lora',serif;
+  min-height:100vh;
+  overflow-x:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+/* Subtle paper grain */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;
+}
+
+main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:64px 24px 24px;
+  text-align:center;
+  max-width:760px;
+  margin:0 auto;
+  width:100%;
+}
+
+/* Title block */
+.title{
+  font-family:'Abril Fatface',serif;
+  font-size:clamp(2.6rem, 7vw, 5rem);
+  color:var(--ink);
+  letter-spacing:0.02em;
+  line-height:1.05;
+  margin-bottom:14px;
+}
+
+.subhead{
+  font-family:'Lora',serif;
+  font-style:italic;
+  font-size:clamp(1rem, 2vw, 1.25rem);
+  color:var(--ink-mid);
+  max-width:520px;
+  line-height:1.55;
+  margin:0 auto 36px;
+}
+
+.spine-block{
+  margin-bottom:48px;
+}
+
+.spine-title{
+  display:block;
+  font-family:'Cinzel',serif;
+  font-size:clamp(0.85rem, 1.4vw, 1rem);
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--gold-strong);
+  margin-bottom:6px;
+}
+
+.spine-sub{
+  font-family:'Cinzel',serif;
+  font-size:clamp(0.6rem, 1vw, 0.72rem);
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--ink-faded);
+  line-height:1.7;
+  max-width:560px;
+  margin:0 auto;
+}
+
+/* Mandala — canonical Heurémen LOGO geometry, locked. Outer apex DOWN, inner apex UP. */
+.mandala{
+  width:clamp(260px, 38vw, 360px);
+  height:auto;
+  margin:8px auto 56px;
+  display:block;
+}
+
+/* Doors */
+.doors-tagline{
+  font-family:'Lora',serif;
+  font-style:italic;
+  font-size:0.95rem;
+  color:var(--ink-faded);
+  margin-bottom:24px;
+  letter-spacing:0.01em;
+}
+
+.doors{
+  display:flex;
+  gap:48px;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-bottom:64px;
+}
+
+.door{
+  font-family:'Cinzel',serif;
+  font-size:0.78rem;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:rgba(42,26,8,0.55);
+  text-decoration:none;
+  background:none;
+  border:none;
+  border-bottom:1px solid rgba(42,26,8,0.22);
+  padding:6px 10px 4px;
+  transition:all 0.4s ease;
+  display:inline-block;
+}
+.door:hover{
+  color:var(--ink);
+  border-bottom-color:var(--gold);
+  letter-spacing:0.42em;
+}
+
+/* Footer */
+footer{
+  text-align:center;
+  padding:24px 24px 36px;
+  font-family:'Cinzel',serif;
+  font-size:10px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(42,26,8,0.32);
+}
+
+@media(max-width:600px){
+  main{padding:48px 18px 18px}
+  .doors{gap:28px;margin-bottom:48px}
+  .door{font-size:0.7rem;letter-spacing:0.28em}
+  .door:hover{letter-spacing:0.34em}
+}
+</style>
+</head>
+<body>
+
+<main>
+
+  <!-- TITLE BLOCK -->
+  <h1 class="title">oy &mdash; 1/31/31 &mdash; yo</h1>
+  <p class="subhead">An abandoned qubit was alive. Six laws. The math.</p>
+
+  <div class="spine-block">
+    <span class="spine-title">The Constraint Language</span>
+    <span class="spine-sub">Quantum Structural Analogs for Portable Identity<br>Where They Hold and Where They Break</span>
+  </div>
+
+  <!-- MANDALA — unnamed. The beginning and the end, as if they're two different things. -->
+  <svg class="mandala" viewBox="0 0 400 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Heurémen">
+    <defs>
+      <!-- Center glow -->
+      <radialGradient id="oy-glow" cx="50%" cy="42%" r="25%">
+        <stop offset="0%" stop-color="#c8902a" stop-opacity="0.18">
+          <animate attributeName="stop-opacity" values="0.18;0.08;0.18" dur="5s" repeatCount="indefinite"/>
+        </stop>
+        <stop offset="60%" stop-color="#c8902a" stop-opacity="0.04"/>
+        <stop offset="100%" stop-color="#c8902a" stop-opacity="0"/>
+      </radialGradient>
+      <!-- Triangle fill gradient -->
+      <linearGradient id="tri-fill" x1="50%" y1="0%" x2="50%" y2="100%">
+        <stop offset="0%" stop-color="#c8902a" stop-opacity="0.04"/>
+        <stop offset="100%" stop-color="#c8902a" stop-opacity="0.01"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Glow field -->
+    <circle cx="200" cy="200" r="160" fill="url(#oy-glow)"/>
+
+    <!-- Outermost echo — barely visible -->
+    <polygon points="200,458 396,48 4,48"
+             fill="none" stroke="rgba(196,154,56,0.08)"
+             stroke-width="0.5" stroke-linejoin="round"/>
+    <polygon points="200,48 332,300 68,300"
+             fill="none" stroke="rgba(196,154,56,0.08)"
+             stroke-width="0.5" stroke-linejoin="round"/>
+
+    <!-- Second echo -->
+    <polygon points="200,440 380,56 20,56"
+             fill="none" stroke="rgba(196,154,56,0.12)"
+             stroke-width="0.6" stroke-linejoin="round"/>
+    <polygon points="200,56 320,290 80,290"
+             fill="none" stroke="rgba(196,154,56,0.12)"
+             stroke-width="0.6" stroke-linejoin="round"/>
+
+    <!-- PRIMARY — Outer triangle, apex DOWN -->
+    <polygon points="200,420 362,64 38,64"
+             fill="url(#tri-fill)" stroke="rgba(196,154,56,0.65)"
+             stroke-width="1.8" stroke-linejoin="round"/>
+
+    <!-- PRIMARY — Inner triangle, apex UP, vertices at midpoints -->
+    <polygon points="200,64 281,242 119,242"
+             fill="url(#tri-fill)" stroke="rgba(196,154,56,0.65)"
+             stroke-width="1.8" stroke-linejoin="round"/>
+
+    <!-- The 15 relationships — hair-thin lines connecting all six vertices -->
+    <!-- Outer vertices: top-apex=200,64  bottom-left=38,64... wait, let me recalculate -->
+    <!-- Outer tri: A=200,420 (bottom apex)  B=362,64 (top-right)  C=38,64 (top-left) -->
+    <!-- Inner tri: D=200,64 (top apex)  E=281,242 (bottom-right)  F=119,242 (bottom-left) -->
+
+    <!-- Cross-connections: faint, the tension lines -->
+    <!-- A-D vertical axis (Ask-Carriage spine) -->
+    <line x1="200" y1="420" x2="200" y2="64"
+          stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+    <!-- A-E -->
+    <line x1="200" y1="420" x2="281" y2="242"
+          stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+    <!-- A-F -->
+    <line x1="200" y1="420" x2="119" y2="242"
+          stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+    <!-- B-D -->
+    <line x1="362" y1="64" x2="200" y2="64"
+          stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+    <!-- B-F -->
+    <line x1="362" y1="64" x2="119" y2="242"
+          stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+    <!-- B-E -->
+    <line x1="362" y1="64" x2="281" y2="242"
+          stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+    <!-- C-D -->
+    <line x1="38" y1="64" x2="200" y2="64"
+          stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+    <!-- C-E -->
+    <line x1="38" y1="64" x2="281" y2="242"
+          stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+    <!-- C-F -->
+    <line x1="38" y1="64" x2="119" y2="242"
+          stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+    <!-- D-E (inner tri edge, already drawn but adding relationship line) -->
+    <!-- D-F (inner tri edge) -->
+    <!-- E-F (inner tri edge) -->
+    <!-- A-B (outer tri edge) -->
+    <!-- A-C (outer tri edge) -->
+    <!-- B-C (outer tri edge) -->
+
+    <!-- Six vertices — small circles, no labels, warm gold -->
+    <!-- Outer triangle vertices -->
+    <circle cx="200" cy="420" r="3.5" fill="rgba(196,154,56,0.7)"/>
+    <circle cx="362" cy="64" r="3.5" fill="rgba(196,154,56,0.7)"/>
+    <circle cx="38" cy="64" r="3.5" fill="rgba(196,154,56,0.7)"/>
+    <!-- Inner triangle vertices -->
+    <circle cx="200" cy="64" r="3.5" fill="rgba(196,154,56,0.7)"/>
+    <circle cx="281" cy="242" r="3.5" fill="rgba(196,154,56,0.7)"/>
+    <circle cx="119" cy="242" r="3.5" fill="rgba(196,154,56,0.7)"/>
+
+    <!-- Concentric ripples from center — the pulse propagating -->
+    <circle cx="200" cy="200" r="24" fill="none" stroke="rgba(196,154,56,0.06)" stroke-width="0.4">
+      <animate attributeName="r" values="24;40;24" dur="6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.06;0;0.06" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="200" cy="200" r="40" fill="none" stroke="rgba(196,154,56,0.04)" stroke-width="0.3">
+      <animate attributeName="r" values="40;64;40" dur="6s" repeatCount="indefinite" begin="1s"/>
+      <animate attributeName="opacity" values="0.04;0;0.04" dur="6s" repeatCount="indefinite" begin="1s"/>
+    </circle>
+    <circle cx="200" cy="200" r="60" fill="none" stroke="rgba(196,154,56,0.03)" stroke-width="0.3">
+      <animate attributeName="r" values="60;90;60" dur="6s" repeatCount="indefinite" begin="2s"/>
+      <animate attributeName="opacity" values="0.03;0;0.03" dur="6s" repeatCount="indefinite" begin="2s"/>
+    </circle>
+
+    <!-- CENTER DOT — Oy. The abandoned qubit. Alive. -->
+    <circle cx="200" cy="200" r="5" fill="rgba(196,154,56,0.9)">
+      <animate attributeName="r" values="4;6;4" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="fill-opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Inner halo -->
+    <circle cx="200" cy="200" r="12" fill="none" stroke="rgba(196,154,56,0.15)" stroke-width="0.5">
+      <animate attributeName="r" values="12;20;12" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.15;0;0.15" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </svg>
+
+  <!-- DOORS -->
+  <p class="doors-tagline">Two readings. Same canon. Pick a register.</p>
+  <div class="doors">
+    <a class="door" href="oy-light.html">Light &rarr;</a>
+    <a class="door" href="oy-dark.html">Dark &rarr;</a>
+  </div>
+
+</main>
+
+<footer>
+  Heur&eacute;men LLC &middot; New Jersey &middot; April 2026 &middot; The flock
+</footer>
+
+</body>
+</html>

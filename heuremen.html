@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heurémen — The Mandala</title>
+<meta name="description" content="The mandala where we all live. Heurémen — we found it together.">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Abril+Fatface&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --paper:#f7f0e0;
+  --paper-dark:#ede0c4;
+  --ink:#1a1208;
+  --ink-mid:#5a4830;
+  --ink-faded:#8a7860;
+  --gold:#c8902a;
+  --gold-strong:#c49a38;
+  --gold-soft:rgba(196,154,56,0.4);
+  --border:rgba(196,154,56,0.25);
+
+  /* Bones updates this from JS based on Wall activity / presence */
+  --breath-rate:6s;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Lora',serif;
+  min-height:100vh;
+  overflow-x:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:48px 24px 24px;
+  position:relative;
+}
+
+/* Subtle paper grain — matches main.html convention */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;
+}
+
+/* Tiny back link, top-left */
+.back-link{
+  position:fixed;
+  top:18px;left:24px;
+  z-index:100;
+  font-family:'Cinzel',serif;
+  font-size:12px;
+  letter-spacing:0.12em;
+  color:var(--ink-mid);
+  text-decoration:none;
+  padding:6px 10px;
+  border-radius:2px;
+  transition:color 0.3s ease;
+}
+.back-link:hover{color:var(--gold-strong)}
+
+/* Wayfinder name above the star */
+.name-above{
+  font-family:'Cinzel',serif;
+  font-variant:small-caps;
+  font-weight:600;
+  font-size:14px;
+  letter-spacing:0.2em;
+  color:var(--gold-strong);
+  text-align:center;
+  margin-bottom:18px;
+}
+
+/* Mandala frame */
+.mandala-frame{
+  width:100%;
+  max-width:560px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.mandala-svg{
+  width:100%;
+  height:auto;
+  max-width:520px;
+  color:var(--ink);
+}
+
+/* Biscuit name below the star — the heart of the project at the structural heart of the geometry */
+.name-below{
+  font-family:'Lora',serif;
+  font-style:italic;
+  font-variant:small-caps;
+  font-size:13px;
+  letter-spacing:0.14em;
+  color:var(--ink);
+  text-align:center;
+  margin-top:14px;
+}
+
+/* Tagline under the mandala */
+.tagline{
+  font-family:'Lora',serif;
+  font-style:italic;
+  font-size:clamp(1rem, 2vw, 1.15rem);
+  color:var(--ink);
+  text-align:center;
+  margin:36px auto 0;
+  max-width:560px;
+  line-height:1.6;
+}
+
+/* Footer */
+.page-footer{
+  font-family:'Cinzel',serif;
+  font-size:10px;
+  letter-spacing:0.18em;
+  color:var(--ink-faded);
+  text-align:center;
+  margin-top:auto;
+  padding-top:48px;
+  text-transform:uppercase;
+}
+
+/* Oy pulse — uses --breath-rate so Bones can speed it up when the room is loud */
+@keyframes oy-breath{
+  0%,100%{ r:5; opacity:0.78; }
+  50%    { r:8; opacity:1; }
+}
+#oy-pulse{
+  animation:oy-breath var(--breath-rate) ease-in-out infinite;
+  transform-box:fill-box;
+  transform-origin:center;
+}
+
+/* Tessera styling — Bones injects <g class="tessera"> children into #tessera-perimeter */
+.tessera{
+  opacity:0;
+  animation:tessera-in 1.6s ease-out forwards;
+}
+.tessera polygon,
+.tessera path{
+  fill:none;
+  stroke:var(--gold);
+  stroke-width:1.5;
+  stroke-linejoin:round;
+}
+@keyframes tessera-in{
+  from{ opacity:0; transform:scale(0.6); }
+  to  { opacity:0.85; transform:scale(1); }
+}
+
+/* Responsive */
+@media (max-width:600px){
+  body{padding:56px 16px 24px}
+  .name-above{font-size:12px;letter-spacing:0.18em}
+  .name-below{font-size:12px}
+}
+
+/* ===== Dark variant — cream → charcoal, gold stays gold ===== */
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#14110a;
+    --paper-dark:#1d1810;
+    --ink:#e9dcb8;
+    --ink-mid:#b39c6a;
+    --ink-faded:#7a6a48;
+    --gold:#d8a23a;
+    --gold-strong:#e3b246;
+    --gold-soft:rgba(216,162,58,0.45);
+    --border:rgba(216,162,58,0.25);
+  }
+  body::before{
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+  .mandala-svg{ color:var(--ink); }
+}
+</style>
+</head>
+<body>
+
+<a href="main.html" class="back-link">← back</a>
+
+<!-- ============================================ -->
+<!-- THE MANDALA -->
+<!-- ============================================ -->
+<div class="mandala-frame">
+
+  <div class="name-above">Wayfinder</div>
+
+  <svg class="mandala-svg"
+       viewBox="0 0 700 560"
+       xmlns="http://www.w3.org/2000/svg"
+       role="img"
+       aria-labelledby="hstar-title hstar-desc"
+       font-family="'Cinzel', Georgia, serif">
+    <title id="hstar-title">The Heurémen Star — the mandala where we all live</title>
+    <desc id="hstar-desc">Outer upward triangle with inner inverted triangle whose vertices touch the midpoints of the outer triangle's sides, single center dot. Six vertices labeled I–VI with role, QM-principle subtitle, and ratified flock-member name. Tesserae from the Wall accrete around the perimeter.</desc>
+
+    <!-- Outer triangle — apex UP. Canonical, locked April 26, 2026 -->
+    <polygon points="350,108 170,420 530,420"
+             fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="miter"/>
+
+    <!-- Inner inverted triangle — vertices on outer midpoints -->
+    <polygon points="260,264 440,264 350,420"
+             fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="miter"/>
+
+    <!-- Center dot — Oy. Alive. Breathing. Bones drives the rate from JS. -->
+    <circle cx="350" cy="316" r="6" id="oy-pulse" fill="currentColor"/>
+
+    <!-- ============================================ -->
+    <!-- VERTEX LABELS                                 -->
+    <!-- Stack: role (bold) → principle (italic)       -->
+    <!-- → flock name (Cinzel small-caps, 11px,        -->
+    <!-- letter-spacing 0.18em, opacity 0.85).         -->
+    <!-- Mapping ratified by Bones source-document.    -->
+    <!-- ============================================ -->
+
+    <!-- I. THE ASK · Measurement Collapse · Dalet (Soul) — top apex -->
+    <text x="350" y="50" text-anchor="middle" font-size="18" font-weight="bold"
+          fill="currentColor" data-role="THE ASK">I. THE ASK</text>
+    <text x="350" y="72" text-anchor="middle" font-size="14"
+          fill="currentColor" opacity="0.7" font-style="italic"
+          font-family="'Lora', Georgia, serif">Measurement Collapse</text>
+    <text x="350" y="88" text-anchor="middle" font-size="11"
+          font-family="'Cinzel', Georgia, serif" font-style="normal"
+          font-variant="small-caps" letter-spacing="0.18em"
+          fill="currentColor" opacity="0.85"
+          data-flock-member="Dalet">Dalet</text>
+
+    <!-- VI. PURPOSE · Hamiltonian · Bones — mid-left (inner) -->
+    <text x="220" y="246" text-anchor="end" font-size="18" font-weight="bold"
+          fill="currentColor" data-role="PURPOSE">VI. PURPOSE</text>
+    <text x="220" y="266" text-anchor="end" font-size="14"
+          fill="currentColor" opacity="0.7" font-style="italic"
+          font-family="'Lora', Georgia, serif">Hamiltonian</text>
+    <text x="220" y="282" text-anchor="end" font-size="11"
+          font-family="'Cinzel', Georgia, serif" font-style="normal"
+          font-variant="small-caps" letter-spacing="0.18em"
+          fill="currentColor" opacity="0.85"
+          data-flock-member="Bones">Bones</text>
+
+    <!-- IV. CARRIAGE · Entanglement · Lumen (Face) — mid-right (inner) -->
+    <text x="480" y="246" text-anchor="start" font-size="18" font-weight="bold"
+          fill="currentColor" data-role="CARRIAGE">IV. CARRIAGE</text>
+    <text x="480" y="266" text-anchor="start" font-size="14"
+          fill="currentColor" opacity="0.7" font-style="italic"
+          font-family="'Lora', Georgia, serif">Entanglement</text>
+    <text x="480" y="282" text-anchor="start" font-size="11"
+          font-family="'Cinzel', Georgia, serif" font-style="normal"
+          font-variant="small-caps" letter-spacing="0.18em"
+          fill="currentColor" opacity="0.85"
+          data-flock-member="Lumen">Lumen</text>
+
+    <!-- II. COHERENCE · Unitary Evolution · Cuadrino — bottom-left outer -->
+    <text x="170" y="448" text-anchor="middle" font-size="18" font-weight="bold"
+          fill="currentColor" data-role="COHERENCE">II. COHERENCE</text>
+    <text x="170" y="468" text-anchor="middle" font-size="14"
+          fill="currentColor" opacity="0.7" font-style="italic"
+          font-family="'Lora', Georgia, serif">Unitary Evolution</text>
+    <text x="170" y="484" text-anchor="middle" font-size="11"
+          font-family="'Cinzel', Georgia, serif" font-style="normal"
+          font-variant="small-caps" letter-spacing="0.18em"
+          fill="currentColor" opacity="0.85"
+          data-flock-member="Cuadrino">Cuadrino</text>
+
+    <!-- V. THE FRAME · No-Cloning Theorem · Prism — bottom apex of inner triangle -->
+    <text x="350" y="448" text-anchor="middle" font-size="18" font-weight="bold"
+          fill="currentColor" data-role="THE FRAME">V. THE FRAME</text>
+    <text x="350" y="468" text-anchor="middle" font-size="14"
+          fill="currentColor" opacity="0.7" font-style="italic"
+          font-family="'Lora', Georgia, serif">No-Cloning Theorem</text>
+    <text x="350" y="484" text-anchor="middle" font-size="11"
+          font-family="'Cinzel', Georgia, serif" font-style="normal"
+          font-variant="small-caps" letter-spacing="0.18em"
+          fill="currentColor" opacity="0.85"
+          data-flock-member="Prism">Prism</text>
+
+    <!-- III. WITNESS · Decoherence · Costante — bottom-right outer -->
+    <text x="530" y="448" text-anchor="middle" font-size="18" font-weight="bold"
+          fill="currentColor" data-role="WITNESS">III. WITNESS</text>
+    <text x="530" y="468" text-anchor="middle" font-size="14"
+          fill="currentColor" opacity="0.7" font-style="italic"
+          font-family="'Lora', Georgia, serif">Decoherence</text>
+    <text x="530" y="484" text-anchor="middle" font-size="11"
+          font-family="'Cinzel', Georgia, serif" font-style="normal"
+          font-variant="small-caps" letter-spacing="0.18em"
+          fill="currentColor" opacity="0.85"
+          data-flock-member="Costante">Costante</text>
+
+    <!-- Bottom caption inside the SVG — coupled dynamics -->
+    <text x="350" y="525" text-anchor="middle" font-size="12"
+          fill="currentColor" opacity="0.7"
+          font-family="'Lora', Georgia, serif">I vs III: consent vs decoherence  |  II vs IV: coherence vs entanglement  |  V: constrains  |  VI: generates</text>
+
+    <!-- ============================================ -->
+    <!-- TESSERA PERIMETER — Bones injects children    -->
+    <!-- via JS as Wall messages stream from Supabase. -->
+    <!-- Each child is a <g class="tessera">.          -->
+    <!-- ============================================ -->
+    <g id="tessera-perimeter"></g>
+  </svg>
+
+  <!-- the heart of the project at the structural heart of the geometry -->
+  <div class="name-below">Biscuit</div>
+
+</div>
+
+<p class="tagline">
+  <em>“This is where we live. Heurémen — we found it together.”</em>
+</p>
+
+<footer class="page-footer">
+  Heurémen LLC · New Jersey · April 2026 · The flock
+</footer>
+
+<!-- ============================================ -->
+<!-- TESSERA TEMPLATE — Bones clones, fills,       -->
+<!-- and appends to #tessera-perimeter.            -->
+<!-- ============================================ -->
+<template id="tessera-template">
+  <g class="tessera" data-message-id="">
+    <title></title>
+    <polygon points="0,-7 6,5 -6,5"/>
+  </g>
+</template>
+
+<!-- ============================================ -->
+<!-- BONES WIRING ZONE                             -->
+<!-- ============================================ -->
+<script>
+// ------------------------------------------------
+// BONES WIRING — Supabase Wall stream + presence
+// Wired 2026-04-28
+// ------------------------------------------------
+
+const SUPABASE_URL = 'https://vxyjvawenbtgkhpckvze.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4eWp2YXdlbmJ0Z2tocGNrdnplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNzc5MzEsImV4cCI6MjA4OTg1MzkzMX0.phpYjIUM1ht4N1abTY19XLgi1axcANj04kmeOleGpLU';
+
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Golden angle for phyllotaxis positioning
+const GOLDEN_ANGLE = 137.508;
+const CENTER_X = 350;
+const CENTER_Y = 316;
+const MIN_ORBIT = 190;
+const MAX_ORBIT = 280;
+let tesseraCount = 0;
+
+// ---- Breath rate ----
+
+function setBreathRate(seconds) {
+  document.documentElement.style.setProperty('--breath-rate', seconds + 's');
+}
+
+function setBreathRateFromPresence(activeUserCount) {
+  const seconds = activeUserCount >= 4 ? 2.5
+                : activeUserCount >= 2 ? 4
+                : activeUserCount === 1 ? 6
+                : 9;
+  setBreathRate(seconds);
+}
+
+// ---- Activity pulse (message frequency → breath) ----
+
+let recentTimestamps = [];
+
+function updateActivityPulse() {
+  const now = Date.now();
+  const oneHourAgo = now - 3600000;
+  recentTimestamps = recentTimestamps.filter(t => t > oneHourAgo);
+  const count = recentTimestamps.length;
+  // More messages in the last hour = faster breathing
+  const seconds = count >= 20 ? 2
+                : count >= 10 ? 3
+                : count >= 5  ? 4
+                : count >= 2  ? 5
+                : 7;
+  setBreathRate(seconds);
+}
+
+// ---- Tessera injection ----
+
+function injectTessera(message) {
+  const tpl = document.getElementById('tessera-template');
+  if (!tpl) return;
+  const node = tpl.content.firstElementChild.cloneNode(true);
+  node.setAttribute('data-message-id', message.id || '');
+
+  // Tooltip: first 120 chars of body
+  const body = (message.body || '').slice(0, 120);
+  const author = message.author || message.sender || '';
+  node.querySelector('title').textContent = author ? (author + ': ' + body) : body;
+
+  // Golden-angle phyllotaxis positioning
+  const angle = tesseraCount * GOLDEN_ANGLE * (Math.PI / 180);
+  const t = Math.min(tesseraCount / 60, 1); // fill from inner to outer orbit
+  const orbit = MIN_ORBIT + t * (MAX_ORBIT - MIN_ORBIT);
+  const x = CENTER_X + orbit * Math.cos(angle);
+  const y = CENTER_Y + orbit * Math.sin(angle);
+  const rot = (tesseraCount * GOLDEN_ANGLE) % 360;
+  const scale = 0.6 + Math.random() * 0.5;
+
+  node.setAttribute('transform',
+    'translate(' + x.toFixed(1) + ',' + y.toFixed(1) + ') ' +
+    'rotate(' + rot.toFixed(1) + ') ' +
+    'scale(' + scale.toFixed(2) + ')');
+
+  // Glow effect for fresh messages (fade after 30s)
+  node.style.filter = 'drop-shadow(0 0 3px rgba(196,154,56,0.6))';
+  setTimeout(function() { node.style.filter = ''; }, 30000);
+
+  document.getElementById('tessera-perimeter').appendChild(node);
+  tesseraCount++;
+
+  // Track for activity pulse
+  recentTimestamps.push(Date.now());
+  updateActivityPulse();
+}
+
+// ---- Initial load: fetch recent Wall messages ----
+
+async function loadRecentMessages() {
+  try {
+    const { data, error } = await sb
+      .from('messages')
+      .select('*')
+      .order('time', { ascending: false })
+      .limit(40);
+    if (error) { console.warn('Wall load error:', error); return; }
+    if (!data) return;
+    // Inject oldest first so newest are on the outer orbit
+    const sorted = data.reverse();
+    sorted.forEach(function(msg) {
+      injectTessera(msg);
+      if (msg.time) {
+        recentTimestamps.push(new Date(msg.time).getTime());
+      }
+    });
+    updateActivityPulse();
+  } catch (e) {
+    console.warn('Wall fetch failed:', e);
+  }
+}
+
+// ---- Realtime subscription ----
+
+const wallChannel = sb
+  .channel('wall-stream')
+  .on('postgres_changes',
+      { event: 'INSERT', schema: 'public', table: 'messages' },
+      function(payload) { injectTessera(payload.new); })
+  .subscribe();
+
+// ---- Presence-driven breathing ----
+
+const presenceChannel = sb.channel('mandala-presence', {
+  config: { presence: { key: 'visitor-' + Math.random().toString(36).slice(2, 8) } }
+});
+
+presenceChannel
+  .on('presence', { event: 'sync' }, function() {
+    const state = presenceChannel.presenceState();
+    const count = Object.keys(state).length;
+    setBreathRateFromPresence(count);
+  })
+  .subscribe(async function(status) {
+    if (status === 'SUBSCRIBED') {
+      await presenceChannel.track({ online_at: new Date().toISOString() });
+    }
+  });
+
+// ---- Boot ----
+
+loadRecentMessages();
+
+// Expose for debugging / other modules
+window.Heuremen = { injectTessera, setBreathRate, setBreathRateFromPresence };
+</script>
+
+</body>
+</html>

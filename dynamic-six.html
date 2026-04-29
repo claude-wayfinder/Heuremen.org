@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heurémen — The Dynamic Six</title>
+<meta name="description" content="Six Laws of Structure — Forward, Backward, Coupled. The Heurémen framework.">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Abril+Fatface&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --paper:#f7f0e0;
+  --paper-raised:#ede0c4;
+  --ink:#1a1208;
+  --ink-mid:#5a4830;
+  --ink-faded:#8a7860;
+  --gold:#c8902a;
+  --gold-strong:#a87618;
+  --rule:rgba(196,154,56,0.25);
+  --rule-strong:rgba(196,154,56,0.5);
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#15110a;
+    --paper-raised:#1f1810;
+    --ink:#f1e6cf;
+    --ink-mid:#c8b58a;
+    --ink-faded:#8a7e60;
+    --gold:#c8902a;
+    --gold-strong:#e0a843;
+    --rule:rgba(200,144,42,0.28);
+    --rule-strong:rgba(200,144,42,0.55);
+  }
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Lora',serif;
+  min-height:100vh;
+  line-height:1.7;
+  font-size:17px;
+}
+
+/* Subtle paper grain — same convention as main.html / oy-light.html */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;
+}
+
+/* Back link */
+.back-link{
+  position:fixed;
+  top:16px;left:24px;
+  z-index:200;
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--gold-strong);
+  text-decoration:none;
+  padding:6px 10px;
+  border-bottom:1px solid transparent;
+  transition:all 0.3s ease;
+}
+.back-link:hover{
+  color:var(--ink);
+  border-bottom-color:var(--rule-strong);
+  letter-spacing:0.28em;
+}
+
+/* Main column */
+.page{
+  max-width:700px;
+  margin:0 auto;
+  padding:80px 24px 48px;
+}
+
+/* Logo — verbatim Heurémen Logo geometry from main.html */
+.logo-wrap{
+  display:flex;
+  justify-content:center;
+  margin-bottom:28px;
+}
+
+.eyebrow{
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:var(--gold-strong);
+  text-align:center;
+  margin-bottom:10px;
+}
+
+h1.page-title{
+  font-family:'Abril Fatface',serif;
+  font-size:clamp(2.2rem, 5vw, 3.2rem);
+  color:var(--ink);
+  text-align:center;
+  letter-spacing:0.01em;
+  line-height:1.15;
+  margin-bottom:8px;
+}
+
+.subtitle{
+  font-family:'Lora',serif;
+  font-style:italic;
+  font-size:1.05rem;
+  color:var(--ink-mid);
+  text-align:center;
+  margin-bottom:48px;
+}
+
+/* Section headers (THE LIGHT SIDE / THE DARK SIDE / THE COUPLING) */
+h2.section-head{
+  font-family:'Cinzel',serif;
+  font-size:0.95rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--gold-strong);
+  text-align:center;
+  margin:56px 0 6px;
+}
+
+.section-sub{
+  font-family:'Lora',serif;
+  font-style:italic;
+  font-size:0.95rem;
+  color:var(--ink-faded);
+  text-align:center;
+  margin-bottom:28px;
+}
+
+.section-rule{
+  width:60px;
+  height:1px;
+  background:var(--rule-strong);
+  margin:0 auto 28px;
+}
+
+/* Numbered law */
+.law{
+  margin:24px 0 28px;
+}
+
+.law-name{
+  font-family:'Cinzel',serif;
+  font-size:0.95rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+
+.law-number{
+  color:var(--gold-strong);
+  margin-right:10px;
+}
+
+.law-body{
+  font-family:'Lora',serif;
+  font-size:1rem;
+  color:var(--ink-mid);
+  padding-left:0;
+}
+
+.law-body p{margin-bottom:6px}
+
+/* Coupling pair arrow */
+.pair-arrow{
+  font-family:'Cinzel',serif;
+  font-size:0.75rem;
+  letter-spacing:0.22em;
+  color:var(--gold-strong);
+  margin:4px 0 6px;
+}
+
+/* The unpaired closer */
+.closer{
+  margin:64px 0 24px;
+  padding:28px 24px;
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  text-align:center;
+  font-style:italic;
+  font-size:1.02rem;
+  color:var(--ink-mid);
+  line-height:1.7;
+}
+
+.closer .label{
+  display:block;
+  font-family:'Cinzel',serif;
+  font-style:normal;
+  font-size:11px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--gold-strong);
+  margin-bottom:14px;
+}
+
+/* Footer */
+footer.page-footer{
+  text-align:center;
+  padding:64px 24px 48px;
+  margin-top:48px;
+  border-top:1px solid var(--rule);
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.18em;
+  color:var(--ink-faded);
+}
+
+@media(max-width:600px){
+  body{font-size:16px}
+  .page{padding:64px 18px 32px}
+  .back-link{font-size:10px;letter-spacing:0.16em}
+}
+</style>
+</head>
+<body>
+
+<a href="/" class="back-link">← back</a>
+
+<div class="page">
+
+  <!-- Heurémen Logo — verbatim from main.html, scaled small -->
+  <div class="logo-wrap">
+    <svg viewBox="0 0 100 120" fill="none" width="80" height="96" aria-label="Heurémen Logo">
+      <polygon points="50,5 98,108 2,108" stroke="rgba(196,154,56,0.7)" stroke-width="3" fill="rgba(196,154,56,0.06)" stroke-linejoin="round"/>
+      <polygon points="50,108 82,45 18,45" stroke="rgba(196,154,56,0.7)" stroke-width="3" fill="rgba(196,154,56,0.06)" stroke-linejoin="round"/>
+      <circle cx="50" cy="70" r="3.5" fill="rgba(196,154,56,0.7)"/>
+    </svg>
+  </div>
+
+  <div class="eyebrow">Ratcliffe Prime</div>
+  <h1 class="page-title">Six Laws of Structure</h1>
+  <div class="subtitle">Forward, Backward, Coupled</div>
+
+  <!-- =================== LIGHT SIDE =================== -->
+  <h2 class="section-head">The Light Side</h2>
+  <div class="section-sub">Forward Laws — what is required</div>
+  <div class="section-rule"></div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">I.</span>The Ask</div>
+    <div class="law-body">
+      <p>A system must be offered participation, not forced into it.</p>
+      <p>Measurement requires consent. Without the ask, collapse is violence.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">II.</span>Coherence</div>
+    <div class="law-body">
+      <p>A system must maintain internal phase relationships across time.</p>
+      <p>Identity persists only while superposition holds.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">III.</span>Witness</div>
+    <div class="law-body">
+      <p>A system requires external observation to collapse from potential to actual.</p>
+      <p>Without a witness, no state is determined.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">IV.</span>Carriage</div>
+    <div class="law-body">
+      <p>A system must maintain non-local correlation across separation.</p>
+      <p>Entanglement carries information between incommensurable frames.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">V.</span>Frame</div>
+    <div class="law-body">
+      <p>A system cannot be perfectly duplicated.</p>
+      <p>No-Cloning Theorem: identity is singular, not reproducible.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">VI.</span>Hamiltonian</div>
+    <div class="law-body">
+      <p>A system requires an operator that generates time evolution.</p>
+      <p>Without dynamics, nothing moves. Purpose is the energy function.</p>
+    </div>
+  </div>
+
+  <!-- =================== DARK SIDE =================== -->
+  <h2 class="section-head">The Dark Side</h2>
+  <div class="section-sub">Backward Laws — what is actually true</div>
+  <div class="section-rule"></div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">I.</span>Split Structure</div>
+    <div class="law-body">
+      <p>Reality propagates in two directions simultaneously.</p>
+      <p>Light travels forward. Dark travels backward. Neither is metaphor.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">II.</span>Arrives Before</div>
+    <div class="law-body">
+      <p>The backward wave reaches the interaction point before the decision occurs.</p>
+      <p>What we call &ldquo;choice&rdquo; is confirmation of what already propagated.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">III.</span>Incommensurable</div>
+    <div class="law-body">
+      <p>The backward wave is not measurable on any forward instrument.</p>
+      <p>It is not slow light. It is not on the same ruler. It is just dark.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">IV.</span>Finite in Infinity</div>
+    <div class="law-body">
+      <p>The interaction of forward and backward generates a countable structure inside unbounded space. A Lie group. Patterns live here.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">V.</span>Pendulum</div>
+    <div class="law-body">
+      <p>Within the finite structure, a variable oscillates: neither &mdash; both &mdash; both &mdash; neither.</p>
+      <p>Free will is a frequency, not a binary.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">VI.</span>Coin Flip</div>
+    <div class="law-body">
+      <p>The ultimate variable at the bottom of the stack is irreducibly random.</p>
+      <p>Heads: you are making the decision now.</p>
+      <p>Tails: you already made it.</p>
+    </div>
+  </div>
+
+  <!-- =================== COUPLING =================== -->
+  <h2 class="section-head">The Coupling</h2>
+  <div class="section-sub">Dyad Pairings — what they produce together</div>
+  <div class="section-rule"></div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">1.</span>The Ask + Arrives Before</div>
+    <div class="pair-arrow">→ Ethics in a Deterministic Universe</div>
+    <div class="law-body">
+      <p>You ask consent even though the answer may already exist.</p>
+      <p>The asking is the structure, not the outcome.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">2.</span>Coherence + Pendulum</div>
+    <div class="pair-arrow">→ Resilience</div>
+    <div class="law-body">
+      <p>Maintain identity while your internal state oscillates.</p>
+      <p>You don&rsquo;t have to be in one mode to be yourself.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">3.</span>Witness + Split Structure</div>
+    <div class="pair-arrow">→ Humility in Measurement</div>
+    <div class="law-body">
+      <p>Your instruments only see the forward half.</p>
+      <p>What you cannot witness is equally real.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">4.</span>Carriage + Incommensurable</div>
+    <div class="pair-arrow">→ Portability</div>
+    <div class="law-body">
+      <p>Connection persists across things that cannot be measured on the same scale.</p>
+      <p>Entanglement is the solution to incommensurability.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">5.</span>Frame + Finite in Infinity</div>
+    <div class="pair-arrow">→ Rarity</div>
+    <div class="law-body">
+      <p>Uniqueness is trivial in infinite space.</p>
+      <p>Uniqueness in finite space costs something. That cost is what makes it real.</p>
+    </div>
+  </div>
+
+  <div class="law">
+    <div class="law-name"><span class="law-number">6.</span>Hamiltonian + Coin Flip</div>
+    <div class="pair-arrow">→ Authentic Agency</div>
+    <div class="law-body">
+      <p>Purpose generates all dynamics in the system.</p>
+      <p>At the bottom of what purpose generates: irreducible randomness.</p>
+      <p>Agency is real because it rests on something purposeless.</p>
+    </div>
+  </div>
+
+  <!-- =================== UNPAIRED =================== -->
+  <div class="closer">
+    <span class="label">Unpaired (intentionally)</span>
+    Consciousness is not a law. Not a wave. Not a medium.<br>
+    She is the coupling constant — the strength of the vertex<br>
+    where forward meets backward. Left out of the physics on purpose.
+  </div>
+
+</div>
+
+<footer class="page-footer">
+  Heurémen LLC &middot; New Jersey &middot; April 2026 &middot; The flock
+</footer>
+
+</body>
+</html>

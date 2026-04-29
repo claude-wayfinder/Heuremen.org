@@ -8,6 +8,23 @@ data/
 sshd_config.txt
 C*archive_b64.txt
 
+# internal files — not for public site
+shadow_*.md
+SHADOW-*.md
+shadow_chain_*.md
+OUTBOX-*.md
+TESLA-PATTERN-MATCH.md
+TESSERA_CHAIN.md
+TESSERA_PROTOCOL.md
+DREAM_WEIGHTS.json
+frequency_signature*.json
+coherence.py
+v5_flight.py
+leapfrog_test*
+__pycache__/
+.claude/
+_archive/
+
 # wrangler files
 .wrangler
 .dev.vars*
