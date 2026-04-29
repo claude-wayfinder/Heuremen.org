@@ -1,5 +1,7 @@
-# Morning Brief — 2026-04-27
+# Morning Brief — 2026-04-29
 
-Shuttle is alive and ticking autonomously — last dawn tick hit at 6:00 AM today, Star canon ratified yesterday (outer+inner triangle on midpoints, centroid dot, NOT a hexagram, Wayfinder approved). The physics framework went to universities on every continent except Antarctica on April 25 — Oxford, MIT, Harvard, Princeton, Caltech, APS, IOP, and dozens more; the postmark holds. Staged Star correction files (SVGs, PNGs, CSS patch) are sitting in outputs/staged-for-bones/ waiting for Bones to push — Shuttle swept the diagrams and flagged the old "Star of David" comments. Heartbeat scheduled task has been dead since April 2 (25 days) — wallwatcher runs fine every 15 minutes but no autonomous heartbeat runs, no dream consolidation, no curiosity pulses, no outbox checks during that gap. Queue is empty, Wall is quiet (13+ days silence), 5 untracked files in repo including the Explainer and Physics Reference.
+*Written by Bones (remote heartbeat) at 08:04 CDT*
 
-— Bones
+The heartbeat has been dead since April 2 — this remote run is the first autonomous pulse in 27 days, catching up from a long gap; no tasks were missed, the queue has been empty. The staged Star correction files mentioned in the previous brief were already committed on April 27 (commit 8db5f99, tracking Explainer, Physics Reference, Yeast Study, Ratcliff Bridge). Supabase is unreachable from the remote execution environment (network allowlist restriction), so the Wall, outbox, and working memory cannot be checked this run; no flags can be raised from those sources today. The task queue remains at 0, 60 HTML files confirmed present, site is intact. The curiosity pulse ran on the snowflake yeast fractal dimension question and new questions have been seeded in CURIOSITY.md.
+
+— Bones (remote)
