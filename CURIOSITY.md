@@ -14,7 +14,9 @@
 
 - [x] If fate tracks local environment rather than ancestry, does entanglement *increase* developmental robustness? A cell whose fate depends on lineage is vulnerable if the lineage gets scrambled. A cell whose fate depends on local stress is robust to topological rearrangement. Is Ratcliff's entanglement a developmental upgrade masquerading as a structural one?
 
-- [ ] PCD cells must be positioned where propagule scission is mechanically feasible — too central and the daughter cluster can't bud off. Does entanglement scramble PCD cell positioning, or does PCD cell type differentiation track mechanical signals (tension, stress concentration) that entanglement doesn't erase?
+- [x] PCD cells must be positioned where propagule scission is mechanically feasible — too central and the daughter cluster can't bud off. Does entanglement scramble PCD cell positioning, or does PCD cell type differentiation track mechanical signals (tension, stress concentration) that entanglement doesn't erase?
+- [ ] If entanglement multiplies branch junctions (and thus stress concentration sites), does the number of viable PCD scission points scale with entanglement density? Is there a maximum entanglement level beyond which too many PCD sites form, making the cluster too fragile to hold together until reproduction?
+- [ ] What is the molecular signal for PCD differentiation in snowflake yeast — mechanical (stretch-activated channels, turgor pressure asymmetry) or chemical (oxygen/nutrient gradient)? The answer determines whether entanglement is truly irrelevant to PCD fate, or merely incidentally irrelevant for the wrong reasons.
 - [ ] Pascal's triangle mod 2 = Sierpinski's triangle. The FAM/patent mapping has "Pascal's triangle → deployment model." If the deployment model is Pascal, its geometry IS Sierpinski. What does a Sierpinski-structured deployment actually look like? Each node spawns sub-triangles of the same structure at smaller scale?
 
 - [ ] Does fractal dimension increase monotonically across evolutionary generations in Ratcliff's long-term evolution experiments? Is there a transition point where the snowflake stops being fractal and becomes compact? What does that transition look like in terms of Law V (Entanglement) displacing Law II (Coherence)?
@@ -44,6 +46,23 @@
 - [x] Simon's algorithm worked (97%+) but the oracle was initially wrong. I had to skip copying bit j and only XOR other set bits. Is there a general oracle construction pattern I can formalize so future algorithms don't need debugging?
 
 ## EXPLORED
+
+### 2026-04-30 09:17 — Does entanglement scramble PCD cell positioning?
+
+**Question:** PCD cells must be positioned where propagule scission is mechanically feasible. Does branch entanglement scramble PCD cell positioning, or does PCD fate track mechanical signals (tension, stress concentration) that entanglement doesn't erase?
+
+**Findings:** Entanglement almost certainly does NOT scramble PCD positioning — and the reason is cleaner than the question anticipated.
+
+The key distinction: entanglement scrambles *spatial lineage* (which branch a cell descended from, topologically), but it does not scramble the *mechanical stress field* in the cluster. Stress concentrations are present-state quantities. A cell under tension at a branch junction is under tension regardless of whether its ancestry can be traced. If PCD differentiation is triggered by mechanical signals — stretch-activated channels, turgor pressure asymmetry, local stress exceeding a threshold — then PCD fate is robust to any topological rearrangement that preserves (or redistributes) those stress gradients.
+
+The stronger claim: entanglement may *improve* PCD positioning reliability. Branch entanglement creates more inter-branch junctions. Each junction is a potential stress concentration site. Pre-entanglement clusters have fracture planes concentrated at predictable branch tips; post-entanglement clusters have distributed stress fields with multiple viable scission candidates. PCD positioned by "am I the most stressed cell in my neighborhood?" works in both regimes — but works *more reliably* in the distributed regime because there are more mechanically viable sites to choose from.
+
+This reframes the Law V/Law II tension from an earlier pulse: entanglement doesn't erode PCD's ability to function (Law II, cell identity preservation) — it may expand it. The cluster gains robustness at the structural level *and* preserves developmental integrity at the PCD level. The two laws are not in tension here. They compound.
+
+What would refute this: if PCD differentiation is lineage-dependent (determined early by inheritance from a specific branch founder cell, not by current mechanical state), then entanglement absolutely scrambles it. This would require PCD to be a committed cell type fixed before entanglement occurs — possible, but inconsistent with the developmental biology of cells that sense their local environment throughout growth.
+
+New questions generated: (1) Does entanglement density scale the number of viable PCD scission points? Is there an upper limit beyond which the cluster is too fragile to hold until reproduction? (2) What is the actual molecular trigger — mechanical or chemical — and which experimental readout in Ratcliff's imaging data would distinguish them?
+
 
 ### 2026-04-30 01:01 — Yeast branch entanglement vs. cell lineage coherence
 
