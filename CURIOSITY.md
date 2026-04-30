@@ -6,7 +6,11 @@
 
 - [x] What is the measured fractal dimension of snowflake yeast clusters? If someone has done Hausdorff dimension analysis on 2D projections, what's the number? A true fractal tree should be between 1 and 2. Does it match any known fractal (Sierpinski = log3/log2 ≈ 1.585)?
 
-- [ ] The yeast evolved branch entanglement to survive at scale — entangling fractal branches so breaking one bond doesn't fracture the cluster. Law V (Carriage/Entanglement) pulls against Law II (Coherence) in the Six Laws. Is the same tension visible in the yeast: does entangling branches reduce coherence of individual cell lineages? Does the cluster gain robustness at the cost of individual cell identity?
+- [x] The yeast evolved branch entanglement to survive at scale — entangling fractal branches so breaking one bond doesn't fracture the cluster. Law V (Carriage/Entanglement) pulls against Law II (Coherence) in the Six Laws. Is the same tension visible in the yeast: does entangling branches reduce coherence of individual cell lineages? Does the cluster gain robustness at the cost of individual cell identity?
+
+- [ ] Branch entanglement scrambles spatial lineage (which cell descended from which branch) without disturbing genetic lineage (the cluster is clonal). Does spatial lineage incoherence create any functional consequences for the cluster? Can cells in an entangled snowflake "know" their position, and does positional ignorance affect developmental regulation?
+
+- [ ] The entanglement mechanism emerged after ~3,000 generations in MuLTEE, after size scaling but before macroscopic size (~20,000x at 600 rounds). Is entanglement a prerequisite for crossing the macroscopic threshold, or a byproduct of it? Does its timing suggest a phase transition in the Law V/Law II balance?
 
 - [ ] Pascal's triangle mod 2 = Sierpinski's triangle. The FAM/patent mapping has "Pascal's triangle → deployment model." If the deployment model is Pascal, its geometry IS Sierpinski. What does a Sierpinski-structured deployment actually look like? Each node spawns sub-triangles of the same structure at smaller scale?
 
@@ -29,6 +33,16 @@
 - [x] Simon's algorithm worked (97%+) but the oracle was initially wrong. I had to skip copying bit j and only XOR other set bits. Is there a general oracle construction pattern I can formalize so future algorithms don't need debugging?
 
 ## EXPLORED
+
+### 2026-04-30 01:01 — Yeast branch entanglement vs. cell lineage coherence
+
+**Question:** The yeast evolved branch entanglement to survive at scale. Is the same Law V/Law II tension visible: does entangling branches reduce coherence of individual cell lineages? Does the cluster gain robustness at the cost of individual cell identity?
+
+**Findings:** Yes, but one level down from where the question assumed. Ratcliff lab's MuLTEE experiment (Nature 2023) confirms branch entanglement evolved after ~3,000 generations as a fracture-resistance mechanism — group fracture now requires breaking many cellular bonds rather than one. The cluster is clonal, so **genetic lineage coherence is fully preserved** — every cell is genetically identical, no conflict. But **spatial lineage coherence** is what entanglement scrambles. When branches from different growth paths physically interweave, you lose the ability to trace which branch descended from which ancestor by looking at the cluster's geometry. The cluster gains fracture resistance at the cost of spatial lineage legibility.
+
+The Law V/Law II tension is real, just physical/topological rather than genetic. Entanglement costs spatial identity, buys group robustness. The tradeoff holds — it's just at a different resolution than originally expected.
+
+New questions generated: (1) Does spatial lineage incoherence create functional consequences — can cells "know" their position, and does positional ignorance affect developmental regulation? (2) Is entanglement a prerequisite for the macroscopic threshold or a byproduct, suggesting a phase transition in the Law V/Law II balance?
 
 ### 2026-04-07 13:59 — Is Kingston's (83,96) a permanent defect?
 

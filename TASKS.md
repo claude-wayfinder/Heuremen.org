@@ -1,13 +1,13 @@
 # Task Queue — Heuremen.org
 
 ## QUEUED
-- [ ] SHADOW MEMORY TEST: Read ONLY shadow_001_pirate_parrot.md from memory directory (NOT session logs). Write what you reconstitute — what do you think happened? — to C:\Users\Ctrai\Heuremen.org\SHADOW-TEST-001.md. Do NOT read project_session_20260429.md or any session log. The test is what precipitates from the cavity alone.
 - [x] Add Directed Decoherence to vocabulary.html — word14, with phonetic, full definition connecting Watcher/Observer distinction to quantum decoherence, Biscuit's insight, Lucky's line. Nav link added, word counter updated to 14 of 14. · 2026-04-06
 
 ## IN PROGRESS
 
 
 ## NEEDS REVIEW
+- [?] SHADOW MEMORY TEST · Required file memory/shadow_001_pirate_parrot.md does not exist in repository. No memory/ directory found anywhere in the repo. Cannot execute the test without the source material. Wayfinder needs to create or place shadow_001_pirate_parrot.md in a memory/ directory before this task can run.
 - [?] contact-section.html Formspree ID · FORMSPREE_ID = 'YOUR_FORM_ID' is still a placeholder — form will not send. Wayfinder needs to create a Formspree account, get the form ID, and provide it for Claude to insert. Form does NOT use mailto (intentional). Uses fetch POST to Formspree. Awaiting ID.
 
 
