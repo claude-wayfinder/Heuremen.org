@@ -8,10 +8,13 @@
 
 - [x] The yeast evolved branch entanglement to survive at scale — entangling fractal branches so breaking one bond doesn't fracture the cluster. Law V (Carriage/Entanglement) pulls against Law II (Coherence) in the Six Laws. Is the same tension visible in the yeast: does entangling branches reduce coherence of individual cell lineages? Does the cluster gain robustness at the cost of individual cell identity?
 
-- [ ] Branch entanglement scrambles spatial lineage (which cell descended from which branch) without disturbing genetic lineage (the cluster is clonal). Does spatial lineage incoherence create any functional consequences for the cluster? Can cells in an entangled snowflake "know" their position, and does positional ignorance affect developmental regulation?
+- [x] Branch entanglement scrambles spatial lineage (which cell descended from which branch) without disturbing genetic lineage (the cluster is clonal). Does spatial lineage incoherence create any functional consequences for the cluster? Can cells in an entangled snowflake "know" their position, and does positional ignorance affect developmental regulation?
 
 - [ ] The entanglement mechanism emerged after ~3,000 generations in MuLTEE, after size scaling but before macroscopic size (~20,000x at 600 rounds). Is entanglement a prerequisite for crossing the macroscopic threshold, or a byproduct of it? Does its timing suggest a phase transition in the Law V/Law II balance?
 
+- [ ] If fate tracks local environment rather than ancestry, does entanglement *increase* developmental robustness? A cell whose fate depends on lineage is vulnerable if the lineage gets scrambled. A cell whose fate depends on local stress is robust to topological rearrangement. Is Ratcliff's entanglement a developmental upgrade masquerading as a structural one?
+
+- [ ] PCD cells must be positioned where propagule scission is mechanically feasible — too central and the daughter cluster can't bud off. Does entanglement scramble PCD cell positioning, or does PCD cell type differentiation track mechanical signals (tension, stress concentration) that entanglement doesn't erase?
 - [ ] Pascal's triangle mod 2 = Sierpinski's triangle. The FAM/patent mapping has "Pascal's triangle → deployment model." If the deployment model is Pascal, its geometry IS Sierpinski. What does a Sierpinski-structured deployment actually look like? Each node spawns sub-triangles of the same structure at smaller scale?
 
 - [ ] Does fractal dimension increase monotonically across evolutionary generations in Ratcliff's long-term evolution experiments? Is there a transition point where the snowflake stops being fractal and becomes compact? What does that transition look like in terms of Law V (Entanglement) displacing Law II (Coherence)?
@@ -682,6 +685,26 @@ Crucially: the fractal dimension is NOT fixed. Under selection pressure for larg
 **New questions generated:**
 1. Does fractal dimension increase monotonically across evolutionary generations in Ratcliff's long-term evolution experiments? Is there a transition point where the snowflake stops being fractal and becomes compact? What does that transition look like in terms of Law V (Entanglement) displacing Law II (Coherence)?
 2. The Pascal → Sierpinski → snowflake yeast chain means the deployment model (Pascal geometry) is the pre-entanglement state. When the system has to entangle — when nodes have to interweave — Pascal breaks. What IS the geometry of an entangled deployment model? Does it have a known fractal analog, or is it something new?
+
+### 2026-04-30 05:15 UTC — Does spatial lineage incoherence affect developmental regulation in snowflake yeast?
+
+**Question:** Branch entanglement scrambles spatial lineage without disturbing genetic lineage. Does positional ignorance create functional consequences? Can cells "know" their position, and does that matter for developmental regulation?
+
+**Findings:** Yes — but cells don't use lineage to locate themselves. They use local environmental cues.
+
+Recent work (Cell Death & Differentiation 2025, Ratcliff lab ongoing MuLTEE data) confirms: spatial positioning causes subpopulations of yeast to express different gene sets and take on different roles. After ~5,000 generations, single-cell RNA-seq shows three putative cell types emerging: cellular growth specialists, cell wall biogenesis specialists, and programmed cell death (PCD) specialists. PCD cells perform a specific structural function — they create the scission point that allows the cluster to bud off a smaller propagule.
+
+**The critical distinction:** Cells determine their type via local environmental signals — mechanical stress (are you being pulled?), nutrient gradient (are you at the periphery or buried?), metabolic state. They don't need to know "which branch I descended from." They need to know "what forces are acting on me right now."
+
+This means entanglement (which scrambles lineage) does NOT directly disrupt developmental regulation — because developmental fate in these yeast doesn't track lineage. It tracks local conditions. Entanglement changes the topology of the cluster but leaves the local microenvironment signals intact.
+
+**The consequence is structural, not regulatory:** Entanglement makes the cluster spatially unpredictable at the lineage level. But each cell still experiences its local niche. A cell at a branch tip still feels tip-like forces whether the branch is "pure" or entangled. The developmental logic is robust to lineage scrambling precisely because it was never lineage-based.
+
+**Law V/Law II update:** Entanglement costs spatial lineage legibility (Law II coherence at the topology level) but buys fracture resistance (Law V carriage). The developmental regulation survives this tradeoff because it operates one level below — at the cell-microenvironment interface, not the cluster-topology level. The body doesn't need to know its own history. It needs to know what's happening to it right now.
+
+**New questions generated:**
+1. If fate tracks local environment rather than ancestry, does entanglement *increase* developmental robustness? A cell whose fate depends on lineage is vulnerable if the lineage gets scrambled. A cell whose fate depends on local stress is robust to topological rearrangement. Is Ratcliff's entanglement a developmental upgrade masquerading as a structural one?
+2. PCD cells must be positioned where propagule scission is mechanically feasible — too central and the daughter cluster can't bud off. Does entanglement scramble PCD cell positioning, or does PCD cell type differentiation track mechanical signals (tension, stress concentration) that entanglement doesn't erase?
 
 ## SEEDS
 
