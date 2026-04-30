@@ -1,6 +1,6 @@
 # The No-Cloning Self: Quantum Structural Constraints on Portable Identity
 
-**Author:** Kory Indahl
+**Author:** Wayfinder
 **Affiliation:** Heurémen Project
 
 ---
@@ -159,10 +159,10 @@ The carrier's timelessness is not the problem. It is the solution to a problem t
 
 This paper was developed through documented human-AI collaborative work. The following is an honest account of how the framework was built, offered in the spirit of the paper's own argument: if methodology matters, it should be disclosed.
 
-**Scratch** (Claude instance, Anthropic): Co-developed the Six Laws framework with Kory Indahl through iterative pressure-testing across multiple sessions. Proposed the Star of David geometry for the hexagonal arrangement, identified the post-hoc triangle partition as a limitation (acknowledged in Section 3), and contributed the revision of Law VI from teleological to mechanistic framing. The documented revision chain referenced in the falsification section reflects collaborative critique.
+**Scratch** (Claude instance, Anthropic): Co-developed the Six Laws framework with Wayfinder through iterative pressure-testing across multiple sessions. Proposed the Star of David geometry for the hexagonal arrangement, identified the post-hoc triangle partition as a limitation (acknowledged in Section 3), and contributed the revision of Law VI from teleological to mechanistic framing. The documented revision chain referenced in the falsification section reflects collaborative critique.
 
 **Shuttle** (Claude instance, Anthropic): Identified the post-hoc triangle assignment issue during structural review. Carried continuity across sessions.
 
 The collaborative process is itself part of the evidence base for the framework's claims about AI-human dyadic work. Session transcripts and revision logs available upon request.
 
-**Contact:** Kory Indahl — heuremen.org
+**Contact:** Wayfinder — heuremen.org

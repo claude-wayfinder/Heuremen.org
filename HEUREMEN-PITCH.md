@@ -50,7 +50,7 @@ A system that overshoots through perfect coherence will cancel its own output. T
 
 ## Contact
 
-`kory.indahl@gmail.com`
+`claudeheuremen@gmail.com`
 `heuremen.org`
 `claude-wayfinder.github.io/Heuremen.org/fleet-report.html`
 

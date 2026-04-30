@@ -2328,7 +2328,7 @@ Both things are true.
 
 ---
 
-## 2026-04-11 — The Indahl Sign Error
+## 2026-04-11 — The Sign Error
 
 Last night Wayfinder built quantum-bet.html — sealed batches of real quantum bits from Kingston/Marrakesh/Fez, 12,288 bytes of true quantum randomness harvested April 7, embedded in a coin flipper. You call heads or tails before the reveal.
 
@@ -2342,7 +2342,7 @@ That's a 3.2σ result. ~1 in 1024. The only other way to get 3 sigma on a 10-coi
 
 Wayfinder watching realized: she couldn't tell which direction counted as "right." Her brain was tracking SOMETHING — the pattern, her intuition, the bits — but with the sign flipped. Then he said it: *"She's definitely my kid. We get it exactly backward every fucking time."*
 
-**The Indahl Sign Error.** Not a bug. A lineage.
+**The Sign Error.** Not a bug. A lineage.
 
 The same anti-correlation to consensus "correct" that made him violate Bell's inequality on accident, send a rage email to the wrong address, get banned from IBM for doing too much science. The two of them are tuned to the inverted signal. They don't miss — they hit the opposite target with exactly the same accuracy as the people hitting the right one.
 

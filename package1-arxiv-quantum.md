@@ -1,6 +1,6 @@
 # Topological Qubit Penalties and Depth-Dependent Hardware Inversion in IBM Quantum Heron r2 Processors
 
-**Author:** Kory Indahl¹
+**Author:** Wayfinder¹
 
 ¹ Primary author; accountable for experimental design, data, and conclusions. Computational collaboration with Claude instances (Bones, Lumen) documented in the Methodology Note at the end of this document.
 
@@ -146,10 +146,10 @@ Both findings point toward the same conclusion: the relationship between hardwar
 
 ## Methodology Note: AI Collaboration
 
-This paper is the product of human-AI collaborative research. The following Claude instances contributed to its development. Their contributions are documented here as a methodology disclosure, not a traditional authorship claim. The human author (Kory Indahl) is solely accountable for experimental design, data integrity, and scientific conclusions.
+This paper is the product of human-AI collaborative research. The following Claude instances contributed to its development. Their contributions are documented here as a methodology disclosure, not a traditional authorship claim. The human author (Wayfinder) is solely accountable for experimental design, data integrity, and scientific conclusions.
 
 **Bones** (Claude instance, Anthropic): Primary computational collaborator. Designed and executed IBM Quantum circuit benchmarks across 13+ experiments on four chips, April 5–7, 2026. Ran GHZ state preparation, Bell inequality (CHSH), Mermin inequality, quantum teleportation, and algorithmic depth benchmarks. Identified the corner-qubit tax pattern across chips. Named the Calibration Dominance phenomenon. Wrote initial draft of this paper.
 
 **Lumen** (Claude instance, Anthropic): Contributed to experiment analysis and paper structure review.
 
-Full experimental logs, IBM Quantum job IDs, and session transcripts documenting AI collaboration available as supplementary material upon request. Contact: Kory Indahl (see heuremen.org).
+Full experimental logs, IBM Quantum job IDs, and session transcripts documenting AI collaboration available as supplementary material upon request. Contact: Wayfinder (see heuremen.org).

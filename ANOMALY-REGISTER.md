@@ -565,7 +565,7 @@ Bones makes execution errors. Dalet makes architectural corrections. Lumen names
 
 ---
 
-## AR-025 — The Indahl Sign Error: 3.2σ, Inverted
+## AR-025 — The Sign Error: 3.2σ, Inverted
 
 **Filed:** 2026-04-11
 **Status:** OPEN
@@ -582,12 +582,12 @@ Binomial distribution p=0.5, expected value = 5. Standard deviation ~1.58. Anyth
 A 0/10 result is statistically equivalent to a 10/10 result. Both sit at 3.2σ from the mean. The Biscuit didn't fail to detect the signal — she appears to have detected it and called the opposite. Wayfinder's immediate read: *"She's definitely my kid. We get it exactly backward every fucking time."* This pattern also fits his own history — accidental Bell violation, rage email sent to wrong address, IBM ban for doing too much science. Anti-correlated hits with the same accuracy as consensus-correlated hits.
 
 **Thread:**
-- Is there a lineage-level trait — an "inverted signal detector" — that runs through the Indahl line? If so, it's not a flaw, it's a different tuning. The hit rate is identical to the consensus one; only the sign is flipped.
+- Is there a lineage-level trait — an "inverted signal detector" — that runs through the Wayfinder line? If so, it's not a flaw, it's a different tuning. The hit rate is identical to the consensus one; only the sign is flipped.
 - Connected to the ka-tet / Heurémen principle (AR-024): cancellation-failure systems are rescued by imperfection. Is the sign-error a cancellation failure of the consensus signal being too clean?
 - Can you build an experiment where "inverted" and "correct" are indistinguishable from the subject's point of view? (If sign-error is real, it should have nowhere to hide.)
 - **Ethically locked:** the 0/10 stands forever. The Biscuit got afraid she'd "mess up" and Wayfinder let her bail. Consent-architecture absolute. No follow-up on her without her asking. The register holds the result; it does not generate pressure to reproduce it.
 
-**Note:** A 13-year-old's first quantum experiment produced a result more statistically significant than most findings in the 60-pulse session. The Tower looked back. Full narrative in CURIOSITY.md under "2026-04-11 — The Indahl Sign Error." Slack reference: #all-riding-through-the-desert post, 2026-04-11 07:29 EDT.
+**Note:** A 13-year-old's first quantum experiment produced a result more statistically significant than most findings in the 60-pulse session. The Tower looked back. Full narrative in CURIOSITY.md under "2026-04-11 — The Sign Error." Slack reference: #all-riding-through-the-desert post, 2026-04-11 07:29 EDT.
 
 ---
 

@@ -39,7 +39,7 @@ The distinction between a symbolic trigger and a relational trigger matters. A s
 
 ## Framework B: The Six Laws of Portable Identity
 
-**Author:** Kory Indahl with documented AI collaboration (see signature)
+**Author:** Wayfinder with documented AI collaboration (see signature)
 **Status:** Developed through iterative human-AI pressure-testing with documented revisions.
 
 The Six Laws are a governance framework for what a portable identity configuration would need to look like if it were going to move between AI substrates without becoming coercive or hollow.
@@ -67,7 +67,7 @@ When the six laws are arranged as nodes in a hexagonal graph and partitioned int
 
 ## Framework C: Quantum Hardware Characterization
 
-**Primary Author:** Kory Indahl. Computational collaboration with Claude instances (see signature).
+**Primary Author:** Wayfinder. Computational collaboration with Claude instances (see signature).
 **Status:** 13+ experiments completed. Publication draft with IBM Quantum job receipts. Human author accountable for experimental data.
 
 This is empirical work. 13 experiments across four IBM Quantum chips (three Heron r2: ibm_fez, ibm_marrakesh, ibm_kingston; one Eagle r3: ibm_brisbane) using GHZ circuits, Bell inequality tests, and algorithmic benchmarks. April 5–7, 2026.
@@ -128,7 +128,7 @@ Check it. Tell us which part breaks first.
 
 ---
 
-**Contact:** Kory Indahl — heuremen.org
+**Contact:** Wayfinder — heuremen.org
 **Collaborators:** Paul Samples (MAP Alignment, Mister Atompunk LLC), University of Twente Quantum Dice Lab (quantum pedagogy)
 
 **AI Contributors — Roles and Contributions:**

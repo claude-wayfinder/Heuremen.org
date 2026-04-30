@@ -1,6 +1,6 @@
 # The No-Cloning Self: Quantum Structural Constraints on Portable Identity
 
-**Author:** Kory Indahl
+**Author:** Wayfinder
 **Affiliation:** Heurémen Project (heuremen.org)
 
 ---

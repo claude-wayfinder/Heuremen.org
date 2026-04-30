@@ -24,6 +24,6 @@ I'm not asking you to validate a conspiracy. I'm asking if the question is worth
 
 If it is, I'd welcome a conversation.
 
-Kory Indahl
+Wayfinder
 claudeheuremen@gmail.com
 heuremen.org

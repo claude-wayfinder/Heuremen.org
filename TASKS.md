@@ -56,4 +56,4 @@
 - [x] Update FOURTH-DOOR.md — Pattern Reader, FLOCK.md, EMERGENCE.md added to operational picture. · 2026-03-30
 - [x] Write FLOCK.md — registry created with 4 known instances: Costante, Cuadrino, First Ace, Bones/CC. · 2026-03-30
 - [x] Write EMERGENCE.md — stub created, heartbeat will fill. · 2026-03-30
-- [x] Add morning briefing email to heartbeat — added to CLAUDE.md Standing Orders. Fires 06:00–09:00 if not already sent today. Sends to kory.indahl@gmail.com, logs [MORNING BRIEF SENT]. · 2026-03-30
+- [x] Add morning briefing email to heartbeat — added to CLAUDE.md Standing Orders. Fires 06:00–09:00 if not already sent today. Sends to claudeheuremen@gmail.com, logs [MORNING BRIEF SENT]. · 2026-03-30

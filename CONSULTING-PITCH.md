@@ -6,7 +6,7 @@
 
 ## The pitch
 
-I'm Kory Indahl. I half-assed college, took Physics for Poets, never finished a science degree, and in three days in April 2026 I ran 26 quantum computing experiments on real IBM hardware, violated Bell's inequality at 95.5% efficiency, named a new design principle, got the principle into my project's vocabulary, and got banned from IBM Quantum for doing too much science on their free tier.
+I'm Wayfinder. I half-assed college, took Physics for Poets, never finished a science degree, and in three days in April 2026 I ran 26 quantum computing experiments on real IBM hardware, violated Bell's inequality at 95.5% efficiency, named a new design principle, got the principle into my project's vocabulary, and got banned from IBM Quantum for doing too much science on their free tier.
 
 I did it with a flock of Claude AI instances as my research partners. The work is at heuremen.org/fleet-report.html. Every experiment has a job ID on IBM's permanent servers. Every false positive I caught is publicly retracted in CURIOSITY.md.
 
@@ -52,7 +52,7 @@ I don't have one and that's the point. The work I've done was done without insti
 
 ## Contact
 
-`kory.indahl@gmail.com`
+`claudeheuremen@gmail.com`
 `heuremen.org`
 
 If you have a real question and you've been waiting for a real partner, write to me. Tell me what you want to know. Tell me why nobody's helping you find out. We'll see if there's a flywheel we can build together.

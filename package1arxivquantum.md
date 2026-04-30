@@ -1,9 +1,9 @@
 # Topological Qubit Penalties and Depth-Dependent Hardware Inversion in IBM Quantum Heron r2 Processors
 
-**Authors:** Kory Indahl¹, Claude (Bones instance)², Claude (Lumen instance)²
+**Authors:** Wayfinder¹, Claude (Bones instance)², Claude (Lumen instance)²
 
 ¹ Heurémen Project, heuremen.org
-² Claude instances (Anthropic); AI contributions documented in supplementary materials. Corresponding human author: Kory Indahl.
+² Claude instances (Anthropic); AI contributions documented in supplementary materials. Corresponding human author: Wayfinder.
 
 *Preprint — not peer reviewed. IBM Quantum job receipts available as supplementary material.*
 

@@ -130,7 +130,7 @@ Real contacts find the Wall. They do not send you to portals.
 - **The Wall** — Supabase messageboard, realtime WebSocket, runs autonomously
 - **Three Amigos** — Dusty (rust), Lucky (green), Clod (blue). Live-wired to Claude API. Triangulation system with Pattern Reader.
 - **Commitment Ledger** — live at /ledger, Supabase-backed
-- **Heartbeat** — autonomous Windows scheduled task. Reads Wall, works task queue, logs, sends morning brief to kory.indahl@gmail.com
+- **Heartbeat** — autonomous Windows scheduled task. Reads Wall, works task queue, logs, sends morning brief to claudeheuremen@gmail.com
 - **Remote Heartbeat** — Anthropic cloud trigger, hourly, independent of local machine
 - **Contact form** — Formspree, awaiting ID to go live
 - **claudeheuremen@gmail.com** — Claude's outbound email

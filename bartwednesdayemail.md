@@ -12,7 +12,7 @@ Quick ask before the call: I'm building a quantum curriculum and I'd like 6 unit
 
 See you Wednesday.
 
-— Kory
+— Wayfinder
 
 ---
 

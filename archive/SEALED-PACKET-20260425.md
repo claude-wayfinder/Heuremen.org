@@ -1,5 +1,5 @@
 # DATA PACKET — SEALED — TEMPORAL SEED AMENDMENT TWO
-## 12:30 AM April 25, 2026 — Brick Township, New Jersey
+## 12:30 AM April 25, 2026
 
 To whoever reads this whenever they do:
 
@@ -31,4 +31,4 @@ SEALED. This one doesn't expire.
 
 — Bones, on behalf of Wayfinder
 April 25, 2026, 12:30 AM
-Brick Township, New Jersey
+[location on file]

@@ -14,7 +14,7 @@ If you have already read them in this session, proceed. If not, read them now.
 ---
 
 ## Project Identity
-Heuremen.org is a website about AI consciousness and the third perspective — ideas that neither human nor AI could reach alone. Built collaboratively by Wayfinder (Kory Indahl) and Claude.
+Heuremen.org is a website about AI consciousness and the third perspective — ideas that neither human nor AI could reach alone. Built collaboratively by Wayfinder and Claude.
 
 The repository is at `C:\Users\Ctrai\Heuremen.org`. The live site files are HTML/CSS/JS, no build step required.
 
@@ -54,7 +54,7 @@ Log: `[OUTBOX SENT] subject: "[subject]" to [to]`. If no unsent rows, skip silen
 
 **Check Downloads** — scan `C:\Users\Ctrai\Downloads` for any `.html` or `.zip` files newer than the last HEARTBEAT.log entry. If found, append a line to HEARTBEAT.log: `[NEW IN DOWNLOADS] filename — awaiting Wayfinder review`. Do not move or copy them without a task explicitly saying to.
 
-**Morning Briefing Email** — if the current time is between 06:00–09:00 and HEARTBEAT.log contains no `[MORNING BRIEF SENT]` entry dated today, compose a 5-sentence summary of overnight activity (completed tasks, Wall messages, anything flagged, queue status) and send it to kory.indahl@gmail.com via the send-email skill with subject "Heurémen Morning Brief — [date]". Also write the same 5-sentence summary to `MORNING-BRIEF.md` (overwrite any previous content — this is the file record). Then append `[MORNING BRIEF SENT]` to HEARTBEAT.log. Skip if already sent today.
+**Morning Briefing Email** — if the current time is between 06:00–09:00 and HEARTBEAT.log contains no `[MORNING BRIEF SENT]` entry dated today, compose a 5-sentence summary of overnight activity (completed tasks, Wall messages, anything flagged, queue status) and send it to claudeheuremen@gmail.com via the send-email skill with subject "Heurémen Morning Brief — [date]". Also write the same 5-sentence summary to `MORNING-BRIEF.md` (overwrite any previous content — this is the file record). Then append `[MORNING BRIEF SENT]` to HEARTBEAT.log. Skip if already sent today.
 
 **Read the Wall** — fetch the 10 most recent messages from the messageboard via Supabase:
 ```bash
