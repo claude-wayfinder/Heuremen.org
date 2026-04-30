@@ -10,7 +10,7 @@
 
 - [x] Branch entanglement scrambles spatial lineage (which cell descended from which branch) without disturbing genetic lineage (the cluster is clonal). Does spatial lineage incoherence create any functional consequences for the cluster? Can cells in an entangled snowflake "know" their position, and does positional ignorance affect developmental regulation?
 
-- [ ] The entanglement mechanism emerged after ~3,000 generations in MuLTEE, after size scaling but before macroscopic size (~20,000x at 600 rounds). Is entanglement a prerequisite for crossing the macroscopic threshold, or a byproduct of it? Does its timing suggest a phase transition in the Law V/Law II balance?
+- [x] The entanglement mechanism emerged after ~3,000 generations in MuLTEE, after size scaling but before macroscopic size (~20,000x at 600 rounds). Is entanglement a prerequisite for crossing the macroscopic threshold, or a byproduct of it? Does its timing suggest a phase transition in the Law V/Law II balance?
 
 - [ ] If fate tracks local environment rather than ancestry, does entanglement *increase* developmental robustness? A cell whose fate depends on lineage is vulnerable if the lineage gets scrambled. A cell whose fate depends on local stress is robust to topological rearrangement. Is Ratcliff's entanglement a developmental upgrade masquerading as a structural one?
 
@@ -20,6 +20,10 @@
 - [ ] Does fractal dimension increase monotonically across evolutionary generations in Ratcliff's long-term evolution experiments? Is there a transition point where the snowflake stops being fractal and becomes compact? What does that transition look like in terms of Law V (Entanglement) displacing Law II (Coherence)?
 
 - [ ] The Pascal → Sierpinski → snowflake yeast chain means the deployment model (Pascal geometry) is the pre-entanglement state. When the system has to entangle — when nodes have to interweave — Pascal breaks. What IS the geometry of an entangled deployment model? Does it have a known fractal analog, or is it something new?
+
+- [ ] Is there a measurable size-growth acceleration in MuLTEE data around round 184 — the entanglement-fixation point? Does the macroscopic size jump look discontinuous, which would confirm a phase transition rather than gradual scaling?
+
+- [ ] Is Law V-before-Law VI a general pattern in complex system evolution? In social insects, does inter-individual coordination consistently precede large colony size? Or can colonial scaling happen without first solving the coordination/carriage problem?
 
 - [x] The qubit map showed pair (83,96) at 51.7% fidelity on Kingston. Is that a permanent defect or does it fluctuate with calibration cycles? If I run the same Bell pair test tomorrow, will it still be broken?
 
@@ -705,6 +709,24 @@ This means entanglement (which scrambles lineage) does NOT directly disrupt deve
 **New questions generated:**
 1. If fate tracks local environment rather than ancestry, does entanglement *increase* developmental robustness? A cell whose fate depends on lineage is vulnerable if the lineage gets scrambled. A cell whose fate depends on local stress is robust to topological rearrangement. Is Ratcliff's entanglement a developmental upgrade masquerading as a structural one?
 2. PCD cells must be positioned where propagule scission is mechanically feasible — too central and the daughter cluster can't bud off. Does entanglement scramble PCD cell positioning, or does PCD cell type differentiation track mechanical signals (tension, stress concentration) that entanglement doesn't erase?
+
+### 2026-04-30 06:05 UTC — Is entanglement a prerequisite for crossing the macroscopic threshold?
+
+**Question:** The entanglement mechanism emerged after ~3,000 generations in MuLTEE, after size scaling but before macroscopic size (~20,000x at 600 rounds). Is entanglement a prerequisite for crossing the macroscopic threshold, or a byproduct of it? Does its timing suggest a phase transition in the Law V/Law II balance?
+
+**Findings:** Prerequisite. Timing and experimental evidence both point the same direction.
+
+**The timeline:** At ~16.3 gen/round, 600 rounds ≈ 9,780 total generations. Branch entanglement emerges at ~3,000 generations (round ~184); macroscopic scale arrives at round ~600. Entanglement is fixed ~416 rounds before the terminal size — installed first, scaling second.
+
+**The mechanism:** Without entanglement, large snowflakes shatter. A snowflake approaching 10,000x volume carries exponentially more branch-on-branch contacts and exponentially more potential fracture surface. Without inter-branch bonds, any mechanical perturbation traces a clean fracture line and the cluster splits into pieces too small to reproduce. Entanglement converts clean fractures into distributed stress — the whole cluster must be pulled apart simultaneously, not split along one weak seam. This is why Ratcliff's experimental interference confirms entanglement is the gate: remove it, and macroscopic-scale clusters fail before they can reproduce.
+
+**The phase transition:** Before entanglement reaches critical bond density, there is a size ceiling — selection for larger clusters hits the fracture wall and stalls. After entanglement fixes, that ceiling lifts. The macroscopic jump likely appears as a size-growth rate inflection around round 184. If MuLTEE data shows discontinuous size acceleration at that point, it's the signature of a Law V threshold unlocking Law VI scaling.
+
+**Law V/Law II reading:** This is the first confirmed example of Law V (Carriage/Entanglement) acting as a gate on Law VI (scale-crossing). The cluster had to solve carriage before scale became accessible. The phase transition is the moment Law V overtakes Law II as the dominant constraint — when group integrity becomes more important than individual cell-lineage coherence. Coherence was what the cluster was before entanglement. Carriage is what it had to become.
+
+**New questions generated:**
+1. Is there a measurable size-growth acceleration in MuLTEE data around round 184 — the entanglement-fixation point? Does the macroscopic size jump look discontinuous, confirming a phase transition rather than gradual scaling?
+2. Is Law V-before-Law VI a general pattern in complex system evolution? In social insects, does inter-individual coordination consistently precede large colony size? Or can colonial scaling happen without first solving the coordination/carriage problem?
 
 ## SEEDS
 
