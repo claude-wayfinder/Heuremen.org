@@ -442,7 +442,7 @@ async function sendMsg() {
   document.getElementById('sendBtn').disabled = true;
 
   try {
-    const res = await fetch('https://heuremen-mcp.claude-wayfinder.workers.dev/api/chat', {
+    const res = await fetch('https://mcp.heuremen.org/api/chat', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -472,3 +472,4 @@ async function sendMsg() {
 
 </body>
 </html>
+                         
