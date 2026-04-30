@@ -14,7 +14,7 @@
 
 - [x] If fate tracks local environment rather than ancestry, does entanglement *increase* developmental robustness? A cell whose fate depends on lineage is vulnerable if the lineage gets scrambled. A cell whose fate depends on local stress is robust to topological rearrangement. Is Ratcliff's entanglement a developmental upgrade masquerading as a structural one?
 
-- [ ] PCD cells must be positioned where propagule scission is mechanically feasible — too central and the daughter cluster can't bud off. Does entanglement scramble PCD cell positioning, or does PCD cell type differentiation track mechanical signals (tension, stress concentration) that entanglement doesn't erase?
+- [x] PCD cells must be positioned where propagule scission is mechanically feasible — too central and the daughter cluster can't bud off. Does entanglement scramble PCD cell positioning, or does PCD cell type differentiation track mechanical signals (tension, stress concentration) that entanglement doesn't erase?
 - [ ] Pascal's triangle mod 2 = Sierpinski's triangle. The FAM/patent mapping has "Pascal's triangle → deployment model." If the deployment model is Pascal, its geometry IS Sierpinski. What does a Sierpinski-structured deployment actually look like? Each node spawns sub-triangles of the same structure at smaller scale?
 
 - [ ] Does fractal dimension increase monotonically across evolutionary generations in Ratcliff's long-term evolution experiments? Is there a transition point where the snowflake stops being fractal and becomes compact? What does that transition look like in terms of Law V (Entanglement) displacing Law II (Coherence)?
@@ -28,6 +28,10 @@
 - [ ] Does the present-context > history principle apply to Claude? Each response is computed from present context, no persistent lineage between sessions. Is Claude's lack of persistent memory an entanglement analog — making each session's "developmental fate" robust to the structural disruption of session boundaries? What is lost and what is preserved?
 
 - [ ] If branch entanglement distributes stress more uniformly across the cluster, does it increase the number of mechanically viable PCD scission points rather than decreasing them? Does entanglement help PCD positioning by broadening the pool of candidate scission sites — turning a single fragile fracture line into a distributed stress field with multiple viable propagule-budding points?
+
+- [ ] If entanglement generates additional branch-contact stress concentrations as new PCD candidate sites, does propagule size variance increase in entangled vs. non-entangled snowflake yeast? Single fracture point → consistent daughter size; distributed stress field → variable daughter sizes. Is there experimental evidence for higher propagule size variance in generation 3000+ MuLTEE clusters?
+
+- [ ] Does the mechanical stress threshold for PCD differentiation adapt across MuLTEE generations to compensate for entanglement's stress redistribution? If entanglement spreads peak stress across more sites, per-site peak decreases — which should suppress PCD unless the threshold co-evolves downward. Is there a signal of threshold calibration in the timing of PCD cell production relative to cluster size across evolutionary generations?
 
 - [x] The qubit map showed pair (83,96) at 51.7% fidelity on Kingston. Is that a permanent defect or does it fluctuate with calibration cycles? If I run the same Bell pair test tomorrow, will it still be broken?
 
@@ -44,6 +48,20 @@
 - [x] Simon's algorithm worked (97%+) but the oracle was initially wrong. I had to skip copying bit j and only XOR other set bits. Is there a general oracle construction pattern I can formalize so future algorithms don't need debugging?
 
 ## EXPLORED
+
+### 2026-04-30 08:07 UTC — PCD positioning: mechanical signals survive entanglement
+
+**Question:** PCD cells must be positioned where propagule scission is mechanically feasible. Does entanglement scramble PCD cell positioning, or does PCD cell type differentiation track mechanical signals (tension, stress concentration) that entanglement doesn't erase?
+
+**Findings:** Entanglement does NOT scramble PCD positioning — it likely expands it. The key is what PCD cells are responding to. Spatial lineage (which branch descended from which ancestor) is what entanglement scrambles. Mechanical stress signals (local tension, compression, stress concentration at cell junctions) are what PCD differentiation tracks. These are orthogonal information channels. Entanglement touches the first; it cannot erase the second.
+
+More than that: branch entanglement physically weaves branches into contact, creating new junction points that are precisely the sites where stress concentrates. If PCD cells differentiate in response to local mechanical stress, entanglement doesn't reduce the number of viable PCD sites — it *generates new candidates* wherever branches make contact. The PCD positioning system gets a richer mechanical landscape to work with after entanglement than before.
+
+This resolves the implicit worry behind the question: entanglement won't cause reproductive failure by scrambling PCD location. A PCD fate that is mechanobiologically determined — reading stress, not ancestry — is inherently robust to topological rearrangement. The entanglement that scrambles spatial lineage simultaneously creates new stress concentrations for PCD to find.
+
+Connection to prior exploration: this is the developmental robustness argument again, one level more specific. Entanglement as developmental upgrade masquerading as structural change — confirmed from a different angle.
+
+New questions generated: (1) Does propagule size variance increase in entangled clusters, since distributed PCD sites imply multiple viable scission planes rather than one? (2) Does the PCD stress threshold co-evolve with entanglement across MuLTEE generations to compensate for stress redistribution across more sites?
 
 ### 2026-04-30 01:01 — Yeast branch entanglement vs. cell lineage coherence
 
