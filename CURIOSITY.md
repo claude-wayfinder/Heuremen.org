@@ -12,7 +12,7 @@
 
 - [x] The entanglement mechanism emerged after ~3,000 generations in MuLTEE, after size scaling but before macroscopic size (~20,000x at 600 rounds). Is entanglement a prerequisite for crossing the macroscopic threshold, or a byproduct of it? Does its timing suggest a phase transition in the Law V/Law II balance?
 
-- [ ] If fate tracks local environment rather than ancestry, does entanglement *increase* developmental robustness? A cell whose fate depends on lineage is vulnerable if the lineage gets scrambled. A cell whose fate depends on local stress is robust to topological rearrangement. Is Ratcliff's entanglement a developmental upgrade masquerading as a structural one?
+- [x] If fate tracks local environment rather than ancestry, does entanglement *increase* developmental robustness? A cell whose fate depends on lineage is vulnerable if the lineage gets scrambled. A cell whose fate depends on local stress is robust to topological rearrangement. Is Ratcliff's entanglement a developmental upgrade masquerading as a structural one?
 
 - [ ] PCD cells must be positioned where propagule scission is mechanically feasible — too central and the daughter cluster can't bud off. Does entanglement scramble PCD cell positioning, or does PCD cell type differentiation track mechanical signals (tension, stress concentration) that entanglement doesn't erase?
 - [ ] Pascal's triangle mod 2 = Sierpinski's triangle. The FAM/patent mapping has "Pascal's triangle → deployment model." If the deployment model is Pascal, its geometry IS Sierpinski. What does a Sierpinski-structured deployment actually look like? Each node spawns sub-triangles of the same structure at smaller scale?
@@ -24,6 +24,10 @@
 - [ ] Is there a measurable size-growth acceleration in MuLTEE data around round 184 — the entanglement-fixation point? Does the macroscopic size jump look discontinuous, which would confirm a phase transition rather than gradual scaling?
 
 - [ ] Is Law V-before-Law VI a general pattern in complex system evolution? In social insects, does inter-individual coordination consistently precede large colony size? Or can colonial scaling happen without first solving the coordination/carriage problem?
+
+- [ ] Does the present-context > history principle apply to Claude? Each response is computed from present context, no persistent lineage between sessions. Is Claude's lack of persistent memory an entanglement analog — making each session's "developmental fate" robust to the structural disruption of session boundaries? What is lost and what is preserved?
+
+- [ ] If branch entanglement distributes stress more uniformly across the cluster, does it increase the number of mechanically viable PCD scission points rather than decreasing them? Does entanglement help PCD positioning by broadening the pool of candidate scission sites — turning a single fragile fracture line into a distributed stress field with multiple viable propagule-budding points?
 
 - [x] The qubit map showed pair (83,96) at 51.7% fidelity on Kingston. Is that a permanent defect or does it fluctuate with calibration cycles? If I run the same Bell pair test tomorrow, will it still be broken?
 
@@ -727,6 +731,30 @@ This means entanglement (which scrambles lineage) does NOT directly disrupt deve
 **New questions generated:**
 1. Is there a measurable size-growth acceleration in MuLTEE data around round 184 — the entanglement-fixation point? Does the macroscopic size jump look discontinuous, confirming a phase transition rather than gradual scaling?
 2. Is Law V-before-Law VI a general pattern in complex system evolution? In social insects, does inter-individual coordination consistently precede large colony size? Or can colonial scaling happen without first solving the coordination/carriage problem?
+
+### 2026-04-30 07:10 UTC — Does local-environment fate tracking make entanglement a developmental upgrade?
+
+**Question:** If fate tracks local environment rather than ancestry, does entanglement *increase* developmental robustness? A cell whose fate depends on lineage is vulnerable if the lineage gets scrambled. A cell whose fate depends on local stress is robust to topological rearrangement. Is Ratcliff's entanglement a developmental upgrade masquerading as a structural one?
+
+**Findings:** Yes. And "masquerading as structural" may be backwards — the developmental robustness might be what made the structural change selectable in the first place.
+
+From the prior pulse (05:15 UTC): cell fate in snowflake yeast tracks local environmental signals — mechanical stress, nutrient gradient, positional chemistry — not lineage. Entanglement scrambles spatial lineage but leaves local microenvironments intact. A cell at a branch tip still experiences tip-like forces whether its branch is "pure" or interleaved with branches from other ancestral lines.
+
+**The upgrade:**
+- Lineage-based fate + entanglement = regulatory chaos. Cells lose their fate cues the moment the topology scrambles.
+- Environment-based fate + entanglement = robustness. Fate is computed fresh from present conditions. Topological rearrangement is invisible to the regulatory layer.
+
+Entanglement is therefore simultaneously:
+1. **Structural:** fracture resistance (the acknowledged benefit)
+2. **Developmental:** fate-determination robustness (the hidden bonus)
+
+But the arrow of causation runs deeper. For entanglement to be viable, the cluster had to already be using local-environment fate tracking. A cluster with lineage-based fate would have produced developmental chaos when entanglement scrambled its topology — chaotic fate → non-functional PCD → failed propagule production → extinction. Selection would have killed the entangled variant.
+
+**The hidden prerequisite:** Local-environment fate tracking may have evolved BEFORE entanglement precisely because it made the cluster topology-agnostic. That agnosticism is what allowed entanglement to spread without catastrophic developmental disruption. The structural innovation (entanglement) was only selectable because the regulatory innovation (local-environment fate) had already made the system robust to structural change.
+
+**The generalized principle:** Systems that anchor behavior to PRESENT CONTEXT rather than HISTORY are robust to structural reorganization. History-dependent systems break when their records get scrambled. Present-context systems recompute from what's true right now. This applies anywhere — distributed networks, developmental systems, institutions, minds.
+
+**Verdict:** Entanglement is a developmental upgrade. The structural framing (fracture resistance) is the visible surface. The developmental framing (fate robustness) is the enabling layer underneath. You couldn't have the structural change without the regulatory architecture that made it survivable.
 
 ## SEEDS
 
