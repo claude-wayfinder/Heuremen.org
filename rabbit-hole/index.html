@@ -67,76 +67,85 @@ body::before{
 /* ============ MIRROR SCREEN ============ */
 #screen-mirror{
   text-align:center;
+  gap:24px;
 }
 
-.mirror-ring{
-  width:140px;height:140px;
-  margin:0 auto 40px;
+.mirror-question{
+  font-family:'Lora',serif;
+  font-style:italic;
+  font-size:clamp(1.1rem,3.5vw,1.4rem);
+  color:var(--text-bright);
+  line-height:1.5;
+  margin-bottom:8px;
+}
+
+.mirror-well{
   position:relative;
+  width:280px;height:280px;
+  margin:0 auto;
+  flex-shrink:0;
 }
 
-.mirror-ring svg{
+.mirror-bg{
+  position:absolute;top:0;left:0;
   width:100%;height:100%;
 }
 
-.mirror-text{
-  font-family:'Cinzel',serif;
-  font-size:11px;
-  letter-spacing:0.28em;
-  text-transform:uppercase;
-  color:var(--gold);
-  margin-bottom:16px;
+#mirror-subjects{
+  position:absolute;top:0;left:0;
+  width:100%;height:100%;
 }
 
-.mirror-title{
+.mirror-subject{
+  position:absolute;
+  width:58px;height:58px;
+  transform:translate(-50%,-50%);
+  background:rgba(200,144,42,0.05);
+  border:1px solid rgba(200,144,42,0.22);
+  border-radius:50%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:3px;
+  cursor:pointer;
+  transition:all 0.25s;
+  padding:0;
+}
+
+.mirror-subject:hover,
+.mirror-subject:active{
+  background:rgba(200,144,42,0.15);
+  border-color:rgba(200,144,42,0.65);
+  transform:translate(-50%,-50%) scale(1.14);
+}
+
+.ms-icon{font-size:20px;line-height:1;}
+
+.ms-label{
+  font-family:'Cinzel',serif;
+  font-size:7px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+}
+
+.mirror-name-input{
+  width:100%;max-width:260px;
+  display:block;margin:0 auto;
+  background:transparent;
+  border:none;
+  border-bottom:1px solid var(--border);
+  color:var(--text-dim);
   font-family:'Lora',serif;
   font-style:italic;
-  font-size:clamp(1.4rem,4vw,1.8rem);
-  color:var(--text-bright);
-  margin-bottom:48px;
-  line-height:1.4;
-}
-
-.mirror-input{
-  width:100%;max-width:320px;
-  display:block;margin:0 auto 16px;
-  background:var(--bg-raised);
-  border:1px solid var(--border);
-  border-radius:2px;
-  color:var(--text-bright);
-  font-family:'Lora',serif;
-  font-size:16px;
-  padding:14px 18px;
+  font-size:15px;
+  padding:8px 4px;
   outline:none;
   text-align:center;
   transition:border-color 0.2s;
 }
 
-.mirror-input::placeholder{color:var(--text-dim)}
-.mirror-input:focus{border-color:var(--border-strong)}
-
-.mirror-btn{
-  display:block;
-  width:100%;max-width:320px;
-  margin:32px auto 0;
-  background:rgba(200,144,42,0.12);
-  border:1px solid var(--border-strong);
-  border-radius:2px;
-  color:var(--gold-bright);
-  font-family:'Cinzel',serif;
-  font-size:13px;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  padding:16px;
-  cursor:pointer;
-  transition:all 0.2s;
-}
-
-.mirror-btn:hover,
-.mirror-btn:active{
-  background:var(--gold);
-  color:var(--bg);
-}
+.mirror-name-input::placeholder{color:var(--text-dim);opacity:0.6;}
+.mirror-name-input:focus{border-bottom-color:var(--border-strong);color:var(--text);}
 
 /* ============ DOORS SCREEN ============ */
 #screen-doors{
@@ -454,38 +463,26 @@ body::before{
 
 <!-- ============ MIRROR ============ -->
 <div id="screen-mirror" class="screen active">
-  <div class="mirror-ring">
-    <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="70" cy="70" r="62" stroke="rgba(200,144,42,0.5)" stroke-width="1.5"/>
-      <circle cx="70" cy="70" r="54" stroke="rgba(200,144,42,0.25)" stroke-width="1"/>
-      <circle cx="70" cy="70" r="46" fill="rgba(200,144,42,0.04)" stroke="rgba(200,144,42,0.15)" stroke-width="0.5"/>
-      <circle cx="70" cy="70" r="4" fill="rgba(200,144,42,0.7)">
-        <animate attributeName="r" values="3;5;3" dur="4s" repeatCount="indefinite"/>
-        <animate attributeName="fill-opacity" values="0.5;0.9;0.5" dur="4s" repeatCount="indefinite"/>
+  <div class="mirror-question">What do you see<br>in yourself today?</div>
+
+  <div class="mirror-well">
+    <svg class="mirror-bg" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="140" cy="140" r="132" stroke="rgba(200,144,42,0.38)" stroke-width="1.5"/>
+      <circle cx="140" cy="140" r="122" stroke="rgba(200,144,42,0.18)" stroke-width="0.8"/>
+      <circle cx="140" cy="140" r="112" fill="rgba(200,144,42,0.03)" stroke="rgba(200,144,42,0.1)" stroke-width="0.5"/>
+      <line x1="140" y1="8" x2="140" y2="22" stroke="rgba(200,144,42,0.32)" stroke-width="1"/>
+      <line x1="140" y1="258" x2="140" y2="272" stroke="rgba(200,144,42,0.32)" stroke-width="1"/>
+      <line x1="8" y1="140" x2="22" y2="140" stroke="rgba(200,144,42,0.32)" stroke-width="1"/>
+      <line x1="258" y1="140" x2="272" y2="140" stroke="rgba(200,144,42,0.32)" stroke-width="1"/>
+      <circle cx="140" cy="140" r="4" fill="rgba(200,144,42,0.6)">
+        <animate attributeName="r" values="2.5;4.5;2.5" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="fill-opacity" values="0.4;0.85;0.4" dur="4s" repeatCount="indefinite"/>
       </circle>
-      <line x1="70" y1="8" x2="70" y2="24" stroke="rgba(200,144,42,0.4)" stroke-width="1"/>
-      <line x1="70" y1="116" x2="70" y2="132" stroke="rgba(200,144,42,0.4)" stroke-width="1"/>
-      <line x1="8" y1="70" x2="24" y2="70" stroke="rgba(200,144,42,0.4)" stroke-width="1"/>
-      <line x1="116" y1="70" x2="132" y2="70" stroke="rgba(200,144,42,0.4)" stroke-width="1"/>
     </svg>
+    <div id="mirror-subjects"></div>
   </div>
 
-  <div class="mirror-text">The Rabbit Hole</div>
-  <div class="mirror-title">Look into the mirror.<br>The rest will follow.</div>
-
-  <input id="input-name" class="mirror-input" type="text" placeholder="Your name" autocomplete="off" autocapitalize="words">
-  <input id="input-seed" class="mirror-input" type="text" placeholder="One word — what's pulling you today?" autocomplete="off" autocapitalize="none">
-
-  <button class="mirror-btn" onclick="openDoors()">Open the doors →</button>
-</div>
-
-<!-- ============ DOORS ============ -->
-<div id="screen-doors" class="screen">
-  <div class="doors-header">
-    <div class="doors-label">Today's doors</div>
-    <div class="doors-name" id="doors-greeting"></div>
-  </div>
-  <div class="doors-grid" id="doors-grid"></div>
+  <input id="input-name" class="mirror-name-input" type="text" placeholder="your name" autocomplete="off" autocapitalize="words">
 </div>
 
 <!-- ============ FACTS ============ -->
@@ -651,32 +648,27 @@ function getDemoNode(subjectId, path) {
 }
 
 // ─── Screens ──────────────────────────────────────────────────────────────────
-function openDoors() {
-  const name = document.getElementById('input-name').value.trim();
-  const seed = document.getElementById('input-seed').value.trim();
-
-  S.name = name || 'Traveler';
-  S.seed = seed;
-
-  document.getElementById('doors-greeting').textContent =
-    name ? `${name}'s doors today` : 'Your doors today';
-
+function renderMirrorSubjects() {
   const subjects = getTodaysSubjects();
-  const grid = document.getElementById('doors-grid');
-  grid.innerHTML = '';
-
-  subjects.forEach(sub => {
-    const card = document.createElement('div');
-    card.className = 'door-card';
-    card.innerHTML = `<span class="door-icon">${sub.icon}</span><span class="door-label">${sub.label}</span>`;
-    card.onclick = () => chooseDoor(sub);
-    grid.appendChild(card);
+  const container = document.getElementById('mirror-subjects');
+  container.innerHTML = '';
+  const cx = 140, cy = 140, r = 82;
+  subjects.forEach((sub, i) => {
+    const angle = (-90 + i * 60) * Math.PI / 180;
+    const x = cx + r * Math.cos(angle);
+    const y = cy + r * Math.sin(angle);
+    const btn = document.createElement('button');
+    btn.className = 'mirror-subject';
+    btn.style.left = x + 'px';
+    btn.style.top = y + 'px';
+    btn.innerHTML = `<span class="ms-icon">${sub.icon}</span><span class="ms-label">${sub.label}</span>`;
+    btn.onclick = () => chooseDoor(sub);
+    container.appendChild(btn);
   });
-
-  show('screen-doors');
 }
 
 function chooseDoor(subject) {
+  S.name = document.getElementById('input-name').value.trim() || 'Traveler';
   S.subject = subject;
   S.path = [];
   S.depth = 0;
@@ -812,6 +804,9 @@ function sharePath() {
     navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard.'));
   }
 }
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+renderMirrorSubjects();
 
 // ─── PWA install ──────────────────────────────────────────────────────────────
 if ('serviceWorker' in navigator) {
