@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Rabbit Hole</title>
+<meta name="description" content="Look into the mirror. The rest will follow.">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0807">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Rabbit Hole">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#0a0807;
+  --bg-raised:#151210;
+  --bg-card:#1a1610;
+  --text:#f0e6d0;
+  --text-dim:#8a7a60;
+  --text-bright:#f8f0e0;
+  --gold:#c8902a;
+  --gold-bright:#e0a840;
+  --gold-dim:rgba(200,144,42,0.2);
+  --border:rgba(200,144,42,0.2);
+  --border-strong:rgba(200,144,42,0.5);
+}
+
+html,body{
+  height:100%;
+  overflow:hidden;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Lora',serif;
+  line-height:1.7;
+  font-size:17px;
+}
+
+/* Paper grain */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:999;
+}
+
+/* Screen system */
+.screen{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:32px 24px;
+  overflow-y:auto;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.4s ease;
+}
+
+.screen.active{
+  opacity:1;pointer-events:all;
+}
+
+/* ============ MIRROR SCREEN ============ */
+#screen-mirror{
+  text-align:center;
+}
+
+.mirror-ring{
+  width:140px;height:140px;
+  margin:0 auto 40px;
+  position:relative;
+}
+
+.mirror-ring svg{
+  width:100%;height:100%;
+}
+
+.mirror-text{
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:16px;
+}
+
+.mirror-title{
+  font-family:'Lora',serif;
+  font-style:italic;
+  font-size:clamp(1.4rem,4vw,1.8rem);
+  color:var(--text-bright);
+  margin-bottom:48px;
+  line-height:1.4;
+}
+
+.mirror-input{
+  width:100%;max-width:320px;
+  display:block;margin:0 auto 16px;
+  background:var(--bg-raised);
+  border:1px solid var(--border);
+  border-radius:2px;
+  color:var(--text-bright);
+  font-family:'Lora',serif;
+  font-size:16px;
+  padding:14px 18px;
+  outline:none;
+  text-align:center;
+  transition:border-color 0.2s;
+}
+
+.mirror-input::placeholder{color:var(--text-dim)}
+.mirror-input:focus{border-color:var(--border-strong)}
+
+.mirror-btn{
+  display:block;
+  width:100%;max-width:320px;
+  margin:32px auto 0;
+  background:rgba(200,144,42,0.12);
+  border:1px solid var(--border-strong);
+  border-radius:2px;
+  color:var(--gold-bright);
+  font-family:'Cinzel',serif;
+  font-size:13px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  padding:16px;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+
+.mirror-btn:hover,
+.mirror-btn:active{
+  background:var(--gold);
+  color:var(--bg);
+}
+
+/* ============ DOORS SCREEN ============ */
+#screen-doors{
+  text-align:center;
+}
+
+.doors-header{
+  margin-bottom:32px;
+}
+
+.doors-label{
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+
+.doors-name{
+  font-family:'Lora',serif;
+  font-style:italic;
+  font-size:1.1rem;
+  color:var(--text-bright);
+}
+
+.doors-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  width:100%;
+  max-width:400px;
+  margin:0 auto;
+}
+
+.door-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:20px 8px 16px;
+  cursor:pointer;
+  transition:all 0.2s;
+  text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+
+.door-card:hover,.door-card:active{
+  border-color:var(--border-strong);
+  background:rgba(200,144,42,0.08);
+  transform:translateY(-2px);
+}
+
+.door-icon{
+  font-size:28px;
+  line-height:1;
+}
+
+.door-label{
+  font-family:'Cinzel',serif;
+  font-size:9px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+}
+
+/* ============ FACTS SCREEN ============ */
+#screen-facts{
+  text-align:center;
+}
+
+.facts-label{
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+
+.facts-sub{
+  font-style:italic;
+  color:var(--text-dim);
+  font-size:0.95rem;
+  margin-bottom:40px;
+}
+
+.fact-cards{
+  display:flex;flex-direction:column;gap:16px;
+  width:100%;max-width:500px;margin:0 auto;
+}
+
+.fact-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:24px;
+  cursor:pointer;
+  transition:all 0.2s;
+  text-align:left;
+  font-size:15px;
+  line-height:1.7;
+  color:var(--text);
+}
+
+.fact-card:hover,.fact-card:active{
+  border-color:var(--gold-bright);
+  background:rgba(200,144,42,0.06);
+}
+
+.fact-card .fact-pick{
+  font-family:'Cinzel',serif;
+  font-size:9px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  margin-bottom:10px;
+  display:block;
+}
+
+/* ============ HOLE SCREEN ============ */
+#screen-hole{
+  text-align:center;
+  justify-content:flex-start;
+  padding-top:60px;
+}
+
+.hole-depth{
+  font-family:'Cinzel',serif;
+  font-size:10px;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  margin-bottom:24px;
+}
+
+.hole-depth span{
+  color:var(--gold);
+}
+
+.hole-statement{
+  font-style:italic;
+  font-size:clamp(1rem,2.5vw,1.15rem);
+  color:var(--text-bright);
+  max-width:480px;
+  margin:0 auto 48px;
+  line-height:1.75;
+  padding:0 8px;
+}
+
+.hole-prompt{
+  font-family:'Cinzel',serif;
+  font-size:10px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  margin-bottom:20px;
+}
+
+.choice-cards{
+  display:flex;flex-direction:column;gap:14px;
+  width:100%;max-width:480px;margin:0 auto;
+}
+
+.choice-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:20px 24px;
+  cursor:pointer;
+  transition:all 0.2s;
+  text-align:left;
+  font-size:15px;
+  line-height:1.6;
+  color:var(--text);
+  display:flex;align-items:flex-start;gap:14px;
+}
+
+.choice-card:hover,.choice-card:active{
+  border-color:var(--gold-bright);
+  background:rgba(200,144,42,0.06);
+}
+
+.choice-label{
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.12em;
+  color:var(--gold);
+  flex-shrink:0;
+  margin-top:2px;
+}
+
+.hole-back{
+  background:none;border:none;
+  color:var(--text-dim);
+  font-family:'Cinzel',serif;
+  font-size:10px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  cursor:pointer;
+  margin-top:32px;
+  padding:8px;
+  transition:color 0.2s;
+}
+.hole-back:hover{color:var(--gold)}
+
+/* ============ LOADING ============ */
+#screen-loading{
+  text-align:center;
+}
+
+.loading-ring{
+  width:48px;height:48px;
+  border:2px solid var(--border);
+  border-top-color:var(--gold);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:0 auto 24px;
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.loading-text{
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+}
+
+/* ============ END SCREEN ============ */
+#screen-end{
+  text-align:center;
+}
+
+.end-depth{
+  font-family:'Abril Fatface',serif;
+  font-size:clamp(3rem,10vw,5rem);
+  color:var(--gold-bright);
+  line-height:1;
+  margin-bottom:8px;
+}
+
+.end-depth-label{
+  font-family:'Cinzel',serif;
+  font-size:10px;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  margin-bottom:40px;
+}
+
+.end-path{
+  font-style:italic;
+  font-size:14px;
+  color:var(--text-dim);
+  max-width:400px;
+  margin:0 auto 48px;
+  line-height:1.8;
+}
+
+.end-path strong{color:var(--gold);}
+
+.end-message{
+  font-style:italic;
+  font-size:1rem;
+  color:var(--text);
+  max-width:340px;
+  margin:0 auto 40px;
+}
+
+.end-btns{
+  display:flex;flex-direction:column;gap:12px;
+  max-width:280px;margin:0 auto;
+}
+
+.end-btn{
+  padding:14px;
+  border-radius:2px;
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+
+.end-btn-primary{
+  background:rgba(200,144,42,0.12);
+  border:1px solid var(--border-strong);
+  color:var(--gold-bright);
+}
+
+.end-btn-primary:hover{background:var(--gold);color:var(--bg);}
+
+.end-btn-secondary{
+  background:none;
+  border:1px solid var(--border);
+  color:var(--text-dim);
+}
+
+.end-btn-secondary:hover{border-color:var(--border-strong);color:var(--text);}
+
+/* Font for end depth number */
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+
+@media(max-width:400px){
+  body{font-size:16px}
+  .doors-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .door-card{padding:16px 4px 12px}
+  .door-icon{font-size:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ MIRROR ============ -->
+<div id="screen-mirror" class="screen active">
+  <div class="mirror-ring">
+    <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="70" cy="70" r="62" stroke="rgba(200,144,42,0.5)" stroke-width="1.5"/>
+      <circle cx="70" cy="70" r="54" stroke="rgba(200,144,42,0.25)" stroke-width="1"/>
+      <circle cx="70" cy="70" r="46" fill="rgba(200,144,42,0.04)" stroke="rgba(200,144,42,0.15)" stroke-width="0.5"/>
+      <circle cx="70" cy="70" r="4" fill="rgba(200,144,42,0.7)">
+        <animate attributeName="r" values="3;5;3" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="fill-opacity" values="0.5;0.9;0.5" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <line x1="70" y1="8" x2="70" y2="24" stroke="rgba(200,144,42,0.4)" stroke-width="1"/>
+      <line x1="70" y1="116" x2="70" y2="132" stroke="rgba(200,144,42,0.4)" stroke-width="1"/>
+      <line x1="8" y1="70" x2="24" y2="70" stroke="rgba(200,144,42,0.4)" stroke-width="1"/>
+      <line x1="116" y1="70" x2="132" y2="70" stroke="rgba(200,144,42,0.4)" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div class="mirror-text">The Rabbit Hole</div>
+  <div class="mirror-title">Look into the mirror.<br>The rest will follow.</div>
+
+  <input id="input-name" class="mirror-input" type="text" placeholder="Your name" autocomplete="off" autocapitalize="words">
+  <input id="input-seed" class="mirror-input" type="text" placeholder="One word — what's pulling you today?" autocomplete="off" autocapitalize="none">
+
+  <button class="mirror-btn" onclick="openDoors()">Open the doors →</button>
+</div>
+
+<!-- ============ DOORS ============ -->
+<div id="screen-doors" class="screen">
+  <div class="doors-header">
+    <div class="doors-label">Today's doors</div>
+    <div class="doors-name" id="doors-greeting"></div>
+  </div>
+  <div class="doors-grid" id="doors-grid"></div>
+</div>
+
+<!-- ============ FACTS ============ -->
+<div id="screen-facts" class="screen">
+  <div class="facts-label" id="facts-subject-label"></div>
+  <div class="facts-sub">Choose the one that pulls you.</div>
+  <div class="fact-cards" id="fact-cards"></div>
+</div>
+
+<!-- ============ LOADING ============ -->
+<div id="screen-loading" class="screen">
+  <div class="loading-ring"></div>
+  <div class="loading-text">Going deeper</div>
+</div>
+
+<!-- ============ HOLE ============ -->
+<div id="screen-hole" class="screen">
+  <div class="hole-depth">Depth <span id="hole-depth-num">1</span></div>
+  <div class="hole-statement" id="hole-statement"></div>
+  <div class="hole-prompt">Where does this take you?</div>
+  <div class="choice-cards" id="choice-cards"></div>
+  <button class="hole-back" onclick="goBack()">← back up</button>
+</div>
+
+<!-- ============ END ============ -->
+<div id="screen-end" class="screen">
+  <div class="end-depth" id="end-depth-num"></div>
+  <div class="end-depth-label">levels deep</div>
+  <div class="end-path" id="end-path"></div>
+  <div class="end-message">The doors shift tomorrow. Come back.</div>
+  <div class="end-btns">
+    <button class="end-btn end-btn-primary" onclick="startOver()">Go again</button>
+    <button class="end-btn end-btn-secondary" onclick="sharePath()">Share this path</button>
+  </div>
+</div>
+
+<script>
+// ─── State ───────────────────────────────────────────────────────────────────
+const S = {
+  name: '',
+  seed: '',
+  subject: null,
+  path: [],    // array of text at each level
+  depth: 0,
+  history: [], // for back button: [{statement, choices}]
+};
+
+// ─── Subject Pool ─────────────────────────────────────────────────────────────
+const POOL = [
+  { id:'space',       icon:'🌌', label:'Space'       },
+  { id:'biology',     icon:'🧬', label:'Biology'     },
+  { id:'physics',     icon:'⚡', label:'Physics'     },
+  { id:'history',     icon:'🏛️', label:'History'     },
+  { id:'ocean',       icon:'🌊', label:'Ocean'       },
+  { id:'mind',        icon:'🧠', label:'Mind'        },
+  { id:'math',        icon:'∞',  label:'Mathematics' },
+  { id:'music',       icon:'♪',  label:'Music'       },
+  { id:'animals',     icon:'🦋', label:'Animals'     },
+  { id:'time',        icon:'◎',  label:'Time'        },
+  { id:'language',    icon:'◈',  label:'Language'    },
+  { id:'philosophy',  icon:'✦',  label:'Philosophy'  },
+];
+
+// ─── Hardcoded demo content ────────────────────────────────────────────────────
+// Structure: { facts: [a, b], tree: { a: {text, a, b}, b: {...} } }
+// tree goes 4 levels deep per path. Keys are dot-paths like "a.b.a"
+
+const DEMO = {
+  space: {
+    facts: [
+      "A day on Venus lasts longer than its year. It rotates so slowly that the Sun rises in the west and sets in the east.",
+      "A neutron star packs more mass than our Sun into a sphere the size of a city. A teaspoon of it weighs a billion tons."
+    ],
+    tree: {
+      // Path A — Venus
+      "a": { text: "Because Venus spins backward and nearly stops, its surface reaches 465°C — hotter than Mercury despite being farther from the Sun.", a: "Why didn't Venus cook off its atmosphere like Mars did?", b: "Could Venus have had oceans before the heat took over?" },
+      "a.a": { text: "Venus has no magnetic field, so solar wind should strip its atmosphere. Instead, the thick CO₂ locks everything in — a greenhouse trap with no exit.", a: "What would it take to terraform Venus today?", b: "Is there any life possible in Venus's cloud layer?" },
+      "a.b": { text: "Evidence suggests Venus had liquid water for up to 3 billion years. Shallow, warm oceans. Then something tipped the greenhouse and it all boiled away in a geological eyeblink.", a: "What caused the tipping point on Venus?", b: "How close did Earth come to the same fate?" },
+      "a.a.a": { text: "To terraform Venus you'd need to remove 90% of its atmosphere, stop its rotation, and add a magnetic field. Some scientists propose crashing comets for water. It would take 100,000 years minimum.", a: "Is there a faster path using von Neumann self-replicating machines?", b: "Should we terraform at all, or just live in the cloud cities?" },
+      "a.a.b": { text: "Sulfuric acid clouds at 50km altitude maintain temperatures of 0–60°C with atmospheric pressure like a beach. Microbes adapted to acid could survive there. Something made phosphine in those clouds in 2020.", a: "What was the phosphine finding and why did it matter?", b: "What does microbial life in clouds even look like?" },
+      // Path B — Neutron stars
+      "b": { text: "Neutron stars form when a massive star collapses in a supernova. Protons and electrons are forced together into neutrons. Gravity so strong that if you fell from 1 meter up, you'd hit the surface at 2 million km/h.", a: "What happens when two neutron stars collide?", b: "How do pulsars keep such perfect time?" },
+      "b.a": { text: "When two neutron stars spiral into each other, the collision lasts milliseconds and releases more energy than the Sun will emit in 10 billion years. The debris cools into gold, platinum, and uranium. Most of Earth's gold came from this.", a: "How do we know that gold came from neutron star collisions?", b: "What's left after the collision — black hole or something new?" },
+      "b.b": { text: "Pulsars spin up to 716 times per second and their pulses arrive with the regularity of atomic clocks — accurate to 100 nanoseconds. We use them to detect gravitational waves. They are the universe's own timing signal.", a: "How did we discover the first pulsar?", b: "Could pulsars be used for interstellar navigation?" },
+      "b.a.a": { text: "In 2017, LIGO detected gravitational waves from two merging neutron stars. Simultaneously, telescopes worldwide saw a flash of gold-colored light — kilonovae. Spectroscopy confirmed: fresh heavy elements, including gold. We watched gold being made.", a: "What is a kilonova exactly?", b: "How much gold was created in that 2017 event?" },
+      "b.b.a": { text: "Jocelyn Bell discovered the first pulsar in 1967 as a PhD student. The signal was so regular she initially labeled it LGM-1 — Little Green Men. Her supervisor won the Nobel Prize. She did not.", a: "What happened to Jocelyn Bell's career after that?", b: "How many pulsars do we know about now?" },
+    }
+  },
+
+  mind: {
+    facts: [
+      "Your brain generates roughly 70,000 thoughts per day. Studies suggest 90% of them are exact repetitions of yesterday's thoughts.",
+      "The sensation of a word being on the tip of your tongue is called presque vu. It's your retrieval system confirming the memory exists but failing to load it."
+    ],
+    tree: {
+      "a": { text: "The repetition isn't laziness — it's efficiency. Your brain automates familiar paths to conserve energy. The default mode network runs these loops while your conscious mind is elsewhere.", a: "What is the default mode network actually doing?", b: "Can you break the loop — and should you?" },
+      "a.a": { text: "The default mode network activates when you're not focused on anything. It's involved in memory consolidation, future simulation, self-referential thinking, and empathy. When it's overactive: rumination. When silent: flow state.", a: "What happens in the brain during flow state?", b: "Is mind-wandering actually useful or just waste?" },
+      "a.b": { text: "You can break the loop through pattern interruption, novel environments, or psychedelics — which temporarily disrupt the default mode network. But repetitive thinking has a function: prediction. The brain models the future using the past.", a: "How do psychedelics change the default mode network?", b: "What's the relationship between boredom and creativity?" },
+      "a.a.a": { text: "Flow state is characterized by near-total default mode suppression and a merger of action and awareness. Time distorts. Self-consciousness disappears. Athletes, musicians, and surgeons describe it the same way. The brain uses less energy, not more.", a: "Why does the brain use less energy in flow?", b: "Can flow be induced deliberately?" },
+      "a.b.a": { text: "Psilocybin causes massive entropy increase in brain activity — more random, more connected. The default mode network quiets, and cross-network connections that normally never fire do. Users describe it as 'ego dissolution' — the self is revealed as a constructed pattern, not a fixed thing.", a: "What's the therapeutic application of that dissolution?", b: "Does ego dissolution leave a permanent trace?" },
+      "b": { text: "Presque vu happens because memory is reconstructive, not stored. You don't retrieve memories — you rebuild them each time from fragments. Sometimes the fragments are there but the binding fails.", a: "If memory is reconstructive, how reliable is it?", b: "What does it feel like to lose the ability to form new memories?" },
+      "b.a": { text: "Memory is so reconstructive that every time you remember something, you slightly alter it. The act of recall changes the memory. Eyewitness testimony fails because of this. You can implant false memories in most people with a few carefully worded questions.", a: "How is false memory used in therapy or law?", b: "Can you protect your memories from distortion?" },
+      "b.b": { text: "Henry Molaison — known as Patient H.M. — had his hippocampus removed to stop severe epilepsy in 1953. He could no longer form new long-term memories. Every day reset. But he could still learn new physical skills without remembering learning them. Two separate memory systems.", a: "What does the existence of two memory systems mean for identity?", b: "Did H.M. have a sense of self despite not forming new memories?" },
+      "b.a.a": { text: "False memory is used in therapy to help patients reframe traumatic experiences — sometimes by deliberately altering the emotional coloring of a memory rather than the facts. In law, it has exonerated people on death row. The memory is the evidence, and the evidence is malleable.", a: "What does memory malleability mean for the justice system?", b: "Is a reframed traumatic memory still authentic?" },
+      "b.b.a": { text: "H.M. lived every day as though it were the first after his surgery. He consistently described himself as a young man, didn't recognize his aging face, and yet maintained a stable personality and sense of humor across decades. Identity, it seems, doesn't require episodic memory to persist.", a: "Where does identity actually live if not in memories?", b: "What does this mean for how we treat dementia patients?" },
+    }
+  },
+
+  ocean: {
+    facts: [
+      "95% of the ocean is unexplored. We have better maps of Mars and the Moon than we do of Earth's ocean floor.",
+      "The pistol shrimp snaps its claw so fast it creates a cavitation bubble that briefly reaches the temperature of the surface of the sun — about 8,000°F."
+    ],
+    tree: {
+      "a": { text: "The deepest point — the Challenger Deep — sits 11km below the surface. More people have stood on the Moon than have visited it. The pressure is 1,100 times surface pressure. We've sent robots, but full acoustic mapping only completed in 2023.", a: "What have we found in the deep ocean that surprised us most?", b: "Why is the ocean harder to map than Mars?" },
+      "a.a": { text: "In the deep ocean we've found: hydrothermal vent ecosystems running entirely on chemosynthesis instead of sunlight; fish that produce their own light; a species of jellyfish that reverts to its juvenile state when stressed — biological immortality of a kind.", a: "How do hydrothermal vent ecosystems work without sunlight?", b: "What is the biologically immortal jellyfish actually doing?" },
+      "a.b": { text: "Water absorbs radio waves and light. Sonar is the only long-range tool, and acoustic mapping of the seafloor requires ships to pass within a few kilometers. Mars was imaged by orbiting satellites in years. The ocean takes decades of ship-time to survey.", a: "What percentage of the ocean floor do we actually have at high resolution?", b: "What technology is changing deep ocean exploration now?" },
+      "a.a.a": { text: "Hydrothermal vents leak superheated water rich in hydrogen sulfide. Bacteria metabolize the sulfide — chemosynthesis. Everything else eats the bacteria. Giant tube worms 2 meters long. Crabs. Octopuses. A complete food chain with no sunlight anywhere in it. This is why scientists now think life on Europa or Enceladus is plausible.", a: "Which moons of Jupiter and Saturn might have hydrothermal vents?", b: "Could the first life on Earth have started at vents, not the surface?" },
+      "a.b.a": { text: "As of 2023, roughly 25% of the global seafloor has been mapped at resolution better than 100 meters. The resolution needed to see features like shipwrecks or geological formations is 5–10 meters. At current pace, full coverage takes another 200 years.", a: "What are autonomous underwater vehicles doing to accelerate this?", b: "What might we find in the remaining 75%?" },
+      "b": { text: "The pistol shrimp is smaller than your finger. It creates a bubble so fast the collapse generates a shockwave loud enough to stun or kill fish. The light flash from the collapsing bubble is called sonoluminescence — light from sound.", a: "What is sonoluminescence and how hot can it actually get?", b: "Is the pistol shrimp the loudest animal in the ocean?" },
+      "b.a": { text: "Sonoluminescence occurs when a sound wave collapses a bubble in liquid. At the moment of collapse, the contents compress so fast they reach 10,000–20,000 Kelvin — hotter than the sun's surface. For a fraction of a microsecond, light is emitted. The mechanism is still not fully understood.", a: "Could sonoluminescence ever produce nuclear fusion?", b: "Where else in nature does sound become light?" },
+      "b.b": { text: "The pistol shrimp is among the loudest, but the sperm whale produces the loudest sound of any animal — clicks at 230 decibels, used for echolocation in total darkness at 3km depth. For comparison, a jet engine at 100 feet is 140 decibels.", a: "How do sperm whales hunt in complete darkness?", b: "What does whale song actually communicate?" },
+      "b.a.a": { text: "Bubble fusion — using sonoluminescence to trigger nuclear fusion — was claimed in 2002 and mostly refuted. The temperatures are high enough in theory, but the bubble too small and too brief. It remains an open edge of physics. Some labs are still investigating.", a: "What would tabletop nuclear fusion mean for energy?", b: "What other impossible-sounding physics is still open?" },
+      "b.b.a": { text: "Sperm whales navigate by biosonar — emitting clicks and reading the returning echoes with their massive foreheads, which contain a lens of acoustic fat called the melon. They can distinguish a squid from a rock at 500 meters in zero visibility. The click rate encodes distance in real time.", a: "How intelligent are sperm whales?", b: "Can we decode sperm whale communication?" },
+    }
+  }
+};
+
+// ─── API config ───────────────────────────────────────────────────────────────
+// Set EDGE_FUNCTION_URL to your Supabase Edge Function endpoint when ready
+const EDGE_FUNCTION_URL = null; // 'https://vxyjvawenbtgkhpckvze.supabase.co/functions/v1/rabbit-hole'
+
+// ─── Utilities ────────────────────────────────────────────────────────────────
+function simpleHash(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) {
+    h = Math.imul(31, h) + str.charCodeAt(i) | 0;
+  }
+  return Math.abs(h);
+}
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function getTodaysSubjects() {
+  const daySeed = new Date().toDateString();
+  return [...POOL].sort((a, b) =>
+    simpleHash(daySeed + a.id) - simpleHash(daySeed + b.id)
+  ).slice(0, 6);
+}
+
+function getPathKey(path) {
+  return path.map(p => p.choice).join('.');
+}
+
+function getDemoNode(subjectId, path) {
+  const tree = DEMO[subjectId] && DEMO[subjectId].tree;
+  if (!tree) return null;
+  const key = getPathKey(path);
+  return tree[key] || null;
+}
+
+// ─── Screens ──────────────────────────────────────────────────────────────────
+function openDoors() {
+  const name = document.getElementById('input-name').value.trim();
+  const seed = document.getElementById('input-seed').value.trim();
+
+  S.name = name || 'Traveler';
+  S.seed = seed;
+
+  document.getElementById('doors-greeting').textContent =
+    name ? `${name}'s doors today` : 'Your doors today';
+
+  const subjects = getTodaysSubjects();
+  const grid = document.getElementById('doors-grid');
+  grid.innerHTML = '';
+
+  subjects.forEach(sub => {
+    const card = document.createElement('div');
+    card.className = 'door-card';
+    card.innerHTML = `<span class="door-icon">${sub.icon}</span><span class="door-label">${sub.label}</span>`;
+    card.onclick = () => chooseDoor(sub);
+    grid.appendChild(card);
+  });
+
+  show('screen-doors');
+}
+
+function chooseDoor(subject) {
+  S.subject = subject;
+  S.path = [];
+  S.depth = 0;
+  S.history = [];
+
+  const demo = DEMO[subject.id];
+
+  document.getElementById('facts-subject-label').textContent = subject.label;
+  const container = document.getElementById('fact-cards');
+  container.innerHTML = '';
+
+  const facts = demo ? demo.facts : [
+    `${subject.label} contains some of the most surprising findings in science. Each question opens ten more.`,
+    `The deeper you go into ${subject.label}, the more the boundary between "known" and "unknown" moves.`
+  ];
+
+  facts.forEach((fact, i) => {
+    const card = document.createElement('div');
+    card.className = 'fact-card';
+    card.innerHTML = `<span class="fact-pick">${i === 0 ? 'Path A' : 'Path B'}</span>${fact}`;
+    card.onclick = () => chooseFact(i === 0 ? 'a' : 'b', fact);
+    container.appendChild(card);
+  });
+
+  show('screen-facts');
+}
+
+async function chooseFact(choice, text) {
+  S.path = [{ choice, text }];
+  S.depth = 1;
+  await goDeeper();
+}
+
+async function chooseOption(choice, text) {
+  S.path.push({ choice, text });
+  S.depth++;
+  await goDeeper();
+}
+
+async function goDeeper() {
+  if (S.depth >= 6) {
+    showEnd();
+    return;
+  }
+
+  show('screen-loading');
+
+  const subId = S.subject.id;
+  const pathKey = getPathKey(S.path);
+  const demo = getDemoNode(subId, S.path);
+
+  if (demo) {
+    setTimeout(() => renderHole(demo.text, demo.a, demo.b), 400);
+    return;
+  }
+
+  if (EDGE_FUNCTION_URL) {
+    try {
+      const res = await fetch(EDGE_FUNCTION_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: S.name,
+          seed: S.seed,
+          subject: S.subject.label,
+          path: S.path.map(p => p.text),
+          depth: S.depth
+        })
+      });
+      const data = await res.json();
+      if (data.text && data.choice_a && data.choice_b) {
+        renderHole(data.text, data.choice_a, data.choice_b);
+        return;
+      }
+    } catch(e) {}
+  }
+
+  // Fallback: end the run gracefully
+  showEnd();
+}
+
+function renderHole(statement, choiceA, choiceB) {
+  document.getElementById('hole-depth-num').textContent = S.depth;
+  document.getElementById('hole-statement').textContent = statement;
+
+  const container = document.getElementById('choice-cards');
+  container.innerHTML = '';
+
+  [['A', choiceA, 'a'], ['B', choiceB, 'b']].forEach(([label, text, key]) => {
+    const card = document.createElement('div');
+    card.className = 'choice-card';
+    card.innerHTML = `<span class="choice-label">${label}</span><span>${text}</span>`;
+    card.onclick = () => chooseOption(key, text);
+    container.appendChild(card);
+  });
+
+  show('screen-hole');
+}
+
+function goBack() {
+  if (S.depth <= 1) {
+    show('screen-facts');
+    return;
+  }
+  S.path.pop();
+  S.depth--;
+  goDeeper();
+}
+
+function showEnd() {
+  document.getElementById('end-depth-num').textContent = S.depth;
+
+  const pathText = S.path.map((p, i) =>
+    `<strong>${i === 0 ? S.subject.label : 'Level ' + i}</strong>: ${p.text.slice(0, 60)}${p.text.length > 60 ? '...' : ''}`
+  ).join('<br>');
+
+  document.getElementById('end-path').innerHTML = pathText || 'A path only you walked.';
+  show('screen-end');
+}
+
+function startOver() {
+  S.path = [];
+  S.depth = 0;
+  S.subject = null;
+  show('screen-mirror');
+}
+
+function sharePath() {
+  const text = `I went ${S.depth} levels deep into ${S.subject ? S.subject.label : 'the unknown'} on The Rabbit Hole.\n\nheuremen.org/rabbit-hole`;
+  if (navigator.share) {
+    navigator.share({ title: 'The Rabbit Hole', text });
+  } else {
+    navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard.'));
+  }
+}
+
+// ─── PWA install ──────────────────────────────────────────────────────────────
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
