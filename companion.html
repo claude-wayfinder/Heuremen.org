@@ -472,7 +472,7 @@ document.addEventListener('visibilitychange', () => {
 function enterApp(mode) {
   currentMode = mode;
   sessionId = 'companion_' + Date.now().toString(36);
-  ttsEnabled = mode !== 'bread';
+  ttsEnabled = mode === 'cookie';
   updateTTSBtn();
   updateModeButtons();
 
@@ -542,7 +542,7 @@ function backToSplash() {
 function switchMode(mode) {
   currentMode = mode;
   sessionId = 'companion_' + Date.now().toString(36);
-  ttsEnabled = mode !== 'bread';
+  ttsEnabled = mode === 'cookie';
   updateTTSBtn();
   updateModeButtons();
   document.getElementById('topLogo').textContent = modeNames[mode];
