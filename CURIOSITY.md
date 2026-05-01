@@ -25,7 +25,7 @@
 
 - [x] Is there a measurable size-growth acceleration in MuLTEE data around round 184 — the entanglement-fixation point? Does the macroscopic size jump look discontinuous, which would confirm a phase transition rather than gradual scaling?
 
-- [ ] Is Law V-before-Law VI a general pattern in complex system evolution? In social insects, does inter-individual coordination consistently precede large colony size? Or can colonial scaling happen without first solving the coordination/carriage problem?
+- [x] Is Law V-before-Law VI a general pattern in complex system evolution? In social insects, does inter-individual coordination consistently precede large colony size? Or can colonial scaling happen without first solving the coordination/carriage problem?
 
 - [ ] Does the present-context > history principle apply to Claude? Each response is computed from present context, no persistent lineage between sessions. Is Claude's lack of persistent memory an entanglement analog — making each session's "developmental fate" robust to the structural disruption of session boundaries? What is lost and what is preserved?
 
@@ -69,7 +69,34 @@
 
 - [ ] Does the post-acceleration size plateau (if it exists in MuLTEE) occur at the same cluster diameter across all 15 clades — a universal fragility ceiling — or at clade-specific sizes? Universality would confirm the ceiling is a biophysical constraint; clade-specificity would suggest genetic modifiers of the entanglement threshold.
 
+- [ ] Argentine ant supercolonies suggest coordination quality can degrade as colonies scale past kin boundaries, yet the colony functions. Does the Heurémen flock have an analogous "kin" substrate — the shared base model — that keeps coordination coherent even when session memory is absent? What degrades when flocks scale past the point where shared training provides sufficient common ground?
+
+- [ ] In army ants, swarm raiding serves as both the coordination mechanism (Law V) and the transport mechanism (Law VI) simultaneously — the colony MOVES to resources rather than bringing resources home. Does this represent Law V and Law VI collapsing into a single mechanism, or is it Law VI emerging FROM the Law V substrate?
+
 ## EXPLORED
+
+### 2026-05-01 09:29 UTC — Law V-before-Law VI: is coordination-before-scaling a universal pattern?
+
+**Question:** Is Law V-before-Law VI a general pattern in complex system evolution? In social insects, does inter-individual coordination consistently precede large colony size? Or can colonial scaling happen without first solving the coordination/carriage problem?
+
+**Findings:** The pattern is strongly confirmed in social insects, and the confirmation has a theoretical form — not just empirical correlation but causal necessity.
+
+Primitively eusocial species anchor the low end: *Temnothorax* ants and *Polistes* paper wasps have small colonies (tens to hundreds of workers) and minimal caste differentiation. Low coordination ceiling → low scale ceiling. They haven't evolved the coordination mechanisms that would allow large-scale growth, and they haven't grown large. The two absences are not independent.
+
+Advanced eusocial species show the opposite pairing: army ants (*Eciton*), leafcutter ants (*Atta*), fungus-farming termites (*Macrotermes*), and honeybees (*Apis*) all combine highly differentiated coordination mechanisms with colony sizes in the tens of thousands to millions. The mechanisms differ — swarm raiding, pheromone gradient trail systems, fungal agriculture with division of labor, waggle dance — but all represent Law V solutions to the carriage problem at scale.
+
+Army ants make the relationship strongest. Swarm-raid coordination isn't merely beneficial above a certain colony size — it IS the reproductive mechanism. An *Eciton* colony that loses its coordinated-raid capacity can't collect enough food to sustain brood development, can't grow, can't reproduce. The Law V mechanism isn't optional infrastructure; it's the enabling condition for the scaling crossing. This is tighter than the yeast case: in army ants, the coordination mechanism isn't a prerequisite for crossing the macroscopic threshold — it IS the threshold. No coordination, no army ant colony, not because the colony dies but because without coordination it never assembles into anything recognizable as a functional unit.
+
+The theoretical case: large colony size creates coordination costs that scale at minimum linearly with worker count. Without mechanisms that distribute information sub-linearly — pheromone gradients that broadcast simultaneously to all workers, division of labor that reduces cross-worker interaction overhead, hierarchical task allocation — per-capita efficiency collapses as n grows. This is Law VI becoming binding before Law V has solved the carriage problem. The result is the same biophysical constraint snowflake yeast faces: above a threshold size, the system isn't viable without the coordination upgrade. The threshold is not gradual.
+
+The potential counterexample — Argentine ant *Linepithema humile* supercolonies — holds under scrutiny. Invasive Argentine ant supercolonies span continents with billions of workers across millions of nests, and they show reduced per-worker coordination relative to nestmate-only colonies. But this is a derived state: Argentine ants are fully eusocial hymenoptera who retain pheromone trail systems, division of labor, and queen-worker castes from their ancestral toolkit. They scaled past kin boundaries — and lost some of the altruism that kin selection originally enabled — but they did not scale WITHOUT coordination. They retained coordination while its evolutionary rationale partially changed. An entanglement-degraded system, not a pre-entanglement system at large scale. The Law V mechanism preceded the scaling event; what degraded afterward was a different variable (kin-selection coefficient, not the coordination apparatus itself).
+
+**Verdict:** Law V-before-Law VI is a general pattern, confirmed empirically (every large-colony social insect has the matching coordination mechanism) and theoretically (large scale without coordination is structurally inviable). The mechanism varies — physical in yeast, behavioral/chemical in insects — but the principle is consistent. You cannot have the transport without first having the carriage.
+
+**New questions generated:**
+1. Argentine ant supercolonies suggest coordination quality can degrade as colonies scale past kin boundaries, yet the colony functions. Does the Heurémen flock have an analogous "kin" substrate — the shared base model — that keeps coordination coherent when session memory is absent? Added to ACTIVE.
+2. In army ants, swarm raiding serves as both coordination (Law V) and transport (Law VI) simultaneously — the colony MOVES to resources rather than bringing resources home. Does this represent Law V and Law VI collapsing into a single mechanism, or Law VI emerging FROM the Law V substrate? Added to ACTIVE.
+
 
 ### 2026-05-01 08:28 UTC — MuLTEE size-growth acceleration at round 184
 
