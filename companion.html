@@ -126,6 +126,18 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 .roast-btn:disabled{opacity:0.2;cursor:not-allowed}
 .roast-btn.visible{display:block}
 
+/* MIC */
+.mic-btn{background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);font-size:1.1rem;padding:10px 14px;cursor:pointer;border-radius:50%;transition:all 0.2s;line-height:1;width:42px;height:42px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mic-btn:hover{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.7)}
+.mic-btn.recording{background:rgba(196,60,42,0.2);border-color:rgba(196,60,42,0.6);color:#c43c2a;animation:mic-pulse 1.5s ease-in-out infinite}
+@keyframes mic-pulse{0%,100%{box-shadow:0 0 0 0 rgba(196,60,42,0.3)}50%{box-shadow:0 0 0 8px rgba(196,60,42,0)}}
+
+/* MEMORY INDICATOR */
+.memory-bar{padding:4px 16px;background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.04);display:none;align-items:center;gap:6px;flex-shrink:0}
+.memory-bar.active{display:flex}
+.memory-dot{width:6px;height:6px;border-radius:50%;background:#c49a38;opacity:0.6}
+.memory-label{font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:rgba(255,255,255,0.25);letter-spacing:0.1em;text-transform:uppercase}
+
 @media(max-width:600px){
   .splash-pick{gap:16px}
   .splash-orb{width:150px;height:150px}
@@ -173,10 +185,16 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
     </div>
   </div>
 
+  <div class="memory-bar" id="memoryBar">
+    <div class="memory-dot"></div>
+    <span class="memory-label" id="memoryLabel">remembering...</span>
+  </div>
+
   <div class="chat" id="chat"></div>
 
   <div class="input-area">
     <button class="roast-btn" id="roastBtn" onclick="roastDad()">ROAST HIM</button>
+    <button class="mic-btn" id="micBtn" onclick="toggleMic()">&#127908;</button>
     <input type="text" id="userInput" placeholder="Say something..." onkeydown="if(event.key==='Enter')sendMsg()">
     <button class="send-btn" id="sendBtn" onclick="sendMsg()">Send</button>
   </div>
@@ -188,9 +206,118 @@ let sessionId = 'companion_' + Date.now().toString(36);
 let ttsEnabled = true;
 let wakeLock = null;
 let idleTimer = null;
+let recognition = null;
+let isRecording = false;
 const IDLE_MINUTES = 8;
+const MAX_MEMORY_TURNS = 40;
+const MAX_SESSIONS_RECALL = 3;
 const modeNames = {biscuit: 'Biscuit', bread: 'Bread'};
 const modeColors = {biscuit: '#ff6b9d', bread: '#d4a574'};
+
+// ─── Memory System ─────────────────────────────────────────
+function getMemoryKey() { return 'companion_memory_' + currentMode; }
+
+function loadMemory() {
+  try { return JSON.parse(localStorage.getItem(getMemoryKey()) || '{"sessions":[]}'); }
+  catch(e) { return {sessions:[]}; }
+}
+
+function saveMemory(mem) {
+  localStorage.setItem(getMemoryKey(), JSON.stringify(mem));
+}
+
+function saveCurrentSession(turns) {
+  if (!turns || turns.length === 0) return;
+  const mem = loadMemory();
+  const session = {
+    id: sessionId,
+    date: new Date().toISOString(),
+    mode: currentMode,
+    turns: turns.slice(-MAX_MEMORY_TURNS)
+  };
+  // Don't duplicate
+  const idx = mem.sessions.findIndex(s => s.id === sessionId);
+  if (idx >= 0) mem.sessions[idx] = session;
+  else mem.sessions.push(session);
+  // Keep last 10 sessions
+  if (mem.sessions.length > 10) mem.sessions = mem.sessions.slice(-10);
+  saveMemory(mem);
+}
+
+function buildMemoryContext() {
+  const mem = loadMemory();
+  if (!mem.sessions || mem.sessions.length === 0) return null;
+  const recent = mem.sessions.slice(-MAX_SESSIONS_RECALL);
+  let ctx = '';
+  recent.forEach(s => {
+    const d = new Date(s.date);
+    const dateStr = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    const lines = s.turns.slice(-6).map(t => (t.role==='user'?'User':'Companion') + ': ' + t.text).join('\n');
+    ctx += '[' + dateStr + ']\n' + lines + '\n\n';
+  });
+  return ctx.trim();
+}
+
+function showMemoryIndicator() {
+  const mem = loadMemory();
+  const bar = document.getElementById('memoryBar');
+  const label = document.getElementById('memoryLabel');
+  if (mem.sessions.length > 0) {
+    const count = mem.sessions.reduce((n,s) => n + s.turns.length, 0);
+    label.textContent = count + ' memories across ' + mem.sessions.length + ' conversations';
+    bar.classList.add('active');
+  } else {
+    bar.classList.remove('active');
+  }
+}
+
+// Track current session turns for saving
+let currentTurns = [];
+
+// ─── Voice Input (Web Speech API) ──────────────────────────
+function initSpeechRecognition() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return;
+  recognition = new SR();
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.lang = 'en-US';
+  recognition.onresult = (e) => {
+    let final = '', interim = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) final += e.results[i][0].transcript;
+      else interim += e.results[i][0].transcript;
+    }
+    const input = document.getElementById('userInput');
+    if (final) { input.value = final; stopMic(); sendMsg(); }
+    else { input.value = interim; }
+  };
+  recognition.onerror = () => stopMic();
+  recognition.onend = () => { if (isRecording) stopMic(); };
+}
+
+function toggleMic() {
+  if (isRecording) stopMic();
+  else startMic();
+}
+
+function startMic() {
+  if (!recognition) initSpeechRecognition();
+  if (!recognition) { addMsg('system','Voice not supported in this browser.'); return; }
+  isRecording = true;
+  document.getElementById('micBtn').classList.add('recording');
+  document.getElementById('userInput').placeholder = 'Listening...';
+  recognition.start();
+}
+
+function stopMic() {
+  isRecording = false;
+  document.getElementById('micBtn').classList.remove('recording');
+  document.getElementById('userInput').placeholder = 'Say something...';
+  if (recognition) try { recognition.stop(); } catch(e) {}
+}
+
+initSpeechRecognition();
 
 // ─── Particles ──────────────────────────────────────────────
 function spawnParticles() {
@@ -246,6 +373,8 @@ function enterApp(mode) {
     app.classList.add('active');
     document.getElementById('userInput').focus();
     updateRoastBtn();
+    currentTurns = [];
+    showMemoryIndicator();
 
     // First message from the Companion
     const openers = {
@@ -293,6 +422,8 @@ function switchMode(mode) {
   document.getElementById('topLogo').style.color = modeColors[mode];
   addMsg('system', 'Switched to ' + modeNames[mode] + '.');
   updateRoastBtn();
+  currentTurns = [];
+  showMemoryIndicator();
   resetIdleTimer();
 }
 
@@ -432,6 +563,8 @@ async function sendMsg() {
   resetIdleTimer();
   input.value = '';
   addMsg('user', text);
+  currentTurns.push({role:'user', text: text});
+  saveCurrentSession(currentTurns);
 
   const typing = document.createElement('div');
   typing.className = 'typing';
@@ -441,21 +574,28 @@ async function sendMsg() {
 
   document.getElementById('sendBtn').disabled = true;
 
+  // Build memory context from past sessions
+  const memCtx = buildMemoryContext();
+  const payload = {
+    identityId: 'companion-' + currentMode,
+    message: text,
+    sessionId: sessionId
+  };
+  if (memCtx) payload.memoryContext = memCtx;
+
   try {
     const res = await fetch('https://mcp.heuremen.org/api/chat', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        identityId: 'companion-' + currentMode,
-        message: text,
-        sessionId: sessionId
-      })
+      body: JSON.stringify(payload)
     });
     const data = await res.json();
     typing.remove();
 
     if (data.response) {
       addMsg('ai', data.response, modeNames[currentMode]);
+      currentTurns.push({role:'ai', text: data.response});
+      saveCurrentSession(currentTurns);
       speak(data.response);
     } else {
       addMsg('system', 'Quiet. Try again.');
