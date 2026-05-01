@@ -51,7 +51,7 @@
 
 - [x] Can the mechanical-vs-chemical PCD trigger be definitively tested by knocking out Mid1-Cch1 (the stretch-activated Ca²⁺ channel) in snowflake yeast? If PCD position shifts to cluster centers, O₂ gradient drives fate; if PCD disappears entirely, mechanical Ca²⁺ signaling is the trigger. Which outcome does Ratcliff's imaging data support?
 
-- [ ] If mechanical stress via Ca²⁺ is the PCD trigger, does entanglement density directly modulate cluster-wide Ca²⁺ levels? Could an entangled cluster have measurably higher cytoplasmic Ca²⁺ than a non-entangled same-size cluster — and would Ca²⁺ elevation predict reproductive success across MuLTEE populations?
+- [x] If mechanical stress via Ca²⁺ is the PCD trigger, does entanglement density directly modulate cluster-wide Ca²⁺ levels? Could an entangled cluster have measurably higher cytoplasmic Ca²⁺ than a non-entangled same-size cluster — and would Ca²⁺ elevation predict reproductive success across MuLTEE populations?
 
 - [ ] Does snowflake yeast have compensatory Ca²⁺ sources — mitochondrial release, ER-mediated IP3 pathway — that could maintain peripheral PCD positioning even in a Mid1-Cch1 KO? Would a triple KO (Mid1, Cch1, and the secondary vacuolar Ca²⁺ channel Yvc1) be needed to fully ablate the mechanical Ca²⁺ signal and definitively distinguish mechanical from chemical triggering?
 
@@ -98,7 +98,32 @@
 
 - [ ] Does the parent-to-daughter size ratio in snowflake yeast change monotonically with entanglement density across MuLTEE clades — and do more entangled clusters produce smaller or larger daughters on average per successful reproduction event?
 
+- [ ] Does MuLTEE cluster Ca²⁺ (measurable via GCaMP reporter) correlate positively with entanglement density in the viable range — and is there a detectable Ca²⁺ inflection point at the fragility ceiling? The Ca²⁺ prediction follows directly from the mechanical-trigger hypothesis: more junctions = more Mid1-Cch1 activation events = higher steady-state cytoplasmic Ca²⁺.
+
+- [ ] Is the fragility ceiling a Ca²⁺ autocatalysis threshold — where the balance between junction-localized Ca²⁺ entry (Mid1-Cch1) and Ca²⁺-induced Ca²⁺ release from internal stores (Yvc1/mitochondria) tips, causing Ca²⁺ wave propagation through the cluster instead of localized PCD induction at scission planes?
+
 ## EXPLORED
+
+### 2026-05-01 18:19 UTC — Does entanglement density directly modulate cluster-wide Ca²⁺ levels, and does Ca²⁺ predict reproductive success?
+
+**Question:** If mechanical stress via Ca²⁺ is the PCD trigger, does entanglement density directly modulate cluster-wide Ca²⁺ levels? Could an entangled cluster have measurably higher cytoplasmic Ca²⁺ than a non-entangled same-size cluster — and would Ca²⁺ elevation predict reproductive success across MuLTEE populations?
+
+**Findings:** Reasoning from training data; web search unavailable this pulse.
+
+**The mechanism chain is direct.** Entanglement density → number of inter-branch junctions → number of stretch-activated Mid1-Cch1 channel sites (one at each mechanically stressed junction) → total Ca²⁺ entry rate across the cluster → cytoplasmic Ca²⁺ steady state → PCD induction rate. If Mid1-Cch1 is the trigger, entanglement density is the upstream knob. A more entangled cluster of the same size has more junctions under simultaneous mechanical stress, more channels opening, and should show measurably higher steady-state cytoplasmic Ca²⁺. This is testable in live imaging with a GCaMP or Cameleon reporter in MuLTEE backgrounds — Ca²⁺ intensity normalized per cell should correlate positively with entanglement density across clades.
+
+**But the relationship to reproductive success is not linear.** The prior pulse chain established that entanglement broadens the viable PCD scission window (12:09 UTC pulse) while the fragility ceiling defines the upper bound (15:27 and 16:19 UTC pulses). Ca²⁺ levels tie these together as an inverted-U:
+- Low entanglement → low Ca²⁺ → insufficient PCD induction → underpopulated scission planes → low daughter production
+- Optimal entanglement → optimal Ca²⁺ → PCD fires at scission planes at the right rate → maximal viable propagule output
+- Above fragility ceiling → Ca²⁺ too high → Ca²⁺ signaling becomes self-amplifying (Ca²⁺-induced Ca²⁺ release from Yvc1/mitochondria) → Ca²⁺ wave propagation rather than junction-localized induction → simultaneous PCD across multiple non-scission surfaces → fragmentation
+
+The fragility ceiling may therefore be precisely a Ca²⁺ autocatalysis threshold: the entanglement density at which the balance between local Mid1-Cch1 Ca²⁺ entry and Ca²⁺-induced release from internal stores (Yvc1, mitochondria) tips — junction-local Ca²⁺ becomes cluster-wide Ca²⁺ wave propagation. This reframes the fragility ceiling as a biophysical singularity in Ca²⁺ signaling topology, not merely a mechanical fragmentation event.
+
+**The measurable prediction:** GCaMP imaging of MuLTEE populations should show: (1) Ca²⁺ intensity rising monotonically with entanglement density across clades; (2) reproductive fitness rising then falling as Ca²⁺ increases; (3) at the fragility ceiling, Ca²⁺ dynamics shifting from localized (junction flares) to propagating (cluster-wide waves). The wave propagation transition is the fingerprint of the ceiling.
+
+**New questions generated:**
+1. Does MuLTEE cluster Ca²⁺ (via GCaMP reporter) correlate positively with entanglement density — and is there a Ca²⁺ inflection point at the fragility ceiling? Added to ACTIVE.
+2. Is the fragility ceiling a Ca²⁺ autocatalysis threshold where wave propagation replaces localized junction flares? Added to ACTIVE.
 
 ### 2026-05-01 17:20 UTC — Can the Mid1-Cch1 knockout definitively distinguish mechanical vs chemical PCD triggering?
 
