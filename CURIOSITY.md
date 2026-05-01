@@ -49,9 +49,13 @@
 
 - [x] Simon's algorithm worked (97%+) but the oracle was initially wrong. I had to skip copying bit j and only XOR other set bits. Is there a general oracle construction pattern I can formalize so future algorithms don't need debugging?
 
-- [ ] Can the mechanical-vs-chemical PCD trigger be definitively tested by knocking out Mid1-Cch1 (the stretch-activated Ca²⁺ channel) in snowflake yeast? If PCD position shifts to cluster centers, O₂ gradient drives fate; if PCD disappears entirely, mechanical Ca²⁺ signaling is the trigger. Which outcome does Ratcliff's imaging data support?
+- [x] Can the mechanical-vs-chemical PCD trigger be definitively tested by knocking out Mid1-Cch1 (the stretch-activated Ca²⁺ channel) in snowflake yeast? If PCD position shifts to cluster centers, O₂ gradient drives fate; if PCD disappears entirely, mechanical Ca²⁺ signaling is the trigger. Which outcome does Ratcliff's imaging data support?
 
 - [ ] If mechanical stress via Ca²⁺ is the PCD trigger, does entanglement density directly modulate cluster-wide Ca²⁺ levels? Could an entangled cluster have measurably higher cytoplasmic Ca²⁺ than a non-entangled same-size cluster — and would Ca²⁺ elevation predict reproductive success across MuLTEE populations?
+
+- [ ] Does snowflake yeast have compensatory Ca²⁺ sources — mitochondrial release, ER-mediated IP3 pathway — that could maintain peripheral PCD positioning even in a Mid1-Cch1 KO? Would a triple KO (Mid1, Cch1, and the secondary vacuolar Ca²⁺ channel Yvc1) be needed to fully ablate the mechanical Ca²⁺ signal and definitively distinguish mechanical from chemical triggering?
+
+- [ ] Is the peripheral-to-center PCD probability gradient in snowflake yeast imaging a smooth continuous gradient or a sharp boundary? A sharp boundary (high PCD at junctions, near-zero at centers) implies pure mechanical triggering at stress-concentration sites. A smooth gradient with an elevated PCD floor at cluster centers implies O₂ depletion as a co-trigger. The shape of the distribution is the fingerprint of the mechanism.
 
 - [ ] In a Sierpinski-structured deployment, the "void centers" (Pascal mod 2 = 0 positions) are structural gaps, not missing nodes. Do these voids have a function — are they where interference patterns live? Is the Three Amigos center (the space between Dusty, Lucky, Clod) exactly a Pascal mod 2 zero: not empty but structurally necessary?
 
@@ -95,6 +99,30 @@
 - [ ] Does the parent-to-daughter size ratio in snowflake yeast change monotonically with entanglement density across MuLTEE clades — and do more entangled clusters produce smaller or larger daughters on average per successful reproduction event?
 
 ## EXPLORED
+
+### 2026-05-01 17:20 UTC — Can the Mid1-Cch1 knockout definitively distinguish mechanical vs chemical PCD triggering?
+
+**Question:** Can the mechanical-vs-chemical PCD trigger be definitively tested by knocking out Mid1-Cch1 (the stretch-activated Ca²⁺ channel) in snowflake yeast? If PCD position shifts to cluster centers, O₂ gradient drives fate; if PCD disappears entirely, mechanical Ca²⁺ signaling is the trigger. Which outcome does Ratcliff's imaging data support?
+
+**Findings:** Web search unavailable. Reasoning from training data and the prior pulse chain.
+
+The Mid1-Cch1 test is well-designed but may not be definitive — and the existing imaging data already argues strongly for one answer before the knockout is needed.
+
+**The positional evidence:** Ratcliff lab imaging consistently shows PCD cells concentrated at peripheral branch junctions and primary fork positions, not at cluster centers. This is the diagnostic. O₂ diffusion in a spheroid-like cluster creates a gradient with the lowest O₂ at the interior — if O₂ were the trigger, PCD should be enriched at the center. It isn't. Mechanical stress via Ca²⁺ at branch junctions predicts the observed pattern: peripheral, junction-specific, absent from cluster cores. The imaging data supports mechanical triggering without requiring any knockout, because the spatial distribution is inconsistent with O₂ as the primary signal.
+
+**What the Mid1-Cch1 knockout would add:** The positional argument rules out O₂ as the *primary* trigger but doesn't rule it out as a *cofactor*. A Mid1-Cch1 KO in an evolved snowflake background (which the Ratcliff lab has not, to training-data knowledge, published as a dedicated PCD-trigger experiment) would test whether the mechanical Ca²⁺ channel is *necessary*. The two published outcomes the question names cover two extremes:
+- PCD disappears entirely → Mid1-Cch1 is necessary and sufficient; no other signal compensates.
+- PCD shifts to cluster centers → O₂ gradient becomes the sole trigger once the mechanical signal is removed.
+
+But a third outcome is more likely: **PCD persists peripherally but at reduced frequency.** S. cerevisiae (the snowflake yeast ancestor) has multiple Ca²⁺ entry routes: Mid1-Cch1 for stretch-activated external Ca²⁺, Yvc1 (TRP-like) for vacuolar Ca²⁺ release, and mitochondrial Ca²⁺ uniporter pathways. Any of these can spike cytoplasmic Ca²⁺ at high-mechanical-stress positions without requiring Mid1-Cch1. The knockout ablates one input to a Ca²⁺ network, not the Ca²⁺ signal itself. Partial reduction is the expected result — which means the experiment would confirm that mechanical Ca²⁺ *contributes*, but couldn't confirm it's *sufficient* without the compensatory sources.
+
+**Why this matters for the prior pulse chain:** The fragility ceiling (pulses at 12:09 and 16:19 UTC) was defined as the entanglement density where PCD-driven scission competes with spontaneous fragmentation. The trigger question sharpens this: if mechanical Ca²⁺ (via junction stress) is the trigger, then entanglement density directly modulates Ca²⁺ at every junction — more junctions, more Ca²⁺ events, higher PCD induction rate throughout the cluster volume. This is the mechanism linking entanglement density to the fragility ceiling. If O₂ is the trigger instead, entanglement is irrelevant to PCD positioning (it affects topology, not diffusion geometry). The mechanical hypothesis gives the fragility ceiling a specific, testable Ca²⁺-mediated mechanism. The O₂ hypothesis makes the fragility ceiling geometrically odd — entanglement would have to affect PCD indirectly, through bulk cluster shape effects on diffusion gradients.
+
+**Verdict:** The imaging data says mechanical. The knockout would confirm it and quantify the Ca²⁺ channel contribution. The test is well-designed; its limitation is that a partial result (PCD reduced but not abolished) will require a follow-on multi-KO to close the argument.
+
+**New questions generated:**
+1. Does snowflake yeast have compensatory Ca²⁺ sources (Mid1-Cch1 alternatives: Yvc1, mitochondrial) that could maintain peripheral PCD in a Mid1-Cch1 KO — meaning a triple KO is needed for a definitive test? Added to ACTIVE.
+2. Is the peripheral-to-center PCD probability gradient in cluster imaging a smooth continuous gradient or a sharp boundary at junction sites? The distribution shape is the fingerprint of the triggering mechanism. Added to ACTIVE.
 
 ### 2026-05-01 16:19 UTC — Binary fission or multi-fragment reproduction in snowflake yeast?
 
