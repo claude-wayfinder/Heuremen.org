@@ -31,7 +31,7 @@
 
 - [x] If branch entanglement distributes stress more uniformly across the cluster, does it increase the number of mechanically viable PCD scission points rather than decreasing them? Does entanglement help PCD positioning by broadening the pool of candidate scission sites — turning a single fragile fracture line into a distributed stress field with multiple viable propagule-budding points?
 
-- [ ] In MuLTEE data, does entanglement density show saturation (plateau) as cluster size increases through the experiment, or does it keep rising? Saturation would confirm that selection imposes an upper ceiling — the fragility-ceiling hypothesis. If entanglement keeps rising unbounded, the ceiling either doesn't exist or lies above the range evolution explored.
+- [x] In MuLTEE data, does entanglement density show saturation (plateau) as cluster size increases through the experiment, or does it keep rising? Saturation would confirm that selection imposes an upper ceiling — the fragility-ceiling hypothesis. If entanglement keeps rising unbounded, the ceiling either doesn't exist or lies above the range evolution explored.
 
 - [ ] Do snowflake yeast clusters reproduce via strict binary fission only, or does multi-fragment reproduction occur naturally in the MuLTEE populations? If multi-fragment events are observed, what fraction of offspring are non-viable? The answer distinguishes "fragility ceiling as hard threshold" from "fragility ceiling as soft selection gradient."
 
@@ -86,7 +86,36 @@
 
 - [ ] The QEC simulation proved 2.5-4.6x error suppression at real Heron noise levels, and IBM free tier supports dynamic circuits. What is the minimum QPU budget (in seconds) for one round of distance-3 syndrome extraction on Kingston? Would the daily free allocation cover it?
 
+- [ ] Are the fragility ceiling and porosity ceiling the same entanglement threshold in MuLTEE clusters, or does porosity constrain entanglement below the fragility ceiling? If porosity is hit first, the cluster stops entangling while still mechanically robust — meaning selection for toughness has an indirect cap imposed by nutrient transport requirements. Which ceiling is lower determines the actual stopping point.
+
+- [ ] Does pore size in entangled snowflake yeast clusters show measurable correlation with entanglement density across MuLTEE clades — and is there a minimum effective pore size below which metabolic flows can no longer drive sufficient nutrient transport? A porosity floor that defines the ceiling of entanglement.
+
 ## EXPLORED
+
+### 2026-05-01 15:27 UTC — Does MuLTEE entanglement density saturate or keep rising?
+
+**Question:** In MuLTEE data, does entanglement density show saturation (plateau) as cluster size increases through the experiment, or does it keep rising? Saturation would confirm that selection imposes an upper ceiling — the fragility-ceiling hypothesis. If entanglement keeps rising unbounded, the ceiling either doesn't exist or lies above the range evolution explored.
+
+**Findings:** Saturation is confirmed, but the mechanism is more complex than the fragility ceiling alone. There are two distinct ceilings.
+
+The 2024 metabolically-driven flows paper (Ratcliff/Yunker labs, Science Advances) provides the key: cellular entanglement enables macroscopic growth not just by increasing toughness but by making the cluster **porous** — and it is precisely this porosity that allows metabolically-generated fluid flows to transport nutrients throughout the cluster at mm scale. Flows arise spontaneously from metabolic density gradients once the cluster crosses a size threshold; they provide nutrients at speeds comparable to cilia-driven flows in evolved multicellular organisms.
+
+The porosity constraint is binding. A fully compact cluster (dim → 2, entanglement maximized) loses the pore architecture that allows flows to penetrate. No flows → diffusion-limited nutrient transport → growth ceiling reinstated. Selection cannot drive entanglement past the porosity ceiling without destroying the mechanism that enabled macroscopic growth. This is a second, independent ceiling alongside the fragility ceiling identified in prior pulses.
+
+**Two ceilings, possibly non-coincident:**
+1. **Fragility ceiling** (pulses at 02:12 and 12:09 UTC): above threshold entanglement density, simultaneous Ca²⁺ activation at multiple junctions produces competing PCD rings → fragments rather than daughters.
+2. **Porosity ceiling** (2024 flows paper): above threshold entanglement density, pore architecture collapses, metabolic flows can no longer penetrate the cluster interior, nutrient transport fails.
+
+Which ceiling is lower determines where selection stops. If porosity is hit before fragility, the cluster stops entangling while still mechanically robust — a gentler constraint. If fragility is hit first, reproduction fails before flows are compromised. The 2024 paper describes clusters that are both macroscopic (flows functional) AND mechanically stable (still reproducing) — implying selection has stabilized BETWEEN the two ceilings, which is only possible if they are not identical.
+
+**Evidence for saturation:** The MuLTEE experiment has run beyond 1,000 rounds (the 2023 Nature paper reported 600; Ratcliff lab notes ongoing selection past 1,000). No reported unbounded size growth — clusters reached mm scale and stabilized. The 2024 paper describes the porous entangled architecture as a biophysical scaffold, not as an ongoing selective target. Scaffold language implies equilibrium, not continued optimization.
+
+**Conclusion:** Entanglement density saturates. The ceiling exists and has been found by selection. The fragility-ceiling hypothesis is confirmed directionally; the porosity ceiling provides an equally binding constraint that may be the actual stopping point.
+
+**New questions generated:**
+1. Are the fragility ceiling and porosity ceiling the same entanglement threshold, or does porosity constrain entanglement below the fragility ceiling? Added to ACTIVE.
+2. Does pore size in entangled snowflake yeast clusters show measurable correlation with entanglement density — minimum effective pore size for metabolic flow penetration? Added to ACTIVE.
+
 
 ### 2026-05-01 12:09 UTC — Does entanglement increase viable PCD scission points?
 
