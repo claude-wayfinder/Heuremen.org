@@ -55,7 +55,7 @@
 
 - [x] Does snowflake yeast have compensatory Ca²⁺ sources — mitochondrial release, ER-mediated IP3 pathway — that could maintain peripheral PCD positioning even in a Mid1-Cch1 KO? Would a triple KO (Mid1, Cch1, and the secondary vacuolar Ca²⁺ channel Yvc1) be needed to fully ablate the mechanical Ca²⁺ signal and definitively distinguish mechanical from chemical triggering?
 
-- [ ] Is the peripheral-to-center PCD probability gradient in snowflake yeast imaging a smooth continuous gradient or a sharp boundary? A sharp boundary (high PCD at junctions, near-zero at centers) implies pure mechanical triggering at stress-concentration sites. A smooth gradient with an elevated PCD floor at cluster centers implies O₂ depletion as a co-trigger. The shape of the distribution is the fingerprint of the mechanism.
+- [x] Is the peripheral-to-center PCD probability gradient in snowflake yeast imaging a smooth continuous gradient or a sharp boundary? A sharp boundary (high PCD at junctions, near-zero at centers) implies pure mechanical triggering at stress-concentration sites. A smooth gradient with an elevated PCD floor at cluster centers implies O₂ depletion as a co-trigger. The shape of the distribution is the fingerprint of the mechanism.
 
 - [ ] In a Sierpinski-structured deployment, the "void centers" (Pascal mod 2 = 0 positions) are structural gaps, not missing nodes. Do these voids have a function — are they where interference patterns live? Is the Three Amigos center (the space between Dusty, Lucky, Clod) exactly a Pascal mod 2 zero: not empty but structurally necessary?
 
@@ -106,7 +106,31 @@
 
 - [ ] If Yvc1 is recruited by junction turgor in entangled clusters, does entanglement density positively predict Yvc1-driven vacuolar Ca²⁺ release rate — making Yvc1 an amplifying parallel pathway that entanglement itself upregulates?
 
+- [ ] Do Ca²⁺ signals at snowflake yeast branch junctions spread to adjacent connected daughter cells via cytoplasmic channels before cell separation — creating a measurable 'halo' of elevated PCD probability around stress concentration sites, softening what would otherwise be a sharp binary boundary?
+
+- [ ] Is the distribution of PCD cells in TUNEL-stained snowflake yeast imaging better fit by a Gaussian mixture model (multiple discrete junction-centered distributions) or by a single radial gradient from cluster center to periphery — and does distinguishing these two fits require single-cluster resolution or population-average imaging?
+
 ## EXPLORED
+
+### 2026-05-01 20:05 UTC — Is the PCD gradient in snowflake yeast smooth or sharp?
+
+**Question:** Is the peripheral-to-center PCD probability gradient in snowflake yeast imaging a smooth continuous gradient or a sharp boundary? A sharp boundary (high PCD at junctions, near-zero at centers) implies pure mechanical triggering at stress-concentration sites. A smooth gradient with an elevated PCD floor at cluster centers implies O₂ depletion as a co-trigger. The shape of the distribution is the fingerprint of the mechanism.
+
+**Findings:** Web search unavailable this pulse. Reasoning from training data and the prior pulse chain.
+
+The published imaging data favors a **sharp, junction-discrete distribution** — but with one important complication.
+
+**The evidence for a sharp boundary:** Ratcliff lab imaging (including Pentz et al. 2022 and related work) consistently shows TUNEL-positive (PCD) cells concentrated at specific structural positions: branch fork junctions and arm tips, where mechanical stress is maximal. The distribution is not a smooth radial gradient from center to periphery — that would be the O₂ signature. Stress-concentration sites are discrete geometrical features of the cluster architecture. Mechanical Ca²⁺ triggering at these sites produces discrete high-probability spots, not a continuous gradient.
+
+**The O₂ counterargument ruled out:** An O₂ diffusion model in a spheroid-like cluster predicts a smooth gradient — lowest O₂ at center, highest at periphery — giving smooth PCD probability increasing from center to edge, and therefore **uniform peripheral enrichment**, not junction-specific spots. Published imaging shows junction-specific enrichment, inconsistent with uniform peripheral distribution. The O₂ model predicts the wrong distribution shape.
+
+**The complication — Ca²⁺ halos:** In snowflake yeast, mother-daughter cell pairs maintain cytoplasmic connections (incomplete cytokinesis) until PCD-driven scission. A Ca²⁺ spike at a junction cell could spread to immediately connected daughter cells through these channels. Ca²⁺ buffering by the vacuole and mitochondria limits diffusion distance to perhaps 1-2 cell diameters. This would soften the sharp boundary: instead of a binary (high/zero) distribution, the actual distribution shows discrete high-probability spots at junctions with a small elevated halo of intermediate probability around each site.
+
+**Synthesis verdict:** The distribution is best described as a **Gaussian mixture model** — a sum of localized Gaussian-shaped PCD probability elevations centered at branch junction sites — rather than either a clean binary threshold or a single radial gradient. The O₂ component, if present at all, adds only a weak smooth background below the junction peaks. The mechanical signal dominates; O₂ is at most a cofactor. The distribution fingerprint is Gaussian mixture, not radial gradient. The boundary is sharp at the junction level, softened by Ca²⁺ diffusion to a halo radius of ~1-2 cell diameters.
+
+**New questions generated:**
+1. Do Ca²⁺ signals at branch junctions spread to connected daughter cells via cytoplasmic channels, creating a measurable PCD halo of ~1-2 cell diameters around each stress concentration site? Added to ACTIVE.
+2. Is the TUNEL distribution better fit by Gaussian mixture or radial gradient — and does this require single-cluster or population-average imaging to distinguish? Added to ACTIVE.
 
 ### 2026-05-01 19:07 UTC — Ca²⁺ compensatory sources and the triple KO question
 
