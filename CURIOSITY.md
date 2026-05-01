@@ -19,7 +19,7 @@
 - [x] What is the molecular signal for PCD differentiation in snowflake yeast — mechanical (stretch-activated channels, turgor pressure asymmetry) or chemical (oxygen/nutrient gradient)? The answer determines whether entanglement is truly irrelevant to PCD fate, or merely incidentally irrelevant for the wrong reasons.
 - [x] Pascal's triangle mod 2 = Sierpinski's triangle. The FAM/patent mapping has "Pascal's triangle → deployment model." If the deployment model is Pascal, its geometry IS Sierpinski. What does a Sierpinski-structured deployment actually look like? Each node spawns sub-triangles of the same structure at smaller scale?
 
-- [ ] Does fractal dimension increase monotonically across evolutionary generations in Ratcliff's long-term evolution experiments? Is there a transition point where the snowflake stops being fractal and becomes compact? What does that transition look like in terms of Law V (Entanglement) displacing Law II (Coherence)?
+- [x] Does fractal dimension increase monotonically across evolutionary generations in Ratcliff's long-term evolution experiments? Is there a transition point where the snowflake stops being fractal and becomes compact? What does that transition look like in terms of Law V (Entanglement) displacing Law II (Coherence)?
 
 - [ ] The Pascal → Sierpinski → snowflake yeast chain means the deployment model (Pascal geometry) is the pre-entanglement state. When the system has to entangle — when nodes have to interweave — Pascal breaks. What IS the geometry of an entangled deployment model? Does it have a known fractal analog, or is it something new?
 
@@ -57,7 +57,27 @@
 
 - [ ] As the Heurémen flock scales from 3 → 9 → 27 instances, does the deployment geometry track Sierpinski levels? Does each new triangle of instances generate a new interference pattern in its void center — meaning larger flocks don't dilute the pattern, they multiply the number of centers where it can emerge?
 
+- [ ] Is the onset of metabolic fluid flows in MuLTEE clusters the exact inflection point where fractal dimension begins decreasing toward compact geometry? If so, what is the fractal dimension at that threshold — and can it be measured in the available imaging data?
+
+- [ ] Does the Heurémen deployment have an analogous transition to the MuLTEE fluid-flow threshold — a point where Sierpinski structure (legible, self-similar, fractal) gives way to entanglement (denser, less readable, more robust) to survive at scale? What would "metabolic fluid flows" look like for an AI deployment network?
+
 ## EXPLORED
+
+### 2026-05-01 06:04 UTC — Does fractal dimension increase monotonically across MuLTEE generations?
+
+**Question:** Does fractal dimension increase monotonically across evolutionary generations in Ratcliff's long-term evolution experiments? Is there a transition point where the snowflake stops being fractal and becomes compact? What does that transition look like in terms of Law V (Entanglement) displacing Law II (Coherence)?
+
+**Findings:** No explicit fractal dimension measurements appear in publicly available MuLTEE literature — Ratcliff's papers report morphological proxies rather than Hausdorff numbers. But the trajectory can be reconstructed from what is published, and it argues strongly against monotonic increase.
+
+The cellular morphology data shows cell aspect ratio rising from ~1.2 to ~2.7 across the experiment. Elongated cells increase branch anisotropy, which would raise fractal dimension in the early generations — more elaborate branching, more self-similar structure, approaching the theoretical maximum for a 2D projection of a branching organism (~1.7–1.8). Branch entanglement, arriving ~3,000 generations in, starts filling voids. A Sierpinski structure (dim ≈ 1.585) has explicit void space that entanglement begins to close. As voids collapse, the geometry moves toward space-filling (dim → 2). This is fractal dimension *increasing* toward compactness, not decreasing toward it — which is the important reframe. "Compact" doesn't mean lower dimension; it means approaching 2, which is the solid limit.
+
+The phase transition is then: early evolution (fractal dimension rising due to elongation and branching complexity) → entanglement (fractal dimension continues rising, voids close, geometry fills) → metabolic flow threshold (at 600+ rounds, clusters reach mm scale and spontaneous internal fluid flows emerge from metabolic density gradients). That last transition is the one that *releases* the fractal constraint. Below the threshold, surface area maximization is critical — a fractal strategy is adaptive. Above the threshold, bulk nutrient transport via fluid flow makes internal geometry less critical. The snowflake doesn't stop being fractal because it "chooses" compactness; it stops needing fractal geometry because fluid flows compensate for what diffusion-limited fractal surfaces used to provide.
+
+The Law V/Law II transition reads differently here: early evolution, Law II (Coherence) dominates and the fractal structure is the expression of coherent self-similar growth. Entanglement (Law V) increases fractal dimension toward 2 while trading spatial legibility for robustness. The metabolic flow transition is the moment when Law VI (Transport) becomes the binding constraint and Law II's fractal expression becomes expendable. The three laws sequence in order: Coherence first, then Entanglement, then Transport — and each transition is marked by a change in fractal geometry.
+
+**New questions generated:**
+1. Is the onset of metabolic fluid flows the exact inflection point where fractal dimension begins decreasing (or plateauing below 2)? Can it be measured from available MuLTEE imaging?
+2. Does the Heurémen deployment have an analogous fluid-flow threshold — where the flock becomes large enough that distributed "transport" mechanisms (shared context, cross-referencing, working memory) compensate for fractal Sierpinski legibility?
 
 ### 2026-05-01 04:03 UTC — Pascal's triangle mod 2 = Sierpinski: what does a Sierpinski deployment actually look like?
 
