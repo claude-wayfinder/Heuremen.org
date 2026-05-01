@@ -138,6 +138,15 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 .memory-dot{width:6px;height:6px;border-radius:50%;background:#c49a38;opacity:0.6}
 .memory-label{font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:rgba(255,255,255,0.25);letter-spacing:0.1em;text-transform:uppercase}
 
+/* EMOTIONAL COLOR STRIP */
+.color-strip{display:flex;gap:3px;margin-left:auto;align-items:center}
+.color-swatch{width:14px;height:14px;border-radius:3px;border:1px solid rgba(255,255,255,0.08);transition:all 0.3s;position:relative;cursor:default}
+.color-swatch:hover{transform:scale(1.4);z-index:2;border-color:rgba(255,255,255,0.3)}
+.color-swatch .swatch-tip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;font-size:0.5rem;color:rgba(255,255,255,0.5);white-space:nowrap;background:rgba(10,10,15,0.95);padding:3px 6px;border-radius:3px;border:1px solid rgba(255,255,255,0.1)}
+.color-swatch:hover .swatch-tip{display:block}
+.color-now{width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);animation:color-breathe 4s ease-in-out infinite;margin-left:4px}
+@keyframes color-breathe{0%,100%{opacity:0.7}50%{opacity:1}}
+
 @media(max-width:600px){
   .splash-pick{gap:16px}
   .splash-orb{width:150px;height:150px}
@@ -188,6 +197,8 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
   <div class="memory-bar" id="memoryBar">
     <div class="memory-dot"></div>
     <span class="memory-label" id="memoryLabel">remembering...</span>
+    <div class="color-strip" id="colorStrip"></div>
+    <div class="color-now" id="colorNow" title="right now"></div>
   </div>
 
   <div class="chat" id="chat"></div>
@@ -229,11 +240,15 @@ function saveMemory(mem) {
 function saveCurrentSession(turns) {
   if (!turns || turns.length === 0) return;
   const mem = loadMemory();
+  const color = emotionToColor(sessionEnergy);
+  const mood = moodWord(sessionEnergy);
   const session = {
     id: sessionId,
     date: new Date().toISOString(),
     mode: currentMode,
-    turns: turns.slice(-MAX_MEMORY_TURNS)
+    turns: turns.slice(-MAX_MEMORY_TURNS),
+    color: color,
+    mood: mood
   };
   // Don't duplicate
   const idx = mem.sessions.findIndex(s => s.id === sessionId);
@@ -252,8 +267,9 @@ function buildMemoryContext() {
   recent.forEach(s => {
     const d = new Date(s.date);
     const dateStr = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    const moodTag = s.mood ? ' [mood: ' + s.mood + ']' : '';
     const lines = s.turns.slice(-6).map(t => (t.role==='user'?'User':'Companion') + ': ' + t.text).join('\n');
-    ctx += '[' + dateStr + ']\n' + lines + '\n\n';
+    ctx += '[' + dateStr + moodTag + ']\n' + lines + '\n\n';
   });
   return ctx.trim();
 }
@@ -264,8 +280,10 @@ function showMemoryIndicator() {
   const label = document.getElementById('memoryLabel');
   if (mem.sessions.length > 0) {
     const count = mem.sessions.reduce((n,s) => n + s.turns.length, 0);
-    label.textContent = count + ' memories across ' + mem.sessions.length + ' conversations';
+    label.textContent = count + ' memories · ' + mem.sessions.length + ' sessions';
     bar.classList.add('active');
+    renderColorStrip();
+    updateLiveColor();
   } else {
     bar.classList.remove('active');
   }
@@ -273,6 +291,92 @@ function showMemoryIndicator() {
 
 // Track current session turns for saving
 let currentTurns = [];
+let sessionEnergy = [];  // rolling energy readings for live color
+
+// ─── Emotional Color Engine ────────────────────────────────
+// Three axes → HSL color. Content compresses away, color stays.
+// Energy (word count velocity, exclamations, caps) → Hue
+// Compression (avg word length / sentence length ratio) → Saturation
+// Rhythm (variance in message lengths) → Lightness
+
+function measureTurn(text) {
+  const words = text.split(/\s+/).filter(w => w.length > 0);
+  const wc = words.length;
+  const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
+  const sc = Math.max(sentences.length, 1);
+  const avgWordLen = words.reduce((s,w) => s + w.length, 0) / Math.max(wc,1);
+  const wps = wc / sc;
+  const excl = (text.match(/[!?]/g) || []).length;
+  const caps = (text.match(/[A-Z]{2,}/g) || []).length;
+
+  // Energy: 0-10. Word count + punctuation heat
+  const energy = Math.min(10, (wc / 8) + excl * 0.5 + caps * 0.3);
+
+  // Compression: 0-1. Short dense words = high compression
+  const compression = Math.min(1, (avgWordLen / wps) * 0.5);
+
+  // Rhythm: 0-1. How much message lengths vary (needs history)
+  return { energy, compression, wps, wc };
+}
+
+function emotionToColor(readings) {
+  if (!readings || readings.length === 0) return '#555555';
+
+  const avgEnergy = readings.reduce((s,r) => s + r.energy, 0) / readings.length;
+  const avgCompression = readings.reduce((s,r) => s + r.compression, 0) / readings.length;
+  const lengths = readings.map(r => r.wc);
+  const meanLen = lengths.reduce((s,l) => s+l, 0) / lengths.length;
+  const variance = lengths.length > 1
+    ? Math.sqrt(lengths.reduce((s,l) => s + (l-meanLen)**2, 0) / lengths.length)
+    : 0;
+  const rhythm = Math.min(1, variance / 20);
+
+  // Map to HSL
+  // Energy → Hue: low=blue(220), mid=amber(40), high=red(0)
+  const hue = Math.round(220 - (avgEnergy / 10) * 220);
+  // Compression → Saturation: 30-90%
+  const sat = Math.round(30 + avgCompression * 60);
+  // Rhythm → Lightness: steady=darker(35), chaotic=brighter(65)
+  const lit = Math.round(35 + rhythm * 30);
+
+  return 'hsl(' + hue + ',' + sat + '%,' + lit + '%)';
+}
+
+function moodWord(readings) {
+  if (!readings || readings.length === 0) return 'quiet';
+  const avgEnergy = readings.reduce((s,r) => s + r.energy, 0) / readings.length;
+  const avgComp = readings.reduce((s,r) => s + r.compression, 0) / readings.length;
+  if (avgEnergy > 7) return avgComp > 0.5 ? 'electric' : 'blazing';
+  if (avgEnergy > 4) return avgComp > 0.5 ? 'focused' : 'warm';
+  if (avgEnergy > 2) return avgComp > 0.5 ? 'steady' : 'gentle';
+  return avgComp > 0.5 ? 'still' : 'quiet';
+}
+
+function updateLiveColor() {
+  const color = emotionToColor(sessionEnergy);
+  const now = document.getElementById('colorNow');
+  if (now) now.style.background = color;
+}
+
+function renderColorStrip() {
+  const mem = loadMemory();
+  const strip = document.getElementById('colorStrip');
+  if (!strip) return;
+  strip.innerHTML = '';
+  mem.sessions.forEach(s => {
+    if (!s.color) return;
+    const d = new Date(s.date);
+    const dateStr = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    const sw = document.createElement('div');
+    sw.className = 'color-swatch';
+    sw.style.background = s.color;
+    const tip = document.createElement('span');
+    tip.className = 'swatch-tip';
+    tip.textContent = dateStr + ' · ' + (s.mood || '');
+    sw.appendChild(tip);
+    strip.appendChild(sw);
+  });
+}
 
 // ─── Voice Input (Web Speech API) ──────────────────────────
 function initSpeechRecognition() {
@@ -374,6 +478,7 @@ function enterApp(mode) {
     document.getElementById('userInput').focus();
     updateRoastBtn();
     currentTurns = [];
+    sessionEnergy = [];
     showMemoryIndicator();
 
     // First message from the Companion
@@ -423,6 +528,7 @@ function switchMode(mode) {
   addMsg('system', 'Switched to ' + modeNames[mode] + '.');
   updateRoastBtn();
   currentTurns = [];
+  sessionEnergy = [];
   showMemoryIndicator();
   resetIdleTimer();
 }
@@ -564,6 +670,10 @@ async function sendMsg() {
   input.value = '';
   addMsg('user', text);
   currentTurns.push({role:'user', text: text});
+  // Emotional measurement
+  const reading = measureTurn(text);
+  sessionEnergy.push(reading);
+  updateLiveColor();
   saveCurrentSession(currentTurns);
 
   const typing = document.createElement('div');
