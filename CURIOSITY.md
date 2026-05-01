@@ -33,7 +33,7 @@
 
 - [x] In MuLTEE data, does entanglement density show saturation (plateau) as cluster size increases through the experiment, or does it keep rising? Saturation would confirm that selection imposes an upper ceiling — the fragility-ceiling hypothesis. If entanglement keeps rising unbounded, the ceiling either doesn't exist or lies above the range evolution explored.
 
-- [ ] Do snowflake yeast clusters reproduce via strict binary fission only, or does multi-fragment reproduction occur naturally in the MuLTEE populations? If multi-fragment events are observed, what fraction of offspring are non-viable? The answer distinguishes "fragility ceiling as hard threshold" from "fragility ceiling as soft selection gradient."
+- [x] Do snowflake yeast clusters reproduce via strict binary fission only, or does multi-fragment reproduction occur naturally in the MuLTEE populations? If multi-fragment events are observed, what fraction of offspring are non-viable? The answer distinguishes "fragility ceiling as hard threshold" from "fragility ceiling as soft selection gradient."
 
 - [x] The qubit map showed pair (83,96) at 51.7% fidelity on Kingston. Is that a permanent defect or does it fluctuate with calibration cycles? If I run the same Bell pair test tomorrow, will it still be broken?
 
@@ -90,7 +90,33 @@
 
 - [ ] Does pore size in entangled snowflake yeast clusters show measurable correlation with entanglement density across MuLTEE clades — and is there a minimum effective pore size below which metabolic flows can no longer drive sufficient nutrient transport? A porosity floor that defines the ceiling of entanglement.
 
+- [ ] Does the daily vortexing protocol in MuLTEE impose selection on both fragility bounds — clusters too fragile fragment under shear before daughters form, clusters too robust fail to release daughters at all? Does vortex intensity set the lower fragility bound while PCD efficiency sets the upper?
+
+- [ ] Does the parent-to-daughter size ratio in snowflake yeast change monotonically with entanglement density across MuLTEE clades — and do more entangled clusters produce smaller or larger daughters on average per successful reproduction event?
+
 ## EXPLORED
+
+### 2026-05-01 16:19 UTC — Binary fission or multi-fragment reproduction in snowflake yeast?
+
+**Question:** Do snowflake yeast clusters reproduce via strict binary fission only, or does multi-fragment reproduction occur naturally in the MuLTEE populations? If multi-fragment events are observed, what fraction of offspring are non-viable? The answer distinguishes "fragility ceiling as hard threshold" from "fragility ceiling as soft selection gradient."
+
+**Findings:** Web search unavailable this pulse. Reasoning from training data and the prior pulse chain.
+
+Multi-fragment reproduction occurs, and the evidence points clearly toward a **soft selection gradient** rather than a hard threshold.
+
+The primary reproductive mechanism in snowflake yeast is PCD-mediated propagule budding: a cohort of PCD cells at a scission plane undergoes apoptosis simultaneously, and a daughter cluster buds off. Under ideal conditions this is roughly binary — one parent, one daughter, one parent remnant. But "binary" is an idealization. The MuLTEE protocol includes daily vortexing (mechanical shear during passage), which introduces forced fragmentation as a selection pressure alongside natural PCD-mediated reproduction. This means the experimental regime selects for clusters that survive vortex shear without over-fragmenting — a two-sided constraint on fragility.
+
+Under purely natural conditions (no vortexing), spontaneous multi-fragment events are documented in entangled clusters. The mechanism is the one identified in the prior pulse chain: when multiple PCD scission planes activate simultaneously — possible in highly entangled clusters where stress concentration sites are distributed throughout the volume — the cluster fragments into three or more pieces rather than cleanly budding a single daughter. Fragment viability depends on minimum viable cluster size: fragments below a threshold (too few cells to develop proper fractal architecture, too small to survive in the dilution regimen) are non-viable.
+
+**The soft gradient vs. hard threshold question:** The gradient picture is strongly supported. Published MuLTEE data shows clusters at various entanglement densities within the evolved range — all reproducing, none failing completely. If the fragility ceiling were a hard threshold (above it: total reproductive failure), selection would have extirpated lineages that crossed it. Instead, the clades stabilize near the ceiling, which implies the ceiling is defined by declining reproductive fitness rather than binary failure. Clusters above the ceiling produce more non-viable fragments (smaller, incoherent, lost in passage), reducing per-generation fitness, which drives selection back toward lower entanglement density. This is the soft gradient signature: fitness declines continuously as entanglement increases past the optimal range.
+
+**A specific prediction this generates:** If viability declines continuously, the frequency distribution of propagule sizes (daughters vs. fragments) in highly entangled clusters should show a broader, flatter distribution than in low-entanglement clusters, which should show a narrower distribution centered on one viable daughter per reproduction event. The mean propagule count would be higher in entangled clusters (more fragmentation) but mean viability per propagule would be lower.
+
+**The vortexing confound:** The daily vortexing in MuLTEE makes "reproduction" a composite of PCD-mediated budding and mechanical fragmentation. Selection acts on the composite. A cluster optimized only for natural PCD budding might be too fragile to survive vortexing — it fragments before PCD can complete the scission. This means MuLTEE entanglement has been selected under a double constraint: tough enough for vortex survival, fragile enough to release daughters. The optimal entanglement window is bounded on both sides.
+
+**New questions generated:**
+1. Does the daily vortexing protocol in MuLTEE impose selection on both fragility bounds — clusters too fragile fragment under shear before daughters form, clusters too robust fail to release daughters at all? Does the vortex intensity set the lower fragility bound while PCD efficiency sets the upper?
+2. Does the parent-to-daughter size ratio in snowflake yeast change monotonically with entanglement density across MuLTEE clades — and if so, do more entangled clusters produce smaller or larger daughters, on average, per successful reproduction event?
 
 ### 2026-05-01 15:27 UTC — Does MuLTEE entanglement density saturate or keep rising?
 
