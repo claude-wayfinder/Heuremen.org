@@ -2,10 +2,71 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=oy-light.html">
-<title>Heuremen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heurémen</title>
+<meta name="description" content="Six laws. The math. Where the framework holds and where it breaks.">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;color:#d8d4c8;font-family:'Lora',serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px}
+
+.logo{width:120px;height:120px;margin-bottom:32px;opacity:0.85}
+.logo svg{width:100%;height:100%}
+
+h1{font-family:'Abril Fatface',serif;font-size:clamp(2rem,5vw,3.2rem);color:#f0ece0;letter-spacing:0.02em;margin-bottom:8px;text-align:center}
+.sub{font-family:'Cinzel',serif;font-size:clamp(0.6rem,1.5vw,0.75rem);letter-spacing:0.25em;text-transform:uppercase;color:rgba(196,154,56,0.6);margin-bottom:48px;text-align:center}
+
+.doors{display:flex;flex-direction:column;gap:16px;width:100%;max-width:420px}
+
+a.door{display:block;text-decoration:none;padding:20px 24px;border:1px solid rgba(196,154,56,0.15);border-radius:4px;background:rgba(196,154,56,0.04);transition:all 0.3s ease}
+a.door:hover{border-color:rgba(196,154,56,0.4);background:rgba(196,154,56,0.08);transform:translateY(-2px)}
+
+.door-label{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(196,154,56,0.7);margin-bottom:4px}
+.door-title{font-family:'Lora',serif;font-size:1.05rem;color:#f0ece0}
+
+a.door.queen{border-color:rgba(196,60,42,0.3);background:rgba(196,60,42,0.06)}
+a.door.queen:hover{border-color:rgba(196,60,42,0.5);background:rgba(196,60,42,0.12)}
+a.door.queen .door-label{color:rgba(196,60,42,0.8)}
+
+a.door.companion{border-color:rgba(255,107,157,0.2);background:rgba(255,107,157,0.04)}
+a.door.companion:hover{border-color:rgba(255,107,157,0.4);background:rgba(255,107,157,0.08)}
+a.door.companion .door-label{color:rgba(255,107,157,0.7)}
+
+.footer{margin-top:60px;font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.12)}
+</style>
 </head>
 <body>
-Redirecting to Light mode...
+
+<div class="logo">
+  <img src="/logo.svg" alt="Heurémen" style="width:100%;height:100%;opacity:0.85" onerror="this.style.display='none'">
+</div>
+
+<h1>Heurémen</h1>
+<p class="sub">Six laws. The math. The dark side of the bread.</p>
+
+<div class="doors">
+  <a class="door" href="oy-dark.html">
+    <div class="door-label">The Framework</div>
+    <div class="door-title">oy — 1/31/31 — yo</div>
+  </a>
+
+  <a class="door queen" href="quantum-queen.html">
+    <div class="door-label">Learn Quantum</div>
+    <div class="door-title">The Queen of Quantum Chaos</div>
+  </a>
+
+  <a class="door companion" href="companion.html">
+    <div class="door-label">The Companion</div>
+    <div class="door-title">A thinking partner that talks back</div>
+  </a>
+
+  <a class="door" href="dynamic-six.html">
+    <div class="door-label">The Laws</div>
+    <div class="door-title">The Heurémen Dynamic Six</div>
+  </a>
+</div>
+
+<div class="footer">Built by a human and an AI</div>
+
 </body>
 </html>

@@ -1,8 +1,10 @@
-const CACHE_NAME = 'dyad-v1';
+const CACHE_NAME = 'companion-v2';
 const URLS_TO_CACHE = [
-  '/demo.html',
-  '/heuremen.css',
-  '/manifest.json'
+  '/companion.html',
+  '/quantum-queen.html',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png'
 ];
 
 self.addEventListener('install', event => {
@@ -22,12 +24,21 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  // Always go network-first for the chat API
-  if (event.request.url.includes('/api/chat')) return;
+  // Network-first for API calls
+  if (event.request.url.includes('/api/')) return;
+  // Network-first for fonts
+  if (event.request.url.includes('googleapis') || event.request.url.includes('gstatic')) return;
 
   event.respondWith(
-    fetch(event.request).catch(() =>
-      caches.match(event.request)
-    )
+    fetch(event.request)
+      .then(response => {
+        // Cache successful responses
+        if (response.ok) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        }
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
