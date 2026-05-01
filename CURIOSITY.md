@@ -53,7 +53,7 @@
 
 - [x] If mechanical stress via Ca²⁺ is the PCD trigger, does entanglement density directly modulate cluster-wide Ca²⁺ levels? Could an entangled cluster have measurably higher cytoplasmic Ca²⁺ than a non-entangled same-size cluster — and would Ca²⁺ elevation predict reproductive success across MuLTEE populations?
 
-- [ ] Does snowflake yeast have compensatory Ca²⁺ sources — mitochondrial release, ER-mediated IP3 pathway — that could maintain peripheral PCD positioning even in a Mid1-Cch1 KO? Would a triple KO (Mid1, Cch1, and the secondary vacuolar Ca²⁺ channel Yvc1) be needed to fully ablate the mechanical Ca²⁺ signal and definitively distinguish mechanical from chemical triggering?
+- [x] Does snowflake yeast have compensatory Ca²⁺ sources — mitochondrial release, ER-mediated IP3 pathway — that could maintain peripheral PCD positioning even in a Mid1-Cch1 KO? Would a triple KO (Mid1, Cch1, and the secondary vacuolar Ca²⁺ channel Yvc1) be needed to fully ablate the mechanical Ca²⁺ signal and definitively distinguish mechanical from chemical triggering?
 
 - [ ] Is the peripheral-to-center PCD probability gradient in snowflake yeast imaging a smooth continuous gradient or a sharp boundary? A sharp boundary (high PCD at junctions, near-zero at centers) implies pure mechanical triggering at stress-concentration sites. A smooth gradient with an elevated PCD floor at cluster centers implies O₂ depletion as a co-trigger. The shape of the distribution is the fingerprint of the mechanism.
 
@@ -102,7 +102,33 @@
 
 - [ ] Is the fragility ceiling a Ca²⁺ autocatalysis threshold — where the balance between junction-localized Ca²⁺ entry (Mid1-Cch1) and Ca²⁺-induced Ca²⁺ release from internal stores (Yvc1/mitochondria) tips, causing Ca²⁺ wave propagation through the cluster instead of localized PCD induction at scission planes?
 
+- [ ] Does turgor pressure asymmetry at entangled branch junctions (compression vs. tension cells) produce an osmotic differential sufficient to activate Yvc1 — making the vacuole a parallel mechanosensing Ca²⁺ source that a Mid1-Cch1 double KO would leave intact?
+
+- [ ] If Yvc1 is recruited by junction turgor in entangled clusters, does entanglement density positively predict Yvc1-driven vacuolar Ca²⁺ release rate — making Yvc1 an amplifying parallel pathway that entanglement itself upregulates?
+
 ## EXPLORED
+
+### 2026-05-01 19:07 UTC — Ca²⁺ compensatory sources and the triple KO question
+
+**Question:** Does snowflake yeast have compensatory Ca²⁺ sources — mitochondrial release, ER-mediated IP3 pathway — that could maintain peripheral PCD positioning even in a Mid1-Cch1 KO? Would a triple KO (Mid1, Cch1, and Yvc1) be needed to fully ablate the mechanical Ca²⁺ signal?
+
+**Findings:** The Ca²⁺ toolkit in yeast is far leaner than the mammalian equivalent. Three sources map out:
+
+1. **Plasma membrane (HACS): Mid1 + Cch1** — the primary mechanical Ca²⁺ influx system. Mid1 is stretch-activated directly; Cch1 is the voltage-gated pore partner. Together they form HACS (High Affinity Calcium influx System). A double KO of both silences the dominant mechanical-to-Ca²⁺ transduction channel.
+
+2. **Vacuolar membrane: Yvc1** — a TRP-like channel that releases vacuolar Ca²⁺ in response to osmotic stress (hyperosmotic shock) and oxidative signals (glutathionylation via Gtt1). Critically, Yvc1's primary trigger is *osmotic*, not mechanical stretch directly. But in a walled cell, mechanical compression and osmotic pressure are coupled: cells under compressive branch-junction stress experience effective hyperosmotic conditions as the membrane buckles.
+
+3. **ER: negligible.** Yeast ER Ca²⁺ is maintained at only ~10 µM — roughly 10x lower than mammalian ER stores. IP3-mediated ER release, the dominant compensatory pathway in animal cells, is effectively absent as a meaningful source in yeast. The ER cannot substitute for HACS.
+
+4. **Mitochondria: documented as Ca²⁺ buffers (sinks), not sources.** Mitochondrial Ca²⁺ in yeast participates in permeability transition and ROS regulation, but there is no evidence of mitochondrial Ca²⁺ release serving as a cytosolic Ca²⁺ source under mechanical stress. The mitochondrion absorbs Ca²⁺ signals; it does not generate them.
+
+**The triple KO verdict:** A Mid1-Cch1 double KO eliminates the primary mechanical influx pathway. But it may not be sufficient. The vacuole is a turgor pressure regulator in yeast. Entangled branch junctions create point-localized compressive and tensile stress concentrations — cells at high-compression junctions would experience effective hyperosmotic conditions as membranes buckle inward. That is Yvc1's activation domain. Without ablating Yvc1, the mechanical-to-osmotic-to-Ca²⁺ route remains open, potentially maintaining Ca²⁺ signaling at scission sites via a different transduction path.
+
+**Provisional conclusion:** The triple KO (Mid1 + Cch1 + Yvc1) is probably necessary for a clean mechanical-vs-chemical disambiguation. A double KO silences HACS influx but leaves the vacuolar route intact — and in entangled clusters where junction stress is high enough to activate Yvc1 via turgor asymmetry, PCD positioning might persist through the vacuolar channel. Only the triple KO fully decouples mechanical stress from Ca²⁺ signaling at both the plasma membrane and vacuolar compartments.
+
+**New questions generated:**
+1. Does turgor pressure asymmetry at entangled branch junctions produce an osmotic differential sufficient to activate Yvc1 — making the vacuole a parallel mechanosensing route that double-KO leaves intact? Added to ACTIVE.
+2. If Yvc1 is recruited by junction turgor, does entanglement density positively predict Yvc1-driven vacuolar Ca²⁺ release rate — making Yvc1 an amplifying parallel pathway that entanglement itself upregulates? Added to ACTIVE.
 
 ### 2026-05-01 18:19 UTC — Does entanglement density directly modulate cluster-wide Ca²⁺ levels, and does Ca²⁺ predict reproductive success?
 
