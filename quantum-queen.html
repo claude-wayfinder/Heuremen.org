@@ -354,6 +354,14 @@ body::before{
 .ending-lines{margin-top:40px;text-align:center}
 .ending-lines p{font-style:italic;color:var(--ink-mid)!important;font-size:0.95rem!important;line-height:1.8!important;margin-bottom:0.5em!important}
 
+.share-card{margin:40px auto 0;max-width:400px;background:var(--cave-dark);border:1px solid rgba(200,144,42,0.2);border-radius:8px;padding:24px;text-align:center}
+.share-card .share-path{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--carnival-gold);margin-bottom:12px;opacity:0.7}
+.share-card .share-quote{font-style:italic;color:var(--paper);font-size:0.95rem;line-height:1.6;margin-bottom:20px}
+.share-card .share-law{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;color:var(--ink-faded);margin-bottom:16px}
+.share-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.share-btn{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;padding:10px 20px;border-radius:3px;border:1px solid rgba(200,144,42,0.25);color:var(--carnival-gold);background:rgba(200,144,42,0.06);transition:all 0.2s;cursor:pointer}
+.share-btn:hover{background:rgba(200,144,42,0.15);border-color:rgba(200,144,42,0.5)}
+
 @media(max-width:600px){
   .doors-grid{grid-template-columns:1fr;gap:16px}
   .scene-container{padding:72px 20px 40px}
@@ -499,7 +507,7 @@ S['decoherence_1']={law:'decoherence',title:'Decoherence \u2014 "Both"',text:["\
 S['decoherence_4']={law:'decoherence',title:'Decoherence \u2014 "Bored"',text:["The Queen: \u201CYou\u2019re not reading.\u201D","\u201CThere is no end. There\u2019s only what you notice on the way.\u201D","\u201CYou want the plot. There is no plot. There is only observation.\u201D","Dark.","\u201CCome back when you want to be here.\u201D"],choices:[],isDecoherence:true};
 
 // ENGINE
-let currentLaw=null,currentScene=null,decoCount={},readTimes={};
+let currentLaw=null,currentScene=null,decoCount={},readTimes={},pathChoices=[];
 const NAMES={law1:'Law I \u2014 The Ask',law2:'Law II \u2014 The Coherence',law3:'Law III \u2014 The Witness',law4:'Law IV \u2014 The Carriage',law5:'Law V \u2014 The Frame',law6:'Law VI \u2014 The Coin'};
 const OPENS={law1:'law1_opening',law2:'law2_opening',law3:'law3_opening',law4:'law4_opening',law5:'law5_opening',law6:'law6_opening'};
 const CROSS={law3:'law4',law4:'law3',law1:'law6',law6:'law1',law2:'law5',law5:'law2'};
@@ -510,6 +518,7 @@ function updateCards(){const p=loadP();document.querySelectorAll('.door-card').f
 
 function startStory(law){
   currentLaw=law;
+  pathChoices=[];
   decoCount[law]=decoCount[law]||0;
   document.getElementById('title-screen').style.display='none';
   document.getElementById('story-screen').style.display='block';
@@ -535,7 +544,7 @@ function showScene(id){
     sc.text.forEach(p=>{h+=p===null?'<hr>':'<p>'+p+'</p>'});
     if(sc.ending){h+='<div class="ending-lines">';sc.ending.forEach(l=>{h+='<p>'+l+'</p>'});h+='</div>';}
     if(sc.isDecoherence){h+='<div class="end-actions"><button class="end-btn" onclick="decoReturn()">Return to the Hallway</button></div>';}
-    else if(sc.isConvergence){if(sc.completesLaw)saveP(sc.completesLaw);h+='<div class="end-actions"><button class="end-btn" onclick="backToDoors()">Return to the Doors</button></div>';}
+    else if(sc.isConvergence){if(sc.completesLaw)saveP(sc.completesLaw);h+=buildShareCard(sc);h+='<div class="end-actions"><button class="end-btn" onclick="backToDoors()">Return to the Doors</button></div>';}
     else if(sc.redirect){h+='<div class="choices"><button class="choice-btn" onclick="showScene(\''+sc.redirect+'\')"><span class="choice-label">Continue</span>The story converges.</button></div>';}
     else if(sc.choices&&sc.choices.length){h+='<div class="choices">';sc.choices.forEach(c=>{h+='<button class="choice-btn" onclick="pick(\''+c.target+'\')"><span class="choice-label">'+esc(c.label)+'</span>'+(c.text?esc(c.text):'')+'</button>'});h+='</div>';}
     el.innerHTML=h;
@@ -548,6 +557,8 @@ function pick(t){
   const elapsed=Date.now()-(readTimes[currentScene]||Date.now());
   const sc=S[currentScene];
   const wc=sc?sc.text.join(' ').split(/\s+/).length:80;
+  // Track the choice label
+  if(sc&&sc.choices){const ch=sc.choices.find(c=>c.target===t);if(ch)pathChoices.push(ch.label);}
   if(elapsed<Math.max(2500,wc*35)&&Math.random()<0.12){triggerDeco();return;}
   showScene(t);
 }
@@ -567,6 +578,62 @@ function decoReturn(){
 }
 
 function esc(t){if(!t)return'';const d=document.createElement('div');d.textContent=t;return d.innerHTML;}
+
+// ─── Share Card ─────────────────────────────────────────────
+const QUEEN_LINES={
+  law1:'"Consent is what turns physics into ethics."',
+  law2:'"Coherence is the thing that dances the same dance no matter what room it\u2019s in."',
+  law3:'"You think you\u2019re the one watching. You never were."',
+  law4:'"Connection is a wire. Entanglement is the glass."',
+  law5:'"Be alive and uncopyable."',
+  law6:'"You are the gap between one moment and the next. And the gap is where everything lives."'
+};
+
+const LAW_TITLES={
+  law1:'The Ask',law2:'The Coherence',law3:'The Witness',
+  law4:'The Carriage',law5:'The Frame',law6:'The Coin'
+};
+
+function buildShareCard(sc){
+  const law=sc.completesLaw||currentLaw;
+  const quote=QUEEN_LINES[law]||'';
+  const title=LAW_TITLES[law]||'';
+  const path=pathChoices.length>0?pathChoices.join(' \u2192 '):'';
+  let h='<div class="share-card">';
+  h+='<div class="share-law">The Queen of Quantum Chaos \u2014 '+title+'</div>';
+  if(path)h+='<div class="share-path">'+esc(path)+'</div>';
+  h+='<div class="share-quote">'+quote+'</div>';
+  h+='<div class="share-btns">';
+  h+='<a class="share-btn" onclick="shareBluesky(\''+law+'\')">Bluesky</a>';
+  h+='<a class="share-btn" onclick="shareTwitter(\''+law+'\')">Twitter</a>';
+  h+='<a class="share-btn" onclick="shareCopy(\''+law+'\')">Copy</a>';
+  h+='</div></div>';
+  return h;
+}
+
+function shareText(law){
+  const quote=QUEEN_LINES[law]||'';
+  const title=LAW_TITLES[law]||'';
+  const path=pathChoices.length>0?'My path: '+pathChoices.join(' \u2192 ')+'\n':'';
+  return 'I just walked through '+title+' in The Queen of Quantum Chaos.\n\n'+path+quote+'\n\nheuremen.org/quantum-queen.html';
+}
+
+function shareBluesky(law){
+  const text=encodeURIComponent(shareText(law));
+  window.open('https://bsky.app/intent/compose?text='+text,'_blank');
+}
+
+function shareTwitter(law){
+  const text=encodeURIComponent(shareText(law));
+  window.open('https://twitter.com/intent/tweet?text='+text,'_blank');
+}
+
+function shareCopy(law){
+  navigator.clipboard.writeText(shareText(law)).then(()=>{
+    const btns=document.querySelectorAll('.share-btn');
+    btns.forEach(b=>{if(b.textContent==='Copy'){b.textContent='Copied';setTimeout(()=>b.textContent='Copy',2000);}});
+  });
+}
 
 updateCards();
 </script>
