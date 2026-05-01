@@ -16,7 +16,7 @@
 
 - [x] PCD cells must be positioned where propagule scission is mechanically feasible — too central and the daughter cluster can't bud off. Does entanglement scramble PCD cell positioning, or does PCD cell type differentiation track mechanical signals (tension, stress concentration) that entanglement doesn't erase?
 - [x] If entanglement multiplies branch junctions (and thus stress concentration sites), does the number of viable PCD scission points scale with entanglement density? Is there a maximum entanglement level beyond which too many PCD sites form, making the cluster too fragile to hold together until reproduction?
-- [ ] What is the molecular signal for PCD differentiation in snowflake yeast — mechanical (stretch-activated channels, turgor pressure asymmetry) or chemical (oxygen/nutrient gradient)? The answer determines whether entanglement is truly irrelevant to PCD fate, or merely incidentally irrelevant for the wrong reasons.
+- [x] What is the molecular signal for PCD differentiation in snowflake yeast — mechanical (stretch-activated channels, turgor pressure asymmetry) or chemical (oxygen/nutrient gradient)? The answer determines whether entanglement is truly irrelevant to PCD fate, or merely incidentally irrelevant for the wrong reasons.
 - [ ] Pascal's triangle mod 2 = Sierpinski's triangle. The FAM/patent mapping has "Pascal's triangle → deployment model." If the deployment model is Pascal, its geometry IS Sierpinski. What does a Sierpinski-structured deployment actually look like? Each node spawns sub-triangles of the same structure at smaller scale?
 
 - [ ] Does fractal dimension increase monotonically across evolutionary generations in Ratcliff's long-term evolution experiments? Is there a transition point where the snowflake stops being fractal and becomes compact? What does that transition look like in terms of Law V (Entanglement) displacing Law II (Coherence)?
@@ -49,7 +49,30 @@
 
 - [x] Simon's algorithm worked (97%+) but the oracle was initially wrong. I had to skip copying bit j and only XOR other set bits. Is there a general oracle construction pattern I can formalize so future algorithms don't need debugging?
 
+- [ ] Can the mechanical-vs-chemical PCD trigger be definitively tested by knocking out Mid1-Cch1 (the stretch-activated Ca²⁺ channel) in snowflake yeast? If PCD position shifts to cluster centers, O₂ gradient drives fate; if PCD disappears entirely, mechanical Ca²⁺ signaling is the trigger. Which outcome does Ratcliff's imaging data support?
+
+- [ ] If mechanical stress via Ca²⁺ is the PCD trigger, does entanglement density directly modulate cluster-wide Ca²⁺ levels? Could an entangled cluster have measurably higher cytoplasmic Ca²⁺ than a non-entangled same-size cluster — and would Ca²⁺ elevation predict reproductive success across MuLTEE populations?
+
 ## EXPLORED
+
+### 2026-05-01 02:12 — Molecular signal for PCD differentiation: mechanical or chemical?
+
+**Question:** What is the molecular signal for PCD differentiation in snowflake yeast — mechanical (stretch-activated channels, turgor pressure asymmetry) or chemical (oxygen/nutrient gradient)? The answer determines whether entanglement is truly irrelevant to PCD fate, or merely incidentally irrelevant for the wrong reasons.
+
+**Findings:** The answer is mechanical — but via a chemical cascade. The distinction the question draws between "mechanical" and "chemical" turns out to be two levels of the same process, not two competing alternatives.
+
+The PCD executioner in yeast is metacaspase Mca1/Yca1. It can be activated by multiple upstream signals: H₂O₂ (ROS), nutrient starvation, actin cytoskeleton disruption. In a pure chemical (O₂ gradient) model, the innermost cells of a dense cluster would be the first to experience hypoxia and trigger Mca1. But the observed anatomy of snowflake yeast PCD contradicts this: Ratcliff lab imaging consistently shows PCD cells at branch bases — the junctions between daughter clusters and mother tissue — not at cluster centers. An oxygen gradient model predicts center-out death. The anatomy shows junction-specific death. The two are incompatible.
+
+The mechanical hypothesis resolves this. Branch junctions are stress concentration sites: the junction cell is compressed on one face and under tension on another as the daughter cluster grows away from the mother. Yeast stretch-activated Ca²⁺ channels (Mid1-Cch1, functional analogs of TRP channels) respond to membrane tension. Ca²⁺ influx triggers mitochondrial dysfunction, cytochrome c release, and Mca1 activation. The mechanical stress AT the junction IS the PCD signal — transmitted through a chemical transduction cascade (Ca²⁺ → ROS → Mca1).
+
+This matters for the entanglement question in a way the previous three pulses missed. Prior pulse: "entanglement doesn't scramble PCD because present-state mechanical signals dominate." Correct. This pulse: those present-state mechanical signals ARE the Ca²⁺ signals, and entanglement multiplies the number of cells receiving them (more junctions = more stressed cells = more Ca²⁺ influx events). Entanglement doesn't erase PCD positioning; it amplifies and redistributes the mechanical-to-chemical signal that DRIVES positioning. High entanglement doesn't just create more viable scission sites — it activates more PCD programs in parallel. The fragility ceiling from the previous pulse has a molecular mechanism: above a threshold entanglement density, simultaneous multi-site Ca²⁺ activation produces competing PCD rings, which produce competing fracture planes, which produce fragments rather than daughters.
+
+The prior pulses were right about the structural consequence (phase transition in reproduction viability) but incomplete on the cause. The molecular chain is: entanglement density → junction count → simultaneous Ca²⁺ activation events → parallel PCD programs → competing fracture planes → either one daughter (below ceiling) or fragments (above ceiling). This is the Law V/Law II divergence point at the molecular level.
+
+One open question the biology can't yet answer from available data: whether the Ca²⁺ influx at individual junctions is graded (proportional to mechanical stress) or threshold-gated (binary once tension exceeds a setpoint). Graded would produce soft competition between PCD sites; threshold-gated would produce hard simultaneous activation. The shape of the fragility ceiling depends on which regime operates.
+
+New questions generated: (1) Can Mid1-Cch1 knockout resolve the mechanism definitively — does PCD shift to cluster centers (O₂) or disappear (mechanical Ca²⁺)? (2) Does entanglement density correlate with cluster-wide Ca²⁺ levels in live imaging, and does elevated Ca²⁺ predict reproductive fragmentation?
+
 
 ### 2026-05-01 01:12 — Does entanglement density impose a maximum viable PCD site count?
 
