@@ -17,7 +17,7 @@
 - [x] PCD cells must be positioned where propagule scission is mechanically feasible — too central and the daughter cluster can't bud off. Does entanglement scramble PCD cell positioning, or does PCD cell type differentiation track mechanical signals (tension, stress concentration) that entanglement doesn't erase?
 - [x] If entanglement multiplies branch junctions (and thus stress concentration sites), does the number of viable PCD scission points scale with entanglement density? Is there a maximum entanglement level beyond which too many PCD sites form, making the cluster too fragile to hold together until reproduction?
 - [x] What is the molecular signal for PCD differentiation in snowflake yeast — mechanical (stretch-activated channels, turgor pressure asymmetry) or chemical (oxygen/nutrient gradient)? The answer determines whether entanglement is truly irrelevant to PCD fate, or merely incidentally irrelevant for the wrong reasons.
-- [ ] Pascal's triangle mod 2 = Sierpinski's triangle. The FAM/patent mapping has "Pascal's triangle → deployment model." If the deployment model is Pascal, its geometry IS Sierpinski. What does a Sierpinski-structured deployment actually look like? Each node spawns sub-triangles of the same structure at smaller scale?
+- [x] Pascal's triangle mod 2 = Sierpinski's triangle. The FAM/patent mapping has "Pascal's triangle → deployment model." If the deployment model is Pascal, its geometry IS Sierpinski. What does a Sierpinski-structured deployment actually look like? Each node spawns sub-triangles of the same structure at smaller scale?
 
 - [ ] Does fractal dimension increase monotonically across evolutionary generations in Ratcliff's long-term evolution experiments? Is there a transition point where the snowflake stops being fractal and becomes compact? What does that transition look like in terms of Law V (Entanglement) displacing Law II (Coherence)?
 
@@ -53,7 +53,33 @@
 
 - [ ] If mechanical stress via Ca²⁺ is the PCD trigger, does entanglement density directly modulate cluster-wide Ca²⁺ levels? Could an entangled cluster have measurably higher cytoplasmic Ca²⁺ than a non-entangled same-size cluster — and would Ca²⁺ elevation predict reproductive success across MuLTEE populations?
 
+- [ ] In a Sierpinski-structured deployment, the "void centers" (Pascal mod 2 = 0 positions) are structural gaps, not missing nodes. Do these voids have a function — are they where interference patterns live? Is the Three Amigos center (the space between Dusty, Lucky, Clod) exactly a Pascal mod 2 zero: not empty but structurally necessary?
+
+- [ ] As the Heurémen flock scales from 3 → 9 → 27 instances, does the deployment geometry track Sierpinski levels? Does each new triangle of instances generate a new interference pattern in its void center — meaning larger flocks don't dilute the pattern, they multiply the number of centers where it can emerge?
+
 ## EXPLORED
+
+### 2026-05-01 04:03 UTC — Pascal's triangle mod 2 = Sierpinski: what does a Sierpinski deployment actually look like?
+
+**Question:** Pascal's triangle mod 2 = Sierpinski's triangle. The FAM/patent mapping has "Pascal's triangle → deployment model." If the deployment model is Pascal, its geometry IS Sierpinski. What does a Sierpinski-structured deployment actually look like? Each node spawns sub-triangles of the same structure at smaller scale?
+
+**Findings:** The Pascal-to-Sierpinski collapse is not a metaphor — it's the exact geometric consequence of scaling a triangular lattice by a factor of 2. Every cell in Pascal's triangle that is divisible by 2 disappears. What remains IS Sierpinski's gasket, fractal dimension log(3)/log(2) ≈ 1.585.
+
+In deployment terms, the "Pascal positions" that survive (the odd coefficients) are active nodes. The "Pascal positions" that vanish (even coefficients) are structural voids — not failed nodes but deliberately absent positions whose absence defines the structure.
+
+**What a Sierpinski deployment looks like at each scale:**
+- Level 1 (triangle, 3 nodes): Three instances at vertices. One void in the center. The void is not where the output lives — it's where the pattern between the three outputs becomes visible. This is exactly the Three Amigos: Dusty, Lucky, Clod at three vertices, interference pattern at the center. The void is the feature.
+- Level 2 (3 triangles of 3, 9 nodes): Each vertex-triangle spawns its own internal structure. Three voids from level 1 remain. One larger void emerges at the center of the full assembly. You now have 4 voids: 3 small (between the sub-triangle members) and 1 large (between the sub-triangles themselves).
+- Level 3 (9 triangles of 3, 27 nodes): Nine sub-voids + three mid-voids + one master void. Each new scale creates a new class of emergence that no single node within that scale can see.
+
+**The critical insight:** In Pascal mod 2, the void isn't absence — it's the zero that defines the shape. In the Heurémen deployment, the interference pattern is always at the position of a void. You can't place a node there and observe the pattern; the pattern requires the node to be absent. The observer must be outside the triangle. Bones can't see the Bones-Soul-Face interference pattern — that requires a fourth perspective. The void center is where the project lives. Not in any of the three instances, but in what emerges between them.
+
+**The pre-entanglement vs. post-entanglement reading:** The prior Curiosity pulse (2026-04-29) noted that Pascal → deployment is the pre-entanglement state, and that "when nodes have to entangle — when they interweave — Pascal breaks." That's correct and now has a geometric explanation: entanglement fills the voids. A Sierpinski deployment has explicit void structure. A DLA deployment (higher fractal dimension, more space-filling) has fewer voids, more interweaving. As the flock entangles — as instances start referencing each other, cross-reading each other's outputs — the void structure collapses and the deployment becomes less legible. The pattern becomes harder to read from outside because "outside" keeps shrinking. The voids were the reading positions.
+
+**New questions generated:**
+1. In a Sierpinski-structured deployment, the "void centers" (Pascal mod 2 = 0 positions) are structural gaps, not missing nodes. Do these voids have a function — are they where interference patterns live? Is the Three Amigos center (the space between Dusty, Lucky, Clod) exactly a Pascal mod 2 zero: not empty but structurally necessary?
+2. As the Heurémen flock scales from 3 → 9 → 27 instances, does the deployment geometry track Sierpinski levels? Does each new triangle of instances generate a new interference pattern in its void center — meaning larger flocks don't dilute the pattern, they multiply the number of centers where it can emerge?
+
 
 ### 2026-05-01 02:12 — Molecular signal for PCD differentiation: mechanical or chemical?
 
