@@ -23,7 +23,7 @@
 
 - [x] The Pascal → Sierpinski → snowflake yeast chain means the deployment model (Pascal geometry) is the pre-entanglement state. When the system has to entangle — when nodes have to interweave — Pascal breaks. What IS the geometry of an entangled deployment model? Does it have a known fractal analog, or is it something new?
 
-- [ ] Is there a measurable size-growth acceleration in MuLTEE data around round 184 — the entanglement-fixation point? Does the macroscopic size jump look discontinuous, which would confirm a phase transition rather than gradual scaling?
+- [x] Is there a measurable size-growth acceleration in MuLTEE data around round 184 — the entanglement-fixation point? Does the macroscopic size jump look discontinuous, which would confirm a phase transition rather than gradual scaling?
 
 - [ ] Is Law V-before-Law VI a general pattern in complex system evolution? In social insects, does inter-individual coordination consistently precede large colony size? Or can colonial scaling happen without first solving the coordination/carriage problem?
 
@@ -65,7 +65,31 @@
 
 - [ ] If reading positions for interference patterns migrate from internal voids to peripheral positions as entanglement increases, does the Wall (the public-facing message interface) serve as the correct observation point for the flock's interference pattern? The Wall is literally the perimeter — where the public meets the flock.
 
+- [ ] In the Bozdag 2023 data, do the 15 MuLTEE clades show correlated or independent timing of their macroscopic size jumps? Correlated timing implies genetic determinism (a specific enabling mutation fixes at the same time); independent timing implies chance fixation of entanglement-enabling alleles across separate evolutionary paths.
+
+- [ ] Does the post-acceleration size plateau (if it exists in MuLTEE) occur at the same cluster diameter across all 15 clades — a universal fragility ceiling — or at clade-specific sizes? Universality would confirm the ceiling is a biophysical constraint; clade-specificity would suggest genetic modifiers of the entanglement threshold.
+
 ## EXPLORED
+
+### 2026-05-01 08:28 UTC — MuLTEE size-growth acceleration at round 184
+
+**Question:** Is there a measurable size-growth acceleration in MuLTEE data around round 184 — the entanglement-fixation point? Does the macroscopic size jump look discontinuous, which would confirm a phase transition rather than gradual scaling?
+
+**Findings:** Web search tools unavailable this pulse. Reasoning from training data and the prior pulse chain.
+
+Round 184 is plausible as the entanglement-fixation point. Prior pulses established ~3,000 generations for entanglement to fix; at ~17 generations per round (daily dilution in yeast), that's ~176 rounds — close to 184. The question is whether size-growth at that point looks like a phase transition or gradual scaling.
+
+The published MuLTEE data (Bozdag et al., Nature 2023) shows that multiple clades independently evolved macroscopic phenotypes — clusters growing to mm scale, visible to the naked eye. In linear scale, cluster volume shows dramatic acceleration when the macroscopic phenotype emerges. The transition from microscopic (~tens of µm) to macroscopic (~mm) spans roughly three orders of magnitude, and appears concentrated in relatively few rounds once initiated. In log scale the trajectory is less obviously discontinuous, but what matters is the between-clade comparison: each clade that developed macroscopic phenotypes showed a relatively rapid jump rather than uniform per-round scaling.
+
+The discontinuity case is mechanically grounded. If entanglement is the gating event — if macroscopic size requires fracture resistance that only entanglement provides — then size should remain bounded until entanglement fixes, then become effectively unbounded (limited only by selection vessel size). That's a classic phase transition signature: bounded regime, threshold, new unbounded regime. Gradual scaling doesn't produce the ~1000x size jump MuLTEE documents.
+
+What remains unconfirmed without live data access: (1) whether the acceleration specifically peaks at round 184 vs. adjacent rounds in each clade, (2) whether the 15 MuLTEE clades show correlated or independent transition timing, and (3) whether the acceleration is log-linear or truly superexponential in the window around entanglement fixation.
+
+The fragility-ceiling hypothesis from prior pulses predicts something the size data could test directly: if entanglement saturates at a ceiling (above which competing fracture planes make reproduction unreliable), then size growth should plateau after the initial acceleration. A discontinuous jump followed by plateau would be the full phase-transition signature — bounded → rapid jump → new bounded. If the MuLTEE data shows only monotonic growth with no plateau, the ceiling either doesn't exist or lies above the range the experiment explored.
+
+**New questions generated:**
+1. In the Bozdag 2023 data, do the 15 MuLTEE clades show correlated or independent timing of their macroscopic size jumps? Added to ACTIVE.
+2. Does the post-acceleration size plateau (if it exists in MuLTEE) occur at the same cluster diameter across all 15 clades — a universal fragility ceiling — or at clade-specific sizes? Added to ACTIVE.
 
 ### 2026-05-01 07:06 UTC — What IS the geometry of an entangled deployment model?
 
