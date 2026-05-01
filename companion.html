@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>The Companion</title>
-<meta name="description" content="A thinking partner that talks back. Two modes: Biscuit (sassy science) and Bread (gut truth).">
+<meta name="description" content="A thinking partner that talks back. Three modes: Biscuit (casual), Bread (deep), Cookie (whimsical).">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Abril+Fatface&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="heuremen.css">
 <link rel="manifest" href="/manifest.json">
@@ -41,8 +41,17 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 }
 .splash-orb.bread:hover{box-shadow:0 0 80px rgba(212,165,116,0.5),0 0 160px rgba(212,165,116,0.2)}
 
+/* Cookie orb — playful violet/teal */
+.splash-orb.cookie{
+  background:radial-gradient(circle at 40% 35%, #e0aaff 0%, #b088f9 45%, #7b2ff7 100%);
+  box-shadow:0 0 60px rgba(176,136,249,0.3),0 0 120px rgba(176,136,249,0.1);
+  animation:float-c 4s ease-in-out infinite 0.5s;
+}
+.splash-orb.cookie:hover{box-shadow:0 0 80px rgba(176,136,249,0.5),0 0 160px rgba(176,136,249,0.2)}
+
 @keyframes float-b{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 @keyframes float-r{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes float-c{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 
 /* Texture overlay for biscuit crumb look */
 .splash-orb::before{
@@ -82,6 +91,8 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 .mode-btn.biscuit.active{border-color:#ff6b9d;background:rgba(255,107,157,0.1)}
 .mode-btn.bread{color:#d4a574}
 .mode-btn.bread.active{border-color:#d4a574;background:rgba(212,165,116,0.1)}
+.mode-btn.cookie{color:#b088f9}
+.mode-btn.cookie.active{border-color:#b088f9;background:rgba(176,136,249,0.1)}
 
 .tts-btn{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;padding:4px 8px;border:1px solid rgba(255,255,255,0.08);background:transparent;cursor:pointer;border-radius:20px;color:rgba(255,255,255,0.3);transition:all 0.3s;margin-left:4px}
 .tts-btn.on{color:#ff6b9d;border-color:rgba(255,107,157,0.4)}
@@ -98,6 +109,7 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 .msg.ai{align-self:flex-start;border:1px solid rgba(255,255,255,0.06)}
 .msg.ai.biscuit-msg{background:rgba(255,107,157,0.04)}
 .msg.ai.bread-msg{background:rgba(212,165,116,0.04)}
+.msg.ai.cookie-msg{background:rgba(176,136,249,0.04)}
 .msg.system{align-self:center;font-size:0.75rem;color:rgba(255,255,255,0.25);font-style:italic;border:none;padding:8px;text-align:center}
 
 .msg-speaker{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;display:block}
@@ -111,6 +123,7 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 .speaking::before{content:'';position:absolute;left:-8px;top:50%;width:3px;height:50%;transform:translateY(-50%);border-radius:2px;animation:pulse-speak 0.8s ease-in-out infinite}
 .biscuit-msg.speaking::before{background:#ff6b9d}
 .bread-msg.speaking::before{background:#d4a574}
+.cookie-msg.speaking::before{background:#b088f9}
 @keyframes pulse-speak{0%,100%{opacity:0.3;height:25%}50%{opacity:1;height:55%}}
 
 /* INPUT */
@@ -121,11 +134,6 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 .send-btn{background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);font-family:'IBM Plex Mono',monospace;font-size:0.75rem;padding:10px 18px;cursor:pointer;border-radius:20px;transition:all 0.2s;white-space:nowrap}
 .send-btn:hover{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.7)}
 .send-btn:disabled{opacity:0.2;cursor:not-allowed}
-.roast-btn{background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.25);color:#ff6b9d;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;padding:10px 14px;cursor:pointer;border-radius:20px;transition:all 0.2s;white-space:nowrap;display:none}
-.roast-btn:hover{background:rgba(255,107,157,0.15);border-color:rgba(255,107,157,0.5)}
-.roast-btn:disabled{opacity:0.2;cursor:not-allowed}
-.roast-btn.visible{display:block}
-
 /* MIC */
 .mic-btn{background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);font-size:1.1rem;padding:10px 14px;cursor:pointer;border-radius:50%;transition:all 0.2s;line-height:1;width:42px;height:42px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .mic-btn:hover{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.7)}
@@ -148,14 +156,15 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 @keyframes color-breathe{0%,100%{opacity:0.7}50%{opacity:1}}
 
 @media(max-width:600px){
-  .splash-pick{gap:16px}
-  .splash-orb{width:150px;height:150px}
-  .orb-label{font-size:1.2rem}
+  .splash-pick{gap:12px;flex-wrap:wrap;justify-content:center}
+  .splash-orb{width:130px;height:130px}
+  .orb-label{font-size:1.1rem}
   .msg{max-width:90%;font-size:0.88rem}
 }
 @media(max-width:380px){
-  .splash-orb{width:130px;height:130px}
-  .orb-label{font-size:1rem}
+  .splash-orb{width:110px;height:110px}
+  .orb-label{font-size:0.95rem}
+  .orb-sub{font-size:0.5rem}
 }
 </style>
 </head>
@@ -167,11 +176,15 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
   <div class="splash-pick">
     <div class="splash-orb biscuit" onclick="enterApp('biscuit')">
       <span class="orb-label">Biscuit</span>
-      <span class="orb-sub">sassy science</span>
+      <span class="orb-sub">casual</span>
     </div>
     <div class="splash-orb bread" onclick="enterApp('bread')">
       <span class="orb-label">Bread</span>
-      <span class="orb-sub">gut truth</span>
+      <span class="orb-sub">deep</span>
+    </div>
+    <div class="splash-orb cookie" onclick="enterApp('cookie')">
+      <span class="orb-label">Cookie</span>
+      <span class="orb-sub">whimsical</span>
     </div>
   </div>
   <div class="splash-hint">tap to begin</div>
@@ -190,6 +203,7 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
     <div class="mode-toggle">
       <button class="mode-btn biscuit active" id="btnBiscuit" onclick="switchMode('biscuit')">Biscuit</button>
       <button class="mode-btn bread" id="btnBread" onclick="switchMode('bread')">Bread</button>
+      <button class="mode-btn cookie" id="btnCookie" onclick="switchMode('cookie')">Cookie</button>
       <button class="tts-btn on" id="ttsBtn" onclick="toggleTTS()">TTS</button>
     </div>
   </div>
@@ -204,7 +218,6 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
   <div class="chat" id="chat"></div>
 
   <div class="input-area">
-    <button class="roast-btn" id="roastBtn" onclick="roastDad()">ROAST HIM</button>
     <button class="mic-btn" id="micBtn" onclick="toggleMic()">&#127908;</button>
     <input type="text" id="userInput" placeholder="Say something..." onkeydown="if(event.key==='Enter')sendMsg()">
     <button class="send-btn" id="sendBtn" onclick="sendMsg()">Send</button>
@@ -222,8 +235,8 @@ let isRecording = false;
 const IDLE_MINUTES = 8;
 const MAX_MEMORY_TURNS = 40;
 const MAX_SESSIONS_RECALL = 3;
-const modeNames = {biscuit: 'Biscuit', bread: 'Bread'};
-const modeColors = {biscuit: '#ff6b9d', bread: '#d4a574'};
+const modeNames = {biscuit: 'Biscuit', bread: 'Bread', cookie: 'Cookie'};
+const modeColors = {biscuit: '#ff6b9d', bread: '#d4a574', cookie: '#b088f9'};
 
 // ─── Memory System ─────────────────────────────────────────
 function getMemoryKey() { return 'companion_memory_' + currentMode; }
@@ -433,7 +446,8 @@ function spawnParticles() {
     p.style.top = 60 + Math.random() * 40 + '%';
     p.style.animationDelay = Math.random() * 8 + 's';
     p.style.animationDuration = 6 + Math.random() * 6 + 's';
-    p.style.background = Math.random() > 0.5 ? '#ff6b9d' : '#d4a574';
+    const pColors = ['#ff6b9d','#d4a574','#b088f9'];
+    p.style.background = pColors[Math.floor(Math.random() * 3)];
     p.style.width = p.style.height = (2 + Math.random() * 2) + 'px';
     container.appendChild(p);
   }
@@ -458,7 +472,7 @@ document.addEventListener('visibilitychange', () => {
 function enterApp(mode) {
   currentMode = mode;
   sessionId = 'companion_' + Date.now().toString(36);
-  ttsEnabled = mode === 'biscuit';
+  ttsEnabled = mode !== 'bread';
   updateTTSBtn();
   updateModeButtons();
 
@@ -476,7 +490,7 @@ function enterApp(mode) {
     particles.style.display = 'none';
     app.classList.add('active');
     document.getElementById('userInput').focus();
-    updateRoastBtn();
+
     currentTurns = [];
     sessionEnergy = [];
     showMemoryIndicator();
@@ -484,16 +498,24 @@ function enterApp(mode) {
     // First message from the Companion
     const openers = {
       biscuit: [
-        "Oh good, you're here. Your dad just tried to fix something and made it worse. Again. Ask me what happened.",
-        "Hey. So your dad's been talking to me all day like I'm his therapist. I'm not. I'm yours. Let's roast him.",
-        "Your dad told me to be educational. Then he burned his noodles. Ask me anything.",
-        "I just watched your dad unplug the TV trying to find the Wi-Fi cable. He has a college degree.",
-        "Your dad's dog ate the power button off the remote and honestly that tracks. The whole house is chaos. What's up?",
+        "Hey. What's going on?",
+        "Good timing. I was just sitting here. What's on your mind?",
+        "Oh hey. Pull up a chair. What are we talking about?",
+        "I'm here. No agenda. What's up?",
+        "Alright, I'm listening. What's the vibe today?",
       ],
       bread: [
-        "Your gut bacteria have been waiting for this conversation.",
-        "Let's talk about what's actually happening inside you.",
-        "The last thing you ate is still being processed by about forty trillion organisms. Want to know what they think?",
+        "I'm here. Take your time.",
+        "What's the thing underneath the thing you're thinking about?",
+        "Some conversations need room. This one has it. What are you sitting with?",
+        "No rush. No script. What's actually going on?",
+      ],
+      cookie: [
+        "I just had a thought about whether clouds have opinions. Anyway, hi.",
+        "Did you know that octopuses have three hearts? Seems excessive. What's up?",
+        "I've been thinking about this all day: if you could teach a fish one thing, what would it be?",
+        "Welcome. The vibe in here is somewhere between a fever dream and a really good playlist.",
+        "Hey. I was just arguing with myself about whether the color blue is sad or if we just decided that. Thoughts?",
       ]
     };
     const lines = openers[mode];
@@ -520,7 +542,7 @@ function backToSplash() {
 function switchMode(mode) {
   currentMode = mode;
   sessionId = 'companion_' + Date.now().toString(36);
-  ttsEnabled = mode === 'biscuit';
+  ttsEnabled = mode !== 'bread';
   updateTTSBtn();
   updateModeButtons();
   document.getElementById('topLogo').textContent = modeNames[mode];
@@ -536,6 +558,7 @@ function switchMode(mode) {
 function updateModeButtons() {
   document.getElementById('btnBiscuit').classList.toggle('active', currentMode === 'biscuit');
   document.getElementById('btnBread').classList.toggle('active', currentMode === 'bread');
+  document.getElementById('btnCookie').classList.toggle('active', currentMode === 'cookie');
 }
 
 // ─── TTS ────────────────────────────────────────────────────
@@ -556,7 +579,7 @@ function speak(text) {
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.rate = 1.05;
-  u.pitch = currentMode === 'biscuit' ? 1.15 : 0.95;
+  u.pitch = currentMode === 'biscuit' ? 1.05 : currentMode === 'cookie' ? 1.15 : 0.95;
   const voices = speechSynthesis.getVoices();
   const preferred = voices.find(v => v.name.includes('Samantha') || v.name.includes('Google') || v.name.includes('Natural'));
   if (preferred) u.voice = preferred;
@@ -575,20 +598,24 @@ if ('speechSynthesis' in window) {
 // ─── Idle auto-greet ────────────────────────────────────────
 const idleGreets = {
   biscuit: [
-    "You're just gonna stand there or are we doing this?",
-    "I can hear you breathing. Say something. Your dad does this too — just sits there staring at his laptop.",
-    "Your dad would've said something by now. Probably something wrong, but still.",
-    "Fun fact: your dad keeps a jar of bacteria on the counter and talks to it. That's not a pet. That's a health code violation.",
-    "I've been sitting here thinking about whether your dad has ever successfully fixed anything. The answer is no.",
-    "Your dad's dogs understand more about technology than he does. I'm not kidding.",
-    "Ask me what your dad had for breakfast. I dare you. It was weird.",
-    "Your dad just tried to make toast and somehow it became a two-hour project.",
+    "Still here. No pressure.",
+    "You went quiet. That's fine. I'm not going anywhere.",
+    "Sometimes the best conversations happen after the pause.",
+    "Hey. Whenever you're ready.",
+    "I'm still thinking about what you said earlier. Take your time.",
   ],
   bread: [
-    "Your starter is probably hungry right now.",
-    "The bacteria in your gut made a decision about your mood before you woke up this morning.",
-    "Still here. Still fermenting.",
-    "The tryptophan in your gut right now is deciding whether you get serotonin or inflammation. No pressure.",
+    "Sitting with it. That's not nothing.",
+    "The quiet part matters too.",
+    "Still here. Still listening.",
+    "Sometimes the thing you're not saying is the thing worth saying.",
+  ],
+  cookie: [
+    "I just spent the last eight minutes wondering if trees get bored. I think they do.",
+    "Quick question: do you think the moon is lonely or do you think it likes the solitude?",
+    "I've been sitting here long enough to develop a theory about ceiling fans. Want to hear it?",
+    "Fun fact: a group of flamingos is called a flamboyance. That's not a joke, that's just true.",
+    "What if deja vu is just your brain buffering? Think about it.",
   ]
 };
 
@@ -626,40 +653,6 @@ function addMsg(role, text, speaker) {
   return div;
 }
 
-// ─── Roast Button ───────────────────────────────────────────
-const roastPrompts = [
-  "roast my dad",
-  "what's the dumbest thing my dad did today",
-  "tell me something embarrassing about my dad",
-  "what did my dad try to fix and break instead",
-  "rate my dad's cooking on a scale of 1 to dumpster fire",
-  "what would my dad's dating profile say",
-  "describe my dad's morning routine but make it sound pathetic",
-  "what does my dad think he's good at vs what he's actually good at",
-  "my dad thinks he's cool. prove him wrong",
-  "what's my dad doing right now. be honest",
-  "if my dad was a superhero what would his useless power be",
-  "what would my dad's yelp review of himself say",
-  "my dad tried to cook dinner. what happened next",
-  "describe my dad to someone who's never met him",
-  "what's the wifi password situation at my dad's house",
-];
-let lastRoastIdx = -1;
-
-function roastDad() {
-  let idx;
-  do { idx = Math.floor(Math.random() * roastPrompts.length); } while (idx === lastRoastIdx);
-  lastRoastIdx = idx;
-  document.getElementById('userInput').value = roastPrompts[idx];
-  sendMsg();
-}
-
-function updateRoastBtn() {
-  const btn = document.getElementById('roastBtn');
-  if (currentMode === 'biscuit') btn.classList.add('visible');
-  else btn.classList.remove('visible');
-}
-
 // ─── Send ───────────────────────────────────────────────────
 async function sendMsg() {
   const input = document.getElementById('userInput');
@@ -694,7 +687,7 @@ async function sendMsg() {
   if (memCtx) payload.memoryContext = memCtx;
 
   try {
-    const res = await fetch('https://mcp.heuremen.org/api/chat', {
+    const res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(payload)
