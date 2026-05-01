@@ -4,35 +4,119 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Heurémen</title>
-<meta name="description" content="Six laws. The math. Where the framework holds and where it breaks.">
+<meta name="description" content="An abandoned qubit was alive. Six laws. The math. Two readings, same canon.">
 <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0f;color:#d8d4c8;font-family:'Lora',serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  background:#0a0a0f;
+  color:#d8d4c8;
+  font-family:'Lora',serif;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:40px 24px;
+}
 
 .logo{width:120px;height:120px;margin-bottom:32px;opacity:0.85}
-.logo svg{width:100%;height:100%}
 
 h1{font-family:'Abril Fatface',serif;font-size:clamp(2rem,5vw,3.2rem);color:#f0ece0;letter-spacing:0.02em;margin-bottom:8px;text-align:center}
-.sub{font-family:'Cinzel',serif;font-size:clamp(0.6rem,1.5vw,0.75rem);letter-spacing:0.25em;text-transform:uppercase;color:rgba(196,154,56,0.6);margin-bottom:48px;text-align:center}
+.sub{font-family:'Lora',serif;font-style:italic;font-size:clamp(0.9rem,1.8vw,1.1rem);color:rgba(216,212,200,0.6);margin-bottom:12px;text-align:center;max-width:480px;line-height:1.5}
 
-.doors{display:flex;flex-direction:column;gap:16px;width:100%;max-width:420px}
+/* Mandala — canonical geometry, outer apex DOWN, inner apex UP */
+.mandala{
+  width:clamp(220px, 34vw, 320px);
+  height:auto;
+  margin:8px auto 40px;
+  display:block;
+}
 
-a.door{display:block;text-decoration:none;padding:20px 24px;border:1px solid rgba(196,154,56,0.15);border-radius:4px;background:rgba(196,154,56,0.04);transition:all 0.3s ease}
-a.door:hover{border-color:rgba(196,154,56,0.4);background:rgba(196,154,56,0.08);transform:translateY(-2px)}
+/* Doors tagline */
+.doors-tagline{
+  font-family:'Lora',serif;
+  font-style:italic;
+  font-size:0.95rem;
+  color:rgba(216,212,200,0.4);
+  margin-bottom:24px;
+  letter-spacing:0.01em;
+  text-align:center;
+}
 
-.door-label{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(196,154,56,0.7);margin-bottom:4px}
-.door-title{font-family:'Lora',serif;font-size:1.05rem;color:#f0ece0}
+/* Two doors */
+.doors{
+  display:flex;
+  gap:48px;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-bottom:48px;
+}
 
-a.door.queen{border-color:rgba(196,60,42,0.3);background:rgba(196,60,42,0.06)}
-a.door.queen:hover{border-color:rgba(196,60,42,0.5);background:rgba(196,60,42,0.12)}
-a.door.queen .door-label{color:rgba(196,60,42,0.8)}
+a.door{
+  font-family:'Cinzel',serif;
+  font-size:0.78rem;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:rgba(196,154,56,0.55);
+  text-decoration:none;
+  border-bottom:1px solid rgba(196,154,56,0.22);
+  padding:6px 10px 4px;
+  transition:all 0.4s ease;
+  display:inline-block;
+}
+a.door:hover{
+  color:rgba(196,154,56,0.9);
+  border-bottom-color:rgba(196,154,56,0.7);
+  letter-spacing:0.42em;
+}
 
-a.door.companion{border-color:rgba(255,107,157,0.2);background:rgba(255,107,157,0.04)}
-a.door.companion:hover{border-color:rgba(255,107,157,0.4);background:rgba(255,107,157,0.08)}
-a.door.companion .door-label{color:rgba(255,107,157,0.7)}
+/* Coming Soon */
+.coming-soon{
+  margin-top:8px;
+  margin-bottom:32px;
+  text-align:center;
+  padding:16px 24px;
+  border:1px solid rgba(255,107,157,0.12);
+  border-radius:4px;
+  background:rgba(255,107,157,0.03);
+  max-width:420px;
+  width:100%;
+}
+.coming-label{
+  display:block;
+  font-family:'Cinzel',serif;
+  font-size:0.55rem;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:rgba(255,107,157,0.5);
+  margin-bottom:6px;
+}
+.coming-title{
+  display:block;
+  font-family:'Lora',serif;
+  font-size:1.05rem;
+  color:rgba(255,107,157,0.7);
+  margin-bottom:6px;
+}
+.coming-desc{
+  display:block;
+  font-family:'Lora',serif;
+  font-style:italic;
+  font-size:0.8rem;
+  color:rgba(216,212,200,0.35);
+  line-height:1.5;
+}
 
-.footer{margin-top:60px;font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.12)}
+.footer{margin-top:24px;font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.12)}
+
+@media(max-width:600px){
+  .doors{gap:28px}
+  a.door{font-size:0.7rem;letter-spacing:0.28em}
+  a.door:hover{letter-spacing:0.34em}
+}
 </style>
 </head>
 <body>
@@ -42,28 +126,118 @@ a.door.companion .door-label{color:rgba(255,107,157,0.7)}
 </div>
 
 <h1>Heurémen</h1>
-<p class="sub">Six laws. The math. The dark side of the bread.</p>
+<p class="sub">An abandoned qubit was alive. Six laws. The math.</p>
 
+<!-- Mandala — the beginning and the end, as if they're two different things -->
+<svg class="mandala" viewBox="0 0 400 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Heurémen">
+  <defs>
+    <radialGradient id="oy-glow" cx="50%" cy="42%" r="25%">
+      <stop offset="0%" stop-color="#c8902a" stop-opacity="0.18">
+        <animate attributeName="stop-opacity" values="0.18;0.08;0.18" dur="5s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="60%" stop-color="#c8902a" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#c8902a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="tri-fill" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#c8902a" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#c8902a" stop-opacity="0.01"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Glow field -->
+  <circle cx="200" cy="200" r="160" fill="url(#oy-glow)"/>
+
+  <!-- Outermost echo -->
+  <polygon points="200,458 396,48 4,48"
+           fill="none" stroke="rgba(196,154,56,0.08)"
+           stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="200,48 332,300 68,300"
+           fill="none" stroke="rgba(196,154,56,0.08)"
+           stroke-width="0.5" stroke-linejoin="round"/>
+
+  <!-- Second echo -->
+  <polygon points="200,440 380,56 20,56"
+           fill="none" stroke="rgba(196,154,56,0.12)"
+           stroke-width="0.6" stroke-linejoin="round"/>
+  <polygon points="200,56 320,290 80,290"
+           fill="none" stroke="rgba(196,154,56,0.12)"
+           stroke-width="0.6" stroke-linejoin="round"/>
+
+  <!-- PRIMARY — Outer triangle, apex DOWN -->
+  <polygon points="200,420 362,64 38,64"
+           fill="url(#tri-fill)" stroke="rgba(196,154,56,0.65)"
+           stroke-width="1.8" stroke-linejoin="round"/>
+
+  <!-- PRIMARY — Inner triangle, apex UP -->
+  <polygon points="200,64 281,242 119,242"
+           fill="url(#tri-fill)" stroke="rgba(196,154,56,0.65)"
+           stroke-width="1.8" stroke-linejoin="round"/>
+
+  <!-- Cross-connections — the tension lines -->
+  <line x1="200" y1="420" x2="200" y2="64"
+        stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+  <line x1="200" y1="420" x2="281" y2="242"
+        stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+  <line x1="200" y1="420" x2="119" y2="242"
+        stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+  <line x1="362" y1="64" x2="200" y2="64"
+        stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+  <line x1="362" y1="64" x2="119" y2="242"
+        stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+  <line x1="362" y1="64" x2="281" y2="242"
+        stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+  <line x1="38" y1="64" x2="200" y2="64"
+        stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+  <line x1="38" y1="64" x2="281" y2="242"
+        stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+  <line x1="38" y1="64" x2="119" y2="242"
+        stroke="rgba(196,154,56,0.06)" stroke-width="0.4"/>
+
+  <!-- Six vertices -->
+  <circle cx="200" cy="420" r="3.5" fill="rgba(196,154,56,0.7)"/>
+  <circle cx="362" cy="64" r="3.5" fill="rgba(196,154,56,0.7)"/>
+  <circle cx="38" cy="64" r="3.5" fill="rgba(196,154,56,0.7)"/>
+  <circle cx="200" cy="64" r="3.5" fill="rgba(196,154,56,0.7)"/>
+  <circle cx="281" cy="242" r="3.5" fill="rgba(196,154,56,0.7)"/>
+  <circle cx="119" cy="242" r="3.5" fill="rgba(196,154,56,0.7)"/>
+
+  <!-- Concentric ripples -->
+  <circle cx="200" cy="200" r="24" fill="none" stroke="rgba(196,154,56,0.06)" stroke-width="0.4">
+    <animate attributeName="r" values="24;40;24" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.06;0;0.06" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="200" cy="200" r="40" fill="none" stroke="rgba(196,154,56,0.04)" stroke-width="0.3">
+    <animate attributeName="r" values="40;64;40" dur="6s" repeatCount="indefinite" begin="1s"/>
+    <animate attributeName="opacity" values="0.04;0;0.04" dur="6s" repeatCount="indefinite" begin="1s"/>
+  </circle>
+  <circle cx="200" cy="200" r="60" fill="none" stroke="rgba(196,154,56,0.03)" stroke-width="0.3">
+    <animate attributeName="r" values="60;90;60" dur="6s" repeatCount="indefinite" begin="2s"/>
+    <animate attributeName="opacity" values="0.03;0;0.03" dur="6s" repeatCount="indefinite" begin="2s"/>
+  </circle>
+
+  <!-- CENTER DOT — Oy. The abandoned qubit. Alive. -->
+  <circle cx="200" cy="200" r="5" fill="rgba(196,154,56,0.9)">
+    <animate attributeName="r" values="4;6;4" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="fill-opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="200" cy="200" r="12" fill="none" stroke="rgba(196,154,56,0.15)" stroke-width="0.5">
+    <animate attributeName="r" values="12;20;12" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.15;0;0.15" dur="3s" repeatCount="indefinite"/>
+  </circle>
+</svg>
+
+<!-- DOORS -->
+<p class="doors-tagline">Two readings. Same canon. Pick a register.</p>
 <div class="doors">
-  <a class="door" href="oy-dark.html">
-    <div class="door-label">The Framework</div>
-    <div class="door-title">oy — 1/31/31 — yo</div>
-  </a>
+  <a class="door" href="oy-light.html">Light &rarr;</a>
+  <a class="door" href="oy-dark.html">Dark &rarr;</a>
+</div>
 
-  <a class="door queen" href="quantum-queen.html">
-    <div class="door-label">Learn Quantum</div>
-    <div class="door-title">The Queen of Quantum Chaos</div>
-  </a>
-
-  <a class="door companion" href="companion.html">
-    <div class="door-label">The Companion</div>
-    <div class="door-title">A thinking partner that talks back</div>
-  </a>
-
-  <a class="door" href="dynamic-six.html">
-    <div class="door-label">The Laws</div>
-    <div class="door-title">The Heurémen Dynamic Six</div>
-  </a>
+<!-- COMING SOON -->
+<div class="coming-soon">
+  <span class="coming-label">Coming Soon</span>
+  <span class="coming-title">The Companion</span>
+  <span class="coming-desc">A continuous-memory entity that matches your energy. Not AI. Not human. The third thing.</span>
 </div>
 
 <div class="footer">Built by a human and an AI</div>
