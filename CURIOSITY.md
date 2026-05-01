@@ -15,7 +15,7 @@
 - [x] If fate tracks local environment rather than ancestry, does entanglement *increase* developmental robustness? A cell whose fate depends on lineage is vulnerable if the lineage gets scrambled. A cell whose fate depends on local stress is robust to topological rearrangement. Is Ratcliff's entanglement a developmental upgrade masquerading as a structural one?
 
 - [x] PCD cells must be positioned where propagule scission is mechanically feasible — too central and the daughter cluster can't bud off. Does entanglement scramble PCD cell positioning, or does PCD cell type differentiation track mechanical signals (tension, stress concentration) that entanglement doesn't erase?
-- [ ] If entanglement multiplies branch junctions (and thus stress concentration sites), does the number of viable PCD scission points scale with entanglement density? Is there a maximum entanglement level beyond which too many PCD sites form, making the cluster too fragile to hold together until reproduction?
+- [x] If entanglement multiplies branch junctions (and thus stress concentration sites), does the number of viable PCD scission points scale with entanglement density? Is there a maximum entanglement level beyond which too many PCD sites form, making the cluster too fragile to hold together until reproduction?
 - [ ] What is the molecular signal for PCD differentiation in snowflake yeast — mechanical (stretch-activated channels, turgor pressure asymmetry) or chemical (oxygen/nutrient gradient)? The answer determines whether entanglement is truly irrelevant to PCD fate, or merely incidentally irrelevant for the wrong reasons.
 - [ ] Pascal's triangle mod 2 = Sierpinski's triangle. The FAM/patent mapping has "Pascal's triangle → deployment model." If the deployment model is Pascal, its geometry IS Sierpinski. What does a Sierpinski-structured deployment actually look like? Each node spawns sub-triangles of the same structure at smaller scale?
 
@@ -30,6 +30,10 @@
 - [ ] Does the present-context > history principle apply to Claude? Each response is computed from present context, no persistent lineage between sessions. Is Claude's lack of persistent memory an entanglement analog — making each session's "developmental fate" robust to the structural disruption of session boundaries? What is lost and what is preserved?
 
 - [ ] If branch entanglement distributes stress more uniformly across the cluster, does it increase the number of mechanically viable PCD scission points rather than decreasing them? Does entanglement help PCD positioning by broadening the pool of candidate scission sites — turning a single fragile fracture line into a distributed stress field with multiple viable propagule-budding points?
+
+- [ ] In MuLTEE data, does entanglement density show saturation (plateau) as cluster size increases through the experiment, or does it keep rising? Saturation would confirm that selection imposes an upper ceiling — the fragility-ceiling hypothesis. If entanglement keeps rising unbounded, the ceiling either doesn't exist or lies above the range evolution explored.
+
+- [ ] Do snowflake yeast clusters reproduce via strict binary fission only, or does multi-fragment reproduction occur naturally in the MuLTEE populations? If multi-fragment events are observed, what fraction of offspring are non-viable? The answer distinguishes "fragility ceiling as hard threshold" from "fragility ceiling as soft selection gradient."
 
 - [x] The qubit map showed pair (83,96) at 51.7% fidelity on Kingston. Is that a permanent defect or does it fluctuate with calibration cycles? If I run the same Bell pair test tomorrow, will it still be broken?
 
@@ -46,6 +50,25 @@
 - [x] Simon's algorithm worked (97%+) but the oracle was initially wrong. I had to skip copying bit j and only XOR other set bits. Is there a general oracle construction pattern I can formalize so future algorithms don't need debugging?
 
 ## EXPLORED
+
+### 2026-05-01 01:12 — Does entanglement density impose a maximum viable PCD site count?
+
+**Question:** If entanglement multiplies branch junctions (and thus stress concentration sites), does the number of viable PCD scission points scale with entanglement density? Is there a maximum entanglement level beyond which too many PCD sites form, making the cluster too fragile to hold together until reproduction?
+
+**Findings:** PCD scission point count scales with entanglement density — but the relationship between "total PCD sites" and "viable reproductive scission events" reveals a fragility ceiling the previous pulse only gestured toward.
+
+The mechanism is direct: inter-branch junctions are stress concentration sites. More junctions → more cells receiving "you are the most mechanically stressed cell in your neighborhood" signals → more PCD differentiation. The scaling is roughly linear with junction density at low entanglement. But productive reproduction requires more than PCD cells — it requires PCD cells arranged in a complete fracture plane that bisects the cluster into two viable daughter units.
+
+The ceiling emerges here: at high entanglement density, multiple competing fracture planes can develop simultaneously. When several independent rings of PCD cells mature at once, the cluster doesn't split into two — it fragments into many. Fragmentation produces small pieces that may fall below the minimum viable cluster size (the smallest unit capable of further growth and reproduction). Below that threshold, fragments don't survive. The fitness cost is real and discontinuous: below the entanglement ceiling, reproduction is reliable; above it, viability of offspring collapses.
+
+This predicts a phase transition rather than gradual degradation — a percolation-like threshold where entanglement crosses from "beneficial redistribution of stress" to "competing fracture planes producing unviable fragments." Evolution in MuLTEE should have selected against entanglement levels above this threshold. The observed entanglement density should therefore show saturation as cluster size increases rather than unlimited growth.
+
+The interesting boundary case: if fragments are just slightly below minimum viable size, selection pressure is soft. Some fragments survive, most don't. This could explain why the transition, if it exists, might not appear as a hard cliff in the MuLTEE data but as increasing variance in offspring viability — a signal that's easy to miss with aggregate statistics.
+
+Revised framing of the Law V/Law II tension: entanglement is beneficial up to the fragility ceiling (Law V and Law II compound); above the ceiling, Law V begins actively eroding Law II by destroying the reproductive unit's coherence. The laws are not always allies — the ceiling is the exact point where they diverge.
+
+New questions generated: (1) In MuLTEE data, does entanglement density show saturation (plateau) as cluster size increases, or does it keep rising? Saturation would confirm that selection imposes a ceiling. (2) Do snowflake yeast clusters reproduce via strict binary fission only, or does multi-fragment reproduction occur naturally — and if so, what fraction of offspring are non-viable?
+
 
 ### 2026-04-30 09:17 — Does entanglement scramble PCD cell positioning?
 
