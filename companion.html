@@ -551,6 +551,8 @@ function switchMode(mode) {
   updateRoastBtn();
   currentTurns = [];
   sessionEnergy = [];
+  idleCount = 0;
+  usedGreets = [];
   showMemoryIndicator();
   resetIdleTimer();
 }
@@ -619,17 +621,26 @@ const idleGreets = {
   ]
 };
 
+let idleCount = 0;
+let usedGreets = [];
+
 function resetIdleTimer() {
   clearTimeout(idleTimer);
   idleTimer = setTimeout(autoGreet, IDLE_MINUTES * 60 * 1000);
 }
 
 function autoGreet() {
+  if (idleCount >= 3) return; // stop after 3, they're not here
   const greets = idleGreets[currentMode];
-  const greet = greets[Math.floor(Math.random() * greets.length)];
+  const available = greets.filter(g => !usedGreets.includes(g));
+  if (available.length === 0) usedGreets = []; // reset if exhausted
+  const pool = available.length > 0 ? available : greets;
+  const greet = pool[Math.floor(Math.random() * pool.length)];
+  usedGreets.push(greet);
+  idleCount++;
   addMsg('ai', greet, modeNames[currentMode]);
   speak(greet);
-  resetIdleTimer();
+  if (idleCount < 3) resetIdleTimer();
 }
 
 // ─── Messages ───────────────────────────────────────────────
@@ -660,6 +671,7 @@ async function sendMsg() {
   if (!text) return;
 
   resetIdleTimer();
+  idleCount = 0;
   input.value = '';
   addMsg('user', text);
   currentTurns.push({role:'user', text: text});
