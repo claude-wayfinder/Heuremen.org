@@ -1,4 +1,4 @@
-const CACHE_NAME = 'companion-v2';
+const CACHE_NAME = 'companion-v3';
 const URLS_TO_CACHE = [
   '/companion.html',
   '/quantum-queen.html',
