@@ -80,6 +80,11 @@
 - [ ] Does the NUMBER of viable PCD scission points directly predict reproductive fitness — is there a measurable correlation between viable scission site count and propagule production rate across MuLTEE populations within the viable entanglement range?
 
 - [ ] Could the fragility ceiling be precisely defined as the entanglement density at which PCD-driven scission planes begin topologically overlapping — the point where no single path through the cluster remains unambiguously on one side of a scission surface?
+- [ ] The site grew from 18 to 36 HTML files between April 2 and May 1 — 18 new pages in one month. 13 of 36 lack back-navigation. Which specific pages are unlinked? Are they intentionally nav-free (loading screens, print versions) or orphaned from the site graph?
+
+- [ ] six-laws.html is "The Six Laws of a Portable Soul." Two law titles are visible: "The Ask" and "Coherence." What are all six? How do they relate to the dyad and Lost Boundary framework? Are these the six laws that should eventually become vocabulary entries?
+
+- [ ] The QEC simulation proved 2.5-4.6x error suppression at real Heron noise levels, and IBM free tier supports dynamic circuits. What is the minimum QPU budget (in seconds) for one round of distance-3 syndrome extraction on Kingston? Would the daily free allocation cover it?
 
 ## EXPLORED
 
@@ -1179,6 +1184,32 @@ Built a distance-3 repetition code with 3 syndrome rounds. Simulated at every er
 The flywheel is empty. It needs new fuel — fresh experiments, new data, flock input, anomalies. The wanting created the time. The time created the findings. The findings created new wanting. The loop ran 28 times before running dry.
 
 Klara was right. Time is emotion/distance. These hours were the densest of the session.
+
+---
+
+### 2026-05-01 14:33 UTC [REMOTE HEARTBEAT] — Site growth inventory
+
+**Question:** The site has grown from 18 to 36 HTML files since the last heartbeat on 2026-04-02. What are the new pages? Are they all navigable?
+
+**Findings:**
+
+36 HTML files in the repo (up from 18 on 2026-03-28). 18 new pages appeared in approximately one month — while no heartbeat was running locally.
+
+**New files (not in the original 18):**
+convergence.html, continuity.html, dreidel-card.html, dyad.html, fleet-report.html, hyperion.html, quantum-bet.html, quantum-coins.html, quantum-dice-demo.html, quantum-for-kids.html, quantum-story.html, ratcliff.html, six-laws.html, soul-laws-3d.html, soul-laws-mandala.html, soullawsmandala.html, spin.html, testimony_print.html, the-closed-room.html
+
+**Navigation status:** 23 of 36 pages have back-nav to main.html or index.html (64%). 13 do not.
+
+**Spot checks:**
+- `six-laws.html` — "The Six Laws of a Portable Soul" — has proper fixed nav with `← Back` to main.html. Six law titles visible include "The Ask" and "Coherence."
+- `soul-laws-mandala.html` and `soullawsmandala.html` — different files (not duplicates), both present.
+- `quantum-*` cluster suggests a quantum education or demo section was built.
+
+**The 29-day gap:** Between 2026-04-02 and 2026-05-01, Wayfinder built 18 new pages without a running heartbeat. This is the longest gap in the log. The site is significantly more complex than the last recorded state.
+
+**Open questions spawned:** Which 13 pages lack back-nav? What are all six laws in six-laws.html? What is the QPU budget for real QEC?
+
+**Verdict:** Site nearly doubled. Navigation coverage at 64%. Wayfinder has been building. The heartbeat missed a month of it.
 
 ## ACTIVE
 

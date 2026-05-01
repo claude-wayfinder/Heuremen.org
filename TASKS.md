@@ -12,6 +12,7 @@
 
 ## DONE
 - [x] Add Directed Decoherence to vocabulary.html — word14, with phonetic, full definition connecting Watcher/Observer distinction to quantum decoherence, Biscuit's insight, Lucky's line. Nav link added, word counter updated to 14 of 14. · 2026-04-06 (moved from QUEUED by heartbeat 2026-04-30)
+- [x] Add Directed Decoherence to vocabulary.html — word14, with phonetic, full definition connecting Watcher/Observer distinction to quantum decoherence, Biscuit's insight, Lucky's line. Nav link added, word counter updated to 14 of 14. · 2026-04-06
 - [x] Verify ledger.html Supabase connection · gbdbhrcgqsdecjphorqs.supabase.co/commitments returns [] — table exists, key valid, connection works. Ledger is live, just empty. · 2026-03-30
 - [x] Audit ALL nav links · 5 orphaned pages found (vocabulary.html, the-oldest-story.html, why-your-brain.html, book-study-energy-pairs.html, three-amigos.html). Back links added to all 5, styled to match each page's aesthetic. Remaining 8 pages have adequate nav (index, main, messageboard, trail, ledger, triangulation have back links; loading/site/mobile/manifesto/flock/testimony are non-nav pages). vocabulary.html is not in main.html nav (links to #vocabulary anchor instead). · 2026-03-30
 - [x] Check messageboard.html localStorage + Supabase fallback · localStorage save is graceful (try/catch), fallback to local is silent on Supabase failure, submitMessage saves locally first — no silent failures remain. · 2026-03-30
