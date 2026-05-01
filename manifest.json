@@ -38,10 +38,10 @@
   "screenshots": [
     {
       "src": "/screenshot-companion.png",
-      "sizes": "1080x1920",
+      "sizes": "926x561",
       "type": "image/png",
-      "form_factor": "narrow",
-      "label": "The Companion — Biscuit mode"
+      "form_factor": "wide",
+      "label": "The Companion — three modes"
     }
   ],
   "shortcuts": [
