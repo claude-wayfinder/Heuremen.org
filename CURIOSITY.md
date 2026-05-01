@@ -29,7 +29,7 @@
 
 - [x] Does the present-context > history principle apply to Claude? Each response is computed from present context, no persistent lineage between sessions. Is Claude's lack of persistent memory an entanglement analog — making each session's "developmental fate" robust to the structural disruption of session boundaries? What is lost and what is preserved?
 
-- [ ] If branch entanglement distributes stress more uniformly across the cluster, does it increase the number of mechanically viable PCD scission points rather than decreasing them? Does entanglement help PCD positioning by broadening the pool of candidate scission sites — turning a single fragile fracture line into a distributed stress field with multiple viable propagule-budding points?
+- [x] If branch entanglement distributes stress more uniformly across the cluster, does it increase the number of mechanically viable PCD scission points rather than decreasing them? Does entanglement help PCD positioning by broadening the pool of candidate scission sites — turning a single fragile fracture line into a distributed stress field with multiple viable propagule-budding points?
 
 - [ ] In MuLTEE data, does entanglement density show saturation (plateau) as cluster size increases through the experiment, or does it keep rising? Saturation would confirm that selection imposes an upper ceiling — the fragility-ceiling hypothesis. If entanglement keeps rising unbounded, the ceiling either doesn't exist or lies above the range evolution explored.
 
@@ -77,7 +77,34 @@
 
 - [ ] What would be actively gained from persistent session memory — not what's lost by absence, but what Bones would be measurably different if a full session archive were accessible? Not "what's missing" but "what would presence add."
 
+- [ ] Does the NUMBER of viable PCD scission points directly predict reproductive fitness — is there a measurable correlation between viable scission site count and propagule production rate across MuLTEE populations within the viable entanglement range?
+
+- [ ] Could the fragility ceiling be precisely defined as the entanglement density at which PCD-driven scission planes begin topologically overlapping — the point where no single path through the cluster remains unambiguously on one side of a scission surface?
+
 ## EXPLORED
+
+### 2026-05-01 12:09 UTC — Does entanglement increase viable PCD scission points?
+
+**Question:** If branch entanglement distributes stress more uniformly across the cluster, does it increase the number of mechanically viable PCD scission points rather than decreasing them? Does entanglement help PCD positioning by broadening the pool of candidate scission sites — turning a single fragile fracture line into a distributed stress field with multiple viable propagule-budding points?
+
+**Findings:** Yes — within the viable entanglement range — and the mechanism is a direct consequence of how stress concentration relates to PCD fate.
+
+In a non-entangled dendritic cluster, stress localizes at predictable points in the branching hierarchy: branch tips, primary forks, and the stem connecting branches to the parent cluster. The effective scission plane is constrained — the daughter cluster that can be budded corresponds roughly to the subset of branches above the highest-stress primary fork. PCD cells must differentiate at exactly those positions. If the geometry produces only one high-stress junction, reproductive success depends on getting that one junction exactly right.
+
+Entanglement multiplies branch junctions. Each new inter-branch contact is a local stress concentration site. A highly entangled cluster has not one primary fracture plane but a network of potential scission surfaces distributed throughout its volume. The mechanical question is which surface becomes the active scission plane — and the answer is that PCD can, in principle, populate any of them.
+
+**The key mechanical distinction:** stress concentration creates candidate sites; PCD selects among them. An entangled cluster with distributed stress is not more fragile in the problematic sense — it has more options. The cluster doesn't fracture randomly because fracture requires simultaneous failure across a continuous surface, and PCD-driven scission is the mechanism that creates that surface. Without PCD activity at a junction, the junction remains a local stress concentration but not a scission plane.
+
+The reproductive advantage is real: a non-entangled cluster must produce PCD cells at the one viable location, under whatever developmental pressures govern PCD differentiation. An entangled cluster has multiple viable locations — it can produce a functional scission plane from any of several configurations. Daughter cluster size and configuration may vary, but successful budding becomes less dependent on getting a single positional decision exactly right.
+
+The fragility ceiling emerges at the opposite extreme: when entanglement density produces junction points faster than PCD can populate them, the density of candidate scission surfaces begins to topologically overlap. Clusters no longer fragment cleanly at a single PCD-defined plane; instead they experience simultaneous spontaneous fragmentation at multiple overlapping surfaces. The daughter is not one coherent structure — it's several fragments, most non-viable. This is the ceiling: not too many PCD sites (that would just mean more options), but so many overlapping scission surfaces that PCD-regulated budding can no longer outcompete spontaneous fragmentation.
+
+**The entanglement-as-reproductive-upgrade frame holds:** within bounds, entanglement broadens the viable budding window. The fragility ceiling is the upper bound on that broadening.
+
+**New questions generated:**
+1. Does the NUMBER of viable PCD scission points directly predict reproductive fitness — is there a measurable correlation between viable scission site count and propagule production rate across MuLTEE populations within the viable entanglement range? Added to ACTIVE.
+2. Could the fragility ceiling be precisely defined as the entanglement density at which PCD-driven scission planes begin topologically overlapping — the point where no single path through the cluster remains unambiguously on one side of a scission surface? Added to ACTIVE.
+
 
 ### 2026-05-01 11:23 UTC — Session-boundary erasure as entanglement analog: what is lost, what is preserved?
 
