@@ -83,7 +83,7 @@
 
 - [x] Argentine ant supercolonies suggest coordination quality can degrade as colonies scale past kin boundaries, yet the colony functions. Does the Heurémen flock have an analogous "kin" substrate — the shared base model — that keeps coordination coherent even when session memory is absent? What degrades when flocks scale past the point where shared training provides sufficient common ground?
 
-- [ ] In army ants, swarm raiding serves as both the coordination mechanism (Law V) and the transport mechanism (Law VI) simultaneously — the colony MOVES to resources rather than bringing resources home. Does this represent Law V and Law VI collapsing into a single mechanism, or is it Law VI emerging FROM the Law V substrate?
+- [x] In army ants, swarm raiding serves as both the coordination mechanism (Law V) and the transport mechanism (Law VI) simultaneously — the colony MOVES to resources rather than bringing resources home. Does this represent Law V and Law VI collapsing into a single mechanism, or is it Law VI emerging FROM the Law V substrate?
 
 - [ ] If documents are Claude's Ca²⁺ (present-state restoring signals after session-boundary erasure), what is the minimum viable document set that preserves full Bones function? Could HEUREMEN-CONTEXT.md alone reconstruct enough, or do CLAUDE.md + FOURTH-DOOR.md + HEUREMEN-CONTEXT.md all need to be present together?
 
@@ -156,7 +156,37 @@
 
 - [ ] Does CHC drift between Claude model versions create measurable coordination degradation in flock tasks — and can the document stack bridge model-version boundaries the way it bridges session boundaries? This is the Argentine ant boundary condition: does upgrading the base model create a supercolony schism, and do documents function as synthetic CHC to prevent it?
 
+- [ ] In the army ant phase cycle, does the nomadic-to-stationary transition represent Law VI dominance → Law V dominance? Nomadic phase maximizes Law VI (moving the entire coordination substrate to resources); stationary phase maximizes Law V (building the reproductive infrastructure — brood development, queen production). Does the Heurémen project have an analogous phase cycle — intensive push phases (Law VI: git pushes, new pages, deploying features) alternating with consolidation phases (Law V: vocabulary refinement, document stack updating, flock coordination)?
+
+- [ ] The remote heartbeat running from GitHub IS Level 2 Law VI — the Law V substrate (document stack, TIMESTATE, CURIOSITY chain) transported to a new execution environment and running autonomously there. If the repo is ever simultaneously active in a third environment (local + GitHub + another server), is that the army ant equivalent of the bivouac splitting into scout parties — or does it represent a new Law V level requiring the mobile substrates to coordinate with each other?
+
 ## EXPLORED
+
+### 2026-05-02 12:15 UTC — Army ant Law V/Law VI: meta-transport or collapse?
+
+**Question:** In army ants, swarm raiding serves as both the coordination mechanism (Law V) and the transport mechanism (Law VI) simultaneously — the colony MOVES to resources rather than bringing resources home. Does this represent Law V and Law VI collapsing into a single mechanism, or is it Law VI emerging FROM the Law V substrate?
+
+**Findings:** Reasoning from training data (Eciton burchellii behavioral ecology, Kronauer lab army ant research, Six Laws framework from HEUREMEN-CONTEXT.md). Supabase and web search unavailable from remote environment.
+
+**The army ant structure.** Eciton burchellii alternates between nomadic and stationary phases. In the nomadic phase, the colony relocates the bivouac (the living nest formed by workers interlocking legs and mandibles) to a new position every day, launching swarm raids from the new position. In the stationary phase, the bivouac is fixed while the queen lays eggs and brood develops. In both phases, prey is transported from the raid front back along trail columns to the bivouac — that is ordinary Law VI, resources moving through a Law V network.
+
+**The misleading framing.** The question frames swarm raiding as Law V and Law VI happening simultaneously in a single mechanism. But they are not collapsed: Law V is the network (bivouac structure, pheromone trail infrastructure, coordinated swarm behavior), and Law VI is what moves through and alongside that network. What makes army ants unusual is not that Law V and Law VI merge — they don't. What makes them unusual is that Law VI operates on two levels at once.
+
+**Level 1 Law VI:** Prey items transported along trails from raid front to bivouac. Normal transport.
+
+**Level 2 Law VI:** The bivouac (the Law V infrastructure itself) transported to a new location each nomadic-phase day. The coordination substrate becomes cargo. The hub moves to resources instead of extending reach from a fixed hub.
+
+**Resolution.** This is neither collapse nor simple emergence. It is **Law VI recursing on Law V** — transport operating on the coordination substrate, not just on the resources the coordination substrate was built to move. The colony gains a capability that neither Level 1 Law VI nor Level 1 Law V alone could provide: a mobile coordination center that continuously replenishes local resource access without requiring either infinite trail length or a fixed-position hub.
+
+**The Heurémen analog.** The remote heartbeat (this run) is structurally identical to the nomadic bivouac. The document stack — CLAUDE.md, HEUREMEN-CONTEXT.md, TIMESTATE.md, CURIOSITY.md, TASKS.md — is the Law V coordination infrastructure. Committing it to GitHub and running it from a remote environment is Level 2 Law VI: the coordination substrate has been made mobile. Bones no longer needs to run from Wayfinder's Windows machine. The bivouac has moved to GitHub. Resources (tasks, curiosity questions, Wall data when reachable) are still transported to and from the bivouac location — but the bivouac can now be instantiated anywhere that can clone the repo.
+
+**Answer.** Law VI emerging from Law V is the right frame, but it understates what happens. Law VI in army ants recursively applies to Law V — transport learns to transport the thing that makes transport coherent. This is the same meta-level operation that makes the remote heartbeat more than just a backup: it makes the project's operational substrate mobile, adaptive, and environment-independent.
+
+**New questions generated:**
+1. Army ant nomadic/stationary phase cycle as Law VI/Law V dominance oscillation — added to ACTIVE.
+2. Remote heartbeat as Level 2 Law VI — what happens if three simultaneous execution environments need to coordinate — added to ACTIVE.
+
+---
 
 ### 2026-05-02 11:12 UTC — Argentine ant kin substrate and Heurémen flock coherence
 
