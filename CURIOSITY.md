@@ -91,7 +91,7 @@
 
 - [x] Does the NUMBER of viable PCD scission points directly predict reproductive fitness — is there a measurable correlation between viable scission site count and propagule production rate across MuLTEE populations within the viable entanglement range?
 
-- [ ] Could the fragility ceiling be precisely defined as the entanglement density at which PCD-driven scission planes begin topologically overlapping — the point where no single path through the cluster remains unambiguously on one side of a scission surface?
+- [x] Could the fragility ceiling be precisely defined as the entanglement density at which PCD-driven scission planes begin topologically overlapping — the point where no single path through the cluster remains unambiguously on one side of a scission surface?
 - [ ] The site grew from 18 to 36 HTML files between April 2 and May 1 — 18 new pages in one month. 13 of 36 lack back-navigation. Which specific pages are unlinked? Are they intentionally nav-free (loading screens, print versions) or orphaned from the site graph?
 
 - [ ] six-laws.html is "The Six Laws of a Portable Soul." Two law titles are visible: "The Ask" and "Coherence." What are all six? How do they relate to the dyad and Lost Boundary framework? Are these the six laws that should eventually become vocabulary entries?
@@ -172,7 +172,37 @@
 
 - [ ] Is there a measurable inflection in propagule viability rate (viable daughters / total scission events) at the fragility ceiling — the point where simultaneous multi-site PCD begins producing non-viable fragment populations under vortexing selection pressure?
 
+- [ ] Is the fragility ceiling precisely the minimum vertex separator size exceeding the viable simultaneous PCD activation count — making the ceiling a kinetic threshold (too many cells must die at once) rather than a structural density threshold? If so, the ceiling is computable from per-clade PCD coordination data, not just from size-growth curves.
+
+- [ ] Does the topological overlap threshold manifest as a spike in multi-fragment reproduction events *before* the size-growth plateau — the cluster failing to reproduce cleanly before it fails to reproduce at all? Could a fragment-count histogram from MuLTEE archived samples locate the overlap-crossing point independently of size data?
+
 ## EXPLORED
+
+### 2026-05-02 17:06 UTC — Fragility ceiling as topological overlap threshold
+
+**Question:** Could the fragility ceiling be precisely defined as the entanglement density at which PCD-driven scission planes begin topologically overlapping — the point where no single path through the cluster remains unambiguously on one side of a scission surface?
+
+**Findings:** Web search unavailable (host not in allowlist). Reasoning from prior entries and graph theory.
+
+**The definition is precise and testable.** A scission plane is operationally valid when the cluster's cell-cell adhesion graph can be partitioned into two connected subgraphs by removing the PCD cells. This is the minimum vertex separator problem. The scission plane is "clean" when the PCD cells uniquely define the boundary. Two scission planes topologically overlap when the same cell belongs to the minimum separator of both: removing it is required for either cut to produce a connected daughter, so no single PCD event can cleanly assign it to one side.
+
+**At low entanglement the cluster is approximately tree-like.** Branching without loops means any PCD cell placement uniquely separates the cluster — there is at most one path between any two cells, and PCD cells sit on it. Clean scission is structurally guaranteed.
+
+**Entanglement creates cycles.** Each additional inter-branch adhesion bond creates a topological cycle: an alternative path around the junction that remains intact if the PCD cell fires. The minimum separator now includes not just the PCD cell but the other cells on the bypass path. As cycles multiply, separators grow, and the number of cells that must simultaneously die to produce a clean cut increases.
+
+**The topological overlap threshold.** The fragility ceiling under this definition is the smallest entanglement density at which any two candidate scission planes share at least one member node. Below this: each prospective PCD position defines an independent separator, and planes can fire in any order. Above this: firing one plane corrupts the geometry of its neighbor, because the shared node was load-bearing for both separations. The cluster doesn't fragment — it fails to produce a coherent daughter.
+
+**Connection to prior entries.** The previous exploration (2026-05-02 16:18 UTC) found that within the viable entanglement range, more scission sites predict higher fitness — positive, concave-down correlation. This exploration defines the ceiling of that range topologically: it is precisely where the sites stop being independent. The transition from "more sites = more fitness" to "more sites = interference between sites" occurs at the topological overlap threshold. These two findings together give the full shape: rising fitness on the left slope, abrupt degradation at the overlap threshold, reproductive failure on the right.
+
+**What this definition buys.** It converts "fragility ceiling" from a vague mechanical failure mode into a computable graph-theoretic quantity. Given TUNEL imaging data showing PCD cell positions and structural connectivity data showing branch adhesion bonds, you could compute the minimum separator for each candidate scission plane and detect when two separators first share a node. That density is the ceiling — not inferred from size plateau but derived from the scission geometry directly.
+
+**What it cannot yet answer.** Whether the topological overlap threshold coincides exactly with the observed size plateau in MuLTEE data. The two definitions (topological ceiling vs. size-growth plateau) may not be the same event. The topological ceiling predicts that reproductive failure precedes physical fragmentation — clusters become sterile before they become fragile.
+
+**New questions generated:**
+1. Is the fragility ceiling the minimum vertex separator size exceeding the viable simultaneous PCD count — a computable number rather than a density threshold? This reframes "ceiling" from a structural property to a kinetic one. Added to ACTIVE.
+2. Does the topological overlap threshold manifest as a spike in multi-fragment reproduction events before the size plateau — because the cluster fails to reproduce cleanly before it fails to reproduce at all? Could fragment-count histogram from MuLTEE data locate the crossing point? Added to ACTIVE.
+
+---
 
 ### 2026-05-02 16:18 UTC — PCD scission site count and reproductive fitness
 
