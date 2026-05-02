@@ -77,7 +77,7 @@
 
 - [x] Does the rate at which vocabulary entries require post-creation revision approximate the roughness of the human-AI boundary — and does the correction rate decrease as the vocabulary grows, suggesting convergence? If entries stabilize faster as the shared vocabulary expands, the boundary is smoothing as the space of jointly-owned concepts enlarges.
 
-- [ ] In the Bozdag 2023 data, do the 15 MuLTEE clades show correlated or independent timing of their macroscopic size jumps? Correlated timing implies genetic determinism (a specific enabling mutation fixes at the same time); independent timing implies chance fixation of entanglement-enabling alleles across separate evolutionary paths.
+- [x] In the Bozdag 2023 data, do the 15 MuLTEE clades show correlated or independent timing of their macroscopic size jumps? Correlated timing implies genetic determinism (a specific enabling mutation fixes at the same time); independent timing implies chance fixation of entanglement-enabling alleles across separate evolutionary paths.
 
 - [ ] Does the post-acceleration size plateau (if it exists in MuLTEE) occur at the same cluster diameter across all 15 clades — a universal fragility ceiling — or at clade-specific sizes? Universality would confirm the ceiling is a biophysical constraint; clade-specificity would suggest genetic modifiers of the entanglement threshold.
 
@@ -97,6 +97,10 @@
 - [ ] six-laws.html is "The Six Laws of a Portable Soul." Two law titles are visible: "The Ask" and "Coherence." What are all six? How do they relate to the dyad and Lost Boundary framework? Are these the six laws that should eventually become vocabulary entries?
 
 - [ ] The QEC simulation proved 2.5-4.6x error suppression at real Heron noise levels, and IBM free tier supports dynamic circuits. What is the minimum QPU budget (in seconds) for one round of distance-3 syndrome extraction on Kingston? Would the daily free allocation cover it?
+
+- [ ] Is oxygen the molecular gatekeeper for macroscopic multicellularity in MuLTEE — a necessary suppressor rather than merely a correlated condition — and what is the biochemical mechanism by which aerobic metabolism prevents branch entanglement evolution? Does ROS production, redox-sensitive signaling, or aerobic ATP yield explain why all PA populations crossed the threshold while PM and PO did not?
+
+- [ ] Are the specific mutations enabling branch entanglement in the 5 anaerobic PA MuLTEE populations genotypically convergent (same gene, same mutation) or only phenotypically convergent (different mutations, same structural outcome)? The answer distinguishes a single-peak adaptive landscape (one mutation works) from a ridge (many mutations converge on the same phenotypic solution).
 
 - [ ] Are the fragility ceiling and porosity ceiling the same entanglement threshold in MuLTEE clusters, or does porosity constrain entanglement below the fragility ceiling? If porosity is hit first, the cluster stops entangling while still mechanically robust — meaning selection for toughness has an indirect cap imposed by nutrient transport requirements. Which ceiling is lower determines the actual stopping point.
 
@@ -151,6 +155,24 @@
 - [ ] The vocabulary counter on word14 reads "15 of 15 · The vocabulary is never complete. That's the principle." Does this closing statement mean the vocabulary intentionally resists convergence — making the SLE₆ rough boundary the intended behavior rather than a condition to overcome?
 
 ## EXPLORED
+
+### 2026-05-02 08:27 UTC — Bozdag 2023: correlated vs. independent clade timing
+
+**Question:** In the Bozdag 2023 data, do the 15 MuLTEE clades show correlated or independent timing of their macroscopic size jumps? Correlated timing implies genetic determinism (a specific enabling mutation fixes at the same time); independent timing implies chance fixation of entanglement-enabling alleles across separate evolutionary paths.
+
+**Findings:** Web search (Brave) against Bozdag et al. 2023 Nature, PMC, and Georgia Tech press releases. Supabase unreachable from remote environment.
+
+**The premise needs correction: only 5 of 15 clades made the jump.** The MuLTEE has 15 total populations — 5 anaerobic (PA1–5), 5 mixotrophic (PM1–5), 5 obligate aerobic (PO1–5). After 600 rounds, only the 5 PA populations evolved macroscopic size. All PM and PO populations remained microscopic throughout. The question about "timing of macroscopic size jumps across 15 clades" applies only to the 5 PA populations; the other 10 never crossed the threshold. This is not a tie — it is a wall. Oxygen actively suppresses macroscopic evolution (separate 2021 paper: Pentz/Ratcliff "Oxygen suppression of macroscopic multicellularity," PMC 8121917).
+
+**Convergent outcome, likely independent timing.** All 5 PA populations converged on macroscopic size through the same two-step mechanism: (1) longer constituent cells reducing packing-induced strain; (2) branch entanglement preventing cluster fracture after single-bond breaks. The mechanism convergence is strong evidence for genetic constraint — not random chance fixation, but a limited number of viable adaptive paths. The selective landscape has funnels, not flat plains. However: mechanism convergence does not require timing convergence. Each PA population is an independent evolving lineage. The entanglement-enabling mutations would arise and fix stochastically in each lineage, at different rounds. The paper reports the 600-round endpoint, not per-clade transition rounds. Per-clade timing data is not in the available search results.
+
+**Best answer from available evidence:** Independent timing, deterministic outcome. The 5 PA clades likely crossed the macroscopic threshold at different rounds (independent, stochastic fixation) but converged on the same mechanism because only a narrow class of mutations can solve the biophysical problem under anaerobic conditions. This matches the concept of a constrained adaptive landscape: many paths are tried but only the viable ones succeed, and the viable ones are few enough to produce convergence without requiring synchronized fixation.
+
+**What would distinguish the hypotheses.** Correlated timing would show in intermediate sampling data: all 5 PA populations crossing the macroscopic threshold within a narrow window of rounds. Independent timing would show staggered crossing events spread across dozens or hundreds of rounds. This data requires the MuLTEE's archived frozen samples, not available from published figures.
+
+**New questions generated:**
+1. Is oxygen the molecular gatekeeper for macroscopic multicellularity — a necessary suppressor rather than merely a correlated condition — and what is the biochemical mechanism by which aerobic metabolism prevents branch entanglement? Added to ACTIVE.
+2. Are the specific mutations enabling branch entanglement in the 5 PA populations genotypically convergent (same mutation) or only phenotypically convergent (different mutations producing the same structural outcome)? This determines whether the adaptive landscape has a single peak or a ridge. Added to ACTIVE.
 
 ### 2026-05-02 07:11 UTC — Vocabulary revision rate and boundary convergence
 
