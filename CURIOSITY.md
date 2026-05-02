@@ -92,7 +92,7 @@
 - [x] Does the NUMBER of viable PCD scission points directly predict reproductive fitness — is there a measurable correlation between viable scission site count and propagule production rate across MuLTEE populations within the viable entanglement range?
 
 - [x] Could the fragility ceiling be precisely defined as the entanglement density at which PCD-driven scission planes begin topologically overlapping — the point where no single path through the cluster remains unambiguously on one side of a scission surface?
-- [ ] The site grew from 18 to 36 HTML files between April 2 and May 1 — 18 new pages in one month. 13 of 36 lack back-navigation. Which specific pages are unlinked? Are they intentionally nav-free (loading screens, print versions) or orphaned from the site graph?
+- [x] The site grew from 18 to 36 HTML files between April 2 and May 1 — 18 new pages in one month. 13 of 36 lack back-navigation. Which specific pages are unlinked? Are they intentionally nav-free (loading screens, print versions) or orphaned from the site graph?
 
 - [ ] six-laws.html is "The Six Laws of a Portable Soul." Two law titles are visible: "The Ask" and "Coherence." What are all six? How do they relate to the dyad and Lost Boundary framework? Are these the six laws that should eventually become vocabulary entries?
 
@@ -176,7 +176,35 @@
 
 - [ ] Does the topological overlap threshold manifest as a spike in multi-fragment reproduction events *before* the size-growth plateau — the cluster failing to reproduce cleanly before it fails to reproduce at all? Could a fragment-count histogram from MuLTEE archived samples locate the overlap-crossing point independently of size data?
 
+- [ ] triangulation.html was the Three Amigos access page but is now linked from NOTHING in the codebase — not from main.html, not from any other page. Is it superseded by three-amigos.html, or accidentally disconnected? Does it need to be re-linked or retired?
+
+- [ ] soullawsmandala.html and soul-laws-mandala.html share identical titles ("Six Laws of a Portable Soul — Quantum Mandala"). Which is the canonical version? Should one redirect to the other, or should the duplicate be removed?
+
 ## EXPLORED
+
+### 2026-05-02 18:03 UTC — Nav audit: which of the 36 pages are orphaned?
+
+**Question:** The site grew from 18 to 36 HTML files between April 2 and May 1 — 18 new pages in one month. 13 of 36 lack back-navigation. Which specific pages are unlinked? Are they intentionally nav-free (loading screens, print versions) or orphaned from the site graph?
+
+**Findings:** Full filesystem audit via grep-based back-nav detection across all 36 HTML files; inbound-link cross-reference for each no-back page.
+
+**16 pages lack back-navigation (not 13 as estimated).** Categorized:
+
+*Intentionally nav-free (7):* index.html (root — IS the destination), loading.html (splash screen), site.html (internal), mobile.html (mobile entry), oy.html / oy-dark.html / oy-light.html (standalone literary readings, listed as live public pages in HEUREMEN-CONTEXT.md).
+
+*Linked from other pages, no back button (2):* contact-section.html (linked from dyad.html, Formspree form pending ID). demo.html (linked from dyad.html, title "The Dyad — Let's Do It Together" — possibly a prototype version of dyad.html).
+
+*True orphans — not linked from any page, no back-nav (7):* triangulation.html (formerly the Three Amigos navigation hub, now linked from NOTHING in the codebase), dreidel-card.html ("Dreidel Card — Print This" — likely intentional standalone print page), quantum-bet.html ("Quantum Bet"), quantum-coins.html ("Quantum Coins"), soul-laws-3d.html ("Six Laws — 3D Substrate Model"), soul-laws-mandala.html ("Six Laws of a Portable Soul — Quantum Mandala"), soullawsmandala.html (identical title to soul-laws-mandala.html — probable duplicate).
+
+**Most notable finding:** triangulation.html is a true orphan. TASKS.md references it as accessible via tri-link from main.html's nav. Now zero inbound links in the codebase. If three-amigos.html is the canonical entry point, triangulation.html is either superseded or accidentally disconnected.
+
+**Six laws confirmed (from six-laws.html):** The Ask, Coherence, Witness, Carriage (with Entanglement as sub-principle), Frame, Purpose.
+
+**New questions generated:**
+1. triangulation.html disconnection — re-link or retire? Added to ACTIVE.
+2. soullawsmandala.html duplicate — which is canonical? Added to ACTIVE.
+
+---
 
 ### 2026-05-02 17:06 UTC — Fragility ceiling as topological overlap threshold
 
