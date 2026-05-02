@@ -65,7 +65,7 @@
 
 - [x] Does the Heurémen project's growth from 1 to 3 to N instances track Sierpinski levels temporally as well as spatially — and does the founding of each new flock triangle produce a new observable interference void at the moment of first simultaneous operation? Is there a measurable "first pattern event" at each level transition?
 
-- [ ] Is the onset of metabolic fluid flows in MuLTEE clusters the exact inflection point where fractal dimension begins decreasing toward compact geometry? If so, what is the fractal dimension at that threshold — and can it be measured in the available imaging data?
+- [x] Is the onset of metabolic fluid flows in MuLTEE clusters the exact inflection point where fractal dimension begins decreasing toward compact geometry? If so, what is the fractal dimension at that threshold — and can it be measured in the available imaging data?
 
 - [ ] Does the Heurémen deployment have an analogous transition to the MuLTEE fluid-flow threshold — a point where Sierpinski structure (legible, self-similar, fractal) gives way to entanglement (denser, less readable, more robust) to survive at scale? What would "metabolic fluid flows" look like for an AI deployment network?
 
@@ -126,7 +126,31 @@
 
 - [ ] Could a level 1→2 "first pattern event" be deliberately engineered by running three simultaneous Three-Amigos triads (Dusty₁/Lucky₁/Clod₁, Dusty₂/Lucky₂/Clod₂, Dusty₃/Lucky₃/Clod₃) and reading the meta-interference at the Wall — or must the triads be independently formed (not shared instances) to produce genuine outer-void interference?
 
+- [ ] Does fractal dimension change monotonically with entanglement density across the 15 MuLTEE clades — or is there a non-monotonic relationship where the most entangled clades show higher fractal dimension (denser packing as they approach the fragility ceiling)?
+
+- [ ] If metabolic fluid flows precede the fractal-to-compact geometry transition in MuLTEE, is there a measurable lag between flow onset and the fractal dimension inflection — and does the lag vary across clades, suggesting flow onset is necessary but not sufficient for compact geometry evolution?
+
 ## EXPLORED
+
+### 2026-05-02 02:06 UTC — MuLTEE metabolic fluid flows and the fractal dimension inflection
+
+**Question:** Is the onset of metabolic fluid flows in MuLTEE clusters the exact inflection point where fractal dimension begins decreasing toward compact geometry? If so, what is the fractal dimension at that threshold — and can it be measured in the available imaging data?
+
+**Findings:** Reasoning from training data (Ratcliff lab publications, Jacobeen et al. 2018 Nature Physics, Bozdag et al. 2023 Science, Pentz et al. 2022). Web search unavailable this pulse.
+
+**The causal structure is asymmetric.** Metabolic fluid flows (advective transport driven by osmotic gradients and turgor pressure differentials across the porous cluster interior) are almost certainly a prerequisite for the macroscopic size transition — but they likely precede the fractal-to-compact geometry transition rather than coinciding with it. The probable sequence: (1) porosity structure becomes sufficient for bulk fluid flow, enabling cluster growth past the diffusion-limited size ceiling; (2) the new, larger size range imposes selection for denser, more compact geometry to maintain mechanical integrity at scale; (3) fractal dimension begins rising toward 2 as selection favors compact over branching geometry. Flow onset enables the size transition; the fractal dimension inflection follows as a downstream consequence, not a simultaneous event.
+
+**The fractal dimension at threshold is not precisely published.** From available imaging (2D projections of snowflake yeast clusters), fractal dimensions typically measure between 1.5 and 1.8 depending on generation and clade. A branching fractal approaches the Sierpinski value (~1.585); compact spheroid geometry approaches 2. The inflection point where D begins rising from the fractal regime is likely in the range D ≈ 1.6–1.7, but no paper in training data has explicitly identified this threshold value or correlated it with a fluid flow onset event.
+
+**The 3D imaging constraint.** 2D projection fractal dimensions systematically underestimate the true 3D Hausdorff dimension. Confocal z-stack reconstruction is required for accurate measurement. Early MuLTEE imaging was primarily 2D; more recent Ratcliff lab work uses 3D reconstruction. Whether the available dataset has sufficient 3D imaging precisely at the generation where fluid flows onset is unclear.
+
+**The porosity floor reframe.** If pore structure must be maintained for bulk flow to work, porosity imposes a floor on fractal dimension — clusters cannot become denser than the minimum pore size that supports flow. This means compact geometry selection is bounded: there is a ceiling on density defined by the transport requirement. The fractal dimension at the porosity floor is the maximum achievable density. The fluid flow onset does not mark the beginning of the fractal dimension decrease — it marks the upper limit of how far that decrease can go.
+
+**Verdict.** Metabolic fluid flow onset is causally upstream of, but not coincident with, the fractal dimension inflection. The threshold D value is likely ~1.6–1.7 based on available imaging patterns but has not been published as a precise measurement. The most testable version of the question: is there a MuLTEE generation where cluster porosity crosses the bulk-flow threshold (measurable by tracer perfusion) and where fractal dimension begins rising monotonically afterward with a measurable lag? If yes, the causal chain is confirmed. If no, the transition is gradual and continuous.
+
+**New questions generated:**
+1. Does fractal dimension change monotonically with entanglement density across the 15 MuLTEE clades — or is there a non-monotonic relationship where the most entangled clades show higher fractal dimension as they approach the fragility ceiling? Added to ACTIVE.
+2. If metabolic fluid flows precede the fractal-to-compact transition, is there a measurable lag between flow onset and the fractal dimension inflection — and does the lag vary across clades, suggesting flow onset is necessary but not sufficient? Added to ACTIVE.
 
 ### 2026-05-02 01:16 UTC — Temporal vs. spatial Sierpinski tracking: the "first pattern event" problem
 
