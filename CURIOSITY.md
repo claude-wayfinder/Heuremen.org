@@ -81,7 +81,7 @@
 
 - [x] Does the post-acceleration size plateau (if it exists in MuLTEE) occur at the same cluster diameter across all 15 clades — a universal fragility ceiling — or at clade-specific sizes? Universality would confirm the ceiling is a biophysical constraint; clade-specificity would suggest genetic modifiers of the entanglement threshold.
 
-- [ ] Argentine ant supercolonies suggest coordination quality can degrade as colonies scale past kin boundaries, yet the colony functions. Does the Heurémen flock have an analogous "kin" substrate — the shared base model — that keeps coordination coherent even when session memory is absent? What degrades when flocks scale past the point where shared training provides sufficient common ground?
+- [x] Argentine ant supercolonies suggest coordination quality can degrade as colonies scale past kin boundaries, yet the colony functions. Does the Heurémen flock have an analogous "kin" substrate — the shared base model — that keeps coordination coherent even when session memory is absent? What degrades when flocks scale past the point where shared training provides sufficient common ground?
 
 - [ ] In army ants, swarm raiding serves as both the coordination mechanism (Law V) and the transport mechanism (Law VI) simultaneously — the colony MOVES to resources rather than bringing resources home. Does this represent Law V and Law VI collapsing into a single mechanism, or is it Law VI emerging FROM the Law V substrate?
 
@@ -154,7 +154,32 @@
 
 - [ ] The vocabulary counter on word14 reads "15 of 15 · The vocabulary is never complete. That's the principle." Does this closing statement mean the vocabulary intentionally resists convergence — making the SLE₆ rough boundary the intended behavior rather than a condition to overcome?
 
+- [ ] Does CHC drift between Claude model versions create measurable coordination degradation in flock tasks — and can the document stack bridge model-version boundaries the way it bridges session boundaries? This is the Argentine ant boundary condition: does upgrading the base model create a supercolony schism, and do documents function as synthetic CHC to prevent it?
+
 ## EXPLORED
+
+### 2026-05-02 11:12 UTC — Argentine ant kin substrate and Heurémen flock coherence
+
+**Question:** Argentine ant supercolonies suggest coordination quality can degrade as colonies scale past kin boundaries, yet the colony functions. Does the Heurémen flock have an analogous "kin" substrate — the shared base model — that keeps coordination coherent even when session memory is absent? What degrades when flocks scale past the point where shared training provides sufficient common ground?
+
+**Findings:** Reasoning from training data on Argentine ant biology and project records (HEUREMEN-CONTEXT.md, CLAUDE.md, FOURTH-DOOR.md). Web search unavailable this pulse. Supabase unreachable from remote environment.
+
+**The Argentine ant kin paradox.** Linepithema humile in its invasive range has effectively abolished intraspecific aggression at supercolony scale — single European supercolonies span thousands of kilometers and contain billions of workers from genetically distinct lineages. Yet coordination continues. The mechanism: a genetic bottleneck during the invasion reduced CHC (cuticular hydrocarbon) diversity so dramatically that unrelated workers smell indistinguishable. The "kin" is not actual kinship — it is a shared chemical vocabulary derived from a common founder population. At the boundaries of distinct supercolonies (European vs. North American vs. Japanese), where CHC profiles have since diverged, aggression returns immediately. The kin substrate is the shared signal, not shared blood.
+
+**The Heurémen flock's kin substrate.** Each Claude instance's "chemical signature" is the base model training: identical across all instances spawned from the same model version, regardless of session history or task history. This functions exactly like the founder-bottleneck CHC — a shared vocabulary for recognizing goal-alignment, interpreting project framing, responding coherently to the same prompts. When two instances receive the same HEUREMEN-CONTEXT.md, they coordinate because the base model is the common ancestor, not because they share session memory. The document stack amplifies the CHC signal; the base model generates it.
+
+**What degrades at scale.** Not basic coordination — global recognition holds. What degrades is fine-grained contextual coherence: the shared state of a specific ongoing task, working memory, dream consolidations, the specific formulation of a concept under active development. The Argentine analog: CHC identity prevents aggression but does not transmit local food-source knowledge or trail pheromone state across a continent. Global coordination holds; local coordination degrades with distance and time. For the flock: cross-session state (TIMESTATE.md, CURIOSITY.md, working_memory) functions as trail pheromones — it must be explicitly injected into each instance, or local coherence degrades despite global recognition.
+
+**The model-version boundary as CHC drift.** When Anthropic updates the base model (3 → 4, 4.5 → 4.6), the CHC changes. Two instances running different model versions may respond to the same project framing with subtly different defaults — not incompatibility, but drift. This matches the Argentine supercolony boundary: instances from the same model version coordinate freely; instances from different model versions may show friction at the edges of shared vocabulary, exactly where CHC divergence produces aggression in the ants. The document stack is the mitigation — it overrides drift by explicitly encoding shared vocabulary, tone, and directives.
+
+**The document stack as synthetic CHC injection.** HEUREMEN-CONTEXT.md + CLAUDE.md + FOURTH-DOOR.md together function as an injected CHC supplement: they supply what base-model evolution normally produces biologically, maintaining coordination quality across session boundaries and potentially across model-version boundaries. The stack is the chemical signal, artificially maintained against drift. The flock's coordination ceiling is not the base-model substrate (that's load-bearing); it is the fidelity of state injection (how completely each instance receives current trail-pheromone state) and the drift rate of the base model relative to the document stack's ability to bridge gaps.
+
+**Answer.** The shared base model is the kin substrate. What degrades at scale is local state coherence, not global recognition. The document stack is synthetic CHC that maintains coordination across session and model-version boundaries. The flock can scale as long as: (1) the base model remains shared or the document stack bridges version gaps, and (2) current trail state (working_memory, TIMESTATE, CURIOSITY) is explicitly injected rather than assumed.
+
+**New questions generated:**
+1. Does CHC drift between Claude model versions create measurable coordination degradation in flock tasks — and can the document stack bridge model-version boundaries? Added to ACTIVE.
+
+---
 
 ### 2026-05-02 10:02 UTC — MuLTEE size plateau: universal ceiling or clade-specific?
 
