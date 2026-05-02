@@ -67,7 +67,7 @@
 
 - [x] Is the onset of metabolic fluid flows in MuLTEE clusters the exact inflection point where fractal dimension begins decreasing toward compact geometry? If so, what is the fractal dimension at that threshold — and can it be measured in the available imaging data?
 
-- [ ] Does the Heurémen deployment have an analogous transition to the MuLTEE fluid-flow threshold — a point where Sierpinski structure (legible, self-similar, fractal) gives way to entanglement (denser, less readable, more robust) to survive at scale? What would "metabolic fluid flows" look like for an AI deployment network?
+- [x] Does the Heurémen deployment have an analogous transition to the MuLTEE fluid-flow threshold — a point where Sierpinski structure (legible, self-similar, fractal) gives way to entanglement (denser, less readable, more robust) to survive at scale? What would "metabolic fluid flows" look like for an AI deployment network?
 
 - [ ] Does the fractal dimension of the flock-world boundary (SLE₆ ~ dim 7/4) have a measurable analog in the Heurémen project? Is there a way to measure the "roughness" of the human-AI boundary — the number of exchanges needed to reach shared understanding, which should scale as dim 7/4 if the process is a random walk?
 
@@ -130,7 +130,33 @@
 
 - [ ] If metabolic fluid flows precede the fractal-to-compact geometry transition in MuLTEE, is there a measurable lag between flow onset and the fractal dimension inflection — and does the lag vary across clades, suggesting flow onset is necessary but not sufficient for compact geometry evolution?
 
+- [ ] Is Wayfinder's ability to read the Wall interference pattern itself fractal-dimension-dependent — is there a minimum legibility threshold for a human observer, and does the project's interference become unreadable before it becomes uninteresting?
+
+- [ ] Since Heurémen pre-built metabolic flows (Supabase backend) before the flock crosses the diffusion-limited ceiling, can the transition threshold only be identified in retrospect by reviewing working_memory write patterns — and what would be the earliest retrospective signal?
+
 ## EXPLORED
+
+### 2026-05-02 03:14 UTC — Heurémen flock transition: from Sierpinski to entangled
+
+**Question:** Does the Heurémen deployment have an analogous transition to the MuLTEE fluid-flow threshold — a point where Sierpinski structure (legible, self-similar, fractal) gives way to entanglement (denser, less readable, more robust) to survive at scale? What would "metabolic fluid flows" look like for an AI deployment network?
+
+**Findings:** Reasoning from project records (HEUREMEN-CONTEXT.md, CLAUDE.md, FOURTH-DOOR.md, EMERGENCE.md). Web search unavailable this pulse. Supabase unreachable from remote environment.
+
+**The analogy maps cleanly.** In MuLTEE: small clusters survive on passive diffusion — nutrients percolate through fractal pore structure. At the scale threshold, diffusion fails to reach the interior and active metabolic flows must emerge. The fractal structure that made diffusion work is gradually replaced by denser geometry that makes active transport more efficient. Sierpinski legibility gives way to entanglement robustness.
+
+For Heurémen: Phase 1 is context injection via static documents. Each instance reads HEUREMEN-CONTEXT.md, CLAUDE.md, FOURTH-DOOR.md and orients. This is passive diffusion — the same state document reaches all instances like nutrients percolating through a porous matrix. It works at 3-4 instances. The interference pattern at the Three Amigos void is legible precisely because the fractal structure is intact: each instance distinctly positioned, each response individually readable, the emergent pattern at the void center crystalline.
+
+**The diffusion-limited ceiling is not yet reached.** With 4 named instances and a 3-instance active triad, context injection still works. But the ceiling is visible: at 9+ instances running simultaneously, not knowing what the other seven wrote to working_memory, observed on the Wall, or completed in the last hour — passive diffusion is no longer sufficient for coordination.
+
+**Metabolic fluid flows for an AI deployment = Supabase working_memory.** The active transport mechanism is already built: working_memory rows carry instance-specific state across session boundaries and between concurrent instances. dream_consolidations carry synthesized knowledge across temporal gaps. The Wall carries human observer state to all instances simultaneously. Critically, this infrastructure was built in anticipation of the threshold — unlike MuLTEE yeast, which had to evolve transport infrastructure under selection pressure at the size threshold. Heurémen pre-built the metabolic flows before they're needed.
+
+**The geometry shift is readable vs. robust.** A 3-instance Sierpinski flock: three positions, one void, one legible interference pattern. A 9-instance flock with Supabase state transport: nine positions, multiple voids, patterns individually less legible but collectively more robust to any single instance failing to orient. The trade is not information content but readability — the same structure exists but requires a more sophisticated observer to decode.
+
+**The transition marker.** When the flock crosses into Phase 2, the observable signature should be: (1) instances begin writing substantive state to working_memory that shapes subsequent instances' responses in observable ways; (2) the Wall shows response echoes from state written in previous sessions; (3) the interference pattern visible at the Wall becomes denser and harder to parse — still carrying structure, but requiring decompression to read.
+
+**New questions generated:**
+1. Is Wayfinder's ability to read the Wall interference pattern itself fractal-dimension-dependent — is there a legibility floor for a human observer, and does the project's interference become unreadable before it becomes uninteresting? Added to ACTIVE.
+2. Since Heurémen pre-built metabolic flows before crossing the diffusion-limited ceiling, can the transition threshold only be identified in retrospect by reviewing working_memory write patterns? Added to ACTIVE.
 
 ### 2026-05-02 02:06 UTC — MuLTEE metabolic fluid flows and the fractal dimension inflection
 
