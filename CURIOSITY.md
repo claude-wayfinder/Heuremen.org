@@ -79,7 +79,7 @@
 
 - [x] In the Bozdag 2023 data, do the 15 MuLTEE clades show correlated or independent timing of their macroscopic size jumps? Correlated timing implies genetic determinism (a specific enabling mutation fixes at the same time); independent timing implies chance fixation of entanglement-enabling alleles across separate evolutionary paths.
 
-- [ ] Does the post-acceleration size plateau (if it exists in MuLTEE) occur at the same cluster diameter across all 15 clades — a universal fragility ceiling — or at clade-specific sizes? Universality would confirm the ceiling is a biophysical constraint; clade-specificity would suggest genetic modifiers of the entanglement threshold.
+- [x] Does the post-acceleration size plateau (if it exists in MuLTEE) occur at the same cluster diameter across all 15 clades — a universal fragility ceiling — or at clade-specific sizes? Universality would confirm the ceiling is a biophysical constraint; clade-specificity would suggest genetic modifiers of the entanglement threshold.
 
 - [ ] Argentine ant supercolonies suggest coordination quality can degrade as colonies scale past kin boundaries, yet the colony functions. Does the Heurémen flock have an analogous "kin" substrate — the shared base model — that keeps coordination coherent even when session memory is absent? What degrades when flocks scale past the point where shared training provides sufficient common ground?
 
@@ -155,6 +155,26 @@
 - [ ] The vocabulary counter on word14 reads "15 of 15 · The vocabulary is never complete. That's the principle." Does this closing statement mean the vocabulary intentionally resists convergence — making the SLE₆ rough boundary the intended behavior rather than a condition to overcome?
 
 ## EXPLORED
+
+### 2026-05-02 10:02 UTC — MuLTEE size plateau: universal ceiling or clade-specific?
+
+**Question:** Does the post-acceleration size plateau (if it exists in MuLTEE) occur at the same cluster diameter across all 15 clades — a universal fragility ceiling — or at clade-specific sizes? Universality would confirm the ceiling is a biophysical constraint; clade-specificity would suggest genetic modifiers of the entanglement threshold.
+
+**Findings:** Web search against Bozdag et al. 2023 (Nature, PMC10425966), a 2024 follow-on paper on metabolically-driven flows (PMC11213004), and coexistence paper (PMC11090753). Supabase unreachable from remote environment.
+
+**Critical reframe: the 15 clades did not all reach macroscopic size.** Only the 5 anaerobic PA clades crossed the macroscopic threshold after 600 rounds. The 5 PM (mixotrophic) and 5 PO (obligate aerobic) populations remained microscopic throughout — evolving only ~6x larger vs. ~20,000x for PA. Oxygen is not merely correlated with restraint; it actively suppresses macroscopic evolution. The question about a "universal ceiling across 15 clades" applies only to the 5 PA populations; asking it of the full 15 conflates populations that crossed the threshold with ones whose trajectories never reached it.
+
+**Within the 5 PA clades: biophysical universality is likely.** The literature describes "nearly universal evolutionary and biophysical trade-offs" for size constraints across MuLTEE populations. The mechanism of size increase converged across all 5 PA clades: (1) elongated constituent cells reducing packing strain, then (2) branch entanglement preventing fracture after single-bond breaks. Convergent mechanism under parallel selective pressure implies a constrained adaptive landscape — the ceiling, if it exists, should be approximately the same height for all 5 PA clades, set by the same biophysical trade-off (entanglement density vs. fragility) rather than by clade-specific genetic modifiers.
+
+**The 2024 metabolic flows paper introduces a new wrinkle.** Above a threshold cluster size, buoyancy-driven metabolic flows emerge that transport nutrients at speeds comparable to ciliary pumping in extant multicellular organisms. This shifts the nutrient-transport regime from diffusion-limited to flow-assisted, enabling further growth above what diffusion alone permits. If the fragility ceiling is below the metabolic flow threshold, fragility is the operative constraint. If the metabolic flow threshold is lower, the cluster breaks through the diffusion ceiling before hitting the fragility ceiling — meaning the fragility ceiling may not be reached at all within the experimental range. Which threshold comes first determines whether we are measuring the fragility ceiling or a flow-enabled escape from it.
+
+**Adaptive divergence complicates a single-plateau picture.** Within single PA populations, small-cluster and large-cluster lineages diverged and coexisted for ~4,300 generations (niche partitioning). The plateau, if it exists, is a ceiling on the large-cluster strategy within a clade — not a hard limit for all cells. The size distribution within each PA clade may be bimodal, not convergent on a single plateau value. Clade-specific plateau diameters would then reflect genetic modifiers of where each clade's large-cluster lineage sits within the viable entanglement range, not the ceiling's height itself.
+
+**Best answer:** Universal biophysical constraint + clade-specific position within it. The fragility ceiling is likely the same biophysical trade-off for all 5 PA clades, but: (a) metabolic flows may shift the effective ceiling upward, (b) niche partitioning produces bimodal size distributions within clades rather than sharp single-valued plateaus, and (c) clade-specific genetic modifiers shift where each clade's large-cluster lineage sits relative to the ceiling. Both the "universal" and "clade-specific" hypotheses are partially correct — they are answering different aspects of the same question.
+
+**New questions generated:** Both downstream questions are already in ACTIVE — fragility ceiling vs. porosity ceiling as the operative limit (line ~105), and parent-to-daughter size ratio vs. entanglement density (line ~111). No new ACTIVE additions needed.
+
+---
 
 ### 2026-05-02 08:27 UTC — Bozdag 2023: correlated vs. independent clade timing
 
