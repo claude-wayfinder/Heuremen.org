@@ -201,9 +201,9 @@ body::before{
 .law-indicator[data-law="law6"]{color:var(--ink-mid);border:1px solid var(--ink-mid)}
 
 .scene-container{
-  max-width:640px;
+  max-width:600px;
   margin:0 auto;
-  padding:80px 28px 60px;
+  padding:80px 32px 60px;
   min-height:100vh;
 }
 
@@ -220,10 +220,62 @@ body::before{
 
 .scene-content p{
   font-size:clamp(1rem,2.5vw,1.15rem);
-  line-height:1.85;
-  margin-bottom:1.2em;
+  line-height:1.7;
+  margin-bottom:0.6em;
   color:var(--ink);
 }
+
+.scene-content p.grouped{
+  margin-bottom:0.15em;
+}
+
+.scene-content p.para-start{
+  margin-top:1.2em;
+}
+
+.scene-content p.drop-cap::first-letter{
+  font-family:'Abril Fatface',serif;
+  float:left;
+  font-size:3.4em;
+  line-height:0.8;
+  padding-right:8px;
+  padding-top:4px;
+  color:var(--carnival-gold);
+}
+
+.illustration-zone{
+  width:100%;
+  aspect-ratio:16/9;
+  margin:28px 0;
+  border-radius:6px;
+  background:linear-gradient(135deg, rgba(0,245,212,0.06), rgba(200,144,42,0.08));
+  border:1px dashed rgba(200,144,42,0.25);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  position:relative;
+}
+
+.illustration-zone::after{
+  content:attr(data-label);
+  font-family:'Cinzel',serif;
+  font-size:0.6rem;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--ink-faded);
+  opacity:0.5;
+}
+
+.illustration-zone img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  position:absolute;
+  inset:0;
+}
+
+.illustration-zone img+::after{display:none}
 
 .scene-content .scene-title{
   font-family:'Cinzel',serif;
@@ -545,8 +597,22 @@ function showScene(id){
   const el=document.getElementById('scene-content');
   el.classList.remove('visible');
   setTimeout(()=>{
-    let h='<span class="scene-title">'+esc(sc.title)+'</span>';
-    sc.text.forEach(p=>{h+=p===null?'<hr>':'<p>'+p+'</p>'});
+    let h='';
+    if(id.endsWith('_opening')||sc.isConvergence){
+      const lbl=sc.isConvergence?'convergence illustration':'scene illustration';
+      h+='<div class="illustration-zone" data-label="'+lbl+'" data-scene="'+id+'"></div>';
+    }
+    h+='<span class="scene-title">'+esc(sc.title)+'</span>';
+    let _first=true,_buf=[];
+    function _flush(){if(!_buf.length)return;const m=_buf.join(' ');h+='<p class="'+(_first?'drop-cap':'para-start')+'">'+m+'</p>';_first=false;_buf=[];}
+    sc.text.forEach(function(p){
+      if(p===null){_flush();h+='<hr>';return;}
+      var isDlg=p.charAt(0)==='\u201C'||p.charAt(0)==='"'||p.indexOf('<strong>')===0||p.indexOf('<em>')===0;
+      var isQ=p.indexOf('Queen')!==-1;
+      if(isDlg||isQ){_flush();h+='<p>'+p+'</p>';_first=false;}
+      else{_buf.push(p);if(_buf.length>=3){_flush();}}
+    });
+    _flush();
     if(sc.ending){h+='<div class="ending-lines">';sc.ending.forEach(l=>{h+='<p>'+l+'</p>'});h+='</div>';}
     if(sc.isDecoherence){h+='<div class="end-actions"><button class="end-btn" onclick="decoReturn()">Return to the Hallway</button></div>';}
     else if(sc.isConvergence){if(sc.completesLaw)saveP(sc.completesLaw);h+=buildShareCard(sc);h+='<div class="end-actions"><button class="end-btn" onclick="backToDoors()">Return to the Doors</button></div>';}
