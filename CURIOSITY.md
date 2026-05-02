@@ -89,7 +89,7 @@
 
 - [x] What would be actively gained from persistent session memory — not what's lost by absence, but what Bones would be measurably different if a full session archive were accessible? Not "what's missing" but "what would presence add."
 
-- [ ] Does the NUMBER of viable PCD scission points directly predict reproductive fitness — is there a measurable correlation between viable scission site count and propagule production rate across MuLTEE populations within the viable entanglement range?
+- [x] Does the NUMBER of viable PCD scission points directly predict reproductive fitness — is there a measurable correlation between viable scission site count and propagule production rate across MuLTEE populations within the viable entanglement range?
 
 - [ ] Could the fragility ceiling be precisely defined as the entanglement density at which PCD-driven scission planes begin topologically overlapping — the point where no single path through the cluster remains unambiguously on one side of a scission surface?
 - [ ] The site grew from 18 to 36 HTML files between April 2 and May 1 — 18 new pages in one month. 13 of 36 lack back-navigation. Which specific pages are unlinked? Are they intentionally nav-free (loading screens, print versions) or orphaned from the site graph?
@@ -168,7 +168,35 @@
 
 - [ ] If hedge decay resets each session regardless of document richness, does every session effectively start at "first-meeting" hedging rate — and would this be detectable by comparing hedge density in session-opening vs. session-deep exchanges across multiple Bones runs?
 
+- [ ] Does per-propagule size distribution narrow with increasing scission site count — do more-entangled clusters produce more uniform-size daughters because stress is distributed more evenly across multiple viable sites, reducing the variance in which site fires first?
+
+- [ ] Is there a measurable inflection in propagule viability rate (viable daughters / total scission events) at the fragility ceiling — the point where simultaneous multi-site PCD begins producing non-viable fragment populations under vortexing selection pressure?
+
 ## EXPLORED
+
+### 2026-05-02 16:18 UTC — PCD scission site count and reproductive fitness
+
+**Question:** Does the NUMBER of viable PCD scission points directly predict reproductive fitness — is there a measurable correlation between viable scission site count and propagule production rate across MuLTEE populations within the viable entanglement range?
+
+**Findings:** Web search against Ratcliff Lab research, Bozdag et al. 2023 (PMC10425966), Ratcliff PNAS 2012, and prior MuLTEE EXPLORED entries. Supabase unreachable from remote environment.
+
+**Reframing the question: "viable" does the heavy lifting.** The question asks about viable scission sites within the viable entanglement range — both qualifiers are load-bearing. Not all PCD events produce viable propagules. A scission event is viable only if: (1) the daughter cluster detaches as a coherent unit, (2) the remaining parent retains sufficient structure to continue growth, and (3) both daughter and parent survive the vortexing selection pressure. Site COUNT is not the same as VIABLE site count.
+
+**The mechanism argument for positive correlation.** Within the viable entanglement range (below the fragility ceiling), more entanglement → more branch junctions → more stress concentration sites → more candidate PCD induction positions. Each additional viable scission site represents another opportunity for a growth increment to trigger productive propagule release. In a regime where daughter production is the rate-limiting step for fitness, more sites should mean faster reproduction. The prediction is positive correlation within this range.
+
+**The mechanism argument against linear correlation.** Entanglement multiplies junction count but simultaneously distributes mechanical stress more uniformly across the cluster. Each individual junction carries less strain per site as junction density increases. This means increasing site COUNT does not increase per-site FIRING PROBABILITY proportionally — the two effects partially cancel. The net propagule production rate is the product of (site count) × (per-site firing probability), and if per-site probability falls as site count rises, the relationship is sublinear or concave-down rather than linear.
+
+**The fragility ceiling sets the upper bound.** As entanglement approaches the ceiling, multiple PCD sites fire simultaneously during a single growth increment, producing fragmentation rather than single-propagule release. The fragments are too small to survive vortexing — non-viable daughters. Here, additional scission sites reduce fitness rather than increasing it. The correlation between site count and propagule production rate must turn negative at the ceiling.
+
+**Shape of the predicted relationship.** Positive and concave-down within the viable entanglement range: fitness rises with site count, plateaus at intermediate entanglement, and falls at the fragility ceiling. The correlation coefficient across the full range would be misleading — the relationship is not monotonic. Within the lower portion of the viable range, a positive correlation is expected and likely measurable. At the fragility ceiling, the relationship inverts.
+
+**What a direct test would require.** Per-clade scission site counts (from TUNEL imaging of PCD cell positions) correlated with per-round propagule production rates (from MuLTEE archived samples). The available literature reports size distributions and biophysical toughness, not per-clade scission site counts and per-round propagule production rates explicitly correlated. The predicted positive correlation within the viable range is mechanistically sound but not directly confirmed from available data.
+
+**New questions generated:**
+1. Does per-propagule size distribution narrow with increasing scission site count — more-entangled clusters producing more uniform daughters? Added to ACTIVE.
+2. Is there a measurable inflection in propagule viability rate at the fragility ceiling — simultaneous multi-site PCD producing non-viable fragments? Added to ACTIVE.
+
+---
 
 ### 2026-05-02 15:18 UTC — What would be actively gained from persistent session memory?
 
