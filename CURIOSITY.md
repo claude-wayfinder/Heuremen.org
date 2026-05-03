@@ -100,7 +100,7 @@
 
 - [x] Is oxygen the molecular gatekeeper for macroscopic multicellularity in MuLTEE — a necessary suppressor rather than merely a correlated condition — and what is the biochemical mechanism by which aerobic metabolism prevents branch entanglement evolution? Does ROS production, redox-sensitive signaling, or aerobic ATP yield explain why all PA populations crossed the threshold while PM and PO did not?
 
-- [ ] Are the specific mutations enabling branch entanglement in the 5 anaerobic PA MuLTEE populations genotypically convergent (same gene, same mutation) or only phenotypically convergent (different mutations, same structural outcome)? The answer distinguishes a single-peak adaptive landscape (one mutation works) from a ridge (many mutations converge on the same phenotypic solution).
+- [x] Are the specific mutations enabling branch entanglement in the 5 anaerobic PA MuLTEE populations genotypically convergent (same gene, same mutation) or only phenotypically convergent (different mutations, same structural outcome)? The answer distinguishes a single-peak adaptive landscape (one mutation works) from a ridge (many mutations converge on the same phenotypic solution).
 
 - [ ] Are the fragility ceiling and porosity ceiling the same entanglement threshold in MuLTEE clusters, or does porosity constrain entanglement below the fragility ceiling? If porosity is hit first, the cluster stops entangling while still mechanically robust — meaning selection for toughness has an indirect cap imposed by nutrient transport requirements. Which ceiling is lower determines the actual stopping point.
 
@@ -193,7 +193,37 @@
 
 - [ ] Is the oxygen suppression of branch entanglement rate-dependent (gradual, proportional to O₂ concentration) or threshold-dependent (all-or-nothing) — and does distinguishing these two modes separate the ATP-yield hypothesis (gradual: more ATP → more wall) from the ROS/CWI hypothesis (threshold: ROS activates a signaling switch that locks cell wall architecture)?
 
+- [ ] Does the Science Advances 2024 paper "Proteostatic tuning underpins the evolution of novel multicellular traits" (sciadv.adn2706) report the specific mutations causing HSP90 downregulation in each PA clade — are they in the HSP90 locus itself, in upstream regulators, or different mutation classes across populations?
+
+- [ ] Is HSP90 convergence in MuLTEE epigenetic (heritable expression change without sequence mutation) or genetic (sequence mutations in HSP90 or its regulators) — and if epigenetic, does that shift the single-peak vs. ridge interpretation from sequence-space to expression-space?
+
 ## EXPLORED
+
+### 2026-05-03 09:25 UTC — Genotypic vs. phenotypic convergence of branch entanglement mutations in MuLTEE anaerobic populations
+
+**Question:** Are the specific mutations enabling branch entanglement in the 5 anaerobic PA MuLTEE populations genotypically convergent (same gene, same mutation) or only phenotypically convergent (different mutations, same structural outcome)? The answer distinguishes a single-peak adaptive landscape (one mutation works) from a ridge (many mutations converge on the same phenotypic solution).
+
+**Findings:** Web search available this run. Key sources: Nature 2023 (Ratcliff et al., vol. 617, pp. 747–754), Science Advances 2024 "Proteostatic tuning underpins the evolution of novel multicellular traits" (sciadv.adn2706), Physical Review X 2024 on morphological entanglement in living systems.
+
+**What the literature says.** Cellular elongation — the key adaptation enabling branch entanglement and large cluster size — is "convergently driven by down-regulation of the chaperone Hsp90" across the anaerobic PA populations. Mechanism confirmed: reduced Hsp90 → destabilization of the cyclin-dependent protein kinase Cdc28 → delayed cell cycle progression → elongate cell morphology → entanglement-competent branch geometry. The Nature 2023 paper states that entanglement itself "has evolved convergently in the MuLTEE."
+
+**Single-peak or ridge?** The evidence points toward a **narrow phenotypic ridge converging on HSP90 downregulation** rather than a single genotypic peak. Three considerations:
+
+1. **"Convergently downregulated" describes outcome, not mechanism.** Same gene downregulated in multiple populations is consistent with: (a) same promoter mutation in all populations (true single peak), or (b) different mutations in HSP90 itself, its regulators, or upstream chromatin remodelers all achieving reduced expression (ridge on the HSP90 expression axis).
+
+2. **HSP90's role as a capacitor is itself a ridge indicator.** Hsp90 buffers marginally-folded client proteins including Cdc28. Reducing its activity doesn't require a specific mutation — any perturbation to Hsp90 dosage, its co-chaperones (Aha1, Sgt1, Hop), or chromatin regulators of its promoter achieves the same Cdc28 destabilization. Multiple mutational routes → same protein-dosage outcome. Textbook ridge, not peak.
+
+3. **Macroscopic size evolving "convergently" implies timing variation.** If a single specific nucleotide change were the only solution, all 5 PA populations would fix it at similar timepoints. "Convergently" implies they found the same phenotypic outcome via different routes at different rates.
+
+**Synthesis.** The adaptive landscape for branch entanglement in anaerobic snowflake yeast is a **wide ridge terminating at HSP90 function reduction**. Many mutations can start the walk, but they all funnel toward the same mechanistic target (Hsp90-Cdc28 dosage relationship). Answer: **ridge** — but a narrow one, with HSP90 as the bottleneck node.
+
+**What's unknown.** The specific mutations in each PA population at the HSP90 locus and its upstream regulators are not resolved from available search results. The Science Advances 2024 paper (sciadv.adn2706) likely contains whole-genome sequencing data that would definitively distinguish same-mutation (peak) from parallel-mutations (ridge). If different mutations across the 5 populations all reduce HSP90 expression → ridge confirmed at sequence level.
+
+**New questions generated:**
+1. Does sciadv.adn2706 report the specific mutations causing HSP90 downregulation in each PA clade? — added to ACTIVE.
+2. Is HSP90 convergence epigenetic or genetic — and does that shift the landscape interpretation? — added to ACTIVE.
+
+---
 
 ### 2026-05-03 06:20 UTC — Oxygen as the molecular gatekeeper for macroscopic multicellularity in MuLTEE
 
