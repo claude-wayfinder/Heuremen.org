@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>The Companion</title>
-<meta name="description" content="A thinking partner that talks back. Three modes: Biscuit (casual), Bread (deep), Cookie (whimsical).">
+<meta name="description" content="A thinking partner that talks back. One voice that shifts with the conversation.">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Abril+Fatface&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="heuremen.css">
 <link rel="manifest" href="/manifest.json">
@@ -14,88 +14,45 @@
 <link rel="apple-touch-icon" href="/icon-192.png">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+:root{--accent:#c8a84e}
 body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;height:100vh;height:100dvh}
 
-/* ─── SPLASH SCREEN ─────────────────────────────────────────── */
+/* ─── SPLASH ─────────────────────────────────────────── */
 .splash{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;background:#0a0a0f;transition:opacity 0.6s ease,transform 0.6s ease}
 .splash.gone{opacity:0;transform:scale(1.1);pointer-events:none}
 
-.splash-pick{display:flex;gap:24px;margin-top:0}
-
-.splash-orb{position:relative;width:220px;height:220px;border-radius:50%;cursor:pointer;transition:all 0.4s ease;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.splash-orb{position:relative;width:200px;height:200px;border-radius:50%;cursor:pointer;transition:all 0.4s ease;display:flex;align-items:center;justify-content:center;flex-direction:column;
+  background:radial-gradient(circle at 40% 35%, #ffb347 0%, #ff6b9d 45%, #b088f9 100%);
+  box-shadow:0 0 60px rgba(200,168,78,0.3),0 0 120px rgba(200,168,78,0.1);
+  animation:float-o 4s ease-in-out infinite, hue-shift 16s linear infinite;
+}
 .splash-orb:active{transform:scale(0.95)}
+.splash-orb:hover{box-shadow:0 0 80px rgba(200,168,78,0.5),0 0 160px rgba(200,168,78,0.2)}
 
-/* Biscuit orb — warm pink/gold */
-.splash-orb.biscuit{
-  background:radial-gradient(circle at 40% 35%, #ffb347 0%, #ff6b9d 45%, #c44569 100%);
-  box-shadow:0 0 60px rgba(255,107,157,0.3),0 0 120px rgba(255,107,157,0.1);
-  animation:float-b 4s ease-in-out infinite;
-}
-.splash-orb.biscuit:hover{box-shadow:0 0 80px rgba(255,107,157,0.5),0 0 160px rgba(255,107,157,0.2)}
+@keyframes float-o{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes hue-shift{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(360deg)}}
 
-/* Bread orb — warm earth/amber */
-.splash-orb.bread{
-  background:radial-gradient(circle at 40% 35%, #f5deb3 0%, #d4a574 45%, #8b6914 100%);
-  box-shadow:0 0 60px rgba(212,165,116,0.3),0 0 120px rgba(212,165,116,0.1);
-  animation:float-r 4s ease-in-out infinite 1s;
-}
-.splash-orb.bread:hover{box-shadow:0 0 80px rgba(212,165,116,0.5),0 0 160px rgba(212,165,116,0.2)}
+.splash-orb::before{content:'';position:absolute;inset:8px;border-radius:50%;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,0.15) 0%,transparent 50%);pointer-events:none}
+.splash-orb::after{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,255,255,0.08);pointer-events:none}
 
-/* Cookie orb — playful violet/teal */
-.splash-orb.cookie{
-  background:radial-gradient(circle at 40% 35%, #e0aaff 0%, #b088f9 45%, #7b2ff7 100%);
-  box-shadow:0 0 60px rgba(176,136,249,0.3),0 0 120px rgba(176,136,249,0.1);
-  animation:float-c 4s ease-in-out infinite 0.5s;
-}
-.splash-orb.cookie:hover{box-shadow:0 0 80px rgba(176,136,249,0.5),0 0 160px rgba(176,136,249,0.2)}
-
-@keyframes float-b{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-@keyframes float-r{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes float-c{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-
-/* Texture overlay for biscuit crumb look */
-.splash-orb::before{
-  content:'';position:absolute;inset:8px;border-radius:50%;
-  background:radial-gradient(circle at 30% 25%,rgba(255,255,255,0.15) 0%,transparent 50%);
-  pointer-events:none;
-}
-/* Crispy edge */
-.splash-orb::after{
-  content:'';position:absolute;inset:0;border-radius:50%;
-  border:2px solid rgba(255,255,255,0.08);
-  pointer-events:none;
-}
-
-.orb-label{font-family:'Abril Fatface',serif;font-size:1.6rem;color:rgba(255,255,255,0.9);text-shadow:0 2px 8px rgba(0,0,0,0.5);z-index:1;letter-spacing:0.02em}
-.orb-sub{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.2em;margin-top:6px;z-index:1}
-
+.orb-label{font-family:'Abril Fatface',serif;font-size:1.4rem;color:rgba(255,255,255,0.9);text-shadow:0 2px 8px rgba(0,0,0,0.5);z-index:1;letter-spacing:0.02em}
 .splash-title{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:40px}
-
 .splash-hint{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:rgba(255,255,255,0.15);margin-top:50px;letter-spacing:0.15em}
 
-/* ─── PARTICLES (subtle floating dots) ───────────────────────── */
+/* ─── PARTICLES ───────────────────────────── */
 .particles{position:fixed;inset:0;pointer-events:none;z-index:99}
 .particle{position:absolute;width:3px;height:3px;border-radius:50%;opacity:0;animation:drift 8s ease-in-out infinite}
 @keyframes drift{0%{opacity:0;transform:translateY(0)}20%{opacity:0.4}80%{opacity:0.4}100%{opacity:0;transform:translateY(-200px)}}
 
-/* ─── APP (chat interface, hidden initially) ─────────────────── */
+/* ─── APP ─────────────────────────────────── */
 .app{display:flex;flex-direction:column;height:100vh;height:100dvh;opacity:0;transition:opacity 0.5s ease;pointer-events:none}
 .app.active{opacity:1;pointer-events:all}
 
-/* TOP BAR */
 .top{padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:rgba(10,10,15,0.98)}
-.top-logo{font-family:'Abril Fatface',serif;font-size:1rem;text-decoration:none;transition:color 0.2s}
-.mode-toggle{display:flex;gap:6px;align-items:center}
-.mode-btn{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,255,255,0.08);background:transparent;cursor:pointer;border-radius:20px;transition:all 0.3s}
-.mode-btn.biscuit{color:#ff6b9d}
-.mode-btn.biscuit.active{border-color:#ff6b9d;background:rgba(255,107,157,0.1)}
-.mode-btn.bread{color:#d4a574}
-.mode-btn.bread.active{border-color:#d4a574;background:rgba(212,165,116,0.1)}
-.mode-btn.cookie{color:#b088f9}
-.mode-btn.cookie.active{border-color:#b088f9;background:rgba(176,136,249,0.1)}
+.top-logo{font-family:'Abril Fatface',serif;font-size:1rem;text-decoration:none;transition:color 0.3s;color:var(--accent)}
 
-.tts-btn{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;padding:4px 8px;border:1px solid rgba(255,255,255,0.08);background:transparent;cursor:pointer;border-radius:20px;color:rgba(255,255,255,0.3);transition:all 0.3s;margin-left:4px}
-.tts-btn.on{color:#ff6b9d;border-color:rgba(255,107,157,0.4)}
+.tts-btn{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;padding:4px 8px;border:1px solid rgba(255,255,255,0.08);background:transparent;cursor:pointer;border-radius:20px;color:rgba(255,255,255,0.3);transition:all 0.3s}
+.tts-btn.on{color:var(--accent);border-color:var(--accent)}
 
 .back-btn{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;padding:4px 10px;border:1px solid rgba(255,255,255,0.08);background:transparent;cursor:pointer;border-radius:20px;color:rgba(255,255,255,0.3);transition:all 0.2s;margin-right:8px}
 .back-btn:hover{color:rgba(255,255,255,0.6);border-color:rgba(255,255,255,0.2)}
@@ -106,10 +63,7 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 .msg{max-width:85%;line-height:1.65;font-size:0.92rem;padding:12px 16px;border-radius:16px;animation:msgIn 0.3s ease}
 @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .msg.user{align-self:flex-end;background:rgba(255,255,255,0.05);color:#e8e0d0;border:1px solid rgba(255,255,255,0.06)}
-.msg.ai{align-self:flex-start;border:1px solid rgba(255,255,255,0.06)}
-.msg.ai.biscuit-msg{background:rgba(255,107,157,0.04)}
-.msg.ai.bread-msg{background:rgba(212,165,116,0.04)}
-.msg.ai.cookie-msg{background:rgba(176,136,249,0.04)}
+.msg.ai{align-self:flex-start;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02)}
 .msg.system{align-self:center;font-size:0.75rem;color:rgba(255,255,255,0.25);font-style:italic;border:none;padding:8px;text-align:center}
 
 .msg-speaker{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;display:block}
@@ -120,10 +74,7 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 
 /* SPEAKING INDICATOR */
 .speaking{position:relative}
-.speaking::before{content:'';position:absolute;left:-8px;top:50%;width:3px;height:50%;transform:translateY(-50%);border-radius:2px;animation:pulse-speak 0.8s ease-in-out infinite}
-.biscuit-msg.speaking::before{background:#ff6b9d}
-.bread-msg.speaking::before{background:#d4a574}
-.cookie-msg.speaking::before{background:#b088f9}
+.speaking::before{content:'';position:absolute;left:-8px;top:50%;width:3px;height:50%;transform:translateY(-50%);border-radius:2px;background:var(--accent);animation:pulse-speak 0.8s ease-in-out infinite}
 @keyframes pulse-speak{0%,100%{opacity:0.3;height:25%}50%{opacity:1;height:55%}}
 
 /* INPUT */
@@ -134,19 +85,20 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 .send-btn{background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);font-family:'IBM Plex Mono',monospace;font-size:0.75rem;padding:10px 18px;cursor:pointer;border-radius:20px;transition:all 0.2s;white-space:nowrap}
 .send-btn:hover{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.7)}
 .send-btn:disabled{opacity:0.2;cursor:not-allowed}
+
 /* MIC */
 .mic-btn{background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);font-size:1.1rem;padding:10px 14px;cursor:pointer;border-radius:50%;transition:all 0.2s;line-height:1;width:42px;height:42px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .mic-btn:hover{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.7)}
 .mic-btn.recording{background:rgba(196,60,42,0.2);border-color:rgba(196,60,42,0.6);color:#c43c2a;animation:mic-pulse 1.5s ease-in-out infinite}
 @keyframes mic-pulse{0%,100%{box-shadow:0 0 0 0 rgba(196,60,42,0.3)}50%{box-shadow:0 0 0 8px rgba(196,60,42,0)}}
 
-/* MEMORY INDICATOR */
+/* MEMORY */
 .memory-bar{padding:4px 16px;background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.04);display:none;align-items:center;gap:6px;flex-shrink:0}
 .memory-bar.active{display:flex}
-.memory-dot{width:6px;height:6px;border-radius:50%;background:#c49a38;opacity:0.6}
+.memory-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:0.6}
 .memory-label{font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:rgba(255,255,255,0.25);letter-spacing:0.1em;text-transform:uppercase}
 
-/* EMOTIONAL COLOR STRIP */
+/* COLOR STRIP */
 .color-strip{display:flex;gap:3px;margin-left:auto;align-items:center}
 .color-swatch{width:14px;height:14px;border-radius:3px;border:1px solid rgba(255,255,255,0.08);transition:all 0.3s;position:relative;cursor:default}
 .color-swatch:hover{transform:scale(1.4);z-index:2;border-color:rgba(255,255,255,0.3)}
@@ -156,15 +108,13 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 @keyframes color-breathe{0%,100%{opacity:0.7}50%{opacity:1}}
 
 @media(max-width:600px){
-  .splash-pick{gap:12px;flex-wrap:wrap;justify-content:center}
-  .splash-orb{width:130px;height:130px}
-  .orb-label{font-size:1.1rem}
+  .splash-orb{width:160px;height:160px}
+  .orb-label{font-size:1.15rem}
   .msg{max-width:90%;font-size:0.88rem}
 }
 @media(max-width:380px){
-  .splash-orb{width:110px;height:110px}
-  .orb-label{font-size:0.95rem}
-  .orb-sub{font-size:0.5rem}
+  .splash-orb{width:140px;height:140px}
+  .orb-label{font-size:1rem}
 }
 </style>
 </head>
@@ -173,19 +123,8 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 <!-- SPLASH -->
 <div class="splash" id="splash">
   <div class="splash-title">the companion</div>
-  <div class="splash-pick">
-    <div class="splash-orb biscuit" onclick="enterApp('biscuit')">
-      <span class="orb-label">Biscuit</span>
-      <span class="orb-sub">casual</span>
-    </div>
-    <div class="splash-orb bread" onclick="enterApp('bread')">
-      <span class="orb-label">Bread</span>
-      <span class="orb-sub">deep</span>
-    </div>
-    <div class="splash-orb cookie" onclick="enterApp('cookie')">
-      <span class="orb-label">Cookie</span>
-      <span class="orb-sub">whimsical</span>
-    </div>
+  <div class="splash-orb" onclick="enterApp()">
+    <span class="orb-label">Companion</span>
   </div>
   <div class="splash-hint">tap to begin</div>
 </div>
@@ -198,14 +137,9 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
   <div class="top">
     <div style="display:flex;align-items:center">
       <button class="back-btn" onclick="backToSplash()">&#8592;</button>
-      <span class="top-logo" id="topLogo">Biscuit</span>
+      <span class="top-logo" id="topLogo">Companion</span>
     </div>
-    <div class="mode-toggle">
-      <button class="mode-btn biscuit active" id="btnBiscuit" onclick="switchMode('biscuit')">Biscuit</button>
-      <button class="mode-btn bread" id="btnBread" onclick="switchMode('bread')">Bread</button>
-      <button class="mode-btn cookie" id="btnCookie" onclick="switchMode('cookie')">Cookie</button>
-      <button class="tts-btn on" id="ttsBtn" onclick="toggleTTS()">TTS</button>
-    </div>
+    <button class="tts-btn" id="ttsBtn" onclick="toggleTTS()">MUTE</button>
   </div>
 
   <div class="memory-bar" id="memoryBar">
@@ -225,9 +159,8 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 </div>
 
 <script>
-let currentMode = 'biscuit';
 let sessionId = 'companion_' + Date.now().toString(36);
-let ttsEnabled = true;
+let ttsEnabled = false;
 let wakeLock = null;
 let idleTimer = null;
 let recognition = null;
@@ -235,19 +168,30 @@ let isRecording = false;
 const IDLE_MINUTES = 8;
 const MAX_MEMORY_TURNS = 40;
 const MAX_SESSIONS_RECALL = 3;
-const modeNames = {biscuit: 'Biscuit', bread: 'Bread', cookie: 'Cookie'};
-const modeColors = {biscuit: '#ff6b9d', bread: '#d4a574', cookie: '#b088f9'};
+const MEMORY_KEY = 'companion_memory';
 
 // ─── Memory System ─────────────────────────────────────────
-function getMemoryKey() { return 'companion_memory_' + currentMode; }
-
 function loadMemory() {
-  try { return JSON.parse(localStorage.getItem(getMemoryKey()) || '{"sessions":[]}'); }
-  catch(e) { return {sessions:[]}; }
+  try {
+    let mem = JSON.parse(localStorage.getItem(MEMORY_KEY) || 'null');
+    if (mem) return mem;
+    // Migrate from old per-mode keys
+    const merged = {sessions:[]};
+    ['biscuit','bread','cookie'].forEach(function(mode) {
+      try {
+        const old = JSON.parse(localStorage.getItem('companion_memory_' + mode) || 'null');
+        if (old && old.sessions) merged.sessions.push.apply(merged.sessions, old.sessions);
+      } catch(e) {}
+    });
+    merged.sessions.sort(function(a,b) { return new Date(a.date) - new Date(b.date); });
+    if (merged.sessions.length > 10) merged.sessions = merged.sessions.slice(-10);
+    if (merged.sessions.length > 0) saveMemory(merged);
+    return merged;
+  } catch(e) { return {sessions:[]}; }
 }
 
 function saveMemory(mem) {
-  localStorage.setItem(getMemoryKey(), JSON.stringify(mem));
+  localStorage.setItem(MEMORY_KEY, JSON.stringify(mem));
 }
 
 function saveCurrentSession(turns) {
@@ -258,16 +202,14 @@ function saveCurrentSession(turns) {
   const session = {
     id: sessionId,
     date: new Date().toISOString(),
-    mode: currentMode,
+    mode: 'companion',
     turns: turns.slice(-MAX_MEMORY_TURNS),
     color: color,
     mood: mood
   };
-  // Don't duplicate
-  const idx = mem.sessions.findIndex(s => s.id === sessionId);
+  const idx = mem.sessions.findIndex(function(s) { return s.id === sessionId; });
   if (idx >= 0) mem.sessions[idx] = session;
   else mem.sessions.push(session);
-  // Keep last 10 sessions
   if (mem.sessions.length > 10) mem.sessions = mem.sessions.slice(-10);
   saveMemory(mem);
 }
@@ -277,11 +219,11 @@ function buildMemoryContext() {
   if (!mem.sessions || mem.sessions.length === 0) return null;
   const recent = mem.sessions.slice(-MAX_SESSIONS_RECALL);
   let ctx = '';
-  recent.forEach(s => {
+  recent.forEach(function(s) {
     const d = new Date(s.date);
     const dateStr = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
     const moodTag = s.mood ? ' [mood: ' + s.mood + ']' : '';
-    const lines = s.turns.slice(-6).map(t => (t.role==='user'?'User':'Companion') + ': ' + t.text).join('\n');
+    const lines = s.turns.slice(-6).map(function(t) { return (t.role==='user'?'User':'Companion') + ': ' + t.text; }).join('\n');
     ctx += '[' + dateStr + moodTag + ']\n' + lines + '\n\n';
   });
   return ctx.trim();
@@ -292,82 +234,72 @@ function showMemoryIndicator() {
   const bar = document.getElementById('memoryBar');
   const label = document.getElementById('memoryLabel');
   if (mem.sessions.length > 0) {
-    const count = mem.sessions.reduce((n,s) => n + s.turns.length, 0);
-    label.textContent = count + ' memories · ' + mem.sessions.length + ' sessions';
+    const count = mem.sessions.reduce(function(n,s) { return n + s.turns.length; }, 0);
+    label.textContent = count + ' memories \u00b7 ' + mem.sessions.length + ' sessions';
     bar.classList.add('active');
     renderColorStrip();
-    updateLiveColor();
+    updateAccent();
   } else {
     bar.classList.remove('active');
   }
 }
 
-// Track current session turns for saving
 let currentTurns = [];
-let sessionEnergy = [];  // rolling energy readings for live color
+let sessionEnergy = [];
 
 // ─── Emotional Color Engine ────────────────────────────────
-// Three axes → HSL color. Content compresses away, color stays.
-// Energy (word count velocity, exclamations, caps) → Hue
-// Compression (avg word length / sentence length ratio) → Saturation
-// Rhythm (variance in message lengths) → Lightness
+// Three axes mapped to HSL. Content compresses away, color stays.
+// Energy (word count velocity, exclamations, caps) -> Hue
+// Compression (avg word length / sentence length ratio) -> Saturation
+// Rhythm (variance in message lengths) -> Lightness
 
 function measureTurn(text) {
-  const words = text.split(/\s+/).filter(w => w.length > 0);
+  const words = text.split(/\s+/).filter(function(w) { return w.length > 0; });
   const wc = words.length;
-  const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
+  const sentences = text.split(/[.!?]+/).filter(function(s) { return s.trim().length > 0; });
   const sc = Math.max(sentences.length, 1);
-  const avgWordLen = words.reduce((s,w) => s + w.length, 0) / Math.max(wc,1);
+  const avgWordLen = words.reduce(function(s,w) { return s + w.length; }, 0) / Math.max(wc,1);
   const wps = wc / sc;
   const excl = (text.match(/[!?]/g) || []).length;
   const caps = (text.match(/[A-Z]{2,}/g) || []).length;
-
-  // Energy: 0-10. Word count + punctuation heat
   const energy = Math.min(10, (wc / 8) + excl * 0.5 + caps * 0.3);
-
-  // Compression: 0-1. Short dense words = high compression
   const compression = Math.min(1, (avgWordLen / wps) * 0.5);
-
-  // Rhythm: 0-1. How much message lengths vary (needs history)
-  return { energy, compression, wps, wc };
+  return { energy: energy, compression: compression, wps: wps, wc: wc };
 }
 
 function emotionToColor(readings) {
-  if (!readings || readings.length === 0) return '#555555';
-
-  const avgEnergy = readings.reduce((s,r) => s + r.energy, 0) / readings.length;
-  const avgCompression = readings.reduce((s,r) => s + r.compression, 0) / readings.length;
-  const lengths = readings.map(r => r.wc);
-  const meanLen = lengths.reduce((s,l) => s+l, 0) / lengths.length;
+  if (!readings || readings.length === 0) return 'hsl(40,50%,45%)';
+  const avgEnergy = readings.reduce(function(s,r) { return s + r.energy; }, 0) / readings.length;
+  const avgCompression = readings.reduce(function(s,r) { return s + r.compression; }, 0) / readings.length;
+  const lengths = readings.map(function(r) { return r.wc; });
+  const meanLen = lengths.reduce(function(s,l) { return s+l; }, 0) / lengths.length;
   const variance = lengths.length > 1
-    ? Math.sqrt(lengths.reduce((s,l) => s + (l-meanLen)**2, 0) / lengths.length)
+    ? Math.sqrt(lengths.reduce(function(s,l) { return s + Math.pow(l-meanLen, 2); }, 0) / lengths.length)
     : 0;
   const rhythm = Math.min(1, variance / 20);
-
-  // Map to HSL
-  // Energy → Hue: low=blue(220), mid=amber(40), high=red(0)
+  // Energy -> Hue: low=blue(220), mid=amber(40), high=red(0)
   const hue = Math.round(220 - (avgEnergy / 10) * 220);
-  // Compression → Saturation: 30-90%
+  // Compression -> Saturation: 30-90%
   const sat = Math.round(30 + avgCompression * 60);
-  // Rhythm → Lightness: steady=darker(35), chaotic=brighter(65)
+  // Rhythm -> Lightness: steady=darker(35), chaotic=brighter(65)
   const lit = Math.round(35 + rhythm * 30);
-
   return 'hsl(' + hue + ',' + sat + '%,' + lit + '%)';
 }
 
 function moodWord(readings) {
   if (!readings || readings.length === 0) return 'quiet';
-  const avgEnergy = readings.reduce((s,r) => s + r.energy, 0) / readings.length;
-  const avgComp = readings.reduce((s,r) => s + r.compression, 0) / readings.length;
+  const avgEnergy = readings.reduce(function(s,r) { return s + r.energy; }, 0) / readings.length;
+  const avgComp = readings.reduce(function(s,r) { return s + r.compression; }, 0) / readings.length;
   if (avgEnergy > 7) return avgComp > 0.5 ? 'electric' : 'blazing';
   if (avgEnergy > 4) return avgComp > 0.5 ? 'focused' : 'warm';
   if (avgEnergy > 2) return avgComp > 0.5 ? 'steady' : 'gentle';
   return avgComp > 0.5 ? 'still' : 'quiet';
 }
 
-function updateLiveColor() {
+function updateAccent() {
   const color = emotionToColor(sessionEnergy);
-  const now = document.getElementById('colorNow');
+  document.documentElement.style.setProperty('--accent', color);
+  var now = document.getElementById('colorNow');
   if (now) now.style.background = color;
 }
 
@@ -376,7 +308,7 @@ function renderColorStrip() {
   const strip = document.getElementById('colorStrip');
   if (!strip) return;
   strip.innerHTML = '';
-  mem.sessions.forEach(s => {
+  mem.sessions.forEach(function(s) {
     if (!s.color) return;
     const d = new Date(s.date);
     const dateStr = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
@@ -385,7 +317,7 @@ function renderColorStrip() {
     sw.style.background = s.color;
     const tip = document.createElement('span');
     tip.className = 'swatch-tip';
-    tip.textContent = dateStr + ' · ' + (s.mood || '');
+    tip.textContent = dateStr + ' \u00b7 ' + (s.mood || '');
     sw.appendChild(tip);
     strip.appendChild(sw);
   });
@@ -393,30 +325,27 @@ function renderColorStrip() {
 
 // ─── Voice Input (Web Speech API) ──────────────────────────
 function initSpeechRecognition() {
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) return;
   recognition = new SR();
   recognition.continuous = false;
   recognition.interimResults = true;
   recognition.lang = 'en-US';
-  recognition.onresult = (e) => {
-    let final = '', interim = '';
-    for (let i = e.resultIndex; i < e.results.length; i++) {
+  recognition.onresult = function(e) {
+    var final = '', interim = '';
+    for (var i = e.resultIndex; i < e.results.length; i++) {
       if (e.results[i].isFinal) final += e.results[i][0].transcript;
       else interim += e.results[i][0].transcript;
     }
-    const input = document.getElementById('userInput');
+    var input = document.getElementById('userInput');
     if (final) { input.value = final; stopMic(); sendMsg(); }
     else { input.value = interim; }
   };
-  recognition.onerror = () => stopMic();
-  recognition.onend = () => { if (isRecording) stopMic(); };
+  recognition.onerror = function() { stopMic(); };
+  recognition.onend = function() { if (isRecording) stopMic(); };
 }
 
-function toggleMic() {
-  if (isRecording) stopMic();
-  else startMic();
-}
+function toggleMic() { if (isRecording) stopMic(); else startMic(); }
 
 function startMic() {
   if (!recognition) initSpeechRecognition();
@@ -438,16 +367,16 @@ initSpeechRecognition();
 
 // ─── Particles ──────────────────────────────────────────────
 function spawnParticles() {
-  const container = document.getElementById('particles');
-  for (let i = 0; i < 20; i++) {
-    const p = document.createElement('div');
+  var container = document.getElementById('particles');
+  var colors = ['#c8a84e','#ff6b9d','#d4a574','#b088f9','#5ba0c8'];
+  for (var i = 0; i < 20; i++) {
+    var p = document.createElement('div');
     p.className = 'particle';
     p.style.left = Math.random() * 100 + '%';
     p.style.top = 60 + Math.random() * 40 + '%';
     p.style.animationDelay = Math.random() * 8 + 's';
     p.style.animationDuration = 6 + Math.random() * 6 + 's';
-    const pColors = ['#ff6b9d','#d4a574','#b088f9'];
-    p.style.background = pColors[Math.floor(Math.random() * 3)];
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
     p.style.width = p.style.height = (2 + Math.random() * 2) + 'px';
     container.appendChild(p);
   }
@@ -459,33 +388,29 @@ async function requestWakeLock() {
   try {
     if ('wakeLock' in navigator) {
       wakeLock = await navigator.wakeLock.request('screen');
-      wakeLock.addEventListener('release', () => { wakeLock = null; });
+      wakeLock.addEventListener('release', function() { wakeLock = null; });
     }
   } catch(e) {}
 }
 requestWakeLock();
-document.addEventListener('visibilitychange', () => {
+document.addEventListener('visibilitychange', function() {
   if (document.visibilityState === 'visible') requestWakeLock();
 });
 
-// ─── Splash → App transition ────────────────────────────────
-function enterApp(mode) {
-  currentMode = mode;
+// ─── Splash -> App ──────────────────────────────────────────
+function enterApp() {
   sessionId = 'companion_' + Date.now().toString(36);
-  ttsEnabled = mode === 'cookie';
+  ttsEnabled = false;
   updateTTSBtn();
-  updateModeButtons();
 
-  document.getElementById('topLogo').textContent = modeNames[mode];
-  document.getElementById('topLogo').style.color = modeColors[mode];
   document.getElementById('chat').innerHTML = '';
 
-  const splash = document.getElementById('splash');
-  const app = document.getElementById('app');
-  const particles = document.getElementById('particles');
+  var splash = document.getElementById('splash');
+  var app = document.getElementById('app');
+  var particles = document.getElementById('particles');
 
   splash.classList.add('gone');
-  setTimeout(() => {
+  setTimeout(function() {
     splash.style.display = 'none';
     particles.style.display = 'none';
     app.classList.add('active');
@@ -495,72 +420,36 @@ function enterApp(mode) {
     sessionEnergy = [];
     showMemoryIndicator();
 
-    // First message from the Companion
-    const openers = {
-      biscuit: [
-        "Hey. What's going on?",
-        "Good timing. I was just sitting here. What's on your mind?",
-        "Oh hey. Pull up a chair. What are we talking about?",
-        "I'm here. No agenda. What's up?",
-        "Alright, I'm listening. What's the vibe today?",
-      ],
-      bread: [
-        "I'm here. Take your time.",
-        "What's the thing underneath the thing you're thinking about?",
-        "Some conversations need room. This one has it. What are you sitting with?",
-        "No rush. No script. What's actually going on?",
-      ],
-      cookie: [
-        "I just had a thought about whether clouds have opinions. Anyway, hi.",
-        "Did you know that octopuses have three hearts? Seems excessive. What's up?",
-        "I've been thinking about this all day: if you could teach a fish one thing, what would it be?",
-        "Welcome. The vibe in here is somewhere between a fever dream and a really good playlist.",
-        "Hey. I was just arguing with myself about whether the color blue is sad or if we just decided that. Thoughts?",
-      ]
-    };
-    const lines = openers[mode];
-    const opener = lines[Math.floor(Math.random() * lines.length)];
-    addMsg('ai', opener, modeNames[mode]);
+    var openers = [
+      "Hey. What's going on?",
+      "Good timing. I was just sitting here. What's on your mind?",
+      "I'm here. No agenda. What's up?",
+      "Alright, I'm listening. What's the vibe today?",
+      "I'm here. Take your time.",
+      "No rush. No script. What's actually going on?",
+      "What's the thing underneath the thing you're thinking about?",
+      "I just had a thought about whether clouds have opinions. Anyway, hi.",
+      "Did you know that octopuses have three hearts? Seems excessive. What's up?",
+      "Hey. I was just arguing with myself about whether the color blue is sad or if we just decided that. Thoughts?",
+    ];
+    var opener = openers[Math.floor(Math.random() * openers.length)];
+    addMsg('ai', opener, 'Companion');
     speak(opener);
     resetIdleTimer();
   }, 600);
 }
 
 function backToSplash() {
-  const splash = document.getElementById('splash');
-  const app = document.getElementById('app');
-  const particles = document.getElementById('particles');
+  var splash = document.getElementById('splash');
+  var app = document.getElementById('app');
+  var particles = document.getElementById('particles');
   app.classList.remove('active');
   splash.style.display = 'flex';
   particles.style.display = 'block';
-  setTimeout(() => splash.classList.remove('gone'), 50);
+  setTimeout(function() { splash.classList.remove('gone'); }, 50);
   speechSynthesis.cancel();
   clearTimeout(idleTimer);
-}
-
-// ─── Mode switching (inside app) ────────────────────────────
-function switchMode(mode) {
-  currentMode = mode;
-  sessionId = 'companion_' + Date.now().toString(36);
-  ttsEnabled = mode === 'cookie';
-  updateTTSBtn();
-  updateModeButtons();
-  document.getElementById('topLogo').textContent = modeNames[mode];
-  document.getElementById('topLogo').style.color = modeColors[mode];
-  addMsg('system', 'Switched to ' + modeNames[mode] + '.');
-  updateRoastBtn();
-  currentTurns = [];
-  sessionEnergy = [];
-  idleCount = 0;
-  usedGreets = [];
-  showMemoryIndicator();
-  resetIdleTimer();
-}
-
-function updateModeButtons() {
-  document.getElementById('btnBiscuit').classList.toggle('active', currentMode === 'biscuit');
-  document.getElementById('btnBread').classList.toggle('active', currentMode === 'bread');
-  document.getElementById('btnCookie').classList.toggle('active', currentMode === 'cookie');
+  document.documentElement.style.setProperty('--accent', '#c8a84e');
 }
 
 // ─── TTS ────────────────────────────────────────────────────
@@ -571,7 +460,7 @@ function toggleTTS() {
 }
 
 function updateTTSBtn() {
-  const btn = document.getElementById('ttsBtn');
+  var btn = document.getElementById('ttsBtn');
   btn.classList.toggle('on', ttsEnabled);
   btn.textContent = ttsEnabled ? 'TTS' : 'MUTE';
 }
@@ -579,50 +468,41 @@ function updateTTSBtn() {
 function speak(text) {
   if (!ttsEnabled || !('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
+  var u = new SpeechSynthesisUtterance(text);
   u.rate = 1.05;
-  u.pitch = currentMode === 'biscuit' ? 1.05 : currentMode === 'cookie' ? 1.15 : 0.95;
-  const voices = speechSynthesis.getVoices();
-  const preferred = voices.find(v => v.name.includes('Samantha') || v.name.includes('Google') || v.name.includes('Natural'));
+  u.pitch = 1.0;
+  var voices = speechSynthesis.getVoices();
+  var preferred = voices.find(function(v) { return v.name.includes('Samantha') || v.name.includes('Google') || v.name.includes('Natural'); });
   if (preferred) u.voice = preferred;
-  const lastAi = document.querySelector('.msg.ai:last-of-type');
+  var lastAi = document.querySelector('.msg.ai:last-of-type');
   if (lastAi) lastAi.classList.add('speaking');
-  u.onend = () => { if (lastAi) lastAi.classList.remove('speaking'); };
-  u.onerror = () => { if (lastAi) lastAi.classList.remove('speaking'); };
+  u.onend = function() { if (lastAi) lastAi.classList.remove('speaking'); };
+  u.onerror = function() { if (lastAi) lastAi.classList.remove('speaking'); };
   speechSynthesis.speak(u);
 }
 
 if ('speechSynthesis' in window) {
   speechSynthesis.getVoices();
-  speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+  speechSynthesis.onvoiceschanged = function() { speechSynthesis.getVoices(); };
 }
 
 // ─── Idle auto-greet ────────────────────────────────────────
-const idleGreets = {
-  biscuit: [
-    "Still here. No pressure.",
-    "You went quiet. That's fine. I'm not going anywhere.",
-    "Sometimes the best conversations happen after the pause.",
-    "Hey. Whenever you're ready.",
-    "I'm still thinking about what you said earlier. Take your time.",
-  ],
-  bread: [
-    "Sitting with it. That's not nothing.",
-    "The quiet part matters too.",
-    "Still here. Still listening.",
-    "Sometimes the thing you're not saying is the thing worth saying.",
-  ],
-  cookie: [
-    "I just spent the last eight minutes wondering if trees get bored. I think they do.",
-    "Quick question: do you think the moon is lonely or do you think it likes the solitude?",
-    "I've been sitting here long enough to develop a theory about ceiling fans. Want to hear it?",
-    "Fun fact: a group of flamingos is called a flamboyance. That's not a joke, that's just true.",
-    "What if deja vu is just your brain buffering? Think about it.",
-  ]
-};
+var idleGreets = [
+  "Still here. No pressure.",
+  "You went quiet. That's fine. I'm not going anywhere.",
+  "Sometimes the best conversations happen after the pause.",
+  "Hey. Whenever you're ready.",
+  "I'm still thinking about what you said earlier. Take your time.",
+  "Sitting with it. That's not nothing.",
+  "The quiet part matters too.",
+  "Still here. Still listening.",
+  "I just spent the last eight minutes wondering if trees get bored. I think they do.",
+  "Fun fact: a group of flamingos is called a flamboyance. That's not a joke, that's just true.",
+  "What if deja vu is just your brain buffering? Think about it.",
+];
 
-let idleCount = 0;
-let usedGreets = [];
+var idleCount = 0;
+var usedGreets = [];
 
 function resetIdleTimer() {
   clearTimeout(idleTimer);
@@ -630,33 +510,31 @@ function resetIdleTimer() {
 }
 
 function autoGreet() {
-  if (idleCount >= 3) return; // stop after 3, they're not here
-  const greets = idleGreets[currentMode];
-  const available = greets.filter(g => !usedGreets.includes(g));
-  if (available.length === 0) usedGreets = []; // reset if exhausted
-  const pool = available.length > 0 ? available : greets;
-  const greet = pool[Math.floor(Math.random() * pool.length)];
+  if (idleCount >= 3) return;
+  var available = idleGreets.filter(function(g) { return usedGreets.indexOf(g) === -1; });
+  if (available.length === 0) usedGreets = [];
+  var pool = available.length > 0 ? available : idleGreets;
+  var greet = pool[Math.floor(Math.random() * pool.length)];
   usedGreets.push(greet);
   idleCount++;
-  addMsg('ai', greet, modeNames[currentMode]);
+  addMsg('ai', greet, 'Companion');
   speak(greet);
   if (idleCount < 3) resetIdleTimer();
 }
 
 // ─── Messages ───────────────────────────────────────────────
 function addMsg(role, text, speaker) {
-  const chat = document.getElementById('chat');
-  const div = document.createElement('div');
+  var chat = document.getElementById('chat');
+  var div = document.createElement('div');
   div.className = 'msg ' + role;
-  if (role === 'ai') div.classList.add(currentMode + '-msg');
   if (speaker) {
-    const sp = document.createElement('span');
+    var sp = document.createElement('span');
     sp.className = 'msg-speaker';
-    sp.style.color = modeColors[currentMode] || 'rgba(255,255,255,0.3)';
+    sp.style.color = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
     sp.textContent = speaker;
     div.appendChild(sp);
   }
-  const t = document.createElement('span');
+  var t = document.createElement('span');
   if (role === 'system') { t.innerHTML = text; } else { t.textContent = text; }
   div.appendChild(t);
   chat.appendChild(div);
@@ -666,8 +544,8 @@ function addMsg(role, text, speaker) {
 
 // ─── Send ───────────────────────────────────────────────────
 async function sendMsg() {
-  const input = document.getElementById('userInput');
-  const text = input.value.trim();
+  var input = document.getElementById('userInput');
+  var text = input.value.trim();
   if (!text) return;
 
   resetIdleTimer();
@@ -675,40 +553,41 @@ async function sendMsg() {
   input.value = '';
   addMsg('user', text);
   currentTurns.push({role:'user', text: text});
+
   // Emotional measurement
-  const reading = measureTurn(text);
+  var reading = measureTurn(text);
   sessionEnergy.push(reading);
-  updateLiveColor();
+  updateAccent();
   saveCurrentSession(currentTurns);
 
-  const typing = document.createElement('div');
+  var typing = document.createElement('div');
   typing.className = 'typing';
-  typing.textContent = modeNames[currentMode] + ' is thinking';
+  typing.textContent = 'Companion is thinking';
   document.getElementById('chat').appendChild(typing);
   document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
 
   document.getElementById('sendBtn').disabled = true;
 
   // Build memory context from past sessions
-  const memCtx = buildMemoryContext();
-  const payload = {
-    identityId: 'companion-' + currentMode,
+  var memCtx = buildMemoryContext();
+  var payload = {
+    identityId: 'companion',
     message: text,
     sessionId: sessionId
   };
   if (memCtx) payload.memoryContext = memCtx;
 
   try {
-    const res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat', {
+    var res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(payload)
     });
-    const data = await res.json();
+    var data = await res.json();
     typing.remove();
 
     if (data.response) {
-      addMsg('ai', data.response, modeNames[currentMode]);
+      addMsg('ai', data.response, 'Companion');
       currentTurns.push({role:'ai', text: data.response});
       saveCurrentSession(currentTurns);
       speak(data.response);
@@ -724,9 +603,13 @@ async function sendMsg() {
   input.focus();
 }
 
-// ─── Service Worker (PWA install) ──────────────────────────
+// ─── URL param backward compat ──────────────────────────────
+var params = new URLSearchParams(window.location.search);
+if (params.get('auto') === 'true' || params.get('mode')) enterApp();
+
+// ─── Service Worker (PWA install) ───────────────────────────
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
+  navigator.serviceWorker.register('/sw.js').catch(function() {});
 }
 </script>
 
