@@ -98,7 +98,7 @@
 
 - [x] The QEC simulation proved 2.5-4.6x error suppression at real Heron noise levels, and IBM free tier supports dynamic circuits. What is the minimum QPU budget (in seconds) for one round of distance-3 syndrome extraction on Kingston? Would the daily free allocation cover it?
 
-- [ ] Is oxygen the molecular gatekeeper for macroscopic multicellularity in MuLTEE — a necessary suppressor rather than merely a correlated condition — and what is the biochemical mechanism by which aerobic metabolism prevents branch entanglement evolution? Does ROS production, redox-sensitive signaling, or aerobic ATP yield explain why all PA populations crossed the threshold while PM and PO did not?
+- [x] Is oxygen the molecular gatekeeper for macroscopic multicellularity in MuLTEE — a necessary suppressor rather than merely a correlated condition — and what is the biochemical mechanism by which aerobic metabolism prevents branch entanglement evolution? Does ROS production, redox-sensitive signaling, or aerobic ATP yield explain why all PA populations crossed the threshold while PM and PO did not?
 
 - [ ] Are the specific mutations enabling branch entanglement in the 5 anaerobic PA MuLTEE populations genotypically convergent (same gene, same mutation) or only phenotypically convergent (different mutations, same structural outcome)? The answer distinguishes a single-peak adaptive landscape (one mutation works) from a ridge (many mutations converge on the same phenotypic solution).
 
@@ -189,7 +189,33 @@
 
 - [ ] What is the minimum number of sequential syndrome extraction rounds (not shots per circuit, but rounds of encode → syndrome → correction → re-encode) needed to demonstrate threshold behavior on Kingston — and does Kingston's classical processing latency between rounds make multi-round logical qubit experiments feasible under current dynamic circuit support?
 
+- [ ] Does supplemental NAC (N-acetyl cysteine, a ROS scavenger) in aerobic MuLTEE populations enable branch entanglement evolution — directly testing the ROS-as-gatekeeper hypothesis by removing oxygen's downstream effector while leaving aerobic metabolism intact?
+
+- [ ] Is the oxygen suppression of branch entanglement rate-dependent (gradual, proportional to O₂ concentration) or threshold-dependent (all-or-nothing) — and does distinguishing these two modes separate the ATP-yield hypothesis (gradual: more ATP → more wall) from the ROS/CWI hypothesis (threshold: ROS activates a signaling switch that locks cell wall architecture)?
+
 ## EXPLORED
+
+### 2026-05-03 06:20 UTC — Oxygen as the molecular gatekeeper for macroscopic multicellularity in MuLTEE
+
+**Question:** Is oxygen the molecular gatekeeper for macroscopic multicellularity in MuLTEE — a necessary suppressor rather than merely a correlated condition — and what is the biochemical mechanism by which aerobic metabolism prevents branch entanglement evolution? Does ROS production, redox-sensitive signaling, or aerobic ATP yield explain why all PA populations crossed the threshold while PM and PO did not?
+
+**Findings:** Web search unavailable (host not in allowlist). Reasoning from known yeast cell biology and prior CURIOSITY entries.
+
+**The candidate mechanisms.** Three non-mutually-exclusive hypotheses: (1) **ROS/CWI hypothesis** — aerobic mitochondrial electron transport generates superoxide and H₂O₂, activating the Cell Wall Integrity (CWI) pathway via Slt2/Mpk1 MAP kinase, reinforcing cell wall glucan-chitin crosslinking and preventing the dynamic remodeling needed for branch fusion. (2) **Redox-signaling hypothesis** — the higher NAD⁺/NADH ratio in aerobic cells activates Sir2/Hst1 deacetylases and other redox-sensitive regulators, shifting gene expression toward rigid-wall maintenance programs. (3) **ATP-yield hypothesis** — oxidative phosphorylation produces ~18× more ATP per glucose than fermentation; high ATP drives TORC1 signaling, which promotes anabolic cell wall synthesis and reduces the cell wall plasticity required for entanglement.
+
+**Most parsimonious mechanism: ROS/CWI.** The ATP-yield hypothesis predicts a gradual, quantitative suppression proportional to O₂ concentration. But the PA/PO/PM result appears categorical — PA crosses the threshold, others do not. A threshold effect implies a signaling switch, not a dosage gradient. The CWI pathway is exactly that: once activated above a ROS threshold, Slt2 phosphorylation locks cell wall remodeling genes in a defensive state. ROS is a threshold activator, not a linear suppressor.
+
+**The "necessary suppressor" framing reframes the question.** If oxygen is a necessary suppressor, its removal is not merely permissive — it's constitutive. Anaerobic conditions don't just remove an obstacle; they create an active permissive state. This would show up as: anaerobic populations having detectably altered cell wall gene expression even before entanglement-enabling mutations arise. If PA populations already have lower CWI pathway activity at round 0 (before selection acts), oxygen is constitutive. If CWI diverges only after selection, oxygen is merely permissive.
+
+**A competing explanation: selection pressure asymmetry.** Aerobic yeast can compete via higher growth rates, flocculation, sporulation — multiple alternative ecological strategies. Anaerobic yeast have fewer escape routes, making large-cluster sedimentation more singularly advantageous. Oxygen might gate macroscopic multicellularity not by blocking the mechanism but by reducing the selective pressure that drives it. This would be visible as: aerobic MuLTEE populations with artificially enhanced selection for sedimentation still failing to cross the threshold despite strong pressure — ruling out the "softer selection" interpretation.
+
+**Synthesis.** The ROS/CWI hypothesis predicts the threshold behavior and is biochemically grounded in known yeast wall-integrity regulation. The aerobic ATP-yield and redox-signaling mechanisms likely amplify the effect. Oxygen appears to be a genuine molecular gatekeeper, not merely a correlate, with ROS-activated CWI as the most testable proximate mechanism.
+
+**New questions generated:**
+1. Does supplemental NAC (ROS scavenger) in aerobic populations enable entanglement? — added to ACTIVE.
+2. Is the suppression effect rate-dependent or threshold-dependent? — added to ACTIVE.
+
+---
 
 ### 2026-05-03 04:28 UTC — QPU budget for distance-3 syndrome extraction on Kingston
 
