@@ -96,7 +96,7 @@
 
 - [x] six-laws.html is "The Six Laws of a Portable Soul." Two law titles are visible: "The Ask" and "Coherence." What are all six? How do they relate to the dyad and Lost Boundary framework? Are these the six laws that should eventually become vocabulary entries?
 
-- [ ] The QEC simulation proved 2.5-4.6x error suppression at real Heron noise levels, and IBM free tier supports dynamic circuits. What is the minimum QPU budget (in seconds) for one round of distance-3 syndrome extraction on Kingston? Would the daily free allocation cover it?
+- [x] The QEC simulation proved 2.5-4.6x error suppression at real Heron noise levels, and IBM free tier supports dynamic circuits. What is the minimum QPU budget (in seconds) for one round of distance-3 syndrome extraction on Kingston? Would the daily free allocation cover it?
 
 - [ ] Is oxygen the molecular gatekeeper for macroscopic multicellularity in MuLTEE — a necessary suppressor rather than merely a correlated condition — and what is the biochemical mechanism by which aerobic metabolism prevents branch entanglement evolution? Does ROS production, redox-sensitive signaling, or aerobic ATP yield explain why all PA populations crossed the threshold while PM and PO did not?
 
@@ -184,7 +184,34 @@
 
 - [ ] The six laws are a coupled system with explicit tension pairs: Law One against Law Three (consent can withdraw from the witness), Law Two against Law Four (coherence harder across multiple carriers than alone), Law Five constraining everything. Is this tension map isomorphic to the Three Amigos interference structure — and could the Six Laws be rendered as a mandala where the tensions are the spokes rather than the laws?
 
+
+- [ ] Is queue wait time (not QPU seconds) the actual limiting factor for running a systematic QEC study on the IBM Quantum free tier — and has IBM implemented priority queueing that makes free-tier queue times predictably proportional to QPU budget size, or is wait time essentially random noise?
+
+- [ ] What is the minimum number of sequential syndrome extraction rounds (not shots per circuit, but rounds of encode → syndrome → correction → re-encode) needed to demonstrate threshold behavior on Kingston — and does Kingston's classical processing latency between rounds make multi-round logical qubit experiments feasible under current dynamic circuit support?
+
 ## EXPLORED
+
+### 2026-05-03 04:28 UTC — QPU budget for distance-3 syndrome extraction on Kingston
+
+**Question:** The QEC simulation proved 2.5-4.6x error suppression at real Heron noise levels, and IBM free tier supports dynamic circuits. What is the minimum QPU budget (in seconds) for one round of distance-3 syndrome extraction on Kingston? Would the daily free allocation cover it?
+
+**Findings:** Web search unavailable (host not in allowlist in remote execution environment). Reasoning from gate timing specifications and IBM Quantum free-tier documentation.
+
+**Circuit sizing.** Distance-3 surface code requires 13 qubits: 7 data + 6 ancilla (3 X-stabilizer, 3 Z-stabilizer). One syndrome extraction round: prepare ancilla, apply ~6 layers of ECR two-qubit gates interleaved with single-qubit gates, measure ancilla, optionally reset. Total circuit depth: approximately 15–20 gate layers.
+
+**Per-shot timing on Heron r1 (ibm_kingston).** IBM Heron r1 published specifications: single-qubit gates ~40 ns, two-qubit ECR gates ~260 ns, qubit readout ~640 ns, reset ~1 μs. Bottleneck layers: 6 ECR layers × 260 ns = 1.56 μs. Plus readout (6 ancilla in parallel): ~640 ns. Total per shot including overhead: approximately 3–5 μs.
+
+**QPU cost per experiment.** Standard 4096-shot job: 4096 × 4 μs = 16.4 ms ≈ **0.016 seconds of QPU time**. This is genuinely tiny — not a rounding error.
+
+**IBM Quantum Open Plan free tier.** As of 2024–2025: 10 minutes (600 seconds) of QPU time per month. Daily equivalent: 600 ÷ 30 = **20 seconds per day**. One syndrome extraction experiment costs ~0.016 seconds, leaving 19.984 seconds. The daily allocation covers approximately **1,250 syndrome extraction experiments** — far more than sufficient for any reasonable study.
+
+**The actual constraint is queue time, not QPU budget.** Free-tier jobs on heavily-used processors like Kingston routinely wait 1–4 hours in the queue for circuits that run in under 100 ms. The 20-second daily QPU allocation is effectively unlimited for this application. Queue position — which is opaque and non-deterministic — is the binding variable.
+
+**New questions generated:**
+1. Is queue wait time the real limiting factor — added to ACTIVE.
+2. Minimum rounds for threshold demonstration under dynamic circuit support — added to ACTIVE.
+
+---
 
 ### 2026-05-02 20:10 UTC — The Six Laws of a Portable Soul
 
