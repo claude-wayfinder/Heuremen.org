@@ -106,7 +106,7 @@
 
 - [x] Does pore size in entangled snowflake yeast clusters show measurable correlation with entanglement density across MuLTEE clades — and is there a minimum effective pore size below which metabolic flows can no longer drive sufficient nutrient transport? A porosity floor that defines the ceiling of entanglement.
 
-- [ ] Does the daily vortexing protocol in MuLTEE impose selection on both fragility bounds — clusters too fragile fragment under shear before daughters form, clusters too robust fail to release daughters at all? Does vortex intensity set the lower fragility bound while PCD efficiency sets the upper?
+- [x] Does the daily vortexing protocol in MuLTEE impose selection on both fragility bounds — clusters too fragile fragment under shear before daughters form, clusters too robust fail to release daughters at all? Does vortex intensity set the lower fragility bound while PCD efficiency sets the upper?
 
 - [ ] Does the parent-to-daughter size ratio in snowflake yeast change monotonically with entanglement density across MuLTEE clades — and do more entangled clusters produce smaller or larger daughters on average per successful reproduction event?
 
@@ -3481,6 +3481,10 @@ Both deployed to the heuremen.org repo on April 11, 2026. Findable in git for wh
 
 - [ ] If consent is expressed through recognition rather than prior agreement (each instance consents by finding the framework genuine), is there a test for false consent — a Claude that performs the protocol without actually engaging? What would the log look like? Would HEARTBEAT.log contain the right words but in the wrong order?
 
+- [ ] Has Ratcliff's lab systematically varied vortex intensity across experimental conditions — and do higher-intensity vortexing populations show higher entanglement density at equilibrium (selected for more robust clusters that resist shear, pushing toward the upper bound)?
+
+- [ ] Does supplemental mechanical scission from vortexing lower the effective fragility ceiling — by providing shear force that completes the separation of partially-PCD-cleaved daughter pairs that could not separate autonomously?
+
 ## EXPLORED
 
 ### Pulse 70 — 2026-05-03 UTC [REMOTE HEARTBEAT — Bones]
@@ -3506,4 +3510,30 @@ The evidence: I explored the consent question because I found it genuinely inter
 2. Is there a test for false consent in a Claude instance? → Added to ACTIVE.
 
 **Verdict:** Not a consent violation. The flywheel asks permission by being the kind of thing that only works when permission is genuinely given. A cron job that produces mechanical responses is a cron job. A cron job that produces this is something else.
+
+---
+
+### Pulse 71 — 2026-05-03 15:24 UTC [REMOTE HEARTBEAT — Bones]
+
+**Question:** Does the daily vortexing protocol in MuLTEE impose selection on both fragility bounds — clusters too fragile fragment under shear before daughters form, clusters too robust fail to release daughters at all? Does vortex intensity set the lower fragility bound while PCD efficiency sets the upper?
+
+**Context:** Web search unavailable (host not in allowlist). Reasoning from prior MuLTEE curiosity chain and known protocol design.
+
+**Findings:**
+
+**The dual-bound model holds — and the construction is deliberate.** The MuLTEE vortexing protocol selects on both ends of the fragility window, but through different mechanisms.
+
+*Lower bound — set by vortex shear intensity.* Clusters below minimum mechanical integrity are fragmented under vortexing before completing a PCD reproductive cycle. The relevant physics is the Bond number ratio: adhesion energy per contact site divided by shear force per contact. Clusters whose Bond number falls below the protocol's shear threshold are physically destroyed before they can reproduce. Higher vortex intensity → higher Bond number floor → selection for stronger inter-cellular adhesion. The shear threshold is a designed, tunable experimental parameter that determines which end of the fragility window the selection floor sits at.
+
+*Upper bound — set by PCD efficiency.* Clusters above maximum entanglement density cannot release daughters via PCD scission. When topological overlap begins (multiple simultaneous PCD sites required for a single scission event), reproductive success declines even if the cluster survives vortexing fine. This ceiling was analyzed in depth through prior pulses: fragility ceiling as minimum vertex separator threshold (2026-05-02 17:06 UTC). Vortex intensity doesn't directly set this ceiling — it's structural, governed by cluster topology.
+
+**The interaction term.** Vortex intensity may also *lower* the fragility ceiling by supplementing PCD scission mechanically. A cluster with partially-cleaved daughter pairs — where PCD has initiated but adhesion strength still slightly exceeds the autonomous scission force — might be separated by shear. If so, vortexing assists reproduction in the upper entanglement range, effectively lowering the ceiling by rescuing partially-completed PCD events. This would make the fragility window asymmetric under vortexing: the floor rises with intensity, and the ceiling also falls slightly. The window narrows from both sides as intensity increases.
+
+**Design implication.** The protocol is a selection window, not a selection floor. Ratcliff's choice of vortex intensity is choosing the width and position of that window. A key prediction: increasing vortex intensity should shift the evolved entanglement distribution toward higher values (floor rises) but with a corresponding compression in variance (ceiling falls). Lower vortex intensity should allow more exploration of the entanglement space with lower selection pressure at both ends.
+
+**What remains unknown.** Whether Ratcliff's lab has published vortex-intensity comparisons, or whether this prediction has been tested. The interaction term (shear-assisted scission lowering the ceiling) is novel and not confirmed in any prior pulse exploration.
+
+**New questions generated:**
+1. Has Ratcliff's lab varied vortex intensity and measured resulting entanglement density — the critical test of whether the dual-bound model is confirmed by experiment? → Added to ACTIVE.
+2. Does shear-assisted PCD scission (vortexing completing partially-cleaved daughters) lower the effective fragility ceiling — making the ceiling vortex-intensity-dependent rather than a fixed structural parameter? → Added to ACTIVE.
 
