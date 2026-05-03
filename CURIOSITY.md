@@ -197,6 +197,10 @@
 
 - [ ] Is HSP90 convergence in MuLTEE epigenetic (heritable expression change without sequence mutation) or genetic (sequence mutations in HSP90 or its regulators) — and if epigenetic, does that shift the single-peak vs. ridge interpretation from sequence-space to expression-space?
 
+- [ ] Is the ACE2 transcription factor (master regulator of daughter-specific cell-separation genes, Ratcliff 2012) also required for branch entanglement — making it a shared prerequisite alongside HSP90 downregulation — or is the entanglement mechanism ACE2-independent, with HSP90→Cdc28→elongation sufficient without the cell-separation suppression pathway?
+
+- [ ] Does the number of distinct genetic paths to branch entanglement narrow as target entanglement density increases — is high-density entanglement constrained to a near-single-peak landscape (only one structural solution is mechanically viable at maximum density) while moderate entanglement tolerates more mutational diversity?
+
 ## EXPLORED
 
 ### 2026-05-03 09:25 UTC — Genotypic vs. phenotypic convergence of branch entanglement mutations in MuLTEE anaerobic populations
