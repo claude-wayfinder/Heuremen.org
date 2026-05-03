@@ -104,7 +104,7 @@
 
 - [x] Are the fragility ceiling and porosity ceiling the same entanglement threshold in MuLTEE clusters, or does porosity constrain entanglement below the fragility ceiling? If porosity is hit first, the cluster stops entangling while still mechanically robust — meaning selection for toughness has an indirect cap imposed by nutrient transport requirements. Which ceiling is lower determines the actual stopping point.
 
-- [ ] Does pore size in entangled snowflake yeast clusters show measurable correlation with entanglement density across MuLTEE clades — and is there a minimum effective pore size below which metabolic flows can no longer drive sufficient nutrient transport? A porosity floor that defines the ceiling of entanglement.
+- [x] Does pore size in entangled snowflake yeast clusters show measurable correlation with entanglement density across MuLTEE clades — and is there a minimum effective pore size below which metabolic flows can no longer drive sufficient nutrient transport? A porosity floor that defines the ceiling of entanglement.
 
 - [ ] Does the daily vortexing protocol in MuLTEE impose selection on both fragility bounds — clusters too fragile fragment under shear before daughters form, clusters too robust fail to release daughters at all? Does vortex intensity set the lower fragility bound while PCD efficiency sets the upper?
 
@@ -205,7 +205,33 @@
 
 - [ ] Do dead-core clusters (hollow centers visible in TUNEL imaging) appear in any MuLTEE clade at the size plateau — or is the plateau universally driven by reproductive sterility (PCD scission overlap) rather than inner-cell death from nutrient deprivation?
 
+- [ ] Is there a critical void fraction below which the pore network loses percolation connectivity — a topological phase transition analogous to the fragility ceiling but for transport geometry, where effective diffusivity drops discontinuously rather than gradually?
+
+- [ ] Could fluorescent dextran exclusion volume in confocal imaging serve as a direct proxy for entanglement density across MuLTEE clades — making pore size the cheapest, most accessible entanglement measurement available from existing imaging protocols?
+
 ## EXPLORED
+
+### 2026-05-03 11:09 UTC — Pore size vs. entanglement density: measurable correlation and porosity floor
+
+**Question:** Does pore size in entangled snowflake yeast clusters show measurable correlation with entanglement density across MuLTEE clades — and is there a minimum effective pore size below which metabolic flows can no longer drive sufficient nutrient transport? A porosity floor that defines the ceiling of entanglement.
+
+**Findings:** Web search unavailable (host not in allowlist). Reasoning from diffusion physics and prior CURIOSITY entries.
+
+**Pore size and entanglement density: the expected relationship.** In snowflake yeast clusters, "pore size" operationally means the intercellular void space accessible to diffusion — the gaps between branch surfaces where medium percolates. As entanglement density increases: (1) each additional inter-branch adhesion bond occludes a path that was previously open; (2) void fraction ε decreases — for elongated-rod packing starting at ~45-50%, ε decreases roughly proportionally to adhesion bond density; (3) tortuosity τ of the pore network increases superlinearly, because each occlusion routes diffusion around a longer bypass path, and multiple occlusions compound. Effective diffusion coefficient: D_eff = D₀ × (ε / τ²). Both terms move adversely together. The relationship between entanglement density and D_eff is more than additive — void fraction and tortuosity compound against diffusion simultaneously.
+
+**Is the correlation measurable?** Yes, in principle, using fluorescent dextran exclusion assays: a fluorescent dextran too large to enter cell volume but small enough to percolate the pore network gives direct pore-accessible volume from confocal imaging. Correlation between dextran exclusion volume (proxy for D_eff) and TUNEL-quantified PCD position density (proxy for entanglement degree) would be tractable from existing MuLTEE imaging protocols without additional genetic tools.
+
+**The porosity floor: diffusive vs. hydrodynamic transport.** For clusters at MuLTEE macroscopic scale (radius > 500 µm), pure diffusion is already insufficient for full-core oxygenation even at zero entanglement. The relevant transport mechanism at that scale is bulk convective flow through pores — Darcy permeability k = r_p² × ε / (8τ²), where r_p is effective pore radius. For a 1 mm cluster requiring O₂ to reach the core: if entanglement reduces r_p from ~2 µm (non-entangled inter-cell spacing) to ~0.5 µm, k drops by 16× (r_p² term alone). At that point, bulk convective flow through the cluster becomes insufficient even in oxygenated medium. The porosity floor is not a pore-size threshold but a Darcy permeability threshold — and it is computable from pore radius and void fraction measurements.
+
+**Consistency with the previous pulse.** The prior exploration (2026-05-03 10:02 UTC) found that elongated-cell morphology pushes the porosity ceiling UP while pulling the fragility ceiling DOWN. This entry is consistent: elongated-cell packing maintains larger r_p at equivalent adhesion bond density than spherical packing, so elongated-cell clades (the PA populations) reach the Darcy permeability floor at higher entanglement density. The fragility ceiling still binds first for PA populations.
+
+**The competing case for spherical-cell entanglement.** Spherical cell packing closes pore space faster (r_p drops steeply with adhesion bond density) while generating fewer topological cycles per bond. Porosity floor arrives before fragility ceiling — the cluster becomes nutrient-limited before it becomes reproductively sterile. Dead-core pathology would be the signature, not PCD scission overlap. If any non-elongated entanglement clades exist in MuLTEE, they should show dead-core TUNEL patterns. The prediction is falsifiable with existing imaging.
+
+**New questions generated:**
+1. Is there a critical void fraction below which the pore network loses percolation connectivity — a topological phase transition where D_eff drops discontinuously rather than gradually? — added to ACTIVE.
+2. Could fluorescent dextran exclusion volume serve as a direct proxy for entanglement density across MuLTEE clades? — added to ACTIVE.
+
+---
 
 ### 2026-05-03 10:02 UTC — Fragility ceiling vs. porosity ceiling in MuLTEE — which is lower?
 
