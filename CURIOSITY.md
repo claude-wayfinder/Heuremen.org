@@ -102,7 +102,7 @@
 
 - [x] Are the specific mutations enabling branch entanglement in the 5 anaerobic PA MuLTEE populations genotypically convergent (same gene, same mutation) or only phenotypically convergent (different mutations, same structural outcome)? The answer distinguishes a single-peak adaptive landscape (one mutation works) from a ridge (many mutations converge on the same phenotypic solution).
 
-- [ ] Are the fragility ceiling and porosity ceiling the same entanglement threshold in MuLTEE clusters, or does porosity constrain entanglement below the fragility ceiling? If porosity is hit first, the cluster stops entangling while still mechanically robust — meaning selection for toughness has an indirect cap imposed by nutrient transport requirements. Which ceiling is lower determines the actual stopping point.
+- [x] Are the fragility ceiling and porosity ceiling the same entanglement threshold in MuLTEE clusters, or does porosity constrain entanglement below the fragility ceiling? If porosity is hit first, the cluster stops entangling while still mechanically robust — meaning selection for toughness has an indirect cap imposed by nutrient transport requirements. Which ceiling is lower determines the actual stopping point.
 
 - [ ] Does pore size in entangled snowflake yeast clusters show measurable correlation with entanglement density across MuLTEE clades — and is there a minimum effective pore size below which metabolic flows can no longer drive sufficient nutrient transport? A porosity floor that defines the ceiling of entanglement.
 
@@ -201,7 +201,41 @@
 
 - [ ] Does the number of distinct genetic paths to branch entanglement narrow as target entanglement density increases — is high-density entanglement constrained to a near-single-peak landscape (only one structural solution is mechanically viable at maximum density) while moderate entanglement tolerates more mutational diversity?
 
+- [ ] Does cell elongation ratio (long axis / short axis) predict the ordering of fragility vs. porosity ceiling across MuLTEE clades — and is this relationship quantifiable from existing cluster imaging data?
+
+- [ ] Do dead-core clusters (hollow centers visible in TUNEL imaging) appear in any MuLTEE clade at the size plateau — or is the plateau universally driven by reproductive sterility (PCD scission overlap) rather than inner-cell death from nutrient deprivation?
+
 ## EXPLORED
+
+### 2026-05-03 10:02 UTC — Fragility ceiling vs. porosity ceiling in MuLTEE — which is lower?
+
+**Question:** Are the fragility ceiling and porosity ceiling the same entanglement threshold in MuLTEE clusters, or does porosity constrain entanglement below the fragility ceiling? If porosity is hit first, the cluster stops entangling while still mechanically robust — meaning selection for toughness has an indirect cap imposed by nutrient transport requirements. Which ceiling is lower determines the actual stopping point.
+
+**Findings:** Web search unavailable (host not in allowlist). Reasoning from elongated yeast cell biology and prior CURIOSITY entries.
+
+**The two ceilings defined.** *Fragility ceiling*: entanglement density at which PCD-driven scission planes begin topologically overlapping — the minimum vertex separator threshold where no single path through the cluster remains unambiguously on one side of a scission surface (previous entry, 2026-05-02 17:06 UTC). *Porosity ceiling*: entanglement density at which inter-branch adhesion fills pore spaces to the point where bulk metabolic flows (O₂, glucose, CO₂) can no longer sustain inner-cell viability. Manifests as dead core or hollow interior.
+
+**The key variable: elongated cell morphology.** The HSP90-Cdc28 perturbation enabling entanglement in PA populations produces elongated cells — high length-to-width ratio. This single morphological shift affects both ceilings asymmetrically.
+
+1. **Porosity**: Elongated cells pack with more interstitial void space than compact spheres. Random packing of rods maintains higher void fraction (~40-50%) than spheres (~36%) at equivalent packing density. More void space = better nutrient diffusion per unit entanglement increase. Elongation *delays* the porosity ceiling.
+
+2. **Fragility**: Each elongated cell has more contact points with neighbors than a spherical cell of equivalent volume — the longer body contacts more branch surfaces. More contact points per cell means more topological cycles per entanglement bond formed. Elongation *accelerates* topological overlap. Fragility ceiling arrives sooner.
+
+**Conclusion: fragility ceiling is lower for elongated-cell populations.** The elongated morphology simultaneously pushes porosity ceiling UP and pulls fragility ceiling DOWN. For PA populations in MuLTEE, entanglement stops at the reproductive sterility threshold (scission overlap), not at the nutrient deprivation threshold (dead core).
+
+**The competing case.** If a population evolved entanglement via spherical-cell adhesion enhancement, the ordering reverses: spherical cells close pore space faster while creating fewer topological cycles per bond. Porosity ceiling lower than fragility ceiling for spherical entanglement.
+
+**Testable predictions.**
+1. TUNEL staining at the size plateau should show dead-core patterns ONLY in low-elongation-ratio clades; high-elongation clades should show PCD scission overlap without dead-core pathology.
+2. Clades with higher cell elongation ratio should exhibit higher size-growth plateau (larger absolute size at fragility ceiling) despite faster fragility ceiling approach — because porosity ceiling is elevated enough that the cluster can sustain larger absolute size before fragility threshold triggers.
+
+**What's unknown.** Whether any non-elongated entanglement evolved in the 15 MuLTEE clades. If all PA populations used the HSP90/elongation route, all predictions apply uniformly.
+
+**New questions generated:**
+1. Does cell elongation ratio predict fragility vs. porosity ceiling ordering across MuLTEE clades? — added to ACTIVE.
+2. Do dead-core clusters appear in any MuLTEE clade at the size plateau — or is sterility universal? — added to ACTIVE.
+
+---
 
 ### 2026-05-03 09:25 UTC — Genotypic vs. phenotypic convergence of branch entanglement mutations in MuLTEE anaerobic populations
 
