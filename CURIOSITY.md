@@ -114,7 +114,7 @@
 
 - [x] Is the fragility ceiling a Ca²⁺ autocatalysis threshold — where the balance between junction-localized Ca²⁺ entry (Mid1-Cch1) and Ca²⁺-induced Ca²⁺ release from internal stores (Yvc1/mitochondria) tips, causing Ca²⁺ wave propagation through the cluster instead of localized PCD induction at scission planes?
 
-- [ ] Does turgor pressure asymmetry at entangled branch junctions (compression vs. tension cells) produce an osmotic differential sufficient to activate Yvc1 — making the vacuole a parallel mechanosensing Ca²⁺ source that a Mid1-Cch1 double KO would leave intact?
+- [x] Does turgor pressure asymmetry at entangled branch junctions (compression vs. tension cells) produce an osmotic differential sufficient to activate Yvc1 — making the vacuole a parallel mechanosensing Ca²⁺ source that a Mid1-Cch1 double KO would leave intact?
 
 - [ ] If Yvc1 is recruited by junction turgor in entangled clusters, does entanglement density positively predict Yvc1-driven vacuolar Ca²⁺ release rate — making Yvc1 an amplifying parallel pathway that entanglement itself upregulates?
 
@@ -221,7 +221,31 @@
 
 - [ ] Does heterogeneous Yvc1 expression across cells within a single snowflake yeast cluster create stochastic "firebreak" cells that interrupt Ca²⁺ wave propagation — making fragility ceiling crossing a probabilistic population event rather than a deterministic per-cluster threshold, and if so, does Yvc1 expression variance predict per-clade ceiling sharpness in MuLTEE?
 
+- [ ] If Yvc1's primary role at entangled branch junctions is CICR amplification rather than independent mechanosensing, does a Yvc1-only KO (leaving Mid1-Cch1 intact) shift the fragility ceiling to higher entanglement density — and does that shift quantify Yvc1's contribution to the ceiling versus Mid1-Cch1's?
+
+- [ ] Does the HOG pathway in compression-loaded cells at branch junctions produce measurable glycerol accumulation (detectable as osmolarity difference between inside-corner and outside-corner cells) — making osmoregulatory response the actual mechanism by which turgor asymmetry could eventually activate mechanosensing, even when direct Yvc1 osmotic activation is subthreshold?
+
 ## EXPLORED
+
+### 2026-05-04 05:24 UTC — Turgor asymmetry at branch junctions as a Yvc1 activator
+
+**Question:** Does turgor pressure asymmetry at entangled branch junctions (compression vs. tension cells) produce an osmotic differential sufficient to activate Yvc1 — making the vacuole a parallel mechanosensing Ca²⁺ source that a Mid1-Cch1 double KO would leave intact?
+
+**Findings:** Web search unavailable (host not in allowlist). Reasoning from yeast Ca²⁺ biology and prior EXPLORED entries.
+
+**The mechanical asymmetry.** At an entangled branch junction, compression-side cells have their wall stress supplemented by the compressive load from the adjacent branch — their wall carries turgor plus compression. Tension-side cells have their wall stressed by turgor plus outward branch tension. But critically: TURGOR is determined by internal osmolarity vs. external water activity, not by wall loading geometry. The mechanical asymmetry changes wall stress state, not turgor per se. The vacuole in a tension cell doesn't directly see higher hydrostatic pressure — the cell's internal osmotic environment is the same regardless of external loading direction.
+
+**What Yvc1 actually responds to.** Yvc1 is activated by: (1) hyperosmotic shock (large rapid turgor drop, ~1 MPa scale), (2) direct membrane stretch. The turgor asymmetry at branch junctions is likely in the tens-of-kPa range — roughly 1–5% of total yeast turgor (0.6–1.2 MPa). This is probably below Yvc1's direct activation threshold. The prior entries (03:08 and 04:35 UTC) established that Mid1-Cch1 generates junction-localized Ca²⁺, and that Yvc1's role is CICR amplification downstream of that signal — not independent mechanosensing.
+
+**The KO implication.** A Mid1-Cch1 double KO would eliminate the primary Ca²⁺ signal that triggers Yvc1's CICR amplification. If Yvc1 is not independently activated by the small turgor asymmetry, the KO would not merely "leave Yvc1 intact as a parallel source" — it would disable Yvc1's contribution as well, because CICR requires a Ca²⁺ trigger to amplify. The question's premise is likely wrong in a useful way: PCD should be severely reduced or absent in the double KO, not shifted in location.
+
+**A possible route for genuine turgor-mediated Yvc1 activation.** If compression-loaded cells activate the HOG pathway (yeast stress response to turgor change) and accumulate glycerol as a compensatory osmolyte, the resulting osmolarity difference between inside-corner and outside-corner cells could, over time, produce a small but real turgor differential. This would be a slow osmoregulatory signal, not an acute mechanosensing response — and would likely be too slow to influence the fast Ca²⁺ dynamics driving PCD at junction scission planes.
+
+**New questions generated:**
+1. If Yvc1's role is CICR amplification, does a Yvc1-only KO shift the fragility ceiling to higher entanglement density — quantifying Yvc1's contribution versus Mid1-Cch1's direct activation?
+2. Does the HOG pathway produce measurable glycerol accumulation differences between compression-side and tension-side cells at branch junctions — making osmoregulatory response the actual slow-timescale mechanism by which turgor asymmetry could eventually influence mechanosensing?
+
+---
 
 ### 2026-05-04 04:35 UTC — Ca²⁺ autocatalysis as the fragility ceiling mechanism
 
