@@ -1,7 +1,10 @@
-const CACHE_NAME = 'companion-v4.0';
+const CACHE_NAME = 'memoryrx-v1.0';
 const URLS_TO_CACHE = [
+  '/memoryrx.html',
   '/companion.html',
+  '/orb.html',
   '/quantum-queen.html',
+  '/manifest-memoryrx.json',
   '/manifest.json',
   '/icon-192.png',
   '/icon-512.png'
