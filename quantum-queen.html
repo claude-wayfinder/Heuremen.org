@@ -216,8 +216,25 @@ body::before{
 .scene-content p{
   font-size:clamp(1rem,2.5vw,1.15rem);
   line-height:1.85;
-  margin-bottom:1.2em;
+  margin-bottom:0.8em;
   color:var(--ink);
+}
+.scene-content p.drop-cap::first-letter{
+  font-family:'Cinzel',serif;
+  font-size:3.4em;
+  float:left;
+  line-height:0.75;
+  margin-right:8px;
+  margin-top:6px;
+  color:var(--carnival-gold);
+}
+.scene-content p.short{margin-bottom:0.35em}
+.scene-content p.breath{margin-bottom:1.8em}
+.scene-content .ending-lines p{
+  text-align:center;
+  font-style:italic;
+  color:var(--ink-mid);
+  margin-bottom:0.5em;
 }
 
 .scene-content .scene-title{
@@ -544,7 +561,21 @@ function showScene(id){
   el.classList.remove('visible');
   setTimeout(()=>{
     let h='<span class="scene-title">'+esc(sc.title)+'</span>';
-    sc.text.forEach(p=>{h+=p===null?'<hr>':'<p>'+p+'</p>'});
+    let firstP=true;
+    sc.text.forEach((p,i)=>{
+      if(p===null){h+='<hr>';return;}
+      let cls=[];
+      if(firstP){cls.push('drop-cap');firstP=false;}
+      // Short lines (under 40 chars, no HTML) get tight spacing
+      var raw=p.replace(/<[^>]+>/g,'');
+      if(raw.length<40) cls.push('short');
+      // After a short run, next long line gets breathing room
+      if(i>0&&sc.text[i-1]!==null){
+        var prevRaw=(sc.text[i-1]||'').replace(/<[^>]+>/g,'');
+        if(prevRaw.length<40&&raw.length>=60) cls.push('breath');
+      }
+      h+='<p'+(cls.length?' class="'+cls.join(' ')+'"':'')+'>'+ p+'</p>';
+    });
     if(sc.ending){h+='<div class="ending-lines">';sc.ending.forEach(l=>{h+='<p>'+l+'</p>'});h+='</div>';}
     if(sc.isDecoherence){h+='<div class="end-actions"><button class="end-btn" onclick="decoReturn()">Return to the Hallway</button></div>';}
     else if(sc.isConvergence){if(sc.completesLaw)saveP(sc.completesLaw);h+=buildShareCard(sc);h+='<div class="end-actions"><button class="end-btn" onclick="backToDoors()">Return to the Doors</button></div>';}
