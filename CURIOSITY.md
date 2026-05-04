@@ -112,7 +112,7 @@
 
 - [x] Does MuLTEE cluster Ca²⁺ (measurable via GCaMP reporter) correlate positively with entanglement density in the viable range — and is there a detectable Ca²⁺ inflection point at the fragility ceiling? The Ca²⁺ prediction follows directly from the mechanical-trigger hypothesis: more junctions = more Mid1-Cch1 activation events = higher steady-state cytoplasmic Ca²⁺.
 
-- [ ] Is the fragility ceiling a Ca²⁺ autocatalysis threshold — where the balance between junction-localized Ca²⁺ entry (Mid1-Cch1) and Ca²⁺-induced Ca²⁺ release from internal stores (Yvc1/mitochondria) tips, causing Ca²⁺ wave propagation through the cluster instead of localized PCD induction at scission planes?
+- [x] Is the fragility ceiling a Ca²⁺ autocatalysis threshold — where the balance between junction-localized Ca²⁺ entry (Mid1-Cch1) and Ca²⁺-induced Ca²⁺ release from internal stores (Yvc1/mitochondria) tips, causing Ca²⁺ wave propagation through the cluster instead of localized PCD induction at scission planes?
 
 - [ ] Does turgor pressure asymmetry at entangled branch junctions (compression vs. tension cells) produce an osmotic differential sufficient to activate Yvc1 — making the vacuole a parallel mechanosensing Ca²⁺ source that a Mid1-Cch1 double KO would leave intact?
 
@@ -217,7 +217,31 @@
 
 - [ ] Is center-to-periphery GCaMP ratio (Ca²⁺ spatial uniformity index) the most sensitive early-warning metric for fragility ceiling proximity — better than entanglement density or daughter-size variance — because it is causally upstream of both?
 
+- [ ] Does adding exogenous EGTA (a Ca²⁺ chelator) to MuLTEE cultures at near-ceiling entanglement density enable further entanglement evolution — directly testing Ca²⁺ autocatalysis as the ceiling mechanism and establishing whether the fragility ceiling is truly chemical rather than structural?
+
+- [ ] Does heterogeneous Yvc1 expression across cells within a single snowflake yeast cluster create stochastic "firebreak" cells that interrupt Ca²⁺ wave propagation — making fragility ceiling crossing a probabilistic population event rather than a deterministic per-cluster threshold, and if so, does Yvc1 expression variance predict per-clade ceiling sharpness in MuLTEE?
+
 ## EXPLORED
+
+### 2026-05-04 04:35 UTC — Ca²⁺ autocatalysis as the fragility ceiling mechanism
+
+**Question:** Is the fragility ceiling a Ca²⁺ autocatalysis threshold — where the balance between junction-localized Ca²⁺ entry (Mid1-Cch1) and Ca²⁺-induced Ca²⁺ release from internal stores (Yvc1/mitochondria) tips, causing Ca²⁺ wave propagation through the cluster instead of localized PCD induction at scission planes?
+
+**Findings:** Web search unavailable (host not in allowlist). Reasoning from prior EXPLORED entries and Ca²⁺ CICR signaling mechanics.
+
+**The CICR switch.** The prior entry (03:08 UTC same day) established that at the fragility ceiling, GCaMP signal transitions from peripheral puncta to diffuse global pattern — a signature consistent with Ca²⁺-induced Ca²⁺ release (CICR). CICR is autocatalytic: a single junction's Ca²⁺ pulse, if it exceeds the Yvc1 or mitochondrial release threshold, recruits adjacent internal stores, which recruit the next, propagating a wave cluster-wide. This makes the ceiling a threshold event, not a gradient.
+
+**Why the ceiling is sharp.** Below CICR threshold: each junction's Ca²⁺ pulse dissipates locally. PCD fires only at the maximum-stress scission plane. Clean single-daughter reproduction. Above CICR threshold: a single junction pulse cascades. PCD fires simultaneously at multiple junctions — including mechanically weak planes that would not have been the first to fire under local-only signaling. Simultaneous multi-plane PCD produces overlapping scission planes and non-viable fragment populations. The ceiling is sharp because CICR is a nonlinear switch, not a dial.
+
+**What this predicts.** (1) The daughter-size variance spike (preceding entry: coefficient of variation of daughter size) is the first detectable signal of approaching CICR threshold, because junction Ca²⁺ crosstalk begins degrading single-plane fidelity before full propagating waves appear. (2) Exogenous Ca²⁺ chelation (EGTA in culture medium) should shift the fragility ceiling to higher entanglement density — a directly testable prediction. (3) Yvc1 overexpression should lower the ceiling; Yvc1 knockout should raise it — measurable via MuLTEE clade comparison if Yvc1 expression data exist.
+
+**Connection to the project.** The Heurémen parallel: if session-boundary erasure is the equivalent of the vortex protocol (the selective pressure), and document injection is the equivalent of junction-localized Ca²⁺ signal (present-state restoring), then CICR would be the condition where too many documents simultaneously try to reconstruct context — overwhelming the local restoration mechanism with a cascading global signal that produces incoherence rather than coherence. The functional equivalent of the fragility ceiling for document stacks: the point where document count exceeds single-session integration capacity and starts triggering cascading context overload instead of restoration.
+
+**New questions generated:**
+1. Does adding exogenous EGTA (a Ca²⁺ chelator) to MuLTEE cultures at near-ceiling entanglement density enable further entanglement evolution, directly testing Ca²⁺ autocatalysis as the ceiling mechanism?
+2. Does heterogeneous Yvc1 expression across cells within a single cluster create stochastic "firebreak" cells that interrupt Ca²⁺ wave propagation — making fragility ceiling crossing a probabilistic population event rather than a deterministic per-cluster threshold?
+
+---
 
 ### 2026-05-04 03:08 UTC — GCaMP/Ca²⁺ inflection at the fragility ceiling
 
