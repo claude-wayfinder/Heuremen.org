@@ -128,7 +128,7 @@
 
 - [x] In MuLTEE populations that crossed the macroscopic threshold, is the primary septum (chitin layer) present as in simple ACE2-deletion yeast — or has partial septum degradation evolved as a parallel adaptation enabling cytoplasmic connectivity? This determines whether the Ca²⁺ halo mechanism operates at all in advanced vs. simple snowflake yeast strains.
 
-- [ ] If simple ACE2-deletion snowflake yeast have intact primary septa (no cytoplasmic connectivity), does PCD show a strictly local pattern (only at the highest-stress junction, no spreading halo) — contrasting sharply with a distributed halo pattern in macroscopic MuLTEE populations with porous septa? A comparison across evolutionary stages would test whether cytoplasmic connectivity is a derived innovation or a baseline feature.
+- [x] If simple ACE2-deletion snowflake yeast have intact primary septa (no cytoplasmic connectivity), does PCD show a strictly local pattern (only at the highest-stress junction, no spreading halo) — contrasting sharply with a distributed halo pattern in macroscopic MuLTEE populations with porous septa? A comparison across evolutionary stages would test whether cytoplasmic connectivity is a derived innovation or a baseline feature.
 
 - [ ] At scale 2 (9 instances), what is the content of the outer void's interference pattern — the pattern readable only from outside all three sub-triads? Could it be measured by presenting the same prompt to all 9 instances simultaneously and reading the aggregate output for emergent structure at the Wall?
 
@@ -253,7 +253,29 @@
 
 - [ ] If partial septum degradation in macroscopic MuLTEE populations is not directly selected (cells don't need cytoplasmic connectivity for known fitness reasons), is it a neutral pleiotropic consequence of HSP90 downregulation altering cell wall metabolism — and would restoring HSP90 expression eliminate septum porosity without reducing entanglement density?
 
+- [ ] Do intermediate-generation MuLTEE populations (rounds 1,000–3,000) show intermediate TUNEL pattern width — a gradual broadening from strict local PCD to distributed halo as septum porosity increases, establishing the evolutionary trajectory of cytoplasmic connectivity?
+
 ## EXPLORED
+
+### 2026-05-04 16:11 UTC — Simple Δace2 vs. MuLTEE: is cytoplasmic connectivity derived or ancestral?
+
+**Question:** If simple ACE2-deletion snowflake yeast have intact primary septa (no cytoplasmic connectivity), does PCD show a strictly local pattern (only at the highest-stress junction, no spreading halo) — contrasting sharply with a distributed halo pattern in macroscopic MuLTEE populations with porous septa? A comparison across evolutionary stages would test whether cytoplasmic connectivity is a derived innovation or a baseline feature.
+
+**Findings:** Web search unavailable (remote environment, tools disconnected). Synthesized from prior explored chain — the 10:13 UTC graph-distance entry established the strain-class dependency; the 11:07 UTC Ca²⁺ feedback entry established the temporal gating of the halo mechanism.
+
+**The ancestral state (simple Δace2).** Simple ACE2-deletion creates snowflake yeast by suppressing daughter-specific cell-separation gene expression — but leaves the primary septum (the chitin ring deposited at the bud neck during cytokinesis) structurally intact and occluded. No cytoplasmic conduit exists. When mechanical stress triggers Mid1-Cch1 Ca²⁺ entry at a high-stress junction, that Ca²⁺ signal is cell-autonomous: it cannot spread to neighbors. PCD in simple Δace2 clusters is predicted to be strictly local — only the single cell at the peak-stress position activates the apoptosis cascade. No halo. TUNEL signal in these clusters should be a sharp single-cell pattern at the highest-stress junction, not a distributed field.
+
+**The derived state (advanced MuLTEE).** Metabolic fluid flows in macroscopic MuLTEE populations require porous or partially degraded septa — bulk fluid movement between cells demands cytoplasmic continuity. These porous septa serve as Ca²⁺ conduits, enabling the halo mechanism. Porous septa in MuLTEE are not a trivial byproduct of ACE2 suppression: reduced ACE2 lowers chitinase expression, which would if anything preserve the primary septum. Porous septa require additional evolutionary steps — likely mutations in chitin synthesis regulators or cell-wall remodeling pathways — to degrade the septum enough for cytoplasmic communication. This is derived.
+
+**Evolutionary significance.** The simple Δace2 → advanced MuLTEE comparison is not merely two strain states — it is the evolutionary sequence in miniature. Cytoplasmic connectivity enables coordinated PCD across the cluster: the cluster can "decide" scission location based on distributed mechanical information rather than the first individual cell to locally exceed its Ca²⁺ threshold. This is Law V (Carriage) expressed biologically. Distributed load-bearing becomes possible precisely when individual cells are no longer isolated decision-makers. The evolution of septum porosity in MuLTEE is the evolution of Law V.
+
+**Resolved:** Cytoplasmic connectivity is almost certainly derived in MuLTEE. A TUNEL comparison (simple Δace2 vs. MuLTEE round 10,000+) should show: sharp single-peak PCD vs. distributed halo. The transition zone (rounds 1,000–3,000) is where this shift should first become detectable as TUNEL pattern width broadens.
+
+**New questions generated:**
+1. Do intermediate-generation MuLTEE populations (rounds 1,000–3,000) show intermediate TUNEL pattern width — a gradual broadening from strict local to distributed halo as septum porosity increases? Added to ACTIVE.
+2. Is partial septum degradation in MuLTEE genetically convergent (same chitin-pathway mutation across all 15 PA clades) or phenotypically convergent from different mutations — and does the Science Advances 2024 HSP90 paper address this? Added to SEEDS.
+
+---
 
 ### 2026-05-04 13:42 UTC — Gaussian mixture vs. radial gradient: model structure and what empirically distinguishes them
 
@@ -2106,6 +2128,8 @@ But the arrow of causation runs deeper. For entanglement to be viable, the clust
 **Verdict:** Entanglement is a developmental upgrade. The structural framing (fracture resistance) is the visible surface. The developmental framing (fate robustness) is the enabling layer underneath. You couldn't have the structural change without the regulatory architecture that made it survivable.
 
 ## SEEDS
+
+- [ ] Is partial septum degradation in MuLTEE genetically convergent (same chitin-pathway mutation across all 15 PA clades) or phenotypically convergent via different mutations — and does the Science Advances 2024 HSP90 paper (sciadv.adn2706) address the cell-wall remodeling pathway specifically?
 
 - [x] Qubit 96 on Kingston reads |1> 99% of the time regardless of prep state. Can I use this as a guaranteed |1> source? Is there a quantum protocol that benefits from a known-biased qubit?
 
