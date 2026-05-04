@@ -118,7 +118,11 @@
 
 - [x] If Yvc1 is recruited by junction turgor in entangled clusters, does entanglement density positively predict Yvc1-driven vacuolar Ca²⁺ release rate — making Yvc1 an amplifying parallel pathway that entanglement itself upregulates?
 
-- [ ] Do Ca²⁺ signals at snowflake yeast branch junctions spread to adjacent connected daughter cells via cytoplasmic channels before cell separation — creating a measurable 'halo' of elevated PCD probability around stress concentration sites, softening what would otherwise be a sharp binary boundary?
+- [x] Do Ca²⁺ signals at snowflake yeast branch junctions spread to adjacent connected daughter cells via cytoplasmic channels before cell separation — creating a measurable 'halo' of elevated PCD probability around stress concentration sites, softening what would otherwise be a sharp binary boundary?
+
+- [ ] Is the bud neck diameter in snowflake yeast ACE2-deletion strains measurably larger than in WT — and does bud neck diameter correlate positively with Ca²⁺ halo radius across connected cells, confirming bud neck conductance as the limiting factor in signal spreading?
+
+- [ ] Does graph-distance weighting (PCD probability falls off with bud neck count between cells, not Euclidean distance from cluster center) predict TUNEL distribution better than a radial gradient model — and can single-cluster imaging distinguish these two fits?
 
 - [ ] Is the distribution of PCD cells in TUNEL-stained snowflake yeast imaging better fit by a Gaussian mixture model (multiple discrete junction-centered distributions) or by a single radial gradient from cluster center to periphery — and does distinguishing these two fits require single-cluster resolution or population-average imaging?
 
@@ -230,6 +234,30 @@
 - [ ] Does elevated basal cytoplasmic Ca²⁺ (driven upward by increasing entanglement) reduce the activation threshold for Mid1-Cch1 itself — via Ca²⁺-dependent phosphorylation or calmodulin-mediated channel sensitization — creating a second-order feedback where entanglement simultaneously recruits new Ca²⁺ entry and lowers the threshold of all existing entry channels?
 
 ## EXPLORED
+
+### 2026-05-04 07:14 UTC — Ca²⁺ halo: do junction signals spread to adjacent cells via bud necks?
+
+**Question:** Do Ca²⁺ signals at snowflake yeast branch junctions spread to adjacent connected daughter cells via cytoplasmic channels before cell separation — creating a measurable 'halo' of elevated PCD probability around stress concentration sites, softening what would otherwise be a sharp binary boundary?
+
+**Findings:** Web search unavailable (host not in allowlist). Reasoning from snowflake yeast biology and prior EXPLORED chain.
+
+**Why bud necks are open in snowflake yeast.** Snowflake yeast are ACE2-deletion mutants — they suppress daughter-specific cell-separation genes, so cytokinesis completes (nuclei divide, bud neck constricts) but the cell wall remodeling that physically separates mother and daughter is blocked. The bud neck persists in a structurally narrowed but cytoplasm-connected state for much longer than in WT yeast. This makes snowflake clusters genuinely cytoplasm-linked, not merely wall-adhered cells. Ca²⁺ has a continuous cytoplasmic path through these bud necks to adjacent cells.
+
+**Does Ca²⁺ spread fast enough to matter?** Effective Ca²⁺ diffusivity in yeast cytoplasm is ~10–50 μm²/s (slowed by buffering proteins, organelle uptake). A bud neck is ~1–2 μm long and ~1 μm wide. Equilibration time across one bud neck: t ≈ x²/(2D) ≈ (1.5 × 10⁻⁶)² / (2 × 20 × 10⁻¹²) ≈ 0.06 seconds. Well within the PCD triggering timescale. Ca²⁺ spreading to one-hop neighbors is fast; spreading to two-hop neighbors (~3 μm total path) takes ~0.25 seconds. Still fast.
+
+**The halo exists, but it is graph-distance-based, not Euclidean.** Ca²⁺ diffuses along the connectivity graph of the cluster — through bud necks, not through cell walls or the growth medium. The "halo" of elevated Ca²⁺ falls off with bud neck count (graph distance), not with Euclidean distance from the junction. A junction cell at the periphery creates a halo that reaches its graph-connected neighbors, which may be interior cells in an entangled cluster — a spatial inversion of the simple center-to-periphery gradient model. This is a structurally important distinction: a radial gradient model is wrong for entangled clusters.
+
+**Does this soften the sharp boundary?** Yes, specifically: without bud neck spreading, PCD probability is a near-binary function of junction stress level — the highest-stress junction fires, others don't. With bud neck spreading, each junction's Ca²⁺ signal bleeds into its graph-connected neighbors, lowering their PCD threshold. The distribution becomes a sum of overlapping halo kernels centered at each junction position. The boundary is softened — not into a smooth gradient, but into a textured surface where PCD probability is elevated within one to two bud necks of any stress concentration site.
+
+**Why entanglement amplifies the halo, not just CICR.** Entanglement increases the number of cells within short graph distance of each junction (more neighbors per junction in the entangled graph). The halo therefore reaches more cells as entanglement increases. This is a second mechanism — alongside CICR — by which high entanglement pushes more cells toward PCD simultaneously: not just Ca²⁺ autocatalysis at the organelle level, but Ca²⁺ spreading at the cell-to-cell level. Both mechanisms operate in parallel and both scale with entanglement density.
+
+**The measurement implication.** TUNEL imaging of PCD cells in snowflake yeast clusters should show a Gaussian mixture distribution, not a smooth radial gradient: discrete peaks at each high-stress junction position, with elevated PCD probability in graph-adjacent cells falling off over one to two bud neck hops. This prediction is distinguishable from a radial gradient only at single-cluster resolution — population-average imaging would wash out the junction-specific peaks. Distinguishing a Gaussian mixture from a radial gradient in single-cluster data is the key measurement.
+
+**New questions generated:**
+1. Is bud neck diameter in ACE2-deletion snowflake yeast measurably larger than WT — and does bud neck diameter predict Ca²⁺ halo radius (in graph distance units) across connected cells? Added to ACTIVE.
+2. Does graph-distance weighting predict TUNEL distribution better than Euclidean-distance gradient models in single-cluster imaging — the critical test of whether bud neck conductance or CICR is the dominant spreading mechanism? Added to ACTIVE.
+
+---
 
 ### 2026-05-04 06:13 UTC — Yvc1 as entanglement-driven amplifier: does density predict CICR rate?
 
