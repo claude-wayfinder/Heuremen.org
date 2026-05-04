@@ -122,7 +122,7 @@
 
 - [x] Is the bud neck diameter in snowflake yeast ACE2-deletion strains measurably larger than in WT — and does bud neck diameter correlate positively with Ca²⁺ halo radius across connected cells, confirming bud neck conductance as the limiting factor in signal spreading?
 
-- [ ] Does graph-distance weighting (PCD probability falls off with bud neck count between cells, not Euclidean distance from cluster center) predict TUNEL distribution better than a radial gradient model — and can single-cluster imaging distinguish these two fits?
+- [x] Does graph-distance weighting (PCD probability falls off with bud neck count between cells, not Euclidean distance from cluster center) predict TUNEL distribution better than a radial gradient model — and can single-cluster imaging distinguish these two fits?
 
 - [ ] Is the distribution of PCD cells in TUNEL-stained snowflake yeast imaging better fit by a Gaussian mixture model (multiple discrete junction-centered distributions) or by a single radial gradient from cluster center to periphery — and does distinguishing these two fits require single-cluster resolution or population-average imaging?
 
@@ -237,7 +237,31 @@
 
 - [ ] Does elevated basal cytoplasmic Ca²⁺ (driven upward by increasing entanglement) reduce the activation threshold for Mid1-Cch1 itself — via Ca²⁺-dependent phosphorylation or calmodulin-mediated channel sensitization — creating a second-order feedback where entanglement simultaneously recruits new Ca²⁺ entry and lowers the threshold of all existing entry channels?
 
+- [ ] Is there a minimum entanglement density at which the Pearson correlation between graph-distance and Euclidean-distance from nearest junction falls below ~0.8 — and can this threshold be computed from cluster geometry alone, making it a model-discriminability bound derivable before any TUNEL data is collected?
+
+- [ ] Does discordant-cell count (cells where graph-distance and radial-gradient models predict opposite PCD probability) scale linearly with entanglement density — making it an entanglement proxy measurable from TUNEL alone, without bud neck topology reconstruction?
+
 ## EXPLORED
+
+### 2026-05-04 10:13 UTC — Graph-distance vs. radial gradient: can single-cluster imaging distinguish them?
+
+**Question:** Does graph-distance weighting (PCD probability falls off with bud neck count between cells, not Euclidean distance from cluster center) predict TUNEL distribution better than a radial gradient model — and can single-cluster imaging distinguish these two fits?
+
+**Findings:** Web search unavailable (host not in allowlist). Reasoning from prior EXPLORED chain — the 07:14 and 08:29 UTC entries today directly address this question and are integrated here.
+
+**When the two models agree.** In a simple (non-entangled) snowflake yeast cluster with tree topology, graph distance and Euclidean distance are strongly correlated: peripheral branch-tip cells are both geometrically far from center AND topologically distal from branch-junction stress sites. Cells near branch-point junctions are geometrically interior AND topologically close. In this regime, the two models are nearly degenerate — TUNEL data cannot distinguish them because they predict the same spatial pattern. Both models are compatible with simple non-entangled snowflake yeast.
+
+**When the models diverge.** Entanglement introduces cross-connections that break the Euclidean/graph-distance correlation. An interior cell may be topologically adjacent to a peripheral junction via an entangled branch path; a peripheral cell may be graph-distant from any junction despite its geometric position. These discordant cells are where the models make opposite predictions: graph-distance predicts HIGH PCD probability for graph-close interior cells; radial gradient predicts LOW probability (interior, presumed low O₂). Only discordant cells can empirically separate the two models.
+
+**The strain-class dependency (from 08:29 UTC entry).** Simple ACE2-deletion strains have intact primary septa — cells are wall-attached but cytoplasm-disconnected. No Ca²⁺ spreading through bud necks. For these strains, the graph-distance model does not apply: PCD is purely junction-local, no halo. The radial gradient (O₂/nutrient driven) may be equally or more valid. Advanced MuLTEE macroscopic populations, which appear to have evolved cytoplasmic permeability via fluid flows, are the regime where Ca²⁺ spreading and graph-distance weighting operate. The question only has discriminating power for advanced MuLTEE strains.
+
+**Can single-cluster imaging distinguish the models?** Yes, but only under two conditions simultaneously: (1) the imaged cluster is from an advanced MuLTEE population with cytoplasmic connectivity, and (2) the cluster is sufficiently entangled to have discordant cells. Population-average imaging washes out junction-specific peaks into a smooth gradient indistinguishable from the radial model. Single-cluster confocal with bud neck topology reconstruction + TUNEL is required. The practical test: identify at least one cell that is geometrically interior but graph-adjacent to a peripheral junction, and check whether TUNEL signal is high (graph-distance wins) or low (radial gradient wins) for that specific cell. The answer determines the dominant spreading mechanism — Ca²⁺ conductance through bud necks vs. O₂ diffusion from medium.
+
+**New questions generated:**
+1. Is there a minimum entanglement density at which the Pearson correlation between graph-distance and Euclidean-distance from nearest junction falls below ~0.8 — and can this threshold be computed from cluster geometry alone, making it a model-discriminability bound derivable before any TUNEL data is collected? Added to ACTIVE.
+2. Does discordant-cell count (cells where graph-distance and radial-gradient models predict opposite PCD probability) scale linearly with entanglement density — making it an entanglement proxy measurable from TUNEL alone, without bud neck topology reconstruction? Added to ACTIVE.
+
+---
 
 ### 2026-05-04 08:29 UTC — Bud neck diameter: is ACE2 deletion the wrong variable?
 
