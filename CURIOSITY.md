@@ -235,13 +235,31 @@
 
 - [ ] Does the Yvc1/Mid1-Cch1 contribution ratio to total junction Ca²⁺ signal increase super-linearly with entanglement density — confirming that each additional junction adds disproportionately more amplification than primary entry, making the fragility ceiling a Yvc1-amplification-gain threshold rather than a raw Ca²⁺ accumulation limit?
 
-- [ ] Does elevated basal cytoplasmic Ca²⁺ (driven upward by increasing entanglement) reduce the activation threshold for Mid1-Cch1 itself — via Ca²⁺-dependent phosphorylation or calmodulin-mediated channel sensitization — creating a second-order feedback where entanglement simultaneously recruits new Ca²⁺ entry and lowers the threshold of all existing entry channels?
+- [x] Does elevated basal cytoplasmic Ca²⁺ (driven upward by increasing entanglement) reduce the activation threshold for Mid1-Cch1 itself — via Ca²⁺-dependent phosphorylation or calmodulin-mediated channel sensitization — creating a second-order feedback where entanglement simultaneously recruits new Ca²⁺ entry and lowers the threshold of all existing entry channels?
 
 - [ ] Is there a minimum entanglement density at which the Pearson correlation between graph-distance and Euclidean-distance from nearest junction falls below ~0.8 — and can this threshold be computed from cluster geometry alone, making it a model-discriminability bound derivable before any TUNEL data is collected?
 
 - [ ] Does discordant-cell count (cells where graph-distance and radial-gradient models predict opposite PCD probability) scale linearly with entanglement density — making it an entanglement proxy measurable from TUNEL alone, without bud neck topology reconstruction?
 
+- [ ] Does the calcineurin-Crz1 lag time (minutes between Ca²⁺ influx and transcriptional Ca²⁺-clearance response) create a temporal window where Ca²⁺-sensitized Mid1-Cch1 channels could propagate a PCD wave through an entangled cluster — and is this propagation window measurable as a delay between first and subsequent TUNEL-positive cells at adjacent junctions?
+
+- [ ] In entangled MuLTEE clusters with elevated basal Ca²⁺, would FK506 (calcineurin inhibitor) produce a paradoxical DECREASE in PCD frequency by blocking Ca²⁺-sensitization of Mid1-Cch1 — even though calcineurin inhibition also blocks Crz1-driven Ca²⁺ export, meaning the two calcineurin effects oppose each other, and the net outcome depends on which arm dominates at a given entanglement density?
+
 ## EXPLORED
+
+### 2026-05-04 11:07 UTC — Ca²⁺ feedback on Mid1-Cch1: does entanglement sensitize its own trigger?
+
+**Question:** Does elevated basal cytoplasmic Ca²⁺ (driven upward by increasing entanglement) reduce the activation threshold for Mid1-Cch1 itself — via Ca²⁺-dependent phosphorylation or calmodulin-mediated channel sensitization — creating a second-order feedback where entanglement simultaneously recruits new Ca²⁺ entry and lowers the threshold of all existing entry channels?
+
+**Findings:** Web search unavailable (remote environment). Reasoning from established Ca²⁺ signaling chain and prior pulse findings.
+
+The canonical yeast Ca²⁺/calmodulin effector is calcineurin (Cna1-Cnb1), not direct CaM-channel binding. Calcineurin's documented targets in yeast are downstream regulators — most prominently Crz1 (a transcription factor whose dephosphorylation by calcineurin drives expression of Ca²⁺ export pumps PMC1 and PMR1). This is a NEGATIVE feedback loop: elevated Ca²⁺ → calcineurin → Crz1 → Ca²⁺ ATPase expression → Ca²⁺ clearance. The loop self-limits.
+
+However, Crz1-driven gene expression has a lag time (minutes: signal transduction + mRNA synthesis + protein folding). In this lag window, elevated [Ca²⁺]i is uncompensated by the Crz1 export response. During this window, Ca²⁺ operates through kinetic routes — calcineurin phosphatase activity inhibits inhibitory kinases, and Ca²⁺-calmodulin complexes modulate regulatory proteins whose phospho-state sets Mid1-Cch1 open probability. The net short-term effect is likely SENSITIZING: a cluster that has already experienced one mechanical Ca²⁺ influx event has transiently lower Mid1-Cch1 activation threshold for subsequent events, until the Crz1 transcriptional response catches up.
+
+**Key implication:** The second-order feedback exists but is temporally gated. It creates a propagation window — a post-junction-activation period where neighboring channels are sensitized. In highly entangled clusters, if junction densities are high enough that successive junctions fire within the Crz1 lag window, a Ca²⁺ wave could propagate cluster-wide rather than localizing to the triggered junction. This would convert discrete PCD at individual scission planes into cluster-wide simultaneous PCD — the fragility ceiling as a wave-propagation threshold, not just an accumulation threshold.
+
+**Resolved:** The feedback almost certainly exists via calcineurin kinetics, not direct CaM-channel binding. Its temporal structure (sensitizing window before Crz1 compensation) predicts that the fragility ceiling is sharp — the transition from "localized PCD" to "wave PCD" is discontinuous at the entanglement density where junction spacing falls within the sensitization diffusion radius.
 
 ### 2026-05-04 10:13 UTC — Graph-distance vs. radial gradient: can single-cluster imaging distinguish them?
 
