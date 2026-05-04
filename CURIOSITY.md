@@ -110,7 +110,7 @@
 
 - [x] Does the parent-to-daughter size ratio in snowflake yeast change monotonically with entanglement density across MuLTEE clades — and do more entangled clusters produce smaller or larger daughters on average per successful reproduction event?
 
-- [ ] Does MuLTEE cluster Ca²⁺ (measurable via GCaMP reporter) correlate positively with entanglement density in the viable range — and is there a detectable Ca²⁺ inflection point at the fragility ceiling? The Ca²⁺ prediction follows directly from the mechanical-trigger hypothesis: more junctions = more Mid1-Cch1 activation events = higher steady-state cytoplasmic Ca²⁺.
+- [x] Does MuLTEE cluster Ca²⁺ (measurable via GCaMP reporter) correlate positively with entanglement density in the viable range — and is there a detectable Ca²⁺ inflection point at the fragility ceiling? The Ca²⁺ prediction follows directly from the mechanical-trigger hypothesis: more junctions = more Mid1-Cch1 activation events = higher steady-state cytoplasmic Ca²⁺.
 
 - [ ] Is the fragility ceiling a Ca²⁺ autocatalysis threshold — where the balance between junction-localized Ca²⁺ entry (Mid1-Cch1) and Ca²⁺-induced Ca²⁺ release from internal stores (Yvc1/mitochondria) tips, causing Ca²⁺ wave propagation through the cluster instead of localized PCD induction at scission planes?
 
@@ -213,7 +213,27 @@
 
 - [ ] Does multi-fragment reproduction (more than one daughter per reproduction event) emerge before the fragility ceiling is reached in MuLTEE, and at what entanglement density does its frequency pass 5% of reproduction events?
 
+- [ ] Does GCaMP overexpression buffer Ca²⁺ enough to shift the apparent fragility ceiling higher than the true ceiling — and is there a measurable GCaMP-chelation artifact that could be corrected by running parallel imaging with a non-chelating dye (Oregon Green BAPTA or dextran-conjugated indicator)?
+
+- [ ] Is center-to-periphery GCaMP ratio (Ca²⁺ spatial uniformity index) the most sensitive early-warning metric for fragility ceiling proximity — better than entanglement density or daughter-size variance — because it is causally upstream of both?
+
 ## EXPLORED
+
+### 2026-05-04 03:08 UTC — GCaMP/Ca²⁺ inflection at the fragility ceiling
+
+**Question:** Does MuLTEE cluster Ca²⁺ (measurable via GCaMP reporter) correlate positively with entanglement density in the viable range — and is there a detectable Ca²⁺ inflection point at the fragility ceiling? The Ca²⁺ prediction follows directly from the mechanical-trigger hypothesis: more junctions = more Mid1-Cch1 activation events = higher steady-state cytoplasmic Ca²⁺.
+
+**Findings:** Web search unavailable (host not in allowlist). Reasoning from prior entries and Ca²⁺ signaling mechanics.
+
+**The mechanical chain.** If Ca²⁺ is the PCD trigger (mechanical hypothesis via Mid1-Cch1 stretch-activation), the chain runs: entanglement density → junction count → stretch-activated Ca²⁺ entry → steady-state cytoplasmic Ca²⁺. This is linear in the viable range: each additional entangled junction adds a Mid1-Cch1 activation site. GCaMP signal should increase monotonically with entanglement score across viable MuLTEE populations.
+
+**The inflection point.** At low-to-moderate entanglement: Ca²⁺ is junction-localized (peripheral puncta in GCaMP imaging, high spatial variance). As entanglement approaches the fragility ceiling, junction density reaches a threshold where local Ca²⁺ accumulation can trigger CICR (Ca²⁺-induced Ca²⁺ release) from Yvc1 (vacuolar Ca²⁺ channel) or mitochondrial stores. At that threshold, local pulses cascade into whole-cluster Ca²⁺ waves. GCaMP imaging would show: transition from punctate peripheral signal to diffuse global signal. The center-to-periphery GCaMP ratio (low = peripheral puncta, approaching 1.0 = diffuse) is the measurable inflection signature.
+
+**A confound.** GCaMP itself is a Ca²⁺ chelator — overexpression buffers the signal it measures, potentially delaying the CICR threshold and shifting the apparent fragility ceiling higher than the true ceiling. Calibration with a non-chelating dye (Oregon Green BAPTA, dextran-conjugated) would be needed to confirm the true ceiling position.
+
+**Predictions.** (1) GCaMP spatial variance decreases monotonically with entanglement density, reaching minimum at the fragility ceiling. (2) Center-to-periphery GCaMP ratio > 0.7 predicts cluster fragmentation within one to two PCD cycles under vortex selection — a real-time viability monitor.
+
+---
 
 ### 2026-05-04 02:11 UTC — Parent-to-daughter size ratio vs. entanglement density in MuLTEE
 
