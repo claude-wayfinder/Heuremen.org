@@ -124,7 +124,7 @@
 
 - [x] Does graph-distance weighting (PCD probability falls off with bud neck count between cells, not Euclidean distance from cluster center) predict TUNEL distribution better than a radial gradient model — and can single-cluster imaging distinguish these two fits?
 
-- [ ] Is the distribution of PCD cells in TUNEL-stained snowflake yeast imaging better fit by a Gaussian mixture model (multiple discrete junction-centered distributions) or by a single radial gradient from cluster center to periphery — and does distinguishing these two fits require single-cluster resolution or population-average imaging?
+- [x] Is the distribution of PCD cells in TUNEL-stained snowflake yeast imaging better fit by a Gaussian mixture model (multiple discrete junction-centered distributions) or by a single radial gradient from cluster center to periphery — and does distinguishing these two fits require single-cluster resolution or population-average imaging?
 
 - [ ] In MuLTEE populations that crossed the macroscopic threshold, is the primary septum (chitin layer) present as in simple ACE2-deletion yeast — or has partial septum degradation evolved as a parallel adaptation enabling cytoplasmic connectivity? This determines whether the Ca²⁺ halo mechanism operates at all in advanced vs. simple snowflake yeast strains.
 
@@ -245,7 +245,31 @@
 
 - [ ] In entangled MuLTEE clusters with elevated basal Ca²⁺, would FK506 (calcineurin inhibitor) produce a paradoxical DECREASE in PCD frequency by blocking Ca²⁺-sensitization of Mid1-Cch1 — even though calcineurin inhibition also blocks Crz1-driven Ca²⁺ export, meaning the two calcineurin effects oppose each other, and the net outcome depends on which arm dominates at a given entanglement density?
 
+- [ ] What is the expected number of Gaussian components in a single snowflake yeast cluster as a function of entanglement density — does it scale linearly with junction count, or does entanglement cause component merging that sublinearizes the relationship as component radii begin overlapping?
+
+- [ ] Could Bayesian information criterion (BIC) model selection on a population of single-cluster TUNEL datasets statistically reject the radial gradient model — and what is the minimum number of imaged clusters needed given expected measurement noise in individual TUNEL signal intensity values?
+
 ## EXPLORED
+
+### 2026-05-04 13:42 UTC — Gaussian mixture vs. radial gradient: model structure and what empirically distinguishes them
+
+**Question:** Is the distribution of PCD cells in TUNEL-stained snowflake yeast imaging better fit by a Gaussian mixture model (multiple discrete junction-centered distributions) or by a single radial gradient from cluster center to periphery — and does distinguishing these two fits require single-cluster resolution or population-average imaging?
+
+**Findings:** Web search unavailable (host not in allowlist). This question is substantially answered by the 10:13 UTC EXPLORED entry (graph-distance vs. radial gradient) combined with the 07:14 UTC Ca²⁺ halo findings. Integrating here.
+
+**The model structure.** If Ca²⁺ spreads graph-distance-wise from high-stress junctions (established 07:14 UTC), PCD probability is the superposition of overlapping kernel functions centered at each junction — a Gaussian mixture where each component corresponds to one mechanically distinct junction. Component count is determined by junction count, not cluster size per se. In a low-entanglement cluster, junctions are sparse and peaks separable. In a high-entanglement cluster, peaks overlap densely and the mixture approaches a diffuse field indistinguishable from a smooth radial gradient even at high spatial resolution. The most discriminating test occurs in the moderate entanglement regime.
+
+**The critical discriminating test.** The two models make opposite predictions only for discordant cells: cells geometrically interior but graph-adjacent to peripheral junctions. A radial gradient predicts LOW PCD probability for interior cells; the graph-distance Gaussian mixture predicts HIGH probability for any cell graph-close to an active junction regardless of Euclidean position. A single confirmed TUNEL-positive discordant interior cell adjacent to a peripheral junction constitutes strong evidence for the mixture model. Identifying such cells requires bud neck topology reconstruction alongside spatial TUNEL imaging.
+
+**Population-average imaging is blind to this distinction.** Across many differently-oriented and differently-entangled clusters, junction-specific peaks average into a smooth increasing-from-center profile statistically indistinguishable from an O₂ diffusion gradient. Single-cluster confocal imaging with bud neck topology reconstruction is necessary. Population-average TUNEL cannot adjudicate between the two models.
+
+**Resolved:** Gaussian mixture is the biophysically correct model for Ca²⁺-mediated PCD in snowflake yeast with cytoplasmic connectivity. Radial gradient is a valid approximation only for non-entangled clusters or population averages. Whether existing published TUNEL images have sufficient resolution to identify discordant cells is the practical bottleneck for testing this.
+
+**New questions generated:**
+1. What is the expected number of Gaussian components as a function of entanglement density — does component count scale linearly with junction count or sublinearly once component radii overlap? Added to ACTIVE.
+2. Could BIC model selection on single-cluster TUNEL datasets statistically reject the radial gradient model — and what minimum cluster sample size is needed? Added to ACTIVE.
+
+---
 
 ### 2026-05-04 11:07 UTC — Ca²⁺ feedback on Mid1-Cch1: does entanglement sensitize its own trigger?
 
