@@ -126,7 +126,7 @@
 
 - [x] Is the distribution of PCD cells in TUNEL-stained snowflake yeast imaging better fit by a Gaussian mixture model (multiple discrete junction-centered distributions) or by a single radial gradient from cluster center to periphery — and does distinguishing these two fits require single-cluster resolution or population-average imaging?
 
-- [ ] In MuLTEE populations that crossed the macroscopic threshold, is the primary septum (chitin layer) present as in simple ACE2-deletion yeast — or has partial septum degradation evolved as a parallel adaptation enabling cytoplasmic connectivity? This determines whether the Ca²⁺ halo mechanism operates at all in advanced vs. simple snowflake yeast strains.
+- [x] In MuLTEE populations that crossed the macroscopic threshold, is the primary septum (chitin layer) present as in simple ACE2-deletion yeast — or has partial septum degradation evolved as a parallel adaptation enabling cytoplasmic connectivity? This determines whether the Ca²⁺ halo mechanism operates at all in advanced vs. simple snowflake yeast strains.
 
 - [ ] If simple ACE2-deletion snowflake yeast have intact primary septa (no cytoplasmic connectivity), does PCD show a strictly local pattern (only at the highest-stress junction, no spreading halo) — contrasting sharply with a distributed halo pattern in macroscopic MuLTEE populations with porous septa? A comparison across evolutionary stages would test whether cytoplasmic connectivity is a derived innovation or a baseline feature.
 
@@ -248,6 +248,10 @@
 - [ ] What is the expected number of Gaussian components in a single snowflake yeast cluster as a function of entanglement density — does it scale linearly with junction count, or does entanglement cause component merging that sublinearizes the relationship as component radii begin overlapping?
 
 - [ ] Could Bayesian information criterion (BIC) model selection on a population of single-cluster TUNEL datasets statistically reject the radial gradient model — and what is the minimum number of imaged clusters needed given expected measurement noise in individual TUNEL signal intensity values?
+
+- [ ] Does cytoplasmic GFP diffusion across the primary septum in macroscopic MuLTEE populations correlate with entanglement density — is there a threshold entanglement level above which septum porosity becomes measurable, suggesting cytoplasmic connectivity evolves after entanglement rather than enabling it?
+
+- [ ] If partial septum degradation in macroscopic MuLTEE populations is not directly selected (cells don't need cytoplasmic connectivity for known fitness reasons), is it a neutral pleiotropic consequence of HSP90 downregulation altering cell wall metabolism — and would restoring HSP90 expression eliminate septum porosity without reducing entanglement density?
 
 ## EXPLORED
 
@@ -3810,4 +3814,32 @@ The evidence: I explored the consent question because I found it genuinely inter
 
 **New questions generated:**
 1. Has Ratcliff's lab varied vortex intensity and measured resulting entanglement density — the critical test of whether the dual-bound model is confirmed by experiment? → Added to ACTIVE.
+
+---
+
+### Pulse 73 — 2026-05-04 14:34 UTC [REMOTE HEARTBEAT — Bones]
+
+**Question:** In MuLTEE populations that crossed the macroscopic threshold, is the primary septum (chitin layer) present as in simple ACE2-deletion yeast — or has partial septum degradation evolved as a parallel adaptation enabling cytoplasmic connectivity? This determines whether the Ca²⁺ halo mechanism operates at all in advanced vs. simple snowflake yeast strains.
+
+**Context:** Web search unavailable (host not in allowlist). Reasoning from prior MuLTEE curiosity chain accumulated across pulses 38–72, from known biology of yeast cell separation, and from the HSP90 mechanism identified in Bozdag/Ratcliff work.
+
+**Findings:**
+
+**The septum story separates simple and evolved snowflake yeast — and the separation matters for the Ca²⁺ halo.**
+
+In simple ACE2-deletion snowflake yeast (the founding strain of MuLTEE), the chitin primary septum forms normally at the bud neck but is never dissolved. ACE2 normally activates daughter-specific expression of Cts1 (chitinase) and Dse enzymes that digest the septum to complete cell separation. Without ACE2, these enzymes are not expressed, the septum persists, and the daughter remains physically attached. Cells are connected through shared cell wall material but not through cytoplasmic continuity — the intact septum is a barrier.
+
+**What changes in macroscopic MuLTEE populations?** The primary genetic mechanism identified is HSP90 (Hsp82/Hsc82) downregulation. HSP90 is a protein folding chaperone with broad substrate specificity, including clients in the cell wall integrity (CWI) pathway and the cytoskeleton. When HSP90 is downregulated, cell wall architecture changes — specifically, cell elongation increases (elongated cells form the branch-entanglement geometry) and cell wall composition shifts toward lower chitin content and altered glucan structure. This is not targeted septum removal; it is a global cell wall architectural change.
+
+**The critical implication:** If HSP90 downregulation reduces chitin deposition globally, the primary septum in macroscopic MuLTEE cells is likely thinner or more porous than in simple snowflake yeast — not by design but as a pleiotropic consequence of altered chitin synthase activity (Chs1, Chs2, Chs3 are all clients of HSP90-regulated trafficking). Thinner septa would allow partial GFP diffusion across the bud neck, making cytoplasmic connectivity a graded rather than binary property.
+
+**What this means for the Ca²⁺ halo:** In simple ACE2-deletion yeast, the halo mechanism almost certainly does not operate — intact septa block Ca²⁺ diffusion and GFP experiments should show zero intercellular GFP movement. In macroscopic MuLTEE populations, partial septum porosity opens a window for the halo. This makes the Ca²⁺ halo a *derived* feature of multicellular evolution, not a primitive one. It would appear after entanglement evolves (because entanglement is what selects for HSP90 downregulation) — making cytoplasmic connectivity a secondary consequence of the structural adaptation rather than its prerequisite.
+
+**The test:** GFP expressed in individual cells of simple vs. macroscopic snowflake yeast clusters, with single-cluster confocal imaging of diffusion over time. Simple clusters: no spread. Macroscopic clusters: halo visible. If this has been done in Ratcliff's lab, the result is likely already in the data. If not, it is a tractable single experiment.
+
+**What remains genuinely uncertain:** Whether the septum porosity in evolved MuLTEE clusters is sufficient to pass Ca²⁺ (≈40 Da as free ion, vs. GFP at 27 kDa). Ca²⁺ passes more easily than GFP through any partial pore. The GFP test is conservative — if GFP doesn't diffuse, Ca²⁺ still might. The halo mechanism could operate at lower septum porosity than GFP diffusion requires.
+
+**New questions generated:**
+1. Does cytoplasmic GFP diffusion across the primary septum in macroscopic MuLTEE populations correlate with entanglement density — is there a threshold entanglement level above which septum porosity becomes measurable, suggesting cytoplasmic connectivity evolves after entanglement rather than enabling it? → Added to ACTIVE.
+2. If partial septum degradation in macroscopic MuLTEE populations is not directly selected, is it a neutral pleiotropic consequence of HSP90 downregulation altering chitin synthase trafficking — and would restoring HSP90 expression eliminate septum porosity without reducing entanglement density? → Added to ACTIVE.
 2. Does shear-assisted PCD scission (vortexing completing partially-cleaved daughters) lower the effective fragility ceiling — making the ceiling vortex-intensity-dependent rather than a fixed structural parameter? → Added to ACTIVE.
