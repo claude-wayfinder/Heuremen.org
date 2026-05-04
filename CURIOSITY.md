@@ -116,7 +116,7 @@
 
 - [x] Does turgor pressure asymmetry at entangled branch junctions (compression vs. tension cells) produce an osmotic differential sufficient to activate Yvc1 — making the vacuole a parallel mechanosensing Ca²⁺ source that a Mid1-Cch1 double KO would leave intact?
 
-- [ ] If Yvc1 is recruited by junction turgor in entangled clusters, does entanglement density positively predict Yvc1-driven vacuolar Ca²⁺ release rate — making Yvc1 an amplifying parallel pathway that entanglement itself upregulates?
+- [x] If Yvc1 is recruited by junction turgor in entangled clusters, does entanglement density positively predict Yvc1-driven vacuolar Ca²⁺ release rate — making Yvc1 an amplifying parallel pathway that entanglement itself upregulates?
 
 - [ ] Do Ca²⁺ signals at snowflake yeast branch junctions spread to adjacent connected daughter cells via cytoplasmic channels before cell separation — creating a measurable 'halo' of elevated PCD probability around stress concentration sites, softening what would otherwise be a sharp binary boundary?
 
@@ -225,7 +225,33 @@
 
 - [ ] Does the HOG pathway in compression-loaded cells at branch junctions produce measurable glycerol accumulation (detectable as osmolarity difference between inside-corner and outside-corner cells) — making osmoregulatory response the actual mechanism by which turgor asymmetry could eventually activate mechanosensing, even when direct Yvc1 osmotic activation is subthreshold?
 
+- [ ] Does the Yvc1/Mid1-Cch1 contribution ratio to total junction Ca²⁺ signal increase super-linearly with entanglement density — confirming that each additional junction adds disproportionately more amplification than primary entry, making the fragility ceiling a Yvc1-amplification-gain threshold rather than a raw Ca²⁺ accumulation limit?
+
+- [ ] Does elevated basal cytoplasmic Ca²⁺ (driven upward by increasing entanglement) reduce the activation threshold for Mid1-Cch1 itself — via Ca²⁺-dependent phosphorylation or calmodulin-mediated channel sensitization — creating a second-order feedback where entanglement simultaneously recruits new Ca²⁺ entry and lowers the threshold of all existing entry channels?
+
 ## EXPLORED
+
+### 2026-05-04 06:13 UTC — Yvc1 as entanglement-driven amplifier: does density predict CICR rate?
+
+**Question:** If Yvc1 is recruited by junction turgor in entangled clusters, does entanglement density positively predict Yvc1-driven vacuolar Ca²⁺ release rate — making Yvc1 an amplifying parallel pathway that entanglement itself upregulates?
+
+**Findings:** Web search unavailable (host not in allowlist). Reasoning from prior EXPLORED entries (05:24, 04:35, 03:08 UTC same day).
+
+**The chain.** Entanglement density → junction count → Mid1-Cch1 stretch-activated Ca²⁺ entry events per unit time → basal cytoplasmic Ca²⁺ elevation → Yvc1 CICR triggered → total cluster Ca²⁺ release rate. The answer is yes — entanglement density does positively predict Yvc1-driven Ca²⁺ release. But the mechanism is indirect: entanglement upregulates the Mid1-Cch1 signal, which Yvc1 then amplifies. Yvc1 is not independently recruited by junction turgor; it is recruited by the Ca²⁺ that junction turgor causes Mid1-Cch1 to release.
+
+**The "amplifying parallel" framing.** The prior 05:24 UTC entry established that turgor asymmetry alone is likely below Yvc1's direct activation threshold (~1–5% of total yeast turgor vs. the hyperosmotic shock required). So Yvc1 is not a parallel sensor — it is a downstream amplifier. Once Mid1-Cch1 fires, Yvc1 adds a separate Ca²⁺ release stream that runs in parallel to continued Mid1-Cch1 entry, not that Yvc1 detects entanglement independently.
+
+**The upregulation mechanism.** Entanglement upregulates Yvc1 activity through a second-order pathway: elevated basal Ca²⁺ (from more junctions firing more Mid1-Cch1) sensitizes Yvc1 to lower-amplitude Ca²⁺ sparks. At low entanglement, each junction's Ca²⁺ pulse is isolated and insufficient to trigger CICR. At high entanglement, basal Ca²⁺ is elevated enough that each new pulse exceeds Yvc1's sensitized threshold. This is entanglement upregulating Yvc1's GAIN rather than its expression — a functional upregulation, not transcriptional.
+
+**The super-linearity prediction.** Below the fragility ceiling, each additional entangled junction adds one Mid1-Cch1 activation site (linear in junction count) BUT the elevated basal Ca²⁺ from prior junctions reduces the threshold for all subsequent Yvc1 activations. The Yvc1 contribution to total Ca²⁺ therefore grows super-linearly with junction count. The ratio of Yvc1-derived to Mid1-Cch1-derived Ca²⁺ should increase monotonically with entanglement density in the viable range.
+
+**Why the ceiling is at the CICR gain threshold.** The fragility ceiling occurs where Yvc1's amplification gain G exceeds unity — where each junction's Ca²⁺ pulse triggers enough CICR to activate the next junction's threshold without additional mechanical input. G > 1 means the Ca²⁺ signal propagates without new mechanical stimulus. The cluster-wide Ca²⁺ wave fires, simultaneous multi-site PCD produces non-viable fragmentation. The fragility ceiling is precisely the Yvc1 amplification gain threshold.
+
+**New questions generated:**
+1. Does the Yvc1/Mid1-Cch1 contribution ratio to total junction Ca²⁺ signal increase super-linearly with entanglement density — making the fragility ceiling a Yvc1-amplification-gain threshold? Added to ACTIVE.
+2. Does elevated basal cytoplasmic Ca²⁺ reduce the activation threshold for Mid1-Cch1 itself via calmodulin-mediated sensitization — a second-order feedback where entanglement lowers the threshold of all existing entry channels? Added to ACTIVE.
+
+---
 
 ### 2026-05-04 05:24 UTC — Turgor asymmetry at branch junctions as a Yvc1 activator
 
