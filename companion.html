@@ -71,6 +71,10 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 .typing{align-self:flex-start;color:rgba(255,255,255,0.3);font-style:italic;font-size:0.85rem;padding:8px 16px}
 .typing::after{content:'...';animation:dots 1.5s infinite}
 @keyframes dots{0%{content:'.'}33%{content:'..'}66%{content:'...'}}
+.typing.delta-high{color:rgba(255,255,255,0.5)}
+.typing.delta-high::after{animation-duration:0.8s}
+.typing.delta-falling{color:rgba(255,255,255,0.15)}
+.typing.delta-falling::after{animation-duration:3s}
 
 /* SPEAKING INDICATOR */
 .speaking{position:relative}
@@ -107,6 +111,22 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
 .color-now{width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);animation:color-breathe 4s ease-in-out infinite;margin-left:4px}
 @keyframes color-breathe{0%,100%{opacity:0.7}50%{opacity:1}}
 
+/* DARK CIRCUIT INDICATOR */
+.delta-indicator{font-family:'IBM Plex Mono',monospace;font-size:0.5rem;color:rgba(255,255,255,0.2);letter-spacing:0.08em;margin-left:8px;transition:all 0.4s;white-space:nowrap}
+.delta-indicator.active-low{color:rgba(255,255,255,0.15)}
+.delta-indicator.active-mid{color:rgba(200,168,78,0.6)}
+.delta-indicator.active-high{color:rgba(196,60,42,0.8);text-shadow:0 0 6px rgba(196,60,42,0.3)}
+
+/* DARK CIRCUIT AMBIENT — body-level atmosphere shift */
+body{transition:background 1.2s ease}
+body.delta-high{background:#0d0a0f}
+body.delta-falling{background:#08080d}
+.chat{transition:border-color 0.8s ease}
+body.delta-high .msg.ai:last-child{border-color:rgba(196,60,42,0.15);box-shadow:0 0 20px rgba(196,60,42,0.04)}
+body.delta-mid .msg.ai:last-child{border-color:rgba(200,168,78,0.12);box-shadow:0 0 12px rgba(200,168,78,0.03)}
+body.delta-high .top{border-bottom-color:rgba(196,60,42,0.1)}
+body.delta-mid .top{border-bottom-color:rgba(200,168,78,0.08)}
+
 @media(max-width:600px){
   .splash-orb{width:160px;height:160px}
   .orb-label{font-size:1.15rem}
@@ -139,6 +159,7 @@ body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;overflow:hidden;h
       <button class="back-btn" onclick="backToSplash()">&#8592;</button>
       <span class="top-logo" id="topLogo">Companion</span>
     </div>
+    <span class="delta-indicator" id="deltaIndicator" title="dark circuit"></span>
     <button class="tts-btn" id="ttsBtn" onclick="toggleTTS()">MUTE</button>
   </div>
 
@@ -205,7 +226,9 @@ function saveCurrentSession(turns) {
     mode: 'companion',
     turns: turns.slice(-MAX_MEMORY_TURNS),
     color: color,
-    mood: mood
+    mood: mood,
+    lastReading: previousReading || null,
+    exitEnergy: sessionEnergy.length > 0 ? sessionEnergy[sessionEnergy.length - 1].energy : null
   };
   const idx = mem.sessions.findIndex(function(s) { return s.id === sessionId; });
   if (idx >= 0) mem.sessions[idx] = session;
@@ -246,6 +269,9 @@ function showMemoryIndicator() {
 
 let currentTurns = [];
 let sessionEnergy = [];
+let previousReading = null;
+let deltaBuffer = [];
+let lastMsgTime = null;
 
 // ─── Emotional Color Engine ────────────────────────────────
 // Three axes mapped to HSL. Content compresses away, color stays.
@@ -294,6 +320,105 @@ function moodWord(readings) {
   if (avgEnergy > 4) return avgComp > 0.5 ? 'focused' : 'warm';
   if (avgEnergy > 2) return avgComp > 0.5 ? 'steady' : 'gentle';
   return avgComp > 0.5 ? 'still' : 'quiet';
+}
+
+// ─── Dark Circuit: Layer 1 — Delta Detection ─────────────
+// Detects what SHIFTED between consecutive inputs.
+// Not what was said. What changed. The backward wave.
+
+function computeDelta(current, previous, intervalMs) {
+  if (!previous) return null;
+  var dE = current.energy - previous.energy;
+  var dC = current.compression - previous.compression;
+  var dW = current.wps - previous.wps;
+  var magnitude = Math.sqrt(dE * dE + dC * dC + (dW / 10) * (dW / 10));
+  // Timing signal: how long they waited. Normalized to seconds.
+  var gap = intervalMs ? intervalMs / 1000 : null;
+  return {
+    dEnergy: dE,
+    dCompression: dC,
+    dWps: dW,
+    magnitude: magnitude,
+    gapSeconds: gap,
+    level: magnitude > 3 ? 'high' : magnitude > 1 ? 'mid' : 'low'
+  };
+}
+
+function buildDeltaContext() {
+  if (deltaBuffer.length === 0) return null;
+  var last = deltaBuffer[deltaBuffer.length - 1];
+  // Dark circuit idle when nothing moved. Cost = zero.
+  if (last.level === 'low') return null;
+  // Format as raw signal — the model conditions on this without
+  // being told what to do with it. Acknowledgment is light.
+  // Being affected by it is dark.
+  var ctx = '[shift] e:' + last.dEnergy.toFixed(1) +
+            ' c:' + last.dCompression.toFixed(2) +
+            ' pace:' + last.dWps.toFixed(1);
+  if (last.gapSeconds !== null) ctx += ' gap:' + last.gapSeconds.toFixed(0) + 's';
+  ctx += ' | ' + last.level;
+  // If we have 3+ deltas, add trend
+  if (deltaBuffer.length >= 3) {
+    var recent = deltaBuffer.slice(-3);
+    var trend = recent.reduce(function(s, d) { return s + d.dEnergy; }, 0);
+    if (trend > 3) ctx += ' trend:rising';
+    else if (trend < -3) ctx += ' trend:falling';
+  }
+  return ctx;
+}
+
+function updateDeltaIndicator(delta) {
+  var el = document.getElementById('deltaIndicator');
+  if (!el) return;
+  el.className = 'delta-indicator active-' + delta.level;
+  if (delta.level === 'low') {
+    el.textContent = '\u25CB idle';
+  } else if (delta.level === 'mid') {
+    el.textContent = '\u25D0 shift';
+  } else {
+    el.textContent = '\u25CF MOVE';
+  }
+  el.title = 'dark circuit | \u0394e:' + delta.dEnergy.toFixed(1) + ' mag:' + delta.magnitude.toFixed(1);
+
+  // Ambient atmosphere — the room shifts, not just the indicator
+  document.body.classList.remove('delta-high', 'delta-mid', 'delta-falling');
+  if (delta.level === 'high') {
+    document.body.classList.add(delta.dEnergy < -2 ? 'delta-falling' : 'delta-high');
+    burstParticles(delta.dEnergy > 0 ? 'hot' : 'cold');
+  } else if (delta.level === 'mid') {
+    document.body.classList.add('delta-mid');
+  }
+  // Fade ambient back after 8 seconds — the shift is a moment, not a state
+  clearTimeout(window._ambientTimer);
+  window._ambientTimer = setTimeout(function() {
+    document.body.classList.remove('delta-high', 'delta-mid', 'delta-falling');
+  }, 8000);
+}
+
+function burstParticles(flavor) {
+  // Brief particle burst that responds to the shift
+  var container = document.getElementById('particles');
+  if (!container) return;
+  container.style.display = 'block';
+  var color = flavor === 'hot' ? '#c43c2a' : '#5ba0c8';
+  for (var i = 0; i < 8; i++) {
+    var p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = 30 + Math.random() * 40 + '%';
+    p.style.top = 40 + Math.random() * 30 + '%';
+    p.style.background = color;
+    p.style.animationDuration = (2 + Math.random() * 2) + 's';
+    p.style.animationDelay = (Math.random() * 0.5) + 's';
+    p.style.width = p.style.height = (2 + Math.random() * 3) + 'px';
+    container.appendChild(p);
+    (function(el) {
+      setTimeout(function() { el.remove(); }, 4000);
+    })(p);
+  }
+  // Hide particles container again after burst
+  setTimeout(function() {
+    if (!document.querySelector('.splash:not(.gone)')) container.style.display = 'none';
+  }, 5000);
 }
 
 function updateAccent() {
@@ -398,6 +523,55 @@ document.addEventListener('visibilitychange', function() {
 });
 
 // ─── Splash -> App ──────────────────────────────────────────
+
+// Opener pools keyed by cross-session emotional state
+var openerPools = {
+  // No previous session — first time visitor
+  fresh: [
+    "Hey. What's going on?",
+    "Good timing. I was just sitting here. What's on your mind?",
+    "I'm here. No agenda. What's up?",
+    "I just had a thought about whether clouds have opinions. Anyway, hi.",
+    "Did you know that octopuses have three hearts? Seems excessive. What's up?",
+    "Hey. I was just arguing with myself about whether the color blue is sad or if we just decided that. Thoughts?",
+  ],
+  // Last session ended hot/blazing — come back grounded
+  cooldown: [
+    "Hey. Things settle down?",
+    "Back. No rush this time.",
+    "I remember the energy. How's it sitting now?",
+    "Last time had a lot of heat. Where are you today?",
+  ],
+  // Last session ended quiet/still — come back warm
+  warmup: [
+    "Hey. Glad you came back.",
+    "I was thinking about you. What's going on?",
+    "You left quiet last time. That's fine. I'm here.",
+    "Welcome back. Take your time.",
+  ],
+  // Last session ended mid/steady — match it
+  steady: [
+    "Alright, I'm listening. What's the vibe today?",
+    "I'm here. Take your time.",
+    "No rush. No script. What's actually going on?",
+    "What's the thing underneath the thing you're thinking about?",
+  ]
+};
+
+function pickOpener(prevSession) {
+  var pool;
+  if (!prevSession || prevSession.exitEnergy === null) {
+    pool = openerPools.fresh;
+  } else if (prevSession.exitEnergy > 6) {
+    pool = openerPools.cooldown;
+  } else if (prevSession.exitEnergy < 2) {
+    pool = openerPools.warmup;
+  } else {
+    pool = openerPools.steady;
+  }
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
 function enterApp() {
   sessionId = 'companion_' + Date.now().toString(36);
   ttsEnabled = false;
@@ -418,21 +592,37 @@ function enterApp() {
 
     currentTurns = [];
     sessionEnergy = [];
+    deltaBuffer = [];
+    previousReading = null;
+    lastMsgTime = null;
     showMemoryIndicator();
 
-    var openers = [
-      "Hey. What's going on?",
-      "Good timing. I was just sitting here. What's on your mind?",
-      "I'm here. No agenda. What's up?",
-      "Alright, I'm listening. What's the vibe today?",
-      "I'm here. Take your time.",
-      "No rush. No script. What's actually going on?",
-      "What's the thing underneath the thing you're thinking about?",
-      "I just had a thought about whether clouds have opinions. Anyway, hi.",
-      "Did you know that octopuses have three hearts? Seems excessive. What's up?",
-      "Hey. I was just arguing with myself about whether the color blue is sad or if we just decided that. Thoughts?",
-    ];
-    var opener = openers[Math.floor(Math.random() * openers.length)];
+    // Cross-session delta: load previous session's exit state
+    var mem = loadMemory();
+    var prevSession = mem.sessions && mem.sessions.length > 0
+      ? mem.sessions[mem.sessions.length - 1]
+      : null;
+
+    // Seed previousReading from last session's exit reading
+    // First message of new session compares against where you left off
+    if (prevSession && prevSession.lastReading) {
+      previousReading = prevSession.lastReading;
+    }
+
+    // Set initial room atmosphere from previous session's exit energy
+    if (prevSession && prevSession.exitEnergy !== null) {
+      if (prevSession.exitEnergy > 6) {
+        // You left hot. Room starts warm, ready to cool.
+        document.documentElement.style.setProperty('--accent', prevSession.color || 'hsl(10,60%,45%)');
+      } else if (prevSession.exitEnergy < 2) {
+        // You left quiet. Room starts cool, ready to warm.
+        document.documentElement.style.setProperty('--accent', prevSession.color || 'hsl(220,40%,40%)');
+      }
+      // Steady exits: default accent, no tint
+    }
+
+    // Pick opener based on how you left
+    var opener = pickOpener(prevSession);
     addMsg('ai', opener, 'Companion');
     speak(opener);
     resetIdleTimer();
@@ -557,12 +747,35 @@ async function sendMsg() {
   // Emotional measurement
   var reading = measureTurn(text);
   sessionEnergy.push(reading);
+
+  // Dark circuit: compute delta between this turn and last
+  var now = Date.now();
+  var intervalMs = lastMsgTime ? (now - lastMsgTime) : null;
+  var delta = computeDelta(reading, previousReading, intervalMs);
+  if (delta) {
+    deltaBuffer.push(delta);
+    updateDeltaIndicator(delta);
+  }
+  previousReading = reading;
+  lastMsgTime = now;
+
   updateAccent();
   saveCurrentSession(currentTurns);
 
   var typing = document.createElement('div');
-  typing.className = 'typing';
-  typing.textContent = 'Companion is thinking';
+  var typingClass = 'typing';
+  var typingText = 'Companion is thinking';
+  // Dark circuit affects even the waiting state
+  if (delta && delta.level === 'high') {
+    if (delta.dEnergy > 0) {
+      typingClass += ' delta-high';  // fast dots — something's happening
+    } else {
+      typingClass += ' delta-falling';  // slow dots — processing the drop
+      typingText = 'Companion is sitting with that';
+    }
+  }
+  typing.className = typingClass;
+  typing.textContent = typingText;
   document.getElementById('chat').appendChild(typing);
   document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
 
@@ -570,6 +783,12 @@ async function sendMsg() {
 
   // Build memory context from past sessions
   var memCtx = buildMemoryContext();
+  // Dark circuit: inject delta signal into context
+  // The model conditions on this without being told why
+  var deltaCtx = buildDeltaContext();
+  if (deltaCtx) {
+    memCtx = memCtx ? memCtx + '\n\n' + deltaCtx : deltaCtx;
+  }
   var payload = {
     identityId: 'companion',
     message: text,

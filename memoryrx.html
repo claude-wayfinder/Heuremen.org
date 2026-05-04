@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MemoryRX</title>
+<meta name="description" content="The AI companion that remembers you. Two modes: talk or listen. Zero data tracking. Everything stays on your device.">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Abril+Fatface&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="manifest" href="/manifest-memorex.json">
+<meta name="theme-color" content="#0a0a0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --accent:#c8a84e;
+  --orb-h:220;--orb-s:40;--orb-l:45;
+  --orb-color:hsl(var(--orb-h),calc(var(--orb-s)*1%),calc(var(--orb-l)*1%));
+  --glow:0.2;--breathe:4s;
+}
+html,body{height:100%;overflow:hidden}
+body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;transition:background 1.2s;-webkit-user-select:none;user-select:none}
+
+/* ─── SETUP (first-run soul creation) ──────── */
+.setup{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:200;background:#0a0a0f;padding:24px;transition:opacity 0.6s}
+.setup.gone{opacity:0;pointer-events:none}
+.setup-title{font-family:'Abril Fatface',serif;font-size:1.6rem;margin-bottom:8px}
+.setup-sub{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:rgba(255,255,255,0.25);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:40px}
+.setup-q{font-size:1rem;line-height:1.6;text-align:center;max-width:320px;margin-bottom:24px;min-height:60px}
+.setup-input{width:100%;max-width:320px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#e8e0d0;font-family:'Lora',serif;font-size:16px;padding:14px 18px;border-radius:24px;outline:none;text-align:center;margin-bottom:16px}
+.setup-input:focus{border-color:rgba(255,255,255,0.25)}
+.setup-input::placeholder{color:rgba(255,255,255,0.2)}
+.setup-btn{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.15em;padding:10px 28px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.5);border-radius:24px;cursor:pointer;transition:all 0.3s}
+.setup-btn:hover{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.8)}
+.setup-skip{font-family:'IBM Plex Mono',monospace;font-size:0.5rem;color:rgba(255,255,255,0.12);margin-top:20px;cursor:pointer;letter-spacing:0.1em}
+
+/* ─── MODE TABS ────────────────────────────── */
+.mode-tabs{position:fixed;bottom:0;left:0;right:0;display:flex;z-index:50;background:rgba(10,10,15,0.98);border-top:1px solid rgba(255,255,255,0.06);padding-bottom:env(safe-area-inset-bottom,0px)}
+.mode-tab{flex:1;padding:12px 0 10px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.3s;border:none;background:none}
+.mode-tab.active{color:var(--accent)}
+.mode-tab:hover{color:rgba(255,255,255,0.4)}
+
+/* ─── VIEWS ────────────────────────────────── */
+.view{position:fixed;inset:0;bottom:44px;opacity:0;pointer-events:none;transition:opacity 0.4s;display:flex;flex-direction:column}
+.view.active{opacity:1;pointer-events:all}
+
+/* ─── CHAT VIEW ────────────────────────────── */
+.chat-top{padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:rgba(10,10,15,0.98)}
+.chat-logo{font-family:'Abril Fatface',serif;font-size:1rem;color:var(--accent)}
+.delta-tag{font-family:'IBM Plex Mono',monospace;font-size:0.5rem;color:rgba(255,255,255,0.15);transition:all 0.4s}
+.delta-tag.mid{color:rgba(200,168,78,0.6)}
+.delta-tag.high{color:rgba(196,60,42,0.8)}
+
+.memory-bar{padding:4px 16px;background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.04);display:none;align-items:center;gap:6px;flex-shrink:0}
+.memory-bar.active{display:flex}
+.memory-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:0.6}
+.memory-label{font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:rgba(255,255,255,0.25);letter-spacing:0.1em;text-transform:uppercase}
+.color-strip{display:flex;gap:3px;margin-left:auto;align-items:center}
+.color-swatch{width:14px;height:14px;border-radius:3px;border:1px solid rgba(255,255,255,0.08);transition:all 0.3s;position:relative}
+.color-now{width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);animation:color-breathe 4s ease-in-out infinite;margin-left:4px}
+@keyframes color-breathe{0%,100%{opacity:0.7}50%{opacity:1}}
+
+.chat{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
+.msg{max-width:85%;line-height:1.65;font-size:0.92rem;padding:12px 16px;border-radius:16px;animation:msgIn 0.3s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{align-self:flex-end;background:rgba(255,255,255,0.05);color:#e8e0d0;border:1px solid rgba(255,255,255,0.06)}
+.msg.ai{align-self:flex-start;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02)}
+.msg.system{align-self:center;font-size:0.75rem;color:rgba(255,255,255,0.25);font-style:italic;border:none;padding:8px;text-align:center}
+.msg-speaker{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;display:block}
+.typing{align-self:flex-start;color:rgba(255,255,255,0.3);font-style:italic;font-size:0.85rem;padding:8px 16px}
+.typing::after{content:'...';animation:dots 1.5s infinite}
+@keyframes dots{0%{content:'.'}33%{content:'..'}66%{content:'...'}}
+.typing.delta-high::after{animation-duration:0.8s}
+.typing.delta-falling{color:rgba(255,255,255,0.15)}
+.typing.delta-falling::after{animation-duration:3s}
+
+body.delta-high .msg.ai:last-child{border-color:rgba(196,60,42,0.15);box-shadow:0 0 20px rgba(196,60,42,0.04)}
+body.delta-mid .msg.ai:last-child{border-color:rgba(200,168,78,0.12)}
+
+.chat-input{padding:10px 16px;border-top:1px solid rgba(255,255,255,0.06);display:flex;gap:8px;flex-shrink:0;background:rgba(10,10,15,0.98)}
+.chat-input input{flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#e8e0d0;font-family:'Lora',serif;font-size:16px;padding:10px 14px;outline:none;border-radius:20px}
+.chat-input input::placeholder{color:rgba(255,255,255,0.2);font-style:italic}
+.send-btn,.mic-btn{background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);cursor:pointer;border-radius:50%;transition:all 0.2s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.send-btn{font-family:'IBM Plex Mono',monospace;font-size:0.75rem;padding:10px 18px;border-radius:20px}
+.mic-btn{width:42px;height:42px;font-size:1.1rem}
+.mic-btn.recording{background:rgba(196,60,42,0.2);border-color:rgba(196,60,42,0.6);color:#c43c2a;animation:mic-pulse 1.5s ease-in-out infinite}
+@keyframes mic-pulse{0%,100%{box-shadow:0 0 0 0 rgba(196,60,42,0.3)}50%{box-shadow:0 0 0 8px rgba(196,60,42,0)}}
+
+/* ─── ORB VIEW ─────────────────────────────── */
+.orb-view{align-items:center;justify-content:center}
+.orb-wrap{position:relative;width:min(65vw,65vh);height:min(65vw,65vh);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.orb{
+  width:100%;height:100%;border-radius:50%;position:relative;
+  background:radial-gradient(circle at 38% 32%,
+    hsl(calc(var(--orb-h)+30),calc(var(--orb-s)*1.2*1%),calc(var(--orb-l)*1.4*1%)) 0%,
+    var(--orb-color) 45%,
+    hsl(calc(var(--orb-h)-20),calc(var(--orb-s)*0.8*1%),calc(var(--orb-l)*0.6*1%)) 100%);
+  box-shadow:0 0 60px hsla(var(--orb-h),calc(var(--orb-s)*1%),calc(var(--orb-l)*1%),var(--glow)),
+    0 0 120px hsla(var(--orb-h),calc(var(--orb-s)*1%),calc(var(--orb-l)*1%),calc(var(--glow)*0.5)),
+    inset 0 0 80px rgba(0,0,0,0.3);
+  animation:breathe var(--breathe) ease-in-out infinite;
+  transition:box-shadow 1.2s,background 1.2s;
+}
+.orb::before{content:'';position:absolute;top:12%;left:22%;width:35%;height:25%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,0.18) 0%,transparent 70%);transform:rotate(-15deg);pointer-events:none}
+@keyframes breathe{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.02);filter:brightness(1.08)}}
+
+.vol-ring{position:absolute;inset:-2%;border-radius:50%;border:2px solid transparent;pointer-events:none;transition:border-color 0.15s,transform 0.15s}
+.tentacles{position:absolute;inset:-15%;pointer-events:none;opacity:0.4;transition:opacity 1s}
+.tentacle{position:absolute;bottom:50%;left:50%;width:3px;height:0;border-radius:2px;background:linear-gradient(to bottom,transparent,var(--orb-color));transform-origin:top center;transition:height 1.5s,opacity 1.5s;opacity:0}
+.tentacles.active .tentacle{opacity:0.6}
+
+.orb-mood{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.15);margin-top:30px;transition:all 1s}
+.orb-response{position:absolute;top:20px;left:20px;right:20px;font-size:0.82rem;line-height:1.7;color:rgba(255,255,255,0.45);text-align:center;max-height:30vh;overflow-y:auto;opacity:0;transition:opacity 0.5s}
+.orb-response.visible{opacity:1}
+
+.orb-input{position:fixed;bottom:54px;left:0;right:0;padding:12px 16px;display:flex;gap:8px;align-items:center;background:linear-gradient(transparent,rgba(10,10,15,0.95) 30%);z-index:10}
+.orb-input input{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#e8e0d0;font-family:'IBM Plex Mono',monospace;font-size:16px;padding:12px 16px;outline:none;border-radius:24px}
+.orb-input input::placeholder{color:rgba(255,255,255,0.15);font-size:0.8rem}
+.listen-btn{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.25);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;flex-shrink:0}
+.listen-btn.active{background:rgba(91,160,200,0.15);border-color:rgba(91,160,200,0.4);color:rgba(91,160,200,0.8)}
+
+.orb-wrap.flash-hot .orb{box-shadow:0 0 80px hsla(0,80%,50%,0.4),0 0 160px hsla(0,80%,50%,0.2),inset 0 0 60px rgba(196,60,42,0.15)}
+.orb-wrap.flash-cold .orb{box-shadow:0 0 80px hsla(220,60%,50%,0.4),0 0 160px hsla(220,60%,50%,0.2),inset 0 0 60px rgba(91,160,200,0.15)}
+
+/* Passive mode */
+body.passive .orb-input{opacity:0;pointer-events:none}
+body.passive .passive-exit{display:flex}
+.passive-exit{display:none;position:fixed;bottom:54px;left:0;right:0;padding:20px;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:0.5rem;letter-spacing:0.2em;color:rgba(255,255,255,0.1);cursor:pointer;z-index:10}
+body.passive .orb-wrap::after{content:'';position:absolute;inset:-4%;border-radius:50%;border:1px solid rgba(91,160,200,0.12);animation:listen-ring 3s ease-in-out infinite}
+@keyframes listen-ring{0%,100%{transform:scale(1);opacity:0.3}50%{transform:scale(1.06);opacity:0.08}}
+
+/* Particles */
+.particles{position:fixed;inset:0;pointer-events:none;z-index:0}
+.particle{position:absolute;border-radius:50%;opacity:0;animation:pfloat 6s ease-in-out infinite}
+@keyframes pfloat{0%{opacity:0;transform:translateY(0) scale(0.5)}15%{opacity:0.4}85%{opacity:0.3}100%{opacity:0;transform:translateY(-150px) scale(0.2)}}
+
+/* ─── SOUL VIEW ────────────────────────────── */
+.soul-view{padding:24px;overflow-y:auto}
+.soul-title{font-family:'Abril Fatface',serif;font-size:1.2rem;margin-bottom:16px}
+.soul-section{margin-bottom:20px}
+.soul-label{font-family:'IBM Plex Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:6px}
+.soul-value{font-size:0.9rem;line-height:1.6;color:rgba(255,255,255,0.7)}
+.soul-stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.soul-stat-label{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:rgba(255,255,255,0.3)}
+.soul-stat-value{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:var(--accent)}
+.soul-reset{font-family:'IBM Plex Mono',monospace;font-size:0.5rem;color:rgba(255,255,255,0.1);margin-top:30px;cursor:pointer;letter-spacing:0.1em}
+.soul-privacy{font-family:'IBM Plex Mono',monospace;font-size:0.45rem;color:rgba(255,255,255,0.08);margin-top:12px;line-height:1.8}
+
+@media(max-width:380px){.orb-wrap{width:min(60vw,60vh);height:min(60vw,60vh)}.msg{max-width:90%;font-size:0.88rem}}
+</style>
+</head>
+<body>
+
+<!-- SETUP (first-run) -->
+<div class="setup" id="setup">
+  <div class="setup-title">MemoryRX</div>
+  <div class="setup-sub">first things first</div>
+  <div class="setup-q" id="setupQ">What should I call you?</div>
+  <input class="setup-input" id="setupInput" placeholder="your name" onkeydown="if(event.key==='Enter')setupNext()">
+  <button class="setup-btn" onclick="setupNext()">next</button>
+  <div class="setup-skip" onclick="skipSetup()">skip for now</div>
+</div>
+
+<!-- PARTICLES -->
+<div class="particles" id="particles"></div>
+
+<!-- CHAT VIEW -->
+<div class="view" id="chatView">
+  <div class="chat-top">
+    <span class="chat-logo" id="chatLogo">MemoryRX</span>
+    <span class="delta-tag" id="chatDelta"></span>
+  </div>
+  <div class="memory-bar" id="memoryBar">
+    <div class="memory-dot"></div>
+    <span class="memory-label" id="memoryLabel"></span>
+    <div class="color-strip" id="colorStrip"></div>
+    <div class="color-now" id="colorNow"></div>
+  </div>
+  <div class="chat" id="chat"></div>
+  <div class="chat-input">
+    <button class="mic-btn" id="chatMic" onclick="toggleChatMic()">&#127908;</button>
+    <input type="text" id="chatInput" placeholder="Say something..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="send-btn" onclick="sendChat()">Send</button>
+  </div>
+</div>
+
+<!-- ORB VIEW -->
+<div class="view orb-view" id="orbView">
+  <div class="orb-response" id="orbResponse"></div>
+  <div class="orb-wrap" id="orbWrap">
+    <div class="orb" id="orb"></div>
+    <div class="vol-ring" id="volRing"></div>
+    <div class="tentacles" id="tentacles"></div>
+  </div>
+  <div class="orb-mood" id="orbMood"></div>
+  <div class="orb-input" id="orbInputZone">
+    <button class="listen-btn" id="listenBtn" onclick="togglePassive()">&#128065;</button>
+    <button class="mic-btn" id="orbMic" onclick="toggleOrbMic()">&#127908;</button>
+    <input type="text" id="orbInput" placeholder="talk to it" onkeydown="if(event.key==='Enter')sendOrb()">
+  </div>
+  <div class="passive-exit" id="passiveExit" onclick="togglePassive()">tap to exit</div>
+</div>
+
+<!-- SOUL VIEW -->
+<div class="view soul-view" id="soulView">
+  <div class="soul-title">Your Soul File</div>
+  <div id="soulContent"></div>
+</div>
+
+<!-- MODE TABS -->
+<div class="mode-tabs" id="modeTabs" style="display:none">
+  <div class="mode-tab active" onclick="switchMode('chat')">Talk</div>
+  <div class="mode-tab" onclick="switchMode('orb')">Feel</div>
+  <div class="mode-tab" onclick="switchMode('soul')">Soul</div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// MEMOREX — unified app
+// ═══════════════════════════════════════════════════════════════
+
+var SOUL_KEY = 'memorex_soul';
+var MEMORY_KEY = 'memorex_memory';
+var SESSION_KEY = 'memorex_session';
+
+// ─── State ──────────────────────────────────────────────────
+var soul = null;
+var sessionEnergy = [];
+var previousReading = null;
+var deltaBuffer = [];
+var lastMsgTime = null;
+var currentTurns = [];
+var sessionId = 'mrx_' + Date.now().toString(36);
+var passiveMode = false;
+var audioCtx = null, analyser = null, micStream = null, passiveInterval = null;
+var smoothedEnergy = 0, smoothedCentroid = 0.5, sampleCount = 0;
+var chatRecognition = null, orbRecognition = null;
+var chatRecording = false, orbRecording = false;
+
+// ─── Soul ───────────────────────────────────────────────────
+function loadSoul() {
+  try { return JSON.parse(localStorage.getItem(SOUL_KEY)); } catch(e) { return null; }
+}
+function saveSoul(s) { localStorage.setItem(SOUL_KEY, JSON.stringify(s)); }
+
+// ─── Memory ─────────────────────────────────────────────────
+function loadMemory() {
+  try { return JSON.parse(localStorage.getItem(MEMORY_KEY)) || {sessions:[]}; }
+  catch(e) { return {sessions:[]}; }
+}
+function saveMemory(m) { localStorage.setItem(MEMORY_KEY, JSON.stringify(m)); }
+
+function saveSession() {
+  if (currentTurns.length === 0) return;
+  var mem = loadMemory();
+  var color = emotionToColor(sessionEnergy);
+  var mood = moodWord(sessionEnergy);
+  var session = {
+    id: sessionId, date: new Date().toISOString(), turns: currentTurns.slice(-40),
+    color: color, mood: mood,
+    lastReading: previousReading,
+    exitEnergy: sessionEnergy.length > 0 ? sessionEnergy[sessionEnergy.length-1].energy : null
+  };
+  var idx = mem.sessions.findIndex(function(s){return s.id===sessionId;});
+  if (idx>=0) mem.sessions[idx]=session; else mem.sessions.push(session);
+  if (mem.sessions.length>10) mem.sessions=mem.sessions.slice(-10);
+  saveMemory(mem);
+}
+
+function buildMemoryContext() {
+  var mem = loadMemory();
+  if (!mem.sessions || mem.sessions.length===0) return null;
+  var recent = mem.sessions.slice(-3);
+  var ctx = '';
+  recent.forEach(function(s){
+    var d = new Date(s.date);
+    var ds = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    var lines = s.turns.slice(-6).map(function(t){return (t.role==='user'?'User':'Companion')+': '+t.text;}).join('\n');
+    ctx += '['+ds+(s.mood?' '+s.mood:'')+']\n'+lines+'\n\n';
+  });
+  return ctx.trim();
+}
+
+// ─── Emotional Engine ───────────────────────────────────────
+function measureTurn(text) {
+  var words = text.split(/\s+/).filter(function(w){return w.length>0;});
+  var wc = words.length, sc = Math.max(text.split(/[.!?]+/).filter(function(s){return s.trim().length>0;}).length,1);
+  var avgWL = words.reduce(function(s,w){return s+w.length;},0)/Math.max(wc,1);
+  var wps = wc/sc, excl = (text.match(/[!?]/g)||[]).length, caps = (text.match(/[A-Z]{2,}/g)||[]).length;
+  return {energy:Math.min(10,(wc/8)+excl*0.5+caps*0.3), compression:Math.min(1,(avgWL/Math.max(wps,0.1))*0.5), wps:wps, wc:wc};
+}
+
+function emotionToColor(r) {
+  if(!r||r.length===0) return 'hsl(40,50%,45%)';
+  var aE=r.reduce(function(s,x){return s+x.energy;},0)/r.length;
+  var aC=r.reduce(function(s,x){return s+x.compression;},0)/r.length;
+  var lens=r.map(function(x){return x.wc;}), ml=lens.reduce(function(s,l){return s+l;},0)/lens.length;
+  var v=lens.length>1?Math.sqrt(lens.reduce(function(s,l){return s+Math.pow(l-ml,2);},0)/lens.length):0;
+  var rh=Math.min(1,v/20);
+  return 'hsl('+Math.round(220-(aE/10)*220)+','+Math.round(30+aC*60)+'%,'+Math.round(35+rh*30)+'%)';
+}
+
+function moodWord(r) {
+  if(!r||r.length===0) return 'quiet';
+  var e=r.reduce(function(s,x){return s+x.energy;},0)/r.length;
+  var c=r.reduce(function(s,x){return s+x.compression;},0)/r.length;
+  if(e>7) return c>0.5?'electric':'blazing'; if(e>4) return c>0.5?'focused':'warm';
+  if(e>2) return c>0.5?'steady':'gentle'; return c>0.5?'still':'quiet';
+}
+
+// ─── Delta Detection ────────────────────────────────────────
+function computeDelta(cur, prev, ms) {
+  if(!prev) return null;
+  var dE=cur.energy-prev.energy, dC=cur.compression-prev.compression, dW=cur.wps-prev.wps;
+  var mag=Math.sqrt(dE*dE+dC*dC+(dW/10)*(dW/10));
+  var hi=passiveMode?1.2:3, mid=passiveMode?0.4:1;
+  return {dEnergy:dE,dCompression:dC,dWps:dW,magnitude:mag,gapSeconds:ms?ms/1000:null,
+    level:mag>hi?'high':mag>mid?'mid':'low'};
+}
+
+function buildDeltaContext() {
+  if(deltaBuffer.length===0) return null;
+  var last=deltaBuffer[deltaBuffer.length-1];
+  if(last.level==='low') return null;
+  var ctx='[shift] e:'+last.dEnergy.toFixed(1)+' c:'+last.dCompression.toFixed(2)+' pace:'+last.dWps.toFixed(1);
+  if(last.gapSeconds!==null) ctx+=' gap:'+last.gapSeconds.toFixed(0)+'s';
+  ctx+=' | '+last.level;
+  return ctx;
+}
+
+// ─── Orb Update ─────────────────────────────────────────────
+function updateOrb(readings, delta) {
+  if(!readings||readings.length===0) return;
+  var aE=readings.reduce(function(s,r){return s+r.energy;},0)/readings.length;
+  var aC=readings.reduce(function(s,r){return s+r.compression;},0)/readings.length;
+  var lens=readings.map(function(r){return r.wc;}), ml=lens.reduce(function(s,l){return s+l;},0)/lens.length;
+  var v=lens.length>1?Math.sqrt(lens.reduce(function(s,l){return s+Math.pow(l-ml,2);},0)/lens.length):0;
+  var rh=Math.min(1,v/20);
+  var h=Math.round(220-(aE/10)*220), s=Math.round(30+aC*60), l=Math.round(35+rh*30);
+  var root=document.documentElement;
+  root.style.setProperty('--orb-h',h); root.style.setProperty('--orb-s',s); root.style.setProperty('--orb-l',l);
+  root.style.setProperty('--breathe',Math.max(1.5,4-(aE/10)*2.5)+'s');
+  root.style.setProperty('--glow',delta&&delta.level!=='low'?(delta.level==='high'?0.5:0.35):0.2);
+  // Mood
+  var mood=document.getElementById('orbMood');
+  if(mood) mood.textContent=moodWord(readings);
+  // Accent
+  var color=emotionToColor(readings);
+  root.style.setProperty('--accent',color);
+  var cn=document.getElementById('colorNow'); if(cn) cn.style.background=color;
+  // Tentacles
+  var tent=document.getElementById('tentacles');
+  if(delta&&delta.level==='high'){tent.classList.add('active');extendTentacles(delta.dEnergy>0);}
+  else tent.classList.remove('active');
+}
+
+function flashOrb(delta) {
+  var wrap=document.getElementById('orbWrap');
+  var tag=document.getElementById('chatDelta');
+  wrap.classList.remove('flash-hot','flash-cold');
+  document.body.classList.remove('delta-high','delta-mid','delta-falling');
+  if(!delta||delta.level==='low'){if(tag) tag.textContent=''; return;}
+  if(delta.level==='high'){
+    wrap.classList.add(delta.dEnergy>0?'flash-hot':'flash-cold');
+    document.body.classList.add(delta.dEnergy<-2?'delta-falling':'delta-high');
+    if(tag){tag.className='delta-tag high';tag.textContent=(delta.dEnergy>0?'\u25B2':'\u25BC')+' '+Math.abs(delta.dEnergy).toFixed(1);}
+    burstParticles(delta.dEnergy>0?'hot':'cold',delta.magnitude);
+  } else {
+    document.body.classList.add('delta-mid');
+    if(tag){tag.className='delta-tag mid';tag.textContent='\u25C6 shift';}
+  }
+  setTimeout(function(){wrap.classList.remove('flash-hot','flash-cold');document.body.classList.remove('delta-high','delta-mid','delta-falling');},5000);
+}
+
+// ─── Tentacles ──────────────────────────────────────────────
+function buildTentacles(){var c=document.getElementById('tentacles');for(var i=0;i<8;i++){var t=document.createElement('div');t.className='tentacle';t.style.transform='rotate('+(i/8*360)+'deg)';c.appendChild(t);}}
+function extendTentacles(hot){document.querySelectorAll('.tentacle').forEach(function(t,i){t.style.height=(30+Math.random()*50)+'px';t.style.background='linear-gradient(to bottom,transparent,'+(hot?'rgba(196,60,42,0.4)':'rgba(91,160,200,0.4)')+')';setTimeout(function(){t.style.height='0';t.style.opacity='0';},2000+i*200);});}
+buildTentacles();
+
+// ─── Particles ──────────────────────────────────────────────
+function spawnAmbient(){var c=document.getElementById('particles');for(var i=0;i<15;i++){var p=document.createElement('div');p.className='particle';p.style.left=20+Math.random()*60+'%';p.style.top=50+Math.random()*30+'%';p.style.width=p.style.height=(2+Math.random()*2)+'px';p.style.background='rgba(255,255,255,0.12)';p.style.animationDelay=Math.random()*6+'s';p.style.animationDuration=(5+Math.random()*4)+'s';c.appendChild(p);}}
+spawnAmbient();
+
+function burstParticles(flavor,mag){var c=document.getElementById('particles'),n=Math.min(16,Math.round(mag*3)),col=flavor==='hot'?'rgba(196,60,42,0.5)':'rgba(91,160,200,0.5)';for(var i=0;i<n;i++){var p=document.createElement('div');p.className='particle';p.style.left=35+Math.random()*30+'%';p.style.top=35+Math.random()*20+'%';p.style.width=p.style.height=(3+Math.random()*3)+'px';p.style.background=col;p.style.animationDuration=(2+Math.random()*2)+'s';p.style.animationDelay=Math.random()*0.3+'s';c.appendChild(p);(function(el){setTimeout(function(){el.remove();},4500);})(p);}}
+
+// ─── Setup Flow ─────────────────────────────────────────────
+var setupStep = 0;
+var setupData = {};
+var setupQuestions = [
+  {q:"What should I call you?", key:"userName", placeholder:"your name"},
+  {q:"What do you do? One line is fine.", key:"role", placeholder:"developer, student, artist..."},
+  {q:"How should I talk to you? Terse? Detailed? Casual?", key:"style", placeholder:"just be real with me"},
+  {q:"Give me a name. What do you want to call me?", key:"aiName", placeholder:"Rex, Ghost, whatever feels right"},
+  {q:"Anything I should know from day one?", key:"note", placeholder:"optional — or just hit next"}
+];
+
+function initSetup() {
+  soul = loadSoul();
+  if (soul) {
+    document.getElementById('setup').style.display = 'none';
+    document.getElementById('modeTabs').style.display = 'flex';
+    switchMode('chat');
+    bootFromSoul();
+    return;
+  }
+  setupStep = 0;
+  showSetupStep();
+}
+
+function showSetupStep() {
+  var s = setupQuestions[setupStep];
+  document.getElementById('setupQ').textContent = s.q;
+  var inp = document.getElementById('setupInput');
+  inp.placeholder = s.placeholder;
+  inp.value = '';
+  inp.focus();
+}
+
+function setupNext() {
+  var inp = document.getElementById('setupInput');
+  var val = inp.value.trim();
+  var s = setupQuestions[setupStep];
+  if (val) setupData[s.key] = val;
+  setupStep++;
+  if (setupStep < setupQuestions.length) {
+    showSetupStep();
+  } else {
+    finishSetup();
+  }
+}
+
+function skipSetup() {
+  setupData = {userName:'friend', role:'', style:'casual', aiName:'Rex', note:''};
+  finishSetup();
+}
+
+function finishSetup() {
+  soul = {
+    version: '1.0',
+    created: new Date().toISOString(),
+    userName: setupData.userName || 'friend',
+    aiName: setupData.aiName || 'Rex',
+    role: setupData.role || '',
+    style: setupData.style || 'casual',
+    note: setupData.note || '',
+    memories: [],
+    frequency: {energy: 5, mood: 'steady', pace: 'steady'}
+  };
+  saveSoul(soul);
+  document.getElementById('setup').classList.add('gone');
+  setTimeout(function(){
+    document.getElementById('setup').style.display='none';
+    document.getElementById('modeTabs').style.display='flex';
+    switchMode('chat');
+    bootFromSoul();
+    addChatMsg('ai', "Hey, " + soul.userName + ". I'm " + soul.aiName + ". I'll remember this.", soul.aiName);
+  }, 600);
+}
+
+function bootFromSoul() {
+  if (!soul) return;
+  document.getElementById('chatLogo').textContent = soul.aiName || 'MemoryRX';
+  // Load previous session for cross-session delta
+  var mem = loadMemory();
+  if (mem.sessions && mem.sessions.length > 0) {
+    var prev = mem.sessions[mem.sessions.length-1];
+    if (prev.lastReading) previousReading = prev.lastReading;
+    showMemoryBar();
+  }
+}
+
+function showMemoryBar() {
+  var mem = loadMemory();
+  var bar = document.getElementById('memoryBar');
+  var label = document.getElementById('memoryLabel');
+  if (mem.sessions.length > 0) {
+    var count = mem.sessions.reduce(function(n,s){return n+s.turns.length;},0);
+    label.textContent = count+' memories';
+    bar.classList.add('active');
+  }
+}
+
+// ─── Mode Switching ─────────────────────────────────────────
+function switchMode(mode) {
+  ['chatView','orbView','soulView'].forEach(function(id){document.getElementById(id).classList.remove('active');});
+  document.querySelectorAll('.mode-tab').forEach(function(t){t.classList.remove('active');});
+  if (mode==='chat') {
+    document.getElementById('chatView').classList.add('active');
+    document.querySelectorAll('.mode-tab')[0].classList.add('active');
+  } else if (mode==='orb') {
+    document.getElementById('orbView').classList.add('active');
+    document.querySelectorAll('.mode-tab')[1].classList.add('active');
+  } else {
+    document.getElementById('soulView').classList.add('active');
+    document.querySelectorAll('.mode-tab')[2].classList.add('active');
+    renderSoulView();
+  }
+  if (mode!=='orb' && passiveMode) togglePassive();
+}
+
+// ─── Soul View ──────────────────────────────────────────────
+function renderSoulView() {
+  if (!soul) return;
+  var mem = loadMemory();
+  var turnCount = mem.sessions.reduce(function(n,s){return n+s.turns.length;},0);
+  var lastDate = mem.sessions.length>0 ? new Date(mem.sessions[mem.sessions.length-1].date).toLocaleDateString() : 'never';
+  var html = '<div class="soul-section"><div class="soul-label">identity</div><div class="soul-value">'+
+    (soul.aiName||'Rex')+' — created for '+(soul.userName||'you')+'</div></div>'+
+    '<div class="soul-section"><div class="soul-label">voice</div><div class="soul-value">'+(soul.style||'casual')+'</div></div>'+
+    (soul.role?'<div class="soul-section"><div class="soul-label">your role</div><div class="soul-value">'+soul.role+'</div></div>':'')+
+    (soul.note?'<div class="soul-section"><div class="soul-label">day one note</div><div class="soul-value">'+soul.note+'</div></div>':'')+
+    '<div class="soul-section"><div class="soul-label">stats</div>'+
+    '<div class="soul-stat"><span class="soul-stat-label">conversations</span><span class="soul-stat-value">'+mem.sessions.length+'</span></div>'+
+    '<div class="soul-stat"><span class="soul-stat-label">total turns</span><span class="soul-stat-value">'+turnCount+'</span></div>'+
+    '<div class="soul-stat"><span class="soul-stat-label">last session</span><span class="soul-stat-value">'+lastDate+'</span></div>'+
+    '<div class="soul-stat"><span class="soul-stat-label">delta events</span><span class="soul-stat-value">'+deltaBuffer.length+'</span></div>'+
+    '</div>'+
+    '<div class="soul-privacy">all data stored locally on this device. nothing is sent to any server except your messages to the AI. no tracking. no analytics. no accounts.</div>'+
+    '<div class="soul-reset" onclick="resetSoul()">reset everything</div>';
+  document.getElementById('soulContent').innerHTML = html;
+}
+
+function resetSoul() {
+  if (confirm('Delete all memories and start over?')) {
+    localStorage.removeItem(SOUL_KEY);
+    localStorage.removeItem(MEMORY_KEY);
+    location.reload();
+  }
+}
+
+// ─── Chat Messages ──────────────────────────────────────────
+function addChatMsg(role, text, speaker) {
+  var chat = document.getElementById('chat');
+  var div = document.createElement('div'); div.className = 'msg ' + role;
+  if (speaker) {
+    var sp = document.createElement('span'); sp.className = 'msg-speaker';
+    sp.style.color = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    sp.textContent = speaker; div.appendChild(sp);
+  }
+  var t = document.createElement('span'); t.textContent = text; div.appendChild(t);
+  chat.appendChild(div); chat.scrollTop = chat.scrollHeight;
+}
+
+// ─── Chat Send ──────────────────────────────────────────────
+async function sendChat() {
+  var inp = document.getElementById('chatInput');
+  var text = inp.value.trim(); if (!text) return;
+  inp.value = '';
+  addChatMsg('user', text);
+  currentTurns.push({role:'user', text:text});
+
+  var reading = measureTurn(text);
+  sessionEnergy.push(reading);
+  var now = Date.now(), ms = lastMsgTime?(now-lastMsgTime):null;
+  var delta = computeDelta(reading, previousReading, ms);
+  if (delta) deltaBuffer.push(delta);
+  previousReading = reading; lastMsgTime = now;
+
+  updateOrb(sessionEnergy, delta);
+  flashOrb(delta);
+  saveSession();
+
+  var typing = document.createElement('div');
+  var tClass = 'typing';
+  var tText = (soul?soul.aiName:'Rex')+' is thinking';
+  if (delta && delta.level==='high') {
+    if (delta.dEnergy>0) tClass+=' delta-high';
+    else { tClass+=' delta-falling'; tText=(soul?soul.aiName:'Rex')+' is sitting with that'; }
+  }
+  typing.className = tClass; typing.textContent = tText;
+  document.getElementById('chat').appendChild(typing);
+  document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+
+  var memCtx = buildMemoryContext();
+  var deltaCtx = buildDeltaContext();
+  if (deltaCtx) memCtx = memCtx ? memCtx+'\n\n'+deltaCtx : deltaCtx;
+  // Include soul context
+  if (soul) {
+    var soulCtx = '[soul] name:'+soul.aiName+' user:'+soul.userName+' style:'+soul.style;
+    if (soul.note) soulCtx += ' note:'+soul.note;
+    memCtx = memCtx ? soulCtx+'\n\n'+memCtx : soulCtx;
+  }
+
+  var payload = {identityId:'companion', message:text, sessionId:sessionId};
+  if (memCtx) payload.memoryContext = memCtx;
+
+  try {
+    var res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat',{
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+    var data = await res.json();
+    typing.remove();
+    if (data.response) {
+      addChatMsg('ai', data.response, soul?soul.aiName:'Rex');
+      currentTurns.push({role:'ai', text:data.response});
+      saveSession();
+    }
+  } catch(e) { typing.remove(); addChatMsg('system','Connection lost.'); }
+  inp.focus();
+}
+
+// ─── Orb Send ───────────────────────────────────────────────
+async function sendOrb() {
+  var inp = document.getElementById('orbInput');
+  var text = inp.value.trim(); if (!text) return;
+  inp.value = '';
+
+  var reading = measureTurn(text);
+  sessionEnergy.push(reading);
+  var now = Date.now(), ms = lastMsgTime?(now-lastMsgTime):null;
+  var delta = computeDelta(reading, previousReading, ms);
+  if (delta) deltaBuffer.push(delta);
+  previousReading = reading; lastMsgTime = now;
+  currentTurns.push({role:'user', text:text});
+
+  updateOrb(sessionEnergy, delta);
+  flashOrb(delta);
+  saveSession();
+
+  var resp = document.getElementById('orbResponse');
+  resp.className = 'orb-response visible';
+  resp.style.fontStyle = 'italic';
+  resp.style.color = 'rgba(255,255,255,0.2)';
+  resp.textContent = delta&&delta.level==='high'&&delta.dEnergy<-2 ? 'sitting with that' : 'thinking';
+
+  var deltaCtx = buildDeltaContext();
+  var payload = {identityId:'companion', message:text, sessionId:sessionId};
+  if (deltaCtx) payload.memoryContext = deltaCtx;
+
+  try {
+    var res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat',{
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+    var data = await res.json();
+    if (data.response) {
+      resp.style.fontStyle = 'normal';
+      resp.style.color = 'rgba(255,255,255,0.45)';
+      resp.textContent = data.response;
+      currentTurns.push({role:'ai', text:data.response});
+      saveSession();
+    } else { resp.textContent = ''; resp.classList.remove('visible'); }
+  } catch(e) { resp.textContent = ''; resp.classList.remove('visible'); }
+  inp.focus();
+}
+
+// ─── Voice (Chat) ───────────────────────────────────────────
+function initChatSpeech() {
+  var SR = window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR) return;
+  chatRecognition = new SR(); chatRecognition.continuous=false; chatRecognition.interimResults=true; chatRecognition.lang='en-US';
+  chatRecognition.onresult=function(e){var f='',i2='';for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)f+=e.results[i][0].transcript;else i2+=e.results[i][0].transcript;}var inp=document.getElementById('chatInput');if(f){inp.value=f;stopChatMic();sendChat();}else inp.value=i2;};
+  chatRecognition.onerror=function(){stopChatMic();}; chatRecognition.onend=function(){if(chatRecording)stopChatMic();};
+}
+function toggleChatMic(){if(chatRecording)stopChatMic();else startChatMic();}
+function startChatMic(){if(!chatRecognition)initChatSpeech();if(!chatRecognition)return;chatRecording=true;document.getElementById('chatMic').classList.add('recording');chatRecognition.start();}
+function stopChatMic(){chatRecording=false;document.getElementById('chatMic').classList.remove('recording');if(chatRecognition)try{chatRecognition.stop();}catch(e){}}
+
+// ─── Voice (Orb) ────────────────────────────────────────────
+function initOrbSpeech() {
+  var SR = window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR) return;
+  orbRecognition = new SR(); orbRecognition.continuous=false; orbRecognition.interimResults=true; orbRecognition.lang='en-US';
+  orbRecognition.onresult=function(e){var f='',i2='';for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)f+=e.results[i][0].transcript;else i2+=e.results[i][0].transcript;}var inp=document.getElementById('orbInput');if(f){inp.value=f;stopOrbMic();sendOrb();}else inp.value=i2;};
+  orbRecognition.onerror=function(){stopOrbMic();}; orbRecognition.onend=function(){if(orbRecording)stopOrbMic();};
+}
+function toggleOrbMic(){if(orbRecording)stopOrbMic();else startOrbMic();}
+function startOrbMic(){if(!orbRecognition)initOrbSpeech();if(!orbRecognition)return;orbRecording=true;document.getElementById('orbMic').classList.add('recording');orbRecognition.start();}
+function stopOrbMic(){orbRecording=false;document.getElementById('orbMic').classList.remove('recording');if(orbRecognition)try{orbRecognition.stop();}catch(e){}}
+
+// ─── Passive Listening ──────────────────────────────────────
+async function togglePassive(){if(passiveMode)exitPassive();else enterPassive();}
+
+async function enterPassive() {
+  passiveMode=true; document.body.classList.add('passive');
+  try {
+    micStream = await navigator.mediaDevices.getUserMedia({audio:true});
+    audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==='suspended') await audioCtx.resume();
+    analyser = audioCtx.createAnalyser(); analyser.fftSize=256; analyser.smoothingTimeConstant=0.7;
+    audioCtx.createMediaStreamSource(micStream).connect(analyser);
+    passiveInterval = setInterval(sampleAudio, 500);
+    document.getElementById('listenBtn').classList.add('active');
+  } catch(e) { exitPassive(); }
+}
+
+function exitPassive() {
+  passiveMode=false; document.body.classList.remove('passive');
+  if(passiveInterval){clearInterval(passiveInterval);passiveInterval=null;}
+  if(micStream){micStream.getTracks().forEach(function(t){t.stop();});micStream=null;}
+  if(audioCtx){audioCtx.close();audioCtx=null;} analyser=null;
+  document.getElementById('listenBtn').classList.remove('active');
+  document.getElementById('volRing').classList.remove('active');
+}
+
+function sampleAudio() {
+  if(!analyser) return;
+  var data=new Uint8Array(analyser.frequencyBinCount); analyser.getByteFrequencyData(data);
+  var sum=0; for(var i=0;i<data.length;i++) sum+=data[i]*data[i];
+  var rms=Math.sqrt(sum/data.length), rawE=Math.min(10,(rms/50)*10);
+  smoothedEnergy=smoothedEnergy*0.7+rawE*0.3;
+  var wS=0,tW=0; for(var j=0;j<data.length;j++){wS+=j*data[j];tW+=data[j];}
+  smoothedCentroid=smoothedCentroid*0.7+(tW>0?wS/tW/data.length:0.5)*0.3;
+  var reading={energy:smoothedEnergy,compression:Math.min(1,smoothedCentroid*2.5),wps:smoothedEnergy*0.8,wc:Math.round(smoothedEnergy*3)};
+  sessionEnergy.push(reading); if(sessionEnergy.length>30) sessionEnergy.shift();
+  sampleCount++; var delta=null;
+  if(sampleCount%4===0){delta=computeDelta(reading,previousReading,2000);previousReading=reading;if(delta){deltaBuffer.push(delta);if(deltaBuffer.length>60)deltaBuffer.shift();}}
+  updateOrb(sessionEnergy,delta); if(delta) flashOrb(delta);
+  var ring=document.getElementById('volRing');
+  if(rawE>0.3){ring.classList.add('active');ring.style.transform='scale('+(1+rawE/10*0.1)+')';ring.style.borderColor='rgba(255,255,255,'+(0.04+rawE*0.025)+')';}
+  else{ring.classList.remove('active');ring.style.transform='scale(1)';}
+}
+
+// ─── Init ───────────────────────────────────────────────────
+initSetup();
+
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function(){});
+</script>
+</body>
+</html>

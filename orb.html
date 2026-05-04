@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Orb</title>
+<meta name="theme-color" content="#0a0a0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --orb-h:220;--orb-s:40;--orb-l:45;
+  --orb-color:hsl(var(--orb-h),calc(var(--orb-s)*1%),calc(var(--orb-l)*1%));
+  --glow-opacity:0.2;
+  --breathe-speed:4s;
+  --bg:#0a0a0f;
+}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;color:#e8e0d0;transition:background 1.5s ease;-webkit-user-select:none;user-select:none}
+
+/* ─── THE ORB ─────────────────────────────────── */
+.orb-wrap{position:relative;width:min(70vw,70vh);height:min(70vw,70vh);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+.orb{
+  width:100%;height:100%;border-radius:50%;position:relative;
+  background:radial-gradient(circle at 38% 32%,
+    hsl(calc(var(--orb-h) + 30), calc(var(--orb-s)*1.2*1%), calc(var(--orb-l)*1.4*1%)) 0%,
+    var(--orb-color) 45%,
+    hsl(calc(var(--orb-h) - 20), calc(var(--orb-s)*0.8*1%), calc(var(--orb-l)*0.6*1%)) 100%
+  );
+  box-shadow:
+    0 0 60px hsla(var(--orb-h),calc(var(--orb-s)*1%),calc(var(--orb-l)*1%),var(--glow-opacity)),
+    0 0 120px hsla(var(--orb-h),calc(var(--orb-s)*1%),calc(var(--orb-l)*1%),calc(var(--glow-opacity)*0.5)),
+    inset 0 0 80px rgba(0,0,0,0.3);
+  animation:breathe var(--breathe-speed) ease-in-out infinite;
+  transition:box-shadow 1.2s ease, background 1.2s ease;
+}
+
+/* Glass highlight */
+.orb::before{
+  content:'';position:absolute;
+  top:12%;left:22%;width:35%;height:25%;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(255,255,255,0.18) 0%,transparent 70%);
+  transform:rotate(-15deg);pointer-events:none;
+}
+
+/* Inner depth ring */
+.orb::after{
+  content:'';position:absolute;inset:6%;border-radius:50%;
+  border:1px solid rgba(255,255,255,0.04);pointer-events:none;
+}
+
+@keyframes breathe{
+  0%,100%{transform:scale(1);filter:brightness(1)}
+  50%{transform:scale(1.02);filter:brightness(1.08)}
+}
+
+/* ─── TENTACLES (idle state) ──────────────────── */
+.tentacles{position:absolute;inset:-15%;pointer-events:none;opacity:0.4;transition:opacity 1s ease}
+.tentacle{
+  position:absolute;bottom:50%;left:50%;
+  width:3px;height:0;border-radius:2px;
+  background:linear-gradient(to bottom, transparent, var(--orb-color));
+  transform-origin:top center;
+  transition:height 1.5s ease, opacity 1.5s ease;
+  opacity:0;
+}
+.tentacles.active .tentacle{opacity:0.6}
+
+/* ─── PARTICLES ───────────────────────────────── */
+.particles{position:fixed;inset:0;pointer-events:none;z-index:0}
+.particle{
+  position:absolute;border-radius:50%;opacity:0;
+  animation:float-up 6s ease-in-out infinite;
+}
+@keyframes float-up{
+  0%{opacity:0;transform:translateY(0) scale(0.5)}
+  15%{opacity:0.5}
+  85%{opacity:0.3}
+  100%{opacity:0;transform:translateY(-120px) scale(0.2)}
+}
+
+/* ─── DELTA FLASH ─────────────────────────────── */
+.orb-wrap.flash-hot .orb{
+  box-shadow:
+    0 0 80px hsla(0,80%,50%,0.4),
+    0 0 160px hsla(0,80%,50%,0.2),
+    inset 0 0 60px rgba(196,60,42,0.15);
+}
+.orb-wrap.flash-cold .orb{
+  box-shadow:
+    0 0 80px hsla(220,60%,50%,0.4),
+    0 0 160px hsla(220,60%,50%,0.2),
+    inset 0 0 60px rgba(91,160,200,0.15);
+}
+
+/* ─── MOOD WORD ───────────────────────────────── */
+.mood{
+  position:absolute;bottom:calc(50% - min(35vw,35vh) - 40px);
+  font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;
+  color:rgba(255,255,255,0.15);transition:all 1s ease;
+}
+
+/* ─── INPUT ───────────────────────────────────── */
+.input-zone{
+  position:fixed;bottom:0;left:0;right:0;
+  padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));
+  display:flex;gap:8px;align-items:center;
+  background:linear-gradient(transparent,rgba(10,10,15,0.95) 30%);
+  z-index:10;
+}
+.input-zone input{
+  flex:1;background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  color:#e8e0d0;font-family:'IBM Plex Mono',monospace;font-size:16px;
+  padding:12px 16px;outline:none;border-radius:24px;
+  transition:border-color 0.3s;
+}
+.input-zone input:focus{border-color:rgba(255,255,255,0.15)}
+.input-zone input::placeholder{color:rgba(255,255,255,0.15);font-size:0.8rem}
+
+.mic-btn{
+  width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);
+  background:transparent;color:rgba(255,255,255,0.3);font-size:1.2rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s;flex-shrink:0;
+}
+.mic-btn:hover{color:rgba(255,255,255,0.6)}
+.mic-btn.recording{
+  background:rgba(196,60,42,0.15);border-color:rgba(196,60,42,0.5);color:#c43c2a;
+  animation:mic-pulse 1.5s ease-in-out infinite;
+}
+@keyframes mic-pulse{0%,100%{box-shadow:0 0 0 0 rgba(196,60,42,0.3)}50%{box-shadow:0 0 0 10px rgba(196,60,42,0)}}
+
+/* ─── RESPONSE TEXT ───────────────────────────── */
+.response{
+  position:fixed;top:0;left:0;right:0;
+  padding:40px 24px 20px;
+  font-size:0.85rem;line-height:1.7;color:rgba(255,255,255,0.5);
+  text-align:center;max-height:35vh;overflow-y:auto;
+  background:linear-gradient(rgba(10,10,15,0.95) 70%,transparent);
+  z-index:10;opacity:0;transform:translateY(-8px);
+  transition:opacity 0.5s ease, transform 0.5s ease;
+}
+.response.visible{opacity:1;transform:translateY(0)}
+.response.thinking{font-style:italic;color:rgba(255,255,255,0.2)}
+.response.thinking::after{content:'...';animation:dots 1.5s infinite}
+@keyframes dots{0%{content:'.'}33%{content:'..'}66%{content:'...'}}
+
+/* ─── DELTA INDICATOR ─────────────────────────── */
+.delta-tag{
+  position:fixed;top:12px;right:16px;
+  font-size:0.45rem;letter-spacing:0.12em;
+  color:rgba(255,255,255,0.12);z-index:20;
+  transition:all 0.5s;
+}
+.delta-tag.mid{color:rgba(200,168,78,0.5)}
+.delta-tag.high{color:rgba(196,60,42,0.7)}
+
+/* ─── PASSIVE MODE ────────────────────────────── */
+body.passive .input-zone{opacity:0;pointer-events:none;transform:translateY(20px)}
+body.passive .response{display:none}
+body.passive .passive-exit{display:flex}
+.input-zone{transition:opacity 0.6s ease, transform 0.6s ease}
+
+.passive-btn{
+  width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);
+  background:transparent;color:rgba(255,255,255,0.25);font-size:1.2rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s;flex-shrink:0;
+}
+.passive-btn:hover{color:rgba(91,160,200,0.6);border-color:rgba(91,160,200,0.3)}
+
+.passive-exit{
+  display:none;position:fixed;bottom:0;left:0;right:0;
+  padding:24px;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));
+  justify-content:center;align-items:center;z-index:10;
+  font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:rgba(255,255,255,0.12);cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.mode-tag{
+  position:fixed;top:12px;left:16px;
+  font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:rgba(255,255,255,0.1);z-index:20;
+  transition:all 0.5s;
+}
+body.passive .mode-tag{color:rgba(91,160,200,0.3)}
+
+/* Passive mic pulse ring around orb */
+body.passive .orb-wrap::after{
+  content:'';position:absolute;inset:-4%;border-radius:50%;
+  border:1px solid rgba(91,160,200,0.15);
+  animation:listen-ring 3s ease-in-out infinite;
+}
+@keyframes listen-ring{
+  0%,100%{transform:scale(1);opacity:0.3}
+  50%{transform:scale(1.06);opacity:0.08}
+}
+
+/* Volume visualizer ring */
+.vol-ring{
+  position:absolute;inset:-2%;border-radius:50%;
+  border:2px solid transparent;pointer-events:none;
+  transition:border-color 0.15s ease, transform 0.15s ease;
+}
+body.passive .vol-ring.active{border-color:rgba(255,255,255,0.08)}
+</style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+<div class="mood" id="mood"></div>
+<div class="response" id="response"></div>
+<div class="delta-tag" id="deltaTag"></div>
+<div class="mode-tag" id="modeTag">active</div>
+
+<div class="orb-wrap" id="orbWrap">
+  <div class="orb" id="orb"></div>
+  <div class="vol-ring" id="volRing"></div>
+  <div class="tentacles" id="tentacles"></div>
+</div>
+
+<div class="input-zone" id="inputZone">
+  <button class="passive-btn" id="passiveBtn" onclick="togglePassive()">&#128065;</button>
+  <button class="mic-btn" id="micBtn" onclick="toggleMic()">&#127908;</button>
+  <input type="text" id="userInput" placeholder="talk to it" onkeydown="if(event.key==='Enter')send()">
+</div>
+
+<div class="passive-exit" id="passiveExit" onclick="togglePassive()">tap to exit</div>
+
+<script>
+// ─── State ──────────────────────────────────────────────────
+var sessionEnergy = [];
+var previousReading = null;
+var deltaBuffer = [];
+var lastMsgTime = null;
+var currentTurns = [];
+var sessionId = 'orb_' + Date.now().toString(36);
+var recognition = null;
+var isRecording = false;
+var passiveMode = false;
+var audioCtx = null;
+var analyser = null;
+var micStream = null;
+var passiveInterval = null;
+var passiveEnergy = [];
+var lastPassiveReading = null;
+
+// ─── Emotional Engine (same as Companion) ───────────────────
+function measureTurn(text) {
+  var words = text.split(/\s+/).filter(function(w) { return w.length > 0; });
+  var wc = words.length;
+  var sentences = text.split(/[.!?]+/).filter(function(s) { return s.trim().length > 0; });
+  var sc = Math.max(sentences.length, 1);
+  var avgWordLen = words.reduce(function(s,w) { return s + w.length; }, 0) / Math.max(wc,1);
+  var wps = wc / sc;
+  var excl = (text.match(/[!?]/g) || []).length;
+  var caps = (text.match(/[A-Z]{2,}/g) || []).length;
+  var energy = Math.min(10, (wc / 8) + excl * 0.5 + caps * 0.3);
+  var compression = Math.min(1, (avgWordLen / Math.max(wps, 0.1)) * 0.5);
+  return { energy: energy, compression: compression, wps: wps, wc: wc };
+}
+
+function computeDelta(current, previous, intervalMs) {
+  if (!previous) return null;
+  var dE = current.energy - previous.energy;
+  var dC = current.compression - previous.compression;
+  var dW = current.wps - previous.wps;
+  var magnitude = Math.sqrt(dE * dE + dC * dC + (dW / 10) * (dW / 10));
+  var gap = intervalMs ? intervalMs / 1000 : null;
+  // Passive mode: audio samples are 500ms apart, smaller deltas matter more
+  var hiThresh = passiveMode ? 1.2 : 3;
+  var midThresh = passiveMode ? 0.4 : 1;
+  return {
+    dEnergy: dE, dCompression: dC, dWps: dW,
+    magnitude: magnitude, gapSeconds: gap,
+    level: magnitude > hiThresh ? 'high' : magnitude > midThresh ? 'mid' : 'low'
+  };
+}
+
+function buildDeltaContext() {
+  if (deltaBuffer.length === 0) return null;
+  var last = deltaBuffer[deltaBuffer.length - 1];
+  if (last.level === 'low') return null;
+  var ctx = '[shift] e:' + last.dEnergy.toFixed(1) +
+            ' c:' + last.dCompression.toFixed(2) +
+            ' pace:' + last.dWps.toFixed(1);
+  if (last.gapSeconds !== null) ctx += ' gap:' + last.gapSeconds.toFixed(0) + 's';
+  ctx += ' | ' + last.level;
+  if (deltaBuffer.length >= 3) {
+    var trend = deltaBuffer.slice(-3).reduce(function(s, d) { return s + d.dEnergy; }, 0);
+    if (trend > 3) ctx += ' trend:rising';
+    else if (trend < -3) ctx += ' trend:falling';
+  }
+  return ctx;
+}
+
+// ─── Orb Color ──────────────────────────────────────────────
+function updateOrb(readings, delta) {
+  if (!readings || readings.length === 0) return;
+
+  var avgEnergy = readings.reduce(function(s,r) { return s + r.energy; }, 0) / readings.length;
+  var avgComp = readings.reduce(function(s,r) { return s + r.compression; }, 0) / readings.length;
+  var lengths = readings.map(function(r) { return r.wc; });
+  var meanLen = lengths.reduce(function(s,l) { return s+l; }, 0) / lengths.length;
+  var variance = lengths.length > 1
+    ? Math.sqrt(lengths.reduce(function(s,l) { return s + Math.pow(l-meanLen, 2); }, 0) / lengths.length)
+    : 0;
+  var rhythm = Math.min(1, variance / 20);
+
+  // Map to HSL
+  var h = Math.round(220 - (avgEnergy / 10) * 220);
+  var s = Math.round(30 + avgComp * 60);
+  var l = Math.round(35 + rhythm * 30);
+
+  document.documentElement.style.setProperty('--orb-h', h);
+  document.documentElement.style.setProperty('--orb-s', s);
+  document.documentElement.style.setProperty('--orb-l', l);
+
+  // Breathe speed: high energy = faster
+  var speed = Math.max(1.5, 4 - (avgEnergy / 10) * 2.5);
+  document.documentElement.style.setProperty('--breathe-speed', speed + 's');
+
+  // Glow intensity from delta
+  if (delta && delta.level !== 'low') {
+    var glow = delta.level === 'high' ? 0.5 : 0.35;
+    document.documentElement.style.setProperty('--glow-opacity', glow);
+  } else {
+    document.documentElement.style.setProperty('--glow-opacity', '0.2');
+  }
+
+  // Mood word
+  var mood = document.getElementById('mood');
+  if (avgEnergy > 7) mood.textContent = avgComp > 0.5 ? 'electric' : 'blazing';
+  else if (avgEnergy > 4) mood.textContent = avgComp > 0.5 ? 'focused' : 'warm';
+  else if (avgEnergy > 2) mood.textContent = avgComp > 0.5 ? 'steady' : 'gentle';
+  else mood.textContent = avgComp > 0.5 ? 'still' : 'quiet';
+
+  // Background shift
+  var bgL = Math.max(3, 6 - (avgEnergy / 10) * 3);
+  document.documentElement.style.setProperty('--bg', 'hsl(' + h + ',8%,' + bgL + '%)');
+
+  // Tentacles extend on high delta
+  var tent = document.getElementById('tentacles');
+  if (delta && delta.level === 'high') {
+    tent.classList.add('active');
+    extendTentacles(delta.dEnergy > 0);
+  } else {
+    tent.classList.remove('active');
+  }
+}
+
+// ─── Tentacles ───────────────────────────────────��──────────
+function buildTentacles() {
+  var container = document.getElementById('tentacles');
+  for (var i = 0; i < 8; i++) {
+    var t = document.createElement('div');
+    t.className = 'tentacle';
+    var angle = (i / 8) * 360;
+    t.style.transform = 'rotate(' + angle + 'deg)';
+    container.appendChild(t);
+  }
+}
+
+function extendTentacles(hot) {
+  var tentacles = document.querySelectorAll('.tentacle');
+  tentacles.forEach(function(t, i) {
+    var len = 30 + Math.random() * 50;
+    t.style.height = len + 'px';
+    t.style.background = 'linear-gradient(to bottom, transparent, ' +
+      (hot ? 'rgba(196,60,42,0.4)' : 'rgba(91,160,200,0.4)') + ')';
+    // Retract after a beat
+    setTimeout(function() {
+      t.style.height = '0px';
+      t.style.opacity = '0';
+    }, 2000 + i * 200);
+  });
+}
+
+buildTentacles();
+
+// ─── Delta Flash ────────────────────────────────────────────
+function flashOrb(delta) {
+  var wrap = document.getElementById('orbWrap');
+  var tag = document.getElementById('deltaTag');
+
+  wrap.classList.remove('flash-hot', 'flash-cold');
+  tag.className = 'delta-tag';
+
+  if (!delta || delta.level === 'low') {
+    tag.textContent = '';
+    return;
+  }
+
+  if (delta.level === 'high') {
+    wrap.classList.add(delta.dEnergy > 0 ? 'flash-hot' : 'flash-cold');
+    tag.classList.add('high');
+    tag.textContent = (delta.dEnergy > 0 ? '\u25B2' : '\u25BC') + ' ' + Math.abs(delta.dEnergy).toFixed(1);
+  } else {
+    tag.classList.add('mid');
+    tag.textContent = '\u25C6 shift';
+  }
+
+  // Particle burst
+  burstParticles(delta.dEnergy > 0 ? 'hot' : 'cold', delta.magnitude);
+
+  setTimeout(function() {
+    wrap.classList.remove('flash-hot', 'flash-cold');
+  }, 3000);
+}
+
+// ─── Particles ──────────────────────────────────────────────
+function spawnAmbient() {
+  var container = document.getElementById('particles');
+  for (var i = 0; i < 12; i++) {
+    var p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = 20 + Math.random() * 60 + '%';
+    p.style.top = 50 + Math.random() * 30 + '%';
+    p.style.width = p.style.height = (2 + Math.random() * 2) + 'px';
+    p.style.background = 'rgba(255,255,255,0.15)';
+    p.style.animationDelay = Math.random() * 6 + 's';
+    p.style.animationDuration = (5 + Math.random() * 4) + 's';
+    container.appendChild(p);
+  }
+}
+spawnAmbient();
+
+function burstParticles(flavor, magnitude) {
+  var container = document.getElementById('particles');
+  var count = Math.min(20, Math.round(magnitude * 4));
+  var color = flavor === 'hot' ? 'rgba(196,60,42,0.6)' : 'rgba(91,160,200,0.6)';
+  for (var i = 0; i < count; i++) {
+    var p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = 35 + Math.random() * 30 + '%';
+    p.style.top = 40 + Math.random() * 20 + '%';
+    p.style.width = p.style.height = (3 + Math.random() * 4) + 'px';
+    p.style.background = color;
+    p.style.animationDuration = (2 + Math.random() * 2) + 's';
+    p.style.animationDelay = (Math.random() * 0.3) + 's';
+    container.appendChild(p);
+    (function(el) { setTimeout(function() { el.remove(); }, 4500); })(p);
+  }
+}
+
+// ─── Voice ──────────────────────────────────────────────────
+function initSpeech() {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return;
+  recognition = new SR();
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.lang = 'en-US';
+  recognition.onresult = function(e) {
+    var final = '', interim = '';
+    for (var i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) final += e.results[i][0].transcript;
+      else interim += e.results[i][0].transcript;
+    }
+    var input = document.getElementById('userInput');
+    if (final) { input.value = final; stopMic(); send(); }
+    else { input.value = interim; }
+  };
+  recognition.onerror = function() { stopMic(); };
+  recognition.onend = function() { if (isRecording) stopMic(); };
+}
+
+function toggleMic() { if (isRecording) stopMic(); else startMic(); }
+
+function startMic() {
+  if (!recognition) initSpeech();
+  if (!recognition) return;
+  isRecording = true;
+  document.getElementById('micBtn').classList.add('recording');
+  document.getElementById('userInput').placeholder = 'listening...';
+  recognition.start();
+}
+
+function stopMic() {
+  isRecording = false;
+  document.getElementById('micBtn').classList.remove('recording');
+  document.getElementById('userInput').placeholder = 'talk to it';
+  if (recognition) try { recognition.stop(); } catch(e) {}
+}
+
+initSpeech();
+
+// ─── Send ───────────────────────────────────────────────────
+async function send() {
+  var input = document.getElementById('userInput');
+  var text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+
+  // Measure
+  var reading = measureTurn(text);
+  sessionEnergy.push(reading);
+
+  // Delta
+  var now = Date.now();
+  var intervalMs = lastMsgTime ? (now - lastMsgTime) : null;
+  var delta = computeDelta(reading, previousReading, intervalMs);
+  if (delta) deltaBuffer.push(delta);
+  previousReading = reading;
+  lastMsgTime = now;
+
+  // Update orb
+  updateOrb(sessionEnergy, delta);
+  flashOrb(delta);
+
+  // Show thinking
+  var resp = document.getElementById('response');
+  resp.className = 'response visible thinking';
+  resp.textContent = delta && delta.level === 'high' && delta.dEnergy < -2
+    ? 'sitting with that' : 'thinking';
+
+  currentTurns.push({role:'user', text: text});
+
+  // Build context
+  var deltaCtx = buildDeltaContext();
+  var payload = {
+    identityId: 'companion',
+    message: text,
+    sessionId: sessionId
+  };
+  if (deltaCtx) payload.memoryContext = deltaCtx;
+
+  try {
+    var res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    var data = await res.json();
+
+    if (data.response) {
+      resp.className = 'response visible';
+      resp.textContent = data.response;
+      currentTurns.push({role:'ai', text: data.response});
+    } else {
+      resp.className = 'response visible';
+      resp.textContent = '';
+    }
+  } catch(e) {
+    resp.className = 'response visible';
+    resp.textContent = '';
+  }
+
+  input.focus();
+}
+
+// ─── Passive Mode ───────────────────────────────────────────
+// Tap the orb to toggle. Mic stays open continuous.
+// No API calls. No text. Just the orb reading the room
+// through raw audio energy. Pure dark circuit.
+
+function togglePassive() {
+  if (passiveMode) exitPassive();
+  else enterPassive();
+}
+
+async function enterPassive() {
+  passiveMode = true;
+  document.body.classList.add('passive');
+  document.getElementById('modeTag').textContent = 'listening';
+  passiveEnergy = [];
+  lastPassiveReading = null;
+
+  // Stop any active text mic
+  if (isRecording) stopMic();
+
+  // Open raw audio stream
+  try {
+    micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    // Resume context (required on mobile after user gesture)
+    if (audioCtx.state === 'suspended') await audioCtx.resume();
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 256;
+    analyser.smoothingTimeConstant = 0.7;
+    var source = audioCtx.createMediaStreamSource(micStream);
+    source.connect(analyser);
+
+    // Sample audio energy every 500ms
+    passiveInterval = setInterval(sampleAudio, 500);
+  } catch(e) {
+    // Mic denied or not available — show message and exit
+    document.getElementById('modeTag').textContent = 'mic needed';
+    setTimeout(function() { exitPassive(); }, 1500);
+  }
+}
+
+function exitPassive() {
+  passiveMode = false;
+  document.body.classList.remove('passive');
+  document.getElementById('modeTag').textContent = 'active';
+
+  if (passiveInterval) { clearInterval(passiveInterval); passiveInterval = null; }
+  if (micStream) { micStream.getTracks().forEach(function(t) { t.stop(); }); micStream = null; }
+  if (audioCtx) { audioCtx.close(); audioCtx = null; }
+  analyser = null;
+
+  // Reset vol ring
+  var ring = document.getElementById('volRing');
+  ring.classList.remove('active');
+  ring.style.transform = '';
+}
+
+var smoothedEnergy = 0;
+var smoothedCentroid = 0.5;
+var sampleCount = 0;
+
+function sampleAudio() {
+  if (!analyser) return;
+
+  // Get frequency data
+  var data = new Uint8Array(analyser.frequencyBinCount);
+  analyser.getByteFrequencyData(data);
+
+  // RMS energy
+  var sum = 0;
+  for (var i = 0; i < data.length; i++) sum += data[i] * data[i];
+  var rms = Math.sqrt(sum / data.length);
+
+  // More sensitive normalization: speaking voice is ~30-60 RMS
+  var rawEnergy = Math.min(10, (rms / 50) * 10);
+
+  // Exponential smoothing (alpha=0.3) — responds to sustained changes, ignores jitter
+  smoothedEnergy = smoothedEnergy * 0.7 + rawEnergy * 0.3;
+
+  // Spectral centroid: bright vs dark tone
+  var weightedSum = 0, totalWeight = 0;
+  for (var j = 0; j < data.length; j++) {
+    weightedSum += j * data[j];
+    totalWeight += data[j];
+  }
+  var centroid = totalWeight > 0 ? weightedSum / totalWeight / data.length : 0.5;
+  smoothedCentroid = smoothedCentroid * 0.7 + centroid * 0.3;
+  var compression = Math.min(1, smoothedCentroid * 2.5);
+
+  var reading = {
+    energy: smoothedEnergy,
+    compression: compression,
+    wps: smoothedEnergy * 0.8,
+    wc: Math.round(smoothedEnergy * 3)
+  };
+
+  passiveEnergy.push(reading);
+  if (passiveEnergy.length > 30) passiveEnergy.shift();
+
+  // Compute delta every 4th sample (2 seconds) — gives time for real changes
+  sampleCount++;
+  var delta = null;
+  if (sampleCount % 4 === 0) {
+    delta = computeDelta(reading, lastPassiveReading, 2000);
+    lastPassiveReading = reading;
+
+    if (delta) {
+      deltaBuffer.push(delta);
+      if (deltaBuffer.length > 60) deltaBuffer.shift();
+    }
+  }
+
+  // Always update orb color smoothly, but only flash on delta ticks
+  updateOrb(passiveEnergy, delta);
+  if (delta) flashOrb(delta);
+
+  // Volume ring: real-time visual feedback
+  var ring = document.getElementById('volRing');
+  if (rawEnergy > 0.3) {
+    ring.classList.add('active');
+    var s = 1 + (rawEnergy / 10) * 0.1;
+    ring.style.transform = 'scale(' + s + ')';
+    ring.style.borderColor = 'rgba(255,255,255,' + (0.04 + rawEnergy * 0.025) + ')';
+  } else {
+    ring.classList.remove('active');
+    ring.style.transform = 'scale(1)';
+  }
+}
+</script>
+
+</body>
+</html>
