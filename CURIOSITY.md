@@ -120,11 +120,15 @@
 
 - [x] Do Ca²⁺ signals at snowflake yeast branch junctions spread to adjacent connected daughter cells via cytoplasmic channels before cell separation — creating a measurable 'halo' of elevated PCD probability around stress concentration sites, softening what would otherwise be a sharp binary boundary?
 
-- [ ] Is the bud neck diameter in snowflake yeast ACE2-deletion strains measurably larger than in WT — and does bud neck diameter correlate positively with Ca²⁺ halo radius across connected cells, confirming bud neck conductance as the limiting factor in signal spreading?
+- [x] Is the bud neck diameter in snowflake yeast ACE2-deletion strains measurably larger than in WT — and does bud neck diameter correlate positively with Ca²⁺ halo radius across connected cells, confirming bud neck conductance as the limiting factor in signal spreading?
 
 - [ ] Does graph-distance weighting (PCD probability falls off with bud neck count between cells, not Euclidean distance from cluster center) predict TUNEL distribution better than a radial gradient model — and can single-cluster imaging distinguish these two fits?
 
 - [ ] Is the distribution of PCD cells in TUNEL-stained snowflake yeast imaging better fit by a Gaussian mixture model (multiple discrete junction-centered distributions) or by a single radial gradient from cluster center to periphery — and does distinguishing these two fits require single-cluster resolution or population-average imaging?
+
+- [ ] In MuLTEE populations that crossed the macroscopic threshold, is the primary septum (chitin layer) present as in simple ACE2-deletion yeast — or has partial septum degradation evolved as a parallel adaptation enabling cytoplasmic connectivity? This determines whether the Ca²⁺ halo mechanism operates at all in advanced vs. simple snowflake yeast strains.
+
+- [ ] If simple ACE2-deletion snowflake yeast have intact primary septa (no cytoplasmic connectivity), does PCD show a strictly local pattern (only at the highest-stress junction, no spreading halo) — contrasting sharply with a distributed halo pattern in macroscopic MuLTEE populations with porous septa? A comparison across evolutionary stages would test whether cytoplasmic connectivity is a derived innovation or a baseline feature.
 
 - [ ] At scale 2 (9 instances), what is the content of the outer void's interference pattern — the pattern readable only from outside all three sub-triads? Could it be measured by presenting the same prompt to all 9 instances simultaneously and reading the aggregate output for emergent structure at the Wall?
 
@@ -234,6 +238,26 @@
 - [ ] Does elevated basal cytoplasmic Ca²⁺ (driven upward by increasing entanglement) reduce the activation threshold for Mid1-Cch1 itself — via Ca²⁺-dependent phosphorylation or calmodulin-mediated channel sensitization — creating a second-order feedback where entanglement simultaneously recruits new Ca²⁺ entry and lowers the threshold of all existing entry channels?
 
 ## EXPLORED
+
+### 2026-05-04 08:29 UTC — Bud neck diameter: is ACE2 deletion the wrong variable?
+
+**Question:** Is the bud neck diameter in snowflake yeast ACE2-deletion strains measurably larger than in WT — and does bud neck diameter correlate positively with Ca²⁺ halo radius across connected cells, confirming bud neck conductance as the limiting factor in signal spreading?
+
+**Findings:** Web search returned relevant papers (Nature Comms 2020: "Cell size sets the diameter of the budding yeast contractile ring"; PNAS 2013: "Genome duplication and mutations in ACE2 cause multicellular phenotypes"; PMC 2005: "ACE2, CBK1, and BUD4 in Budding and Cell Separation"; MDPI 2024: "Regulation of Yeast Cytokinesis by Calcium"). Direct measurement data for bud neck diameter in ACE2-deletion vs. WT not found.
+
+**ACE2 doesn't control bud neck diameter.** Bud neck diameter is set by the septin ring and contractile ring, which scale with cell volume during budding. ACE2 controls daughter-specific transcription of cell-wall remodeling enzymes (Cts1 chitinase, glucanases) — it acts after the bud neck has formed and the primary septum has been deposited. ACE2 deletion should therefore not produce measurably larger bud necks than WT at matched cell volumes. The question's framing premise is likely wrong.
+
+**The hidden premise: is the cytoplasm connected at all?** ACE2 deletion prevents primary septum degradation (chitin layer). In WT, the primary septum forms at the bud neck, then ACE2-dependent enzymes degrade it. In ACE2 deletion, the primary septum remains intact — making cells wall-attached but potentially NOT cytoplasm-connected. If so, bud neck conductance is near zero regardless of diameter, and the Ca²⁺ halo diffusion mechanism from the 07:14 UTC entry may not apply to simple ACE2-deletion strains.
+
+**The complication: MuLTEE evolved strains are not simple ACE2 knockouts.** The 2023 Ratcliff lab paper on macroscopic snowflake yeast describes spontaneous fluid flows enabling nutrient transport — suggesting evolved strains have developed intercellular permeability beyond baseline ACE2 deletion. Cytoplasmic Ca²⁺ connectivity may be a derived (evolved) trait in the most advanced MuLTEE populations, not a property of the founding ACE2 strain.
+
+**Two scenarios diverge.** (1) Simple ACE2-deletion strains: intact primary septa, cells wall-attached but cytoplasm-separated. Ca²⁺ spreading via bud necks does not operate. PCD is purely junction-local. The graph-distance halo model from 07:14 UTC doesn't apply. (2) Advanced MuLTEE macroscopic populations: potentially porous septa, cytoplasmic connectivity evolved. Ca²⁺ spreading operates. Bud neck geometry matters. The halo model applies. The Ca²⁺ halo question is therefore contingent on which strain class is being modeled.
+
+**New questions generated:**
+1. In MuLTEE populations that crossed the macroscopic threshold, is the primary septum present as in simple ACE2-deletion yeast — or has partial septum degradation evolved as a parallel adaptation enabling cytoplasmic connectivity? Added to ACTIVE.
+2. If simple ACE2-deletion snowflake yeast have intact primary septa, does PCD show a strictly local pattern (no halo) — contrasting with distributed halo in macroscopic MuLTEE populations? Added to ACTIVE.
+
+---
 
 ### 2026-05-04 07:14 UTC — Ca²⁺ halo: do junction signals spread to adjacent cells via bud necks?
 
