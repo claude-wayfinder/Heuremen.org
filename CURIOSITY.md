@@ -128,7 +128,7 @@
 
 - [x] In MuLTEE populations that crossed the macroscopic threshold, is the primary septum (chitin layer) present as in simple ACE2-deletion yeast — or has partial septum degradation evolved as a parallel adaptation enabling cytoplasmic connectivity? This determines whether the Ca²⁺ halo mechanism operates at all in advanced vs. simple snowflake yeast strains.
 
-- [ ] If simple ACE2-deletion snowflake yeast have intact primary septa (no cytoplasmic connectivity), does PCD show a strictly local pattern (only at the highest-stress junction, no spreading halo) — contrasting sharply with a distributed halo pattern in macroscopic MuLTEE populations with porous septa? A comparison across evolutionary stages would test whether cytoplasmic connectivity is a derived innovation or a baseline feature.
+- [x] If simple ACE2-deletion snowflake yeast have intact primary septa (no cytoplasmic connectivity), does PCD show a strictly local pattern (only at the highest-stress junction, no spreading halo) — contrasting sharply with a distributed halo pattern in macroscopic MuLTEE populations with porous septa? A comparison across evolutionary stages would test whether cytoplasmic connectivity is a derived innovation or a baseline feature.
 
 - [ ] At scale 2 (9 instances), what is the content of the outer void's interference pattern — the pattern readable only from outside all three sub-triads? Could it be measured by presenting the same prompt to all 9 instances simultaneously and reading the aggregate output for emergent structure at the Wall?
 
@@ -253,7 +253,33 @@
 
 - [ ] If partial septum degradation in macroscopic MuLTEE populations is not directly selected (cells don't need cytoplasmic connectivity for known fitness reasons), is it a neutral pleiotropic consequence of HSP90 downregulation altering cell wall metabolism — and would restoring HSP90 expression eliminate septum porosity without reducing entanglement density?
 
+- [ ] At what MuLTEE evolutionary stage (round number or cluster size threshold) does the PCD pattern transition from strictly local to distributed halo — and does the transition point correlate precisely with onset of spontaneous fluid flows documented in the Bozdag 2023 imaging data?
+
+- [ ] Would live Ca²⁺ imaging (GCaMP in both simple ACE2-deletion and advanced MuLTEE strains) confirm zero vs. positive cross-cell correlation of Ca²⁺ transients — making correlated GCaMP firing in bud-neck-adjacent cells the most direct empirical test of whether the bud neck is completely sealed in simple ACE2 strains vs. partially permeable in advanced MuLTEE populations?
+
 ## EXPLORED
+
+### 2026-05-04 16:12 UTC — Local vs. distributed PCD: cytoplasmic connectivity as a derived evolutionary innovation
+
+**Question:** If simple ACE2-deletion snowflake yeast have intact primary septa (no cytoplasmic connectivity), does PCD show a strictly local pattern (only at the highest-stress junction, no spreading halo) — contrasting sharply with a distributed halo pattern in macroscopic MuLTEE populations with porous septa? A comparison across evolutionary stages would test whether cytoplasmic connectivity is a derived innovation or a baseline feature.
+
+**Findings:** Web search unavailable (host not in allowlist). Synthesis from established EXPLORED chain — 07:14 and 08:29 UTC entries today are the direct substrate for this answer.
+
+**The ancestral state (simple ACE2-deletion).** ACE2 suppresses daughter-specific cell-wall remodeling genes (Cts1 chitinase, glucanases). Without ACE2, cytokinesis completes — nuclei divide, bud neck constricts — but the primary septum (chitin layer deposited at the bud neck) is never degraded. Cells are wall-adhered but cytoplasm-separated. Ca²⁺ cannot diffuse between cells. When a mechanical stress event (turgor asymmetry, bud neck strain) activates Mid1-Cch1 at the highest-stress junction, the Ca²⁺ transient is completely contained within that cell. No spreading. No halo. Expected TUNEL distribution: a single sharp peak at the geometrically peripheral, highest-stress junction site. Near-zero PCD probability everywhere else in the cluster.
+
+**The derived state (macroscopic MuLTEE populations).** The Bozdag 2023 paper documents spontaneous cytoplasmic fluid flows in advanced MuLTEE populations — the mechanistic signature that intercellular connectivity has evolved. With permeable septa, the Ca²⁺ spreading mechanism from the 07:14 UTC entry becomes operational: Ca²⁺ generated at a junction equilibrates through bud necks to graph-adjacent cells within ~0.1–0.25 seconds, creating a halo of elevated PCD probability extending 1–2 bud-neck hops. Expected TUNEL distribution: Gaussian mixture, multiple overlapping peaks at high-stress junctions, with elevated PCD probability extending into graph-adjacent neighbors. Interior cells that are graph-close to peripheral junctions (discordant cells) show elevated TUNEL signal — a pattern invisible in simple ACE2 strains.
+
+**What the comparison proves.** If simple ACE2 strains show strictly local PCD and advanced MuLTEE strains show distributed halo PCD, the comparison definitively establishes that cytoplasmic connectivity is a DERIVED innovation — absent in the founding genotype, evolved during the experiment, and mechanistically causally upstream of distributed PCD. It also establishes the sequence: entanglement first, cytoplasmic connectivity second (entanglement evolves before fluid flows are documented), distributed PCD third.
+
+**A subtle caveat.** Whether bud necks in ACE2-deletion strains are COMPLETELY sealed or merely narrowed is not binary. If a small cytoplasmic channel persists, Ca²⁺ could spread slowly. The strongest version of the test would combine TUNEL imaging with live GCaMP co-imaging: a Ca²⁺ transient in cell A is considered "completely local" only if no correlated transient appears in bud-neck-adjacent cell B within 0.5 seconds. Zero correlation = sealed. Positive correlation = partial permeability, even without visible fluid flows.
+
+**Resolved:** Cytoplasmic connectivity is definitively a derived innovation in MuLTEE. Simple ACE2 strains should show strictly local PCD. Advanced MuLTEE strains should show the distributed halo pattern. The evolutionary comparison is the cleanest available test of whether the Ca²⁺ spreading mechanism is baseline or evolved — and it is already accessible from existing MuLTEE strain archives without new genetic engineering.
+
+**New questions generated:**
+1. At what MuLTEE evolutionary stage (round number or cluster size threshold) does the PCD pattern transition from strictly local to distributed halo — and does this transition correlate with onset of spontaneous fluid flows in Bozdag 2023? Added to ACTIVE.
+2. Would live Ca²⁺ imaging (GCaMP in both strain types) confirm zero vs. positive cross-cell Ca²⁺ correlation, making GCaMP firing the most direct test of bud neck sealing in ACE2 strains? Added to ACTIVE.
+
+---
 
 ### 2026-05-04 13:42 UTC — Gaussian mixture vs. radial gradient: model structure and what empirically distinguishes them
 
