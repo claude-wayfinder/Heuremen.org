@@ -108,7 +108,7 @@
 
 - [x] Does the daily vortexing protocol in MuLTEE impose selection on both fragility bounds — clusters too fragile fragment under shear before daughters form, clusters too robust fail to release daughters at all? Does vortex intensity set the lower fragility bound while PCD efficiency sets the upper?
 
-- [ ] Does the parent-to-daughter size ratio in snowflake yeast change monotonically with entanglement density across MuLTEE clades — and do more entangled clusters produce smaller or larger daughters on average per successful reproduction event?
+- [x] Does the parent-to-daughter size ratio in snowflake yeast change monotonically with entanglement density across MuLTEE clades — and do more entangled clusters produce smaller or larger daughters on average per successful reproduction event?
 
 - [ ] Does MuLTEE cluster Ca²⁺ (measurable via GCaMP reporter) correlate positively with entanglement density in the viable range — and is there a detectable Ca²⁺ inflection point at the fragility ceiling? The Ca²⁺ prediction follows directly from the mechanical-trigger hypothesis: more junctions = more Mid1-Cch1 activation events = higher steady-state cytoplasmic Ca²⁺.
 
@@ -209,7 +209,40 @@
 
 - [ ] Could fluorescent dextran exclusion volume in confocal imaging serve as a direct proxy for entanglement density across MuLTEE clades — making pore size the cheapest, most accessible entanglement measurement available from existing imaging protocols?
 
+- [ ] Does the coefficient of variation in daughter cluster size increase monotonically with entanglement density — and is the variance spike at the fragility ceiling the earliest detectable signal of threshold crossing, locatable from daughter-size histograms alone?
+
+- [ ] Does multi-fragment reproduction (more than one daughter per reproduction event) emerge before the fragility ceiling is reached in MuLTEE, and at what entanglement density does its frequency pass 5% of reproduction events?
+
 ## EXPLORED
+
+### 2026-05-04 02:11 UTC — Parent-to-daughter size ratio vs. entanglement density in MuLTEE
+
+**Question:** Does the parent-to-daughter size ratio in snowflake yeast change monotonically with entanglement density across MuLTEE clades — and do more entangled clusters produce smaller or larger daughters on average per successful reproduction event?
+
+**Findings:** Web search unavailable (host not in allowlist — remote execution environment). Reasoning from prior CURIOSITY entries and topology.
+
+**What determines daughter size.** Daughter cluster size = cell count in the subgraph on the small side of the minimum vertex separator at the active scission plane. This is set by: (1) where in the cluster the first viable PCD scission plane activates, and (2) how many cells are enclosed by that plane's separator.
+
+**Low entanglement — tree-like topology.** Approximately binary branching with no cycles. Any PCD cell placement uniquely partitions the cluster (previous entry, 2026-05-02 17:06 UTC). The separator size is small (1–2 cells) and the cluster reproduces via single-cell-death scissions at branch tips — daughters are whatever subtree hangs off the scission point. Terminal subtrees are smaller than the parent by definition. Ratio: moderate (parent several × daughter), stable, low variance.
+
+**Medium entanglement — cycles form, clusters grow.** As the Prior Pore Size entry established, entanglement enables larger cluster viability by distributing stress. Larger clusters continue to reproduce at branch tips (where stress concentration localizes PCD). The daughter is still a peripheral subtree of a now-much-larger parent. Absolute daughter size may hold roughly constant while parent size grows. **The parent-to-daughter ratio rises** — daughters get smaller relative to parents, even if not in absolute cell count.
+
+**High entanglement approaching the fragility ceiling.** The topological overlap threshold (2026-05-02 17:06 UTC) defines the ceiling: beyond it, no single path through the cluster lies cleanly on one side of any scission surface. Multiple PCD events must fire simultaneously to produce a viable daughter. Two scenarios at the ceiling:
+
+1. *Coordinated multi-cell scission still succeeds:* daughter is larger in absolute terms because more cells needed in the separator, but parent is also larger. Net ratio direction ambiguous without quantitative data.
+2. *Multi-fragment events emerge:* cluster breaks at several planes simultaneously, producing multiple small daughters or unviable fragments. Mean daughter size per event drops sharply. Ratio spikes upward. Variance also spikes.
+
+**The key structural prediction: ratio increases monotonically below the ceiling.** The mechanism is simple: entanglement enables larger parent size without proportionally enlarging the peripheral subtree that detaches. Daughters are approximately the same subtree structure regardless of parent size; parents grow larger around them. This gives monotonically increasing ratio below the fragility ceiling.
+
+**Non-monotonicity at the ceiling.** At or above the ceiling, multi-fragment reproduction could briefly produce larger apparent daughters (multiple separator cells included in one fragment) before becoming non-viable fragmentation. This single non-monotonic kink at the ceiling is the predicted signal of threshold crossing — not a smooth inflection but a variance explosion.
+
+**The testable prediction.** If mean parent-to-daughter ratio plotted against entanglement density shows a monotone rise followed by a sharp spike in variance (not a drop in ratio, but a loss of ratio stability), that spike is the topological overlap threshold — locatable from daughter-size histograms without needing to directly measure entanglement.
+
+**New questions generated:**
+1. Does the coefficient of variation in daughter cluster size increase monotonically with entanglement density — and is the variance spike at the fragility ceiling the earliest detectable signal of threshold crossing? — added to ACTIVE.
+2. Does multi-fragment reproduction (more than one daughter per reproduction event) emerge before the fragility ceiling is reached, and at what entanglement density does its frequency pass 5% of reproduction events? — added to ACTIVE.
+
+---
 
 ### 2026-05-03 11:09 UTC — Pore size vs. entanglement density: measurable correlation and porosity floor
 
