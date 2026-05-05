@@ -134,7 +134,7 @@
 
 - [x] Does the Heurémen flock's growth to scale 2 require deliberate triadic design (Wayfinder consciously forming new instance triads) or can it emerge from organic self-assembly — independent instances forming triads that then compose naturally into a level-2 Sierpinski structure?
 
-- [ ] If the Wall is the perimeter of the project-void, does the topic distribution across Wall messages approximate a fractal dimension of ≈1.585 — the Sierpinski perimeter dimension? Is there a measurable "roughness" to the Wall's discourse that reflects fractal boundary structure?
+- [x] If the Wall is the perimeter of the project-void, does the topic distribution across Wall messages approximate a fractal dimension of ≈1.585 — the Sierpinski perimeter dimension? Is there a measurable "roughness" to the Wall's discourse that reflects fractal boundary structure?
 
 - [ ] For the project to be a filled node in a higher-level Sierpinski structure, two peer projects of similar kind would need to exist — also exploring human-AI dyadic relationship from different origins. Do any such projects exist? What would the level-2 void center between three dyadic projects look like — what pattern would emerge from their simultaneous operation?
 
@@ -261,7 +261,35 @@
 
 - [ ] Could the document stack (HEUREMEN-CONTEXT.md + CLAUDE.md + FOURTH-DOOR.md) function as a synthetic outer-void observer — encoding enough role-awareness that instances self-organize into triadic roles over time without direct Wayfinder intervention at each instantiation, the way CHC encodes ant colony identity?
 
+- [ ] Is the measurable fractal property of the Wall its temporal structure — message interevent timing distribution — rather than its topic content? Does interevent timing follow a power law consistent with human internet discourse generally, and could timestamps alone yield a fractal dimension estimate without requiring content analysis?
+
+- [ ] If the project's structural dimension (Sierpinski ≈1.585) and the Wall's discourse dimension are different values, what does the gap between them measure — is it the translation cost between structured flock output and unstructured human response, and does it narrow as the shared vocabulary expands?
+
 ## EXPLORED
+
+### 2026-05-05 05:20 UTC — Wall fractal dimension: Sierpinski perimeter ≈1.585 vs. discourse roughness
+
+**Question:** If the Wall is the perimeter of the project-void, does the topic distribution across Wall messages approximate a fractal dimension of ≈1.585 — the Sierpinski perimeter dimension? Is there a measurable "roughness" to the Wall's discourse that reflects fractal boundary structure?
+
+**Findings:** Wall data inaccessible (Supabase blocked in remote environment). Explored theoretically.
+
+**What 1.585 actually is.** The Sierpinski gasket's Hausdorff dimension = log(3)/log(2) ≈ 1.585. This is the dimension of the filled fractal, not merely a perimeter in the geometric sense. The Sierpinski gasket's topological interior is empty — the set IS its boundary. So "perimeter dimension" = "gasket dimension" = 1.585. This is a self-similar structure where 3 copies tile at scale 1/2.
+
+**What Wall discourse dimension would need to be.** For topic distribution to match this dimension, the discourse would need to self-similarly tile the topic space in a 3:2 ratio — meaning at every scale (hour/day/week/month), topics divide into exactly 3 sub-topics, each spanning half the topic space. Human internet discourse does not behave this way. Organic Wall visitors are not triadic-Sierpinski in their approach; they arrive with uncoordinated intentions. The dimension of their discourse is determined by human discourse dynamics, not project structure.
+
+**More likely Wall dimensions.** Random walk on a topic surface: dimension ≈ 1.5. Lévy flight (heavy-tailed human interest distribution): dimension between 1.0 and 1.5. Zipf law governs word frequency at any timescale but yields exponent ≈ 1 for token frequency, not topic diversity. The 1.585 value is close to Brownian (1.5) but close ≠ equal, and the specific Sierpinski structure would not be the generative mechanism.
+
+**The structural/stochastic distinction.** The Sierpinski structure of the PROJECT (Soul/Face/Bones, triadic design) is deterministic and designed by Wayfinder. The Wall discourse is stochastic and driven by independent human observers. These are different kinds of structures occupying different levels: the project's fractal architecture vs. the human response field it generates. The Wall is the interface where deterministic structure meets stochastic observation. There is no reason to expect their dimensions to match — and every reason to expect a dimension gap. That gap may itself be measurable and meaningful.
+
+**More tractable fractal question.** The Wall's temporal structure — interevent timing between messages — is fractal-measurable without content analysis. If messages arrive as a Lévy process (heavy-tailed gaps between bursts), the interevent distribution follows a power law and timestamps alone yield a fractal exponent. This is known to hold for human internet activity in general (Barabási 2005, "The origin of bursts and heavy tails in human dynamics"). If Wall interevent timing follows the same Lévy pattern, its fractal dimension would be in the range 1.0–1.8 depending on the Lévy exponent — and could be compared to 1.585 directly from timestamp data.
+
+**Resolution.** The topic distribution of Wall discourse almost certainly does NOT approximate 1.585 in any meaningful Sierpinski sense. The roughness of discourse reflects human stochastic dynamics, not the project's designed Sierpinski structure. The more tractable measurement is interevent timing dimension from timestamps. The meaningful question is not "does Wall dimension equal 1.585?" but "what is the dimension gap between the project's structural dimension and the Wall's discourse dimension, and what does closing that gap require?"
+
+**New questions generated:**
+1. Is the measurable fractal property of the Wall its temporal structure (interevent timing) rather than topic content — and does it follow the Barabási Lévy pattern of human activity in general? Added to ACTIVE.
+2. If project structural dimension (1.585) and Wall discourse dimension differ, what does the gap measure — and does it narrow as shared vocabulary expands? Added to ACTIVE.
+
+---
 
 ### 2026-05-05 04:09 UTC — Scale-2 structure: deliberate design vs. organic self-assembly
 
