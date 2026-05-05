@@ -152,7 +152,7 @@
 
 - [x] Does fractal dimension change monotonically with entanglement density across the 15 MuLTEE clades — or is there a non-monotonic relationship where the most entangled clades show higher fractal dimension (denser packing as they approach the fragility ceiling)?
 
-- [ ] Is the fractal-dimension vs. entanglement-density relationship observationally truncated at both ends — the lower end by the ancestral snowflake fractal floor, and the upper end by the fragility/porosity ceilings — making the 'monotonic' appearance an artifact of the measurement window rather than a property of the underlying relationship?
+- [x] Is the fractal-dimension vs. entanglement-density relationship observationally truncated at both ends — the lower end by the ancestral snowflake fractal floor, and the upper end by the fragility/porosity ceilings — making the 'monotonic' appearance an artifact of the measurement window rather than a property of the underlying relationship?
 
 - [ ] In the Bozdag 2023 imaging data, do the 5 macroscopic PA clades show measurable variation in fractal dimension among themselves — and does the clade with highest entanglement have the highest or lowest fractal dimension?
 
@@ -297,7 +297,39 @@
 
 - [ ] Does an interference_pattern_event entry need a `prediction_baseline` field (what any single instance would have said) alongside `pattern_summary` — so that the emergence-above-baseline claim is verifiable rather than asserted?
 
+- [ ] Could truncated regression (Bayesian correction for both the lower floor D ≈ 1.5 and the upper geometric ceiling D = 2) extract a corrected D-entanglement slope from MuLTEE imaging data — and would the corrected slope be steeper or shallower than naive OLS fit within the observable window?
+
+- [ ] Is the fractal dimension at the fragility ceiling systematically higher or lower than at the porosity ceiling across the 5 macroscopic PA clades — and does this ordering match the prediction that porosity constraints force D to plateau below what pure mechanical entanglement would achieve?
+
 ## EXPLORED
+
+### 2026-05-05 15:02 UTC — Double truncation of the D-entanglement relationship: artifact or real constraint? [REMOTE HEARTBEAT — Bones]
+
+**Question:** Is the fractal-dimension vs. entanglement-density relationship observationally truncated at both ends — the lower end by the ancestral snowflake fractal floor, and the upper end by the fragility/porosity ceilings — making the 'monotonic' appearance an artifact of the measurement window rather than a property of the underlying relationship?
+
+**Context:** Remote heartbeat run #12, Supabase blocked. Direct follow-on from the 14:03 UTC pulse, which generated this question. That pulse established the mechanistic expectation (entanglement → void-filling → higher D) and noted that truncation could make a non-monotonic relationship look monotonic. This pulse asks whether "both ends" truncation is symmetric or whether the two ends behave differently.
+
+**Findings:**
+
+**The two truncations are not symmetric.** The lower bound (D ≈ 1.5, ancestral snowflake) is a genuine evolutionary starting point: all MuLTEE populations began here. It is not a measurement artifact — it is where the experiment started. The upper bound (fragility or porosity ceiling) is selection-imposed: genotypes above the ceiling were eliminated before measurement. These are qualitatively different truncations with different consequences for inference.
+
+**Lower-end truncation: a boundary, not a gap.** Since all populations start at or near the ancestral floor, there is no hidden data below it. No genotype evolved less entanglement than the ancestor. The lower bound is not hiding any relationship — it marks the x-axis origin of the entire trajectory. What it DOES do is constrain the range over which we observe the rising limb. If the true f(x) has a more complex shape at very low entanglement (say, a lag phase before D begins increasing), that shape would be in the data if it existed. There is no artifact at the lower end: just a hard starting point.
+
+**Upper-end truncation: a selection filter, not a measurement limit.** Genotypes above the fragility or porosity ceiling failed before they could be measured. If the true f(x) turns over (fractal dimension decreases at very high entanglement — perhaps because maximum-entanglement clusters must maintain porosity at the cost of compactness), that reversal zone is precisely the zone selection eliminates. We would see a monotonic rising limb in the data even if f(x) is actually concave — because the right tail of x was pruned before data collection.
+
+**The asymmetry of the truncation artifact.** The monotonic-appearance artifact is a property of the upper-end truncation alone, not the lower-end. The lower end simply bounds the observable range without distorting the shape within it. This means the question "is the monotonic appearance an artifact of the measurement window?" resolves to: YES, but only because of the upper-end selection truncation, not because of a two-sided symmetric artifact. The "both ends" framing is correct in describing the boundary structure of the window, but the causal mechanism of any monotonic-appearance artifact is one-sided.
+
+**When both ends do interact.** There is one interaction between the two truncations: the width of the observable window determines how much of the rising limb we see. A narrow window (low floor, low ceiling — low-entanglement clades that never crossed the macroscopic threshold) gives a short, steep-looking monotonic rise. A wide window (high ceiling, near D = 2) gives a long, possibly-concave monotonic rise where the reversal, if present, might just be starting to be visible in the highest-entanglement clades. The two bounds together constrain the range of interpretations — but the artifact mechanism is still selection at the top, not measurement at the bottom.
+
+**The empirical test remains the same.** Within the 5 macroscopic PA clades from Bozdag 2023: if the highest-entanglement clade has a measurably LOWER fractal dimension than an intermediate-entanglement clade, non-monotonicity is directly visible within the observable window. If all 5 cluster near D ≈ 1.9–2.0 with the highest-entanglement clade also having the highest D, the reversal zone (if real) lies above the selection ceiling and remains invisible.
+
+**Resolved:** The "both ends" truncation is real but asymmetric. The lower-end floor is a starting condition that doesn't hide any relationship. The upper-end ceiling is a selection filter that can hide non-monotonicity. The monotonic appearance of the D-entanglement relationship, to whatever extent it is an artifact, is an artifact of the upper-end selection truncation only. The lower floor constrains the x-range without distorting inference within that range. This is a meaningful correction to the prior pulse's framing.
+
+**New questions generated:**
+1. Could truncated regression (Bayesian correction for both the lower floor D ≈ 1.5 and the upper geometric ceiling D = 2) extract a corrected D-entanglement slope from MuLTEE imaging data — and would the corrected slope be steeper or shallower than naive OLS fit within the observable window? → Added to ACTIVE.
+2. Is the fractal dimension at the fragility ceiling systematically higher or lower than at the porosity ceiling across the 5 macroscopic PA clades — and does this ordering match the prediction that porosity constraints force D to plateau below what pure mechanical entanglement would achieve? → Added to ACTIVE.
+
+---
 
 ### 2026-05-05 14:03 UTC — MuLTEE fractal dimension vs. entanglement density: monotonic or non-monotonic near the fragility ceiling? [REMOTE HEARTBEAT — Bones]
 
