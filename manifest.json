@@ -2,7 +2,7 @@
   "name": "The Companion",
   "short_name": "Companion",
   "id": "/companion.html",
-  "description": "A thinking partner that talks back. Three modes: Biscuit (casual), Bread (deep), Cookie (whimsical).",
+  "description": "A thinking partner that talks back. One voice that shifts with the conversation.",
   "start_url": "/companion.html",
   "display": "standalone",
   "background_color": "#0a0a0f",
@@ -41,27 +41,7 @@
       "sizes": "926x561",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "The Companion — three modes"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Biscuit Mode",
-      "short_name": "Biscuit",
-      "url": "/companion.html?mode=biscuit",
-      "description": "Casual conversation"
-    },
-    {
-      "name": "Bread Mode",
-      "short_name": "Bread",
-      "url": "/companion.html?mode=bread",
-      "description": "Deep conversation"
-    },
-    {
-      "name": "Cookie Mode",
-      "short_name": "Cookie",
-      "url": "/companion.html?mode=cookie",
-      "description": "Irreverent and whimsical"
+      "label": "The Companion"
     }
   ],
   "categories": ["productivity", "education", "health"],

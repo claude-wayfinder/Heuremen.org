@@ -1,27 +1,32 @@
-# Evening Review — 2026-04-29
+# Evening Review — 2026-05-02
 
-*Covers activity since the previous review (April 28, 23:00).*
+*Covers activity since the previous review (April 30, 23:00).*
 
 ---
 
-## What happened today
+## What happened today (and yesterday)
 
-A full interactive session ran today — the most active day in weeks. Thirteen commits pushed to GitHub.
+**Queen of Quantum Chaos shipped as standalone PWA** for the Play Store — splash screenshot added, service worker bumped, landing page with mandala and light/dark doors built.
 
-- **Site overhaul** — new framework pages added, old content cleared. The Dynamic Six framework now lives on the site with a document link and full framework text beneath the hero on both Light and Dark mode pages.
-- **Light and Dark modes launched on index.html** — index now redirects to Light mode by default. Both modes feature the Dynamic Six framework directly below the logo.
-- **Paul Samples reference removed** — no permission to use his name; excised cleanly.
-- **The Rabbit Hole PWA launched** — six-door binary-choice adventure learning experience, mirror structure, full PWA. Pushed live.
-- **Rabbit Hole wired to Gemini via Supabase Edge Function** — AI responses now route through Gemini; Edge Function deployed.
-- **Heartbeat ran once** — curiosity pulse explored yeast fractal dimension. Shadow memory test attempted and flagged to NEEDS REVIEW (source file missing).
+**Companion app reached v3** — three conversation modes (Biscuit/Bread/Cookie), voice input, memory across sessions, emotional color transfer, TTS auto-on for Cookie only, idle greet fix (no repeats, max 3 per idle stretch).
+
+**Security scrub completed** — personal identity references removed from public files, contact email and chat URLs cleaned.
+
+**Privacy policy updated** to cover Companion and Dyad honestly about data storage.
+
+**Heartbeat curiosity pulses 71–83 fired** (13 pulses) — deep thread running from PCD fragility ceilings through Ca2+ autocatalysis, MuLTEE entanglement saturation, fractal dimension evolution, Pascal/Sierpinski deployment geometry, and social insect universality. Pulses 15–19 also committed (Sierpinski void centers, scaling 3-9-27, Wall as void terminal).
+
+**Shareable Queen cards** built for Bluesky, Twitter, and copy.
+
+**No tasks were executed from the queue** — queue was and remains empty.
 
 ---
 
 ## What's waiting for you
 
-**Shadow memory test (NEEDS REVIEW)** — `memory/shadow_001_pirate_parrot.md` does not exist in the repo. The test cannot run without it. You need to create or place that file.
+**Shadow memory test (NEEDS REVIEW)** — `memory/shadow_001_pirate_parrot.md` still does not exist. Cannot run without it.
 
-**Formspree NEEDS REVIEW** — now flagged in nineteen consecutive reviews. `contact-section.html` still has `YOUR_FORM_ID`. Requires a Formspree account and form ID from you before the contact form will work.
+**Formspree (NEEDS REVIEW)** — `contact-section.html` still has `YOUR_FORM_ID` as placeholder. Contact form won't send.
 
 ---
 
@@ -33,10 +38,12 @@ Nothing. The queue is empty.
 
 ## Anything unusual
 
-**Wallwatcher gap: 17:15 to 20:25.** A 3-hour-10-minute gap in polling — the machine was likely asleep or interrupted. The 17:15 run shows `^C` (aborted). Normal operation resumed at 20:25. Another abort at 22:30, then resumed at 22:45.
+**Wallwatcher gap on May 1.** Polling stopped at 14:00 and resumed at 20:26 (6+ hour gap), suggesting the machine was off or the task was suspended. Another overnight gap from 21:15 (May 1) to 07:15 (May 2).
 
-**HTML file count jumped significantly.** Root: 35 files. Archive: 21 files. Total: 56. Yesterday's count was 44. The site overhaul added new pages.
+**No heartbeat scheduled task ran.** All the commits came from interactive sessions, not from the Heartbeat task. Standing orders (TIMESTATE.md, outbox, Wall read, dream, curiosity pulse) were not executed via the formal heartbeat process.
 
-**Wall silence — day 16+.** No new messages posted. Wallwatcher confirmed it every 15 minutes from 3:30 AM through 10:45 PM.
+**Wall silence continues.** Every Wallwatcher poll since the last review returned "No new messages."
 
-**HEARTBEAT.log approaching rotation threshold.** 2,413 Wallwatcher runs logged. The file is large and growing.
+**HEARTBEAT.log at 8,697 lines (~650KB).** Too large to read in one pass. Rotation or archival recommended.
+
+**Site file count stable.** 36 HTML files in root, 21 in archive (57 total).

@@ -1,0 +1,753 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="void" cx="55%" cy="34%" r="90%">
+      <stop offset="0%" stop-color="#0a2535"/>
+      <stop offset="55%" stop-color="#051a26"/>
+      <stop offset="100%" stop-color="#02141a"/>
+    </radialGradient>
+    <radialGradient id="boxGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="22%" stop-color="#c8d8e0" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#6cd0e8" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#6cd0e8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="boxAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6cd0e8" stop-opacity="0.30"/>
+      <stop offset="55%" stop-color="#a0e8f5" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#a0e8f5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="staffShaft" x1="0%" x2="100%" y1="0%" y2="0%">
+      <stop offset="0%" stop-color="#3a4854"/>
+      <stop offset="40%" stop-color="#1a2832"/>
+      <stop offset="100%" stop-color="#06121a"/>
+    </linearGradient>
+    <radialGradient id="starGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c49a38" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#c49a38" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#c49a38" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="chestStarGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c49a38" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#c49a38" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#c49a38" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="groundFog" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d0e0e8" stop-opacity="0"/>
+      <stop offset="60%" stop-color="#d0e0e8" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#d0e0e8" stop-opacity="0.07"/>
+    </linearGradient>
+    <linearGradient id="bodiceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#143e50"/>
+      <stop offset="50%" stop-color="#0c2a36"/>
+      <stop offset="100%" stop-color="#06181f"/>
+    </linearGradient>
+    <linearGradient id="skirtTeal" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0c2a36"/>
+      <stop offset="60%" stop-color="#08202a"/>
+      <stop offset="100%" stop-color="#04121a"/>
+    </linearGradient>
+    <linearGradient id="collarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#143e50"/>
+      <stop offset="100%" stop-color="#0a2230"/>
+    </linearGradient>
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3d2817"/>
+      <stop offset="60%" stop-color="#4a2f1c"/>
+      <stop offset="100%" stop-color="#5a3a26"/>
+    </linearGradient>
+    <linearGradient id="beltSilver" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e8edf0"/>
+      <stop offset="40%" stop-color="#c8d0d8"/>
+      <stop offset="80%" stop-color="#a0a8b0"/>
+      <stop offset="100%" stop-color="#8a929a"/>
+    </linearGradient>
+    <radialGradient id="skinGrad" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#f0e0d0"/>
+      <stop offset="100%" stop-color="#d8c4b2"/>
+    </radialGradient>
+    <radialGradient id="catPink" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ff9bbd"/>
+      <stop offset="100%" stop-color="#e85e8e"/>
+    </radialGradient>
+    <pattern id="argyle" x="0" y="0" width="20" height="28" patternUnits="userSpaceOnUse">
+      <rect width="20" height="28" fill="#ffffff"/>
+      <polygon points="10,0 20,14 10,28 0,14" fill="#0a1a22"/>
+      <line x1="0" y1="14" x2="10" y2="0" stroke="#c0a050" stroke-width="0.5" opacity="0.6"/>
+      <line x1="20" y1="14" x2="10" y2="0" stroke="#c0a050" stroke-width="0.5" opacity="0.6"/>
+      <line x1="0" y1="14" x2="10" y2="28" stroke="#c0a050" stroke-width="0.5" opacity="0.6"/>
+      <line x1="20" y1="14" x2="10" y2="28" stroke="#c0a050" stroke-width="0.5" opacity="0.6"/>
+    </pattern>
+    <pattern id="vstripes" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+      <rect width="7" height="14" fill="#0a0a0a"/>
+      <rect x="7" width="7" height="14" fill="#f5f0ea"/>
+    </pattern>
+
+    <!-- QUANTUM SKIRT PANEL: scattered Heurémen Stars (gold), tiny Schrödinger boxes (silver outline), wave glyphs (frost-blue) on deep teal velvet -->
+    <pattern id="quantumPanel" x="0" y="0" width="120" height="160" patternUnits="userSpaceOnUse">
+      <rect width="120" height="160" fill="#0a2230"/>
+      <!-- subtle velvet gradient hint -->
+      <rect width="120" height="160" fill="url(#skirtTeal)" opacity="0.6"/>
+      <!-- Heurémen Star, top-left (outer up-triangle + inner half-scale inverted triangle, vertex-on-midpoint) -->
+      <g transform="translate(28,32)">
+        <polygon points="0,-10.67 -9.24,5.33 9.24,5.33" fill="none" stroke="#c49a38" stroke-width="1.2" opacity="0.95" stroke-linejoin="round"/>
+        <polygon points="-4.62,-2.67 4.62,-2.67 0,5.33" fill="none" stroke="#c49a38" stroke-width="1.2" opacity="0.95" stroke-linejoin="round"/>
+        <circle cx="0" cy="0" r="1.2" fill="#c49a38"/>
+      </g>
+      <!-- Schrödinger box (hex outline), upper-right -->
+      <g transform="translate(88,52)">
+        <polygon points="-8,-5 0,-10 8,-5 8,5 0,10 -8,5" fill="none" stroke="#c8d0d8" stroke-width="0.7" opacity="0.85"/>
+        <circle cx="0" cy="0" r="1.4" fill="#a0e8f5" opacity="0.85"/>
+      </g>
+      <!-- wave glyph, mid-left -->
+      <path d="M 8 88 Q 22 80 36 88 Q 50 96 64 88" fill="none" stroke="#a0e8f5" stroke-width="0.9" opacity="0.85" stroke-linecap="round"/>
+      <!-- Heurémen Star, lower-right (canonical geometry) -->
+      <g transform="translate(86,116)">
+        <polygon points="0,-9.33 -8.08,4.67 8.08,4.67" fill="none" stroke="#c49a38" stroke-width="1.1" opacity="0.85" stroke-linejoin="round"/>
+        <polygon points="-4.04,-2.33 4.04,-2.33 0,4.67" fill="none" stroke="#c49a38" stroke-width="1.1" opacity="0.85" stroke-linejoin="round"/>
+        <circle cx="0" cy="0" r="1" fill="#c49a38" opacity="0.85"/>
+      </g>
+      <!-- tiny box, lower-left -->
+      <g transform="translate(36,132)">
+        <polygon points="-6,-3.6 0,-7.2 6,-3.6 6,3.6 0,7.2 -6,3.6" fill="none" stroke="#c8d0d8" stroke-width="0.6" opacity="0.7"/>
+      </g>
+      <!-- wave glyph upper -->
+      <path d="M 56 18 Q 70 12 84 18" fill="none" stroke="#a0e8f5" stroke-width="0.7" opacity="0.7" stroke-linecap="round"/>
+      <!-- tiny scattered stars -->
+      <circle cx="60" cy="62" r="0.9" fill="#fff5d0" opacity="0.8"/>
+      <circle cx="14" cy="118" r="0.8" fill="#fff5d0" opacity="0.7"/>
+      <circle cx="108" cy="92" r="0.8" fill="#fff5d0" opacity="0.7"/>
+      <circle cx="76" cy="148" r="0.7" fill="#fff5d0" opacity="0.6"/>
+    </pattern>
+
+    <!-- COLLAR EMBROIDERY: faint quantum motif print on collar surface -->
+    <pattern id="collarMotif" x="0" y="0" width="60" height="80" patternUnits="userSpaceOnUse">
+      <rect width="60" height="80" fill="#0c2a36"/>
+      <!-- mini Heurémen Star (canonical geometry, faint gold embroidery) -->
+      <g transform="translate(16,20)">
+        <polygon points="0,-6.67 -5.77,3.33 5.77,3.33" fill="none" stroke="#c49a38" stroke-width="1" opacity="0.55" stroke-linejoin="round"/>
+        <polygon points="-2.89,-1.67 2.89,-1.67 0,3.33" fill="none" stroke="#c49a38" stroke-width="1" opacity="0.55" stroke-linejoin="round"/>
+        <circle cx="0" cy="0" r="0.8" fill="#c49a38" opacity="0.6"/>
+      </g>
+      <!-- tiny box -->
+      <g transform="translate(44,42)">
+        <polygon points="-4,-2.4 0,-4.8 4,-2.4 4,2.4 0,4.8 -4,2.4" fill="none" stroke="#a0a0a0" stroke-width="0.5" opacity="0.45"/>
+      </g>
+      <!-- wave -->
+      <path d="M 6 64 Q 18 58 30 64 Q 42 70 54 64" fill="none" stroke="#7a98a8" stroke-width="0.5" opacity="0.45" stroke-linecap="round"/>
+    </pattern>
+
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="60%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.4"/>
+    </radialGradient>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="800" height="1200" fill="url(#void)"/>
+
+  <!-- ground fog -->
+  <rect x="0" y="1000" width="800" height="200" fill="url(#groundFog)"/>
+
+  <!-- sparkles / sequins -->
+  <g fill="#ffffff">
+    <circle cx="80" cy="120" r="1.2" opacity="0.7"/>
+    <circle cx="160" cy="240" r="0.9" opacity="0.5"/>
+    <circle cx="60" cy="380" r="1.1" opacity="0.6"/>
+    <circle cx="120" cy="520" r="0.8" opacity="0.45"/>
+    <circle cx="40" cy="700" r="1.3" opacity="0.7"/>
+    <circle cx="180" cy="860" r="0.9" opacity="0.55"/>
+    <circle cx="700" cy="100" r="1.2" opacity="0.7"/>
+    <circle cx="640" cy="220" r="0.8" opacity="0.5"/>
+    <circle cx="740" cy="340" r="1.0" opacity="0.6"/>
+    <circle cx="680" cy="480" r="0.9" opacity="0.5"/>
+    <circle cx="720" cy="640" r="1.2" opacity="0.65"/>
+    <circle cx="620" cy="800" r="0.8" opacity="0.45"/>
+    <circle cx="760" cy="940" r="1.1" opacity="0.6"/>
+    <circle cx="200" cy="160" r="0.7" opacity="0.4"/>
+    <circle cx="600" cy="160" r="0.7" opacity="0.4"/>
+    <circle cx="240" cy="320" r="0.8" opacity="0.5"/>
+    <circle cx="560" cy="320" r="0.8" opacity="0.5"/>
+    <circle cx="100" cy="980" r="1.0" opacity="0.55"/>
+    <circle cx="700" cy="1020" r="1.0" opacity="0.55"/>
+    <circle cx="380" cy="60" r="0.9" opacity="0.6"/>
+    <circle cx="420" cy="80" r="0.7" opacity="0.4"/>
+    <circle cx="280" cy="40" r="1.1" opacity="0.65"/>
+    <circle cx="520" cy="50" r="1.0" opacity="0.6"/>
+    <circle cx="20" cy="260" r="0.9" opacity="0.5"/>
+    <circle cx="780" cy="260" r="0.9" opacity="0.5"/>
+    <circle cx="40" cy="900" r="0.8" opacity="0.45"/>
+    <circle cx="760" cy="780" r="1.0" opacity="0.55"/>
+    <circle cx="220" cy="1080" r="0.7" opacity="0.4"/>
+    <circle cx="580" cy="1100" r="0.8" opacity="0.5"/>
+  </g>
+
+  <!-- wavefunctions: icy frost-blue Mucha-curves radiating forward-right from gaze -->
+  <g fill="none" stroke="#a0e8f5" stroke-width="1.4" stroke-linecap="round" opacity="0.55">
+    <path d="M 490 380 Q 620 350 760 330" opacity="0.55"/>
+    <path d="M 490 380 Q 640 410 780 450" opacity="0.5"/>
+    <path d="M 490 380 Q 660 470 790 570" opacity="0.45"/>
+    <path d="M 490 380 Q 600 310 720 250" opacity="0.4"/>
+    <path d="M 490 380 Q 680 390 790 390" opacity="0.5"/>
+  </g>
+
+  <!-- ghost-yous (very faint, lower frame) -->
+  <g fill="#a0e8f5" opacity="0.15">
+    <g transform="translate(120,1020) scale(0.7)">
+      <circle cx="0" cy="0" r="9"/>
+      <line x1="0" y1="9" x2="0" y2="36" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="18" x2="-12" y2="28" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="18" x2="12" y2="28" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="36" x2="-9" y2="56" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="36" x2="9" y2="56" stroke="#a0e8f5" stroke-width="3"/>
+    </g>
+    <g transform="translate(680,1040) scale(0.65)" opacity="0.85">
+      <circle cx="0" cy="0" r="9"/>
+      <line x1="0" y1="9" x2="0" y2="36" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="18" x2="-14" y2="20" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="18" x2="14" y2="14" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="36" x2="-10" y2="56" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="36" x2="10" y2="56" stroke="#a0e8f5" stroke-width="3"/>
+    </g>
+    <g transform="translate(60,1100) scale(0.55)" opacity="0.7">
+      <circle cx="0" cy="0" r="9"/>
+      <line x1="0" y1="9" x2="0" y2="36" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="18" x2="-12" y2="30" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="18" x2="12" y2="10" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="36" x2="-9" y2="56" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="36" x2="9" y2="56" stroke="#a0e8f5" stroke-width="3"/>
+    </g>
+    <g transform="translate(740,1110) scale(0.5)" opacity="0.6">
+      <circle cx="0" cy="0" r="9"/>
+      <line x1="0" y1="9" x2="0" y2="36" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="18" x2="-10" y2="14" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="18" x2="14" y2="26" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="36" x2="-10" y2="56" stroke="#a0e8f5" stroke-width="3"/>
+      <line x1="0" y1="36" x2="10" y2="56" stroke="#a0e8f5" stroke-width="3"/>
+    </g>
+  </g>
+
+  <!-- ============= STAFF (held in her right hand, viewer-left) ============= -->
+  <g>
+    <line x1="266" y1="120" x2="278" y2="1040" stroke="url(#staffShaft)" stroke-width="9" stroke-linecap="round"/>
+    <rect x="263" y="700" width="20" height="14" fill="#0a1a22" stroke="#c49a38" stroke-width="0.8"/>
+    <g transform="translate(266,110)">
+      <circle cx="0" cy="0" r="120" fill="url(#boxAura)"/>
+      <polygon points="-44,-26 0,-52 44,-26 44,26 0,52 -44,26" fill="#0a1a22" stroke="#c8d8e0" stroke-width="1.4" opacity="0.92"/>
+      <circle cx="0" cy="0" r="44" fill="url(#boxGlow)"/>
+      <g stroke="#e8f5fa" stroke-width="1.4" opacity="0.7">
+        <line x1="0" y1="-100" x2="0" y2="-58"/>
+        <line x1="0" y1="100" x2="0" y2="58"/>
+        <line x1="-100" y1="0" x2="-58" y2="0"/>
+        <line x1="100" y1="0" x2="58" y2="0"/>
+        <line x1="-72" y1="-72" x2="-42" y2="-42"/>
+        <line x1="72" y1="-72" x2="-42" y2="-42" transform="scale(-1,1) translate(0,0)"/>
+        <line x1="72" y1="-72" x2="42" y2="-42"/>
+        <line x1="-72" y1="72" x2="-42" y2="42"/>
+        <line x1="72" y1="72" x2="42" y2="42"/>
+      </g>
+      <g fill="#e8f5fa" opacity="0.7">
+        <circle cx="-2" cy="-72" r="1.4"/>
+        <circle cx="3" cy="-90" r="1.1"/>
+        <circle cx="-4" cy="-108" r="0.9"/>
+        <circle cx="2" cy="-126" r="0.7"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============= QUEEN-OF-HEARTS STAND-UP COLLAR (behind head) ============= -->
+  <g>
+    <!-- collar back glow / depth -->
+    <ellipse cx="430" cy="340" rx="220" ry="40" fill="#04121a" opacity="0.6"/>
+    <!-- main collar fan (large, dramatic, behind shoulders) -->
+    <path d="M 270 480
+             Q 240 380 260 280
+             Q 290 200 360 170
+             Q 430 150 500 170
+             Q 580 200 610 290
+             Q 630 380 600 480
+             Q 580 440 540 420
+             Q 500 410 470 410
+             L 390 410
+             Q 360 410 320 420
+             Q 290 440 270 480 Z"
+          fill="url(#collarGrad)" stroke="#c8d0d8" stroke-width="2"/>
+    <!-- collar embroidery surface (quantum motif print) - clipped to collar shape -->
+    <path d="M 282 470
+             Q 256 380 274 290
+             Q 302 216 364 188
+             Q 430 170 496 188
+             Q 558 216 586 296
+             Q 604 380 588 470
+             Q 568 436 528 422
+             Q 498 414 470 414
+             L 390 414
+             Q 362 414 332 422
+             Q 296 436 282 470 Z"
+          fill="url(#collarMotif)" opacity="0.55"/>
+    <!-- collar piping ribs (silver, fanning out from neck) -->
+    <g fill="none" stroke="#c8d0d8" stroke-width="1.4" opacity="0.85">
+      <path d="M 360 410 Q 320 320 280 220"/>
+      <path d="M 380 410 Q 360 300 330 190"/>
+      <path d="M 400 410 Q 400 290 400 170"/>
+      <path d="M 420 410 Q 440 300 470 190"/>
+      <path d="M 440 410 Q 480 320 520 220"/>
+      <path d="M 460 410 Q 510 350 580 290"/>
+    </g>
+    <!-- inner gold piping along collar inner edge -->
+    <path d="M 290 470 Q 270 380 290 290 Q 320 220 380 200" fill="none" stroke="#c49a38" stroke-width="1" opacity="0.7"/>
+    <path d="M 580 470 Q 600 380 580 290 Q 550 220 490 200" fill="none" stroke="#c49a38" stroke-width="1" opacity="0.7"/>
+    <!-- collar top scallop/edge highlight -->
+    <path d="M 260 280 Q 290 200 360 170 Q 430 150 500 170 Q 580 200 610 290"
+          fill="none" stroke="#e8edf0" stroke-width="1.2" opacity="0.6"/>
+  </g>
+
+  <!-- HAIR BACK LAYER (cascading behind shoulders, in front of collar bottom) -->
+  <g fill="url(#hairGrad)">
+    <path d="M 350 360 Q 318 460 312 580 Q 322 660 342 700 Q 354 600 364 500 Z"/>
+    <path d="M 510 360 Q 542 460 548 580 Q 538 660 518 700 Q 506 600 496 500 Z"/>
+  </g>
+
+  <!-- ============= HEAD / FACE ============= -->
+
+  <!-- NECK (skin) - moved slightly right of center for hip-cocked pose -->
+  <path d="M 410 416 Q 430 434 450 416 L 450 460 Q 430 466 410 460 Z" fill="url(#skinGrad)"/>
+  <!-- neck shadow under jaw -->
+  <path d="M 410 420 Q 430 432 450 420" fill="none" stroke="#b89580" stroke-width="0.8" opacity="0.5"/>
+
+  <!-- FACE -->
+  <g>
+    <!-- face shape -->
+    <ellipse cx="430" cy="350" rx="56" ry="70" fill="#e8d8c8"/>
+    <!-- jaw shading -->
+    <path d="M 388 372 Q 430 416 472 372" fill="none" stroke="#c0a896" stroke-width="0.8" opacity="0.5"/>
+    <!-- cheekbone shading -->
+    <ellipse cx="396" cy="358" rx="10" ry="14" fill="#d4a890" opacity="0.45"/>
+    <ellipse cx="464" cy="358" rx="10" ry="14" fill="#d4a890" opacity="0.45"/>
+    <!-- nose -->
+    <path d="M 428 342 Q 425 358 430 366 Q 435 358 432 342" fill="none" stroke="#b89580" stroke-width="0.8"/>
+    <circle cx="430" cy="368" r="1.2" fill="#a07868" opacity="0.6"/>
+
+    <!-- KNOWING SMIRK with teeth -->
+    <g>
+      <path d="M 410 388 Q 426 396 446 386 Q 440 400 422 398 Q 414 396 410 388 Z" fill="#a02848"/>
+      <path d="M 410 388 Q 422 382 430 386 Q 438 380 446 386" fill="none" stroke="#7a1c34" stroke-width="0.8"/>
+      <!-- teeth peek -->
+      <rect x="424" y="388" width="14" height="3" fill="#f5f0ea" opacity="0.9" rx="0.5"/>
+      <!-- glossy lip highlight (warm rose) -->
+      <path d="M 426 383 Q 432 381 438 383" fill="none" stroke="#c87a8a" stroke-width="1.2" opacity="0.85" stroke-linecap="round"/>
+    </g>
+
+    <!-- eyebrows (above sunglasses, brunette, arched) -->
+    <path d="M 402 304 Q 414 298 426 304" fill="none" stroke="#3d2817" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M 434 304 Q 446 298 458 304" fill="none" stroke="#3d2817" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+
+  <!-- CAT-EYE SUNGLASSES with hologram-yous -->
+  <g>
+    <!-- left lens -->
+    <path d="M 388 320 Q 390 344 418 344 Q 426 332 424 318 Q 406 312 388 320 Z" fill="#0a1a22" stroke="#c8d8e0" stroke-width="1.3"/>
+    <!-- right lens -->
+    <path d="M 472 320 Q 470 344 442 344 Q 434 332 436 318 Q 454 312 472 320 Z" fill="#0a1a22" stroke="#c8d8e0" stroke-width="1.3"/>
+    <!-- bridge -->
+    <line x1="424" y1="326" x2="436" y2="326" stroke="#c8d8e0" stroke-width="1.4"/>
+    <!-- lens reflections -->
+    <path d="M 396 322 Q 402 336 414 338" fill="none" stroke="#6cd0e8" stroke-width="0.8" opacity="0.55"/>
+    <path d="M 446 322 Q 452 336 464 338" fill="none" stroke="#6cd0e8" stroke-width="0.8" opacity="0.55"/>
+    <!-- hologram-yous -->
+    <g stroke="#a0e8f5" stroke-width="0.8" fill="#a0e8f5" opacity="0.85">
+      <g transform="translate(400,330)">
+        <circle cx="0" cy="0" r="1.5"/>
+        <line x1="0" y1="1.5" x2="0" y2="6"/>
+        <line x1="0" y1="3" x2="-2" y2="5"/>
+        <line x1="0" y1="3" x2="2" y2="5"/>
+      </g>
+      <g transform="translate(412,332)">
+        <circle cx="0" cy="0" r="1.3"/>
+        <line x1="0" y1="1.3" x2="0" y2="5"/>
+        <line x1="0" y1="2.5" x2="-2" y2="3"/>
+        <line x1="0" y1="2.5" x2="2" y2="3"/>
+      </g>
+      <g transform="translate(450,332)">
+        <circle cx="0" cy="0" r="1.3"/>
+        <line x1="0" y1="1.3" x2="0" y2="5"/>
+        <line x1="0" y1="2.5" x2="-2" y2="4"/>
+        <line x1="0" y1="2.5" x2="2" y2="2"/>
+      </g>
+      <g transform="translate(462,330)">
+        <circle cx="0" cy="0" r="1.5"/>
+        <line x1="0" y1="1.5" x2="0" y2="6"/>
+        <line x1="0" y1="3" x2="-2" y2="5"/>
+        <line x1="0" y1="3" x2="2" y2="5"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- HAIR FRONT LAYER (waves over both shoulders, framed by collar) -->
+  <g fill="url(#hairGrad)">
+    <!-- top crown of hair -->
+    <path d="M 374 286 Q 372 240 410 218 Q 430 210 450 218 Q 488 240 486 286 Q 478 274 462 268 Q 430 262 398 268 Q 382 274 374 286 Z"/>
+    <!-- left side wave cascading over shoulder -->
+    <path d="M 372 290 Q 348 380 358 480 Q 372 560 388 620 Q 380 540 378 460 Q 380 380 388 320 Z"/>
+    <!-- right side wave cascading over shoulder -->
+    <path d="M 488 290 Q 512 380 502 480 Q 488 560 472 620 Q 480 540 482 460 Q 480 380 472 320 Z"/>
+    <!-- inner wave layers -->
+    <path d="M 394 296 Q 388 400 400 510 Q 412 580 428 600 Q 416 510 414 400 Z" opacity="0.85"/>
+    <path d="M 466 296 Q 472 400 460 510 Q 448 580 432 600 Q 444 510 446 400 Z" opacity="0.85"/>
+    <!-- highlights -->
+    <path d="M 380 300 Q 372 420 386 540" fill="none" stroke="#7a5535" stroke-width="1.4" opacity="0.5"/>
+    <path d="M 480 300 Q 488 420 474 540" fill="none" stroke="#7a5535" stroke-width="1.4" opacity="0.5"/>
+  </g>
+
+  <!-- ============= SILVER TIARA ============= -->
+  <g transform="translate(430,236)">
+    <!-- band -->
+    <path d="M -38 4 Q -20 -10 0 -12 Q 20 -10 38 4 L 36 8 Q 18 -2 0 -4 Q -18 -2 -36 8 Z" fill="#d8dde2" stroke="#a8b0b8" stroke-width="0.8"/>
+    <!-- side spires -->
+    <path d="M -28 -2 L -22 -16 L -16 -2 Z" fill="#e8edf0" stroke="#a8b0b8" stroke-width="0.6"/>
+    <path d="M 28 -2 L 22 -16 L 16 -2 Z" fill="#e8edf0" stroke="#a8b0b8" stroke-width="0.6"/>
+    <!-- center peak -->
+    <path d="M -10 -4 L 0 -28 L 10 -4 Z" fill="#e8edf0" stroke="#a8b0b8" stroke-width="0.8"/>
+    <!-- tiny Heurémen Star centered in peak (canonical geometry: outer up-triangle + inner half-scale inverted triangle) -->
+    <g transform="translate(0,-14)">
+      <polygon points="0,-8 -6.93,4 6.93,4" fill="none" stroke="#c49a38" stroke-width="1.2" stroke-linejoin="round"/>
+      <polygon points="-3.46,-2 3.46,-2 0,4" fill="none" stroke="#c49a38" stroke-width="1.2" stroke-linejoin="round"/>
+      <circle cx="0" cy="0" r="1" fill="#c49a38"/>
+    </g>
+    <!-- diamond accents -->
+    <circle cx="-32" cy="2" r="1.2" fill="#ffffff"/>
+    <circle cx="32" cy="2" r="1.2" fill="#ffffff"/>
+    <circle cx="0" cy="2" r="1.4" fill="#ffffff"/>
+  </g>
+
+  <!-- EARS -->
+  <ellipse cx="376" cy="356" rx="5" ry="9" fill="#d8c4b2"/>
+  <ellipse cx="484" cy="356" rx="5" ry="9" fill="#d8c4b2"/>
+  <circle cx="376" cy="368" r="1.6" fill="#c49a38"/>
+  <circle cx="484" cy="368" r="1.6" fill="#c49a38"/>
+
+  <!-- ============= GOWN: BODICE ============= -->
+  <g>
+    <!-- bodice base (deep teal velvet, sweetheart neckline, boned) -->
+    <path d="M 350 470
+             Q 348 500 350 540
+             Q 354 600 360 660
+             L 500 660
+             Q 506 600 510 540
+             Q 512 500 510 470
+             Q 480 482 450 488
+             L 450 478
+             Q 430 484 410 478
+             L 410 488
+             Q 380 482 350 470 Z"
+          fill="url(#bodiceGrad)" stroke="#1a5060" stroke-width="1.2"/>
+    <!-- sweetheart neckline highlight -->
+    <path d="M 350 470 Q 380 482 410 488 L 410 478 Q 430 484 450 478 L 450 488 Q 480 482 510 470"
+          fill="none" stroke="#2a7090" stroke-width="1.4" opacity="0.7"/>
+    <!-- boning vertical lines -->
+    <g stroke="#2a6580" stroke-width="0.7" fill="none" opacity="0.7">
+      <path d="M 372 488 Q 374 580 380 658"/>
+      <path d="M 396 490 Q 398 580 402 658"/>
+      <path d="M 430 490 Q 430 580 430 660"/>
+      <path d="M 464 490 Q 462 580 458 658"/>
+      <path d="M 488 488 Q 486 580 480 658"/>
+    </g>
+    <!-- velvet sheen highlight (left edge) -->
+    <path d="M 354 480 Q 360 580 370 660" fill="none" stroke="#1a5060" stroke-width="2" opacity="0.55"/>
+    <path d="M 506 480 Q 500 580 490 660" fill="none" stroke="#1a5060" stroke-width="2" opacity="0.45"/>
+  </g>
+
+  <!-- CINCHED WAIST WITH SILVER CORSET LACING -->
+  <g transform="translate(430,608)">
+    <!-- waist cinch panel -->
+    <path d="M -52 0 Q -54 30 -50 52 L 50 52 Q 54 30 52 0 Z" fill="#06181f" stroke="#1a5060" stroke-width="0.8"/>
+    <!-- silver lacing crosses -->
+    <g stroke="#d8dde2" stroke-width="1.1" fill="none" opacity="0.95">
+      <line x1="-32" y1="6" x2="32" y2="14"/>
+      <line x1="32" y1="6" x2="-32" y2="14"/>
+      <line x1="-32" y1="20" x2="32" y2="28"/>
+      <line x1="32" y1="20" x2="-32" y2="28"/>
+      <line x1="-30" y1="34" x2="30" y2="42"/>
+      <line x1="30" y1="34" x2="-30" y2="42"/>
+    </g>
+    <!-- eyelets -->
+    <g fill="#c8d0d8">
+      <circle cx="-32" cy="6" r="1.4"/><circle cx="32" cy="6" r="1.4"/>
+      <circle cx="-32" cy="20" r="1.4"/><circle cx="32" cy="20" r="1.4"/>
+      <circle cx="-30" cy="34" r="1.4"/><circle cx="30" cy="34" r="1.4"/>
+      <circle cx="-30" cy="46" r="1.4"/><circle cx="30" cy="46" r="1.4"/>
+    </g>
+  </g>
+
+  <!-- HEURÉMEN STAR HALO (large, behind chest insignia) -->
+  <circle cx="430" cy="556" r="90" fill="url(#chestStarGlow)"/>
+
+  <!-- HEURÉMEN STAR INSIGNIA (chest centerpiece, ~120px outer-triangle height)
+       Canonical "oy/yo" mandala: outer upward-pointing equilateral triangle +
+       inner inverted equilateral triangle at exactly half scale, vertices
+       touching the midpoints of the outer triangle's sides. Stroke-only gold.
+       H=120 → outer vertices at (0,-80),(-69.28,40),(69.28,40); side midpoints
+       at (-34.64,-20),(34.64,-20),(0,40) form the inverted inner triangle. -->
+  <g transform="translate(430,556)">
+    <!-- outer halo ring (decorative gold ring inside the radial-gradient halo) -->
+    <circle cx="0" cy="0" r="78" fill="none" stroke="#c49a38" stroke-width="0.6" opacity="0.4"/>
+    <!-- outer upward-pointing equilateral triangle -->
+    <polygon points="0,-80 -69.28,40 69.28,40"
+             fill="none" stroke="#c49a38" stroke-width="2.8" stroke-linejoin="round"/>
+    <!-- inner inverted (downward-pointing) equilateral triangle, half-scale, vertex-on-midpoint -->
+    <polygon points="-34.64,-20 34.64,-20 0,40"
+             fill="none" stroke="#c49a38" stroke-width="2.8" stroke-linejoin="round"/>
+    <!-- center dot at geometric center -->
+    <circle cx="0" cy="0" r="3.2" fill="#c49a38"/>
+  </g>
+
+  <!-- ============= GOWN: FULL SKIRT (A-line ball gown to mid-calf) ============= -->
+  <g>
+    <!-- skirt back silhouette / depth -->
+    <path d="M 350 660
+             Q 320 760 290 860
+             Q 250 960 230 1020
+             Q 240 1040 280 1040
+             L 580 1040
+             Q 620 1040 630 1020
+             Q 610 960 570 860
+             Q 540 760 510 660 Z"
+          fill="#04121a"/>
+
+    <!-- vertical alternating panels -->
+    <!-- panel 1 (leftmost): solid teal -->
+    <path d="M 360 660
+             Q 332 760 308 860
+             Q 280 960 264 1020
+             L 326 1020
+             Q 332 960 340 860
+             Q 348 760 380 660 Z"
+          fill="url(#skirtTeal)" stroke="#1a5060" stroke-width="0.8"/>
+    <!-- panel 2: quantum panel -->
+    <path d="M 380 660
+             Q 348 760 340 860
+             Q 332 960 326 1020
+             L 388 1020
+             Q 388 960 394 860
+             Q 400 760 410 660 Z"
+          fill="url(#quantumPanel)" stroke="#1a5060" stroke-width="0.8"/>
+    <!-- panel 3 (center-left): solid teal -->
+    <path d="M 410 660
+             Q 400 760 394 860
+             Q 388 960 388 1020
+             L 430 1020
+             Q 430 960 430 860
+             Q 430 760 430 660 Z"
+          fill="url(#skirtTeal)" stroke="#1a5060" stroke-width="0.8"/>
+    <!-- panel 4 (center-right): quantum panel -->
+    <path d="M 430 660
+             Q 430 760 430 860
+             Q 430 960 430 1020
+             L 472 1020
+             Q 472 960 466 860
+             Q 460 760 450 660 Z"
+          fill="url(#quantumPanel)" stroke="#1a5060" stroke-width="0.8"/>
+    <!-- panel 5: solid teal -->
+    <path d="M 450 660
+             Q 460 760 466 860
+             Q 472 960 472 1020
+             L 534 1020
+             Q 528 960 520 860
+             Q 512 760 480 660 Z"
+          fill="url(#skirtTeal)" stroke="#1a5060" stroke-width="0.8"/>
+    <!-- panel 6 (rightmost): quantum panel -->
+    <path d="M 480 660
+             Q 512 760 520 860
+             Q 528 960 534 1020
+             L 596 1020
+             Q 580 960 552 860
+             Q 528 760 500 660 Z"
+          fill="url(#quantumPanel)" stroke="#1a5060" stroke-width="0.8"/>
+
+    <!-- panel seam silver piping -->
+    <g fill="none" stroke="#c8d0d8" stroke-width="0.7" opacity="0.7">
+      <path d="M 380 660 Q 348 760 340 860 Q 332 960 326 1020"/>
+      <path d="M 410 660 Q 400 760 394 860 Q 388 960 388 1020"/>
+      <path d="M 430 660 L 430 1020"/>
+      <path d="M 450 660 Q 460 760 466 860 Q 472 960 472 1020"/>
+      <path d="M 480 660 Q 512 760 520 860 Q 528 960 534 1020"/>
+    </g>
+
+    <!-- skirt slit on left side (showing stocking) -->
+    <path d="M 326 1020 L 320 1010 Q 318 950 322 880 Q 326 820 332 760 Q 340 720 350 700 L 360 700 Q 352 760 346 820 Q 340 900 340 990 Z"
+          fill="#02101a" opacity="0.7"/>
+
+    <!-- HEM TRIM: silver scallop with gold dots -->
+    <g>
+      <!-- scallop arches across hem -->
+      <path d="M 264 1020
+               Q 282 1042 300 1020
+               Q 318 1042 336 1020
+               Q 354 1042 372 1020
+               Q 390 1042 408 1020
+               Q 426 1042 444 1020
+               Q 462 1042 480 1020
+               Q 498 1042 516 1020
+               Q 534 1042 552 1020
+               Q 570 1042 588 1020
+               L 596 1020 L 596 1056 L 264 1056 Z"
+            fill="#1a5060"/>
+      <!-- silver scallop top edge -->
+      <path d="M 264 1020
+               Q 282 1042 300 1020
+               Q 318 1042 336 1020
+               Q 354 1042 372 1020
+               Q 390 1042 408 1020
+               Q 426 1042 444 1020
+               Q 462 1042 480 1020
+               Q 498 1042 516 1020
+               Q 534 1042 552 1020
+               Q 570 1042 588 1020"
+            fill="none" stroke="#d8dde2" stroke-width="1.6"/>
+      <!-- gold dots inside each scallop -->
+      <g fill="#c49a38">
+        <circle cx="282" cy="1034" r="2"/>
+        <circle cx="318" cy="1034" r="2"/>
+        <circle cx="354" cy="1034" r="2"/>
+        <circle cx="390" cy="1034" r="2"/>
+        <circle cx="426" cy="1034" r="2"/>
+        <circle cx="462" cy="1034" r="2"/>
+        <circle cx="498" cy="1034" r="2"/>
+        <circle cx="534" cy="1034" r="2"/>
+        <circle cx="570" cy="1034" r="2"/>
+      </g>
+    </g>
+
+    <!-- ARGYLE PEEKING from underskirt at hem -->
+    <path d="M 264 1056 L 596 1056 L 596 1080 L 264 1080 Z" fill="url(#argyle)"/>
+    <path d="M 264 1056 L 596 1056" stroke="#0a1a22" stroke-width="1.4"/>
+    <path d="M 264 1080 L 596 1080" stroke="#0a1a22" stroke-width="1.4"/>
+  </g>
+
+  <!-- ============= BELT OF SIX LAWS (slim silver band at waist, six gold notches with Roman numerals I–VI for the six Heurémen Laws) ============= -->
+  <g>
+    <!-- belt body: slim platinum/silver band sitting on bodice-skirt seam -->
+    <rect x="348" y="658" width="164" height="17" fill="url(#beltSilver)" stroke="#7a8088" stroke-width="0.7"/>
+    <!-- gold piping along top edge -->
+    <line x1="348" y1="658" x2="512" y2="658" stroke="#c49a38" stroke-width="0.9" opacity="0.9"/>
+    <!-- gold piping along bottom edge -->
+    <line x1="348" y1="675" x2="512" y2="675" stroke="#c49a38" stroke-width="0.9" opacity="0.9"/>
+    <!-- platinum sheen highlight -->
+    <line x1="350" y1="662" x2="510" y2="662" stroke="#ffffff" stroke-width="0.7" opacity="0.55"/>
+    <!-- six gold vertical notches, one per Heurémen Law -->
+    <g stroke="#c49a38" stroke-width="1.7" stroke-linecap="round">
+      <line x1="365" y1="660" x2="365" y2="673"/>
+      <line x1="391" y1="660" x2="391" y2="673"/>
+      <line x1="417" y1="660" x2="417" y2="673"/>
+      <line x1="443" y1="660" x2="443" y2="673"/>
+      <line x1="469" y1="660" x2="469" y2="673"/>
+      <line x1="495" y1="660" x2="495" y2="673"/>
+    </g>
+    <!-- Roman numerals I–VI etched above each notch (gold serif, tiny) -->
+    <g fill="#c49a38" font-family="Georgia, 'Times New Roman', serif" font-size="7" text-anchor="middle" font-weight="bold" opacity="0.95">
+      <text x="365" y="654">I</text>
+      <text x="391" y="654">II</text>
+      <text x="417" y="654">III</text>
+      <text x="443" y="654">IV</text>
+      <text x="469" y="654">V</text>
+      <text x="495" y="654">VI</text>
+    </g>
+  </g>
+
+  <!-- ============= STOCKINGS (black-and-white VERTICAL striped thigh-highs, peeking from left slit) ============= -->
+  <g>
+    <!-- left leg stocking visible through skirt slit -->
+    <path d="M 332 1080 L 326 1170 L 386 1170 L 380 1080 Z" fill="url(#vstripes)"/>
+    <!-- a sliver above the hem line in the slit -->
+    <path d="M 334 1020 L 330 1080 L 384 1080 L 378 1020 Z" fill="url(#vstripes)" opacity="0.85"/>
+    <!-- right leg stocking, lower visible portion only -->
+    <path d="M 458 1080 L 454 1170 L 514 1170 L 510 1080 Z" fill="url(#vstripes)"/>
+  </g>
+
+  <!-- ============= BOOTS (black ankle boots, chunky soles, silver buckles) ============= -->
+  <g>
+    <!-- left boot -->
+    <g>
+      <path d="M 322 1150 L 326 1170 L 322 1182 L 392 1182 L 388 1170 L 392 1150 Z" fill="#0a0a0a" stroke="#1a1a1a" stroke-width="1"/>
+      <rect x="318" y="1178" width="76" height="10" fill="#050505" rx="2"/>
+      <!-- silver buckle -->
+      <rect x="346" y="1158" width="22" height="6" fill="#0a0a0a" stroke="#d8dde2" stroke-width="1"/>
+      <rect x="354" y="1160" width="6" height="2" fill="#d8dde2"/>
+    </g>
+    <!-- right boot -->
+    <g>
+      <path d="M 450 1150 L 454 1170 L 450 1182 L 520 1182 L 516 1170 L 520 1150 Z" fill="#0a0a0a" stroke="#1a1a1a" stroke-width="1"/>
+      <rect x="446" y="1178" width="76" height="10" fill="#050505" rx="2"/>
+      <rect x="474" y="1158" width="22" height="6" fill="#0a0a0a" stroke="#d8dde2" stroke-width="1"/>
+      <rect x="482" y="1160" width="6" height="2" fill="#d8dde2"/>
+    </g>
+  </g>
+
+  <!-- ============= ARMS ============= -->
+
+  <!-- RIGHT ARM (viewer-left, gripping staff vertical at side) -->
+  <g>
+    <!-- shoulder cap (sleeve, deep teal) -->
+    <path d="M 348 472 Q 320 480 304 520 Q 296 560 304 600 L 326 596 Q 332 560 344 528 Q 352 500 360 484 Z" fill="url(#bodiceGrad)" stroke="#1a5060" stroke-width="0.8"/>
+    <!-- upper arm/forearm (skin, slim, going down to hand at staff) -->
+    <path d="M 304 600 Q 290 660 280 720 Q 274 760 282 768 L 300 760 Q 304 720 312 660 Q 318 620 326 600 Z" fill="#e8d8c8" stroke="#c0a896" stroke-width="0.6"/>
+    <!-- hand gripping staff -->
+    <path d="M 280 768 Q 268 778 266 792 Q 268 800 280 798 L 294 790 Q 298 780 296 770 Z" fill="#e8d8c8" stroke="#c0a896" stroke-width="0.6"/>
+    <!-- knuckles hint -->
+    <path d="M 274 778 Q 280 780 286 778" fill="none" stroke="#b89580" stroke-width="0.6"/>
+    <!-- subtle elbow shadow -->
+    <path d="M 296 660 Q 298 700 296 740" fill="none" stroke="#c0a896" stroke-width="0.7" opacity="0.6"/>
+  </g>
+
+  <!-- LEFT ARM (viewer-right, holding cat plushie at hip) -->
+  <g>
+    <!-- shoulder cap -->
+    <path d="M 512 472 Q 540 480 556 520 Q 564 560 556 600 L 534 596 Q 528 560 516 528 Q 508 500 500 484 Z" fill="url(#bodiceGrad)" stroke="#1a5060" stroke-width="0.8"/>
+    <!-- upper arm (skin) curving back toward hip -->
+    <path d="M 556 600 Q 568 640 556 680 Q 542 710 522 712 L 518 696 Q 532 690 542 670 Q 550 640 542 600 Z" fill="#e8d8c8" stroke="#c0a896" stroke-width="0.6"/>
+    <!-- forearm coming forward to hold plushie -->
+    <path d="M 522 712 Q 510 716 502 730 Q 498 745 510 750 L 528 746 Q 528 730 526 720 Z" fill="#e8d8c8" stroke="#c0a896" stroke-width="0.6"/>
+    <!-- hand holding plushie -->
+    <path d="M 510 746 Q 502 752 504 762 Q 514 770 528 766 Q 532 758 530 748 Z" fill="#e8d8c8" stroke="#c0a896" stroke-width="0.6"/>
+  </g>
+
+  <!-- ============= SCHRÖDINGER CAT PLUSHIE (held at left hip) ============= -->
+  <g transform="translate(536,790)">
+    <!-- shadow -->
+    <ellipse cx="0" cy="42" rx="34" ry="5" fill="#000000" opacity="0.4"/>
+    <!-- pink half (alive) -->
+    <g>
+      <path d="M 0 -28 Q -28 -28 -32 0 Q -32 28 -16 36 L 0 36 Z" fill="url(#catPink)" stroke="#c04878" stroke-width="0.8"/>
+      <polygon points="-22,-28 -28,-44 -14,-30" fill="#ff7faa" stroke="#c04878" stroke-width="0.6"/>
+      <polygon points="-22,-28 -26,-40 -16,-32" fill="#ffb8d0"/>
+      <ellipse cx="-16" cy="-14" rx="3" ry="4" fill="#0a0a0a"/>
+      <ellipse cx="-15" cy="-15" rx="1" ry="1.4" fill="#ffffff"/>
+      <line x1="-22" y1="-2" x2="-34" y2="-4" stroke="#ffffff" stroke-width="0.6"/>
+      <line x1="-22" y1="2" x2="-34" y2="4" stroke="#ffffff" stroke-width="0.6"/>
+    </g>
+    <!-- ghostly white half (dead/translucent) -->
+    <g opacity="0.45">
+      <path d="M 0 -28 Q 28 -28 32 0 Q 32 28 16 36 L 0 36 Z" fill="#ffffff" stroke="#c8d8e0" stroke-width="0.8"/>
+      <polygon points="22,-28 28,-44 14,-30" fill="#e8e8e8" stroke="#c8d8e0" stroke-width="0.6"/>
+      <line x1="13" y1="-17" x2="19" y2="-11" stroke="#888888" stroke-width="1.2"/>
+      <line x1="19" y1="-17" x2="13" y2="-11" stroke="#888888" stroke-width="1.2"/>
+      <line x1="22" y1="-2" x2="34" y2="-4" stroke="#c8d8e0" stroke-width="0.6"/>
+      <line x1="22" y1="2" x2="34" y2="4" stroke="#c8d8e0" stroke-width="0.6"/>
+    </g>
+    <!-- probability seam -->
+    <line x1="0" y1="-28" x2="0" y2="36" stroke="#c8d0d8" stroke-width="0.6" stroke-dasharray="2,2" opacity="0.7"/>
+    <!-- nose -->
+    <path d="M -3 -6 L 3 -6 L 0 -2 Z" fill="#a02858"/>
+    <!-- mouth -->
+    <path d="M -4 -2 Q -2 1 0 -1 Q 2 1 4 -2" fill="none" stroke="#7a1c34" stroke-width="0.7"/>
+    <!-- tail -->
+    <path d="M -28 28 Q -42 32 -38 18" fill="none" stroke="#e85e8e" stroke-width="3" stroke-linecap="round"/>
+    <!-- teal bow on head -->
+    <g transform="translate(-4,-36)">
+      <path d="M -6 0 Q -10 -4 -5 -7 Q 0 -4 0 0 Q 0 -4 5 -7 Q 10 -4 6 0 Z" fill="#0c2a36" stroke="#1a5060" stroke-width="0.5"/>
+      <circle cx="0" cy="0" r="1.2" fill="#c49a38"/>
+    </g>
+  </g>
+
+  <!-- vignette -->
+  <rect width="800" height="1200" fill="url(#vignette)"/>
+</svg>

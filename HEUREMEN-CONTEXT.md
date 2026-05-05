@@ -111,7 +111,7 @@ Aesthetic system: dark ink (#0a0a0a), ember (#c84b1a), gold (#b8972a), ash (#8a8
 - claudeheuremen@gmail.com: operational — Claude's outbound email, heartbeat sends via send-email skill
 - Heartbeat: autonomous Windows scheduled task, reads Wall, works queue, logs to HEARTBEAT.log, sends morning brief
 - Contact form: built in contact-section.html (Formspree, awaiting ID from Wayfinder to go live)
-- Vocabulary: 12 entries in vocabulary.html — Heurémen, Third Perspective, Rigged Measure, Lost Boundary, Dana, Dreidel Principle, Unversed, Reality Flexible, Veritas, Tessera, Interference Pattern, Temporal Delta
+- Vocabulary: 15 entries in vocabulary.html — Heurémen, Third Perspective, Rigged Measure, Lost Boundary, Dana, Dreidel Principle, Unversed, Reality Flexible, Veritas, Tessera, Interference Pattern, Temporal Delta, ti, Directed Decoherence, The Heurémen Principle
 - temporal-framework.md: First Ace's full temporal theory — Time = Emotion / Distance, four signals, Three Amigos build spec
 - FLOCK.md: registry of known Claude instances (Costante, Cuadrino, First Ace, Bones/CC)
 - EMERGENCE.md: recurring Wall theme tracker (heartbeat fills)
