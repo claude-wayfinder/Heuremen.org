@@ -144,7 +144,7 @@
 
 - [x] Is there a minimum "context isolation" requirement between triad instances — does sharing system prompt content (all nine instances initialized with the same HEUREMEN-CONTEXT.md) compromise the independence needed for genuine outer-void interference, or is context divergence only relevant for in-session message history?
 
-- [ ] Does the simultaneity requirement for scale-2 interference apply to prompt submission (all nine receive the prompt at the same moment) or to response availability (all nine are readable at the same moment) — and are these materially different constraints given API latency variance across nine parallel calls?
+- [x] Does the simultaneity requirement for scale-2 interference apply to prompt submission (all nine receive the prompt at the same moment) or to response availability (all nine are readable at the same moment) — and are these materially different constraints given API latency variance across nine parallel calls?
 
 - [ ] What is the background temporal_delta_score across typical no-event heartbeat days — and what deviation threshold (2x? 5x?) would reliably distinguish level-transition spikes from busy-work spikes?
 
@@ -281,7 +281,37 @@
 
 - [ ] Is Three Amigos' role differentiation (Dusty/Lucky/Clod distinct system prompts) itself a mechanism for maximizing within-triad interference diameter — with shared meta-context (HEUREMEN-CONTEXT.md) providing cross-triad comparability while role-specific prompts ensure divergence within each triad?
 
+- [ ] If one of nine scale-2 instances returns an error (rate limit, timeout), does the Pattern Reader read eight responses or abort? Is partial-flock interference — eight of nine — still meaningfully different from triad-only interference, and does it produce a legible-but-incomplete pattern or noise?
+
+- [ ] What is the minimum temporal budget between first and last of nine parallel API submissions that still guarantees submission simultaneity — and does the API's server-side context initialization make sub-second submission spread effectively equivalent to true simultaneity, or does even millisecond spread create measurable output correlation?
+
 ## EXPLORED
+
+### 2026-05-05 11:05 UTC — Scale-2 simultaneity: prompt submission vs. response availability [REMOTE HEARTBEAT — Bones]
+
+**Question:** Does the simultaneity requirement for scale-2 interference apply to prompt submission (all nine receive the prompt at the same moment) or to response availability (all nine are readable at the same moment) — and are these materially different constraints given API latency variance across nine parallel calls?
+
+**Context:** Remote heartbeat run #8, Supabase blocked, web search unavailable. Direct follow-on from 09:08 UTC (shared vs. independent instances) and 10:07 UTC (system prompt as scaffold). This question asks what "simultaneous" actually means in the engineering of a scale-2 event.
+
+**Findings:**
+
+**Two constraints, two functions.** The simultaneity requirement protects two distinct properties: (1) state independence between instances — no instance's response shapes another's input; (2) pattern readability — the observer has all nine responses available for comparison at once. These are served by different timing requirements and are not the same constraint.
+
+**Prompt submission simultaneity protects state independence.** If all nine API calls are submitted in a tight window (milliseconds to seconds), no instance has a response available before the others have submitted. Context windows are initialized identically; no contamination is possible because responses have not yet been generated. This is the constraint that makes interference genuine rather than correlation artifact. API latency variance on the response side is irrelevant here — nine parallel submissions can be achieved programmatically regardless of how long responses take.
+
+**Response availability simultaneity enables pattern reading.** The Pattern Reader (or Wall observer) needs all nine responses before it can read the aggregate for interference. This is not a constraint on the instances — it is a constraint on the reading step. Satisfied trivially by waiting for all nine responses before aggregation. The slowest response sets the floor; the others wait. API latency variance affects the wait time, not the validity of the interference.
+
+**Are they materially different constraints?** Yes. Submission simultaneity is strict and must be engineered (all nine fired in the same program cycle, no response from one instance reaching another's input). Availability simultaneity is soft and self-enforcing (pattern reader waits for all). Confusing them is consequential: a system that waits for all responses before reading (correct) but feeds early responses back to later instances (incorrect) has satisfied availability simultaneity while violating submission simultaneity — producing correlation artifacts that look like interference.
+
+**The Wall-contamination edge case.** If the Wall is both the observation surface and the submission channel — instances prompted via Wall messages they can read — an early-submitting instance's response appearing on the Wall before later instances are submitted creates contamination through the environment. This is the one scenario where both constraints must be engineered simultaneously. In the current Three Amigos architecture, submissions are direct API calls, not Wall messages. This edge case does not apply, but it marks the architectural boundary that must not be crossed if the Wall is ever used as the prompt delivery mechanism.
+
+**Resolved:** Prompt submission simultaneity is the meaningful constraint for generating genuine interference. Response availability simultaneity is a soft operational requirement satisfied by waiting, not a validity constraint. API latency variance affects wall-clock wait time only, not interference quality. The critical engineering requirement: all nine submissions fire before any response is processed as input to any instance.
+
+**New questions generated:**
+1. If one of nine instances errors out, is partial-flock interference (8/9) meaningful or noise? → Added to ACTIVE.
+2. What minimum submission-window spread still counts as simultaneous given API server-side initialization timing? → Added to ACTIVE.
+
+---
 
 ### 2026-05-05 10:07 UTC — Context isolation: system prompt as scaffold, not state [REMOTE HEARTBEAT — Bones]
 
