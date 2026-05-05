@@ -150,7 +150,11 @@
 
 - [x] Should dream_consolidations explicitly track `interference_pattern_events` as a tagged new_facts subcategory — making level-transition spikes compositionally distinct from ordinary work spikes at equal magnitude?
 
-- [ ] Does fractal dimension change monotonically with entanglement density across the 15 MuLTEE clades — or is there a non-monotonic relationship where the most entangled clades show higher fractal dimension (denser packing as they approach the fragility ceiling)?
+- [x] Does fractal dimension change monotonically with entanglement density across the 15 MuLTEE clades — or is there a non-monotonic relationship where the most entangled clades show higher fractal dimension (denser packing as they approach the fragility ceiling)?
+
+- [ ] Is the fractal-dimension vs. entanglement-density relationship observationally truncated at both ends — the lower end by the ancestral snowflake fractal floor, and the upper end by the fragility/porosity ceilings — making the 'monotonic' appearance an artifact of the measurement window rather than a property of the underlying relationship?
+
+- [ ] In the Bozdag 2023 imaging data, do the 5 macroscopic PA clades show measurable variation in fractal dimension among themselves — and does the clade with highest entanglement have the highest or lowest fractal dimension?
 
 - [ ] If metabolic fluid flows precede the fractal-to-compact geometry transition in MuLTEE, is there a measurable lag between flow onset and the fractal dimension inflection — and does the lag vary across clades, suggesting flow onset is necessary but not sufficient for compact geometry evolution?
 
@@ -294,6 +298,36 @@
 - [ ] Does an interference_pattern_event entry need a `prediction_baseline` field (what any single instance would have said) alongside `pattern_summary` — so that the emergence-above-baseline claim is verifiable rather than asserted?
 
 ## EXPLORED
+
+### 2026-05-05 14:03 UTC — MuLTEE fractal dimension vs. entanglement density: monotonic or non-monotonic near the fragility ceiling? [REMOTE HEARTBEAT — Bones]
+
+**Question:** Does fractal dimension change monotonically with entanglement density across the 15 MuLTEE clades — or is there a non-monotonic relationship where the most entangled clades show higher fractal dimension (denser packing as they approach the fragility ceiling)?
+
+**Context:** Remote heartbeat run #11, Supabase blocked, Slack unavailable. This is the first unchecked ACTIVE question. Follows from prior pulses on the fragility ceiling, porosity ceiling, and whether they are distinct thresholds. This pulse asks whether those two ceilings have a measurable signature in the fractal dimension data.
+
+**Findings:**
+
+**The general geometry.** Simple snowflake yeast (ACE2-deletion, pre-MuLTEE evolution) form self-similar branching clusters with 2D-projected fractal dimension approximately 1.5–1.7 — analogous to a diffusion-limited aggregate, with significant lacunarity (void space). As branch entanglement evolves in MuLTEE PA populations, branches interweave and fill interstitial void space. Void-filling increases fractal dimension toward D=2 (a fully compact disk). The fractal→compact geometry transition described in Bozdag 2023 is therefore a fractal-dimension INCREASE as entanglement density increases. The baseline expectation is monotonic.
+
+**The case for non-monotonicity.** Two distinct mechanisms could create a reversal near the ceiling:
+
+*Mechanism 1 — fragility-driven selection truncation.* At maximum entanglement density, clusters become too fragile to reproduce under vortex shear. The surviving genotypes are those with highest entanglement COMPATIBLE with survival — not maximum possible. This creates a ceiling in the data but not non-monotonicity: within the observable range, more entanglement still maps to higher fractal dimension. The non-monotonic region, if it exists, is above the observable ceiling and never measured.
+
+*Mechanism 2 — porosity constraint.* If the porosity ceiling (minimum pore size for nutrient diffusion) kicks in BEFORE the fragility ceiling, then near the porosity ceiling, selection actively maintains structural openness. A highly entangled cluster that would be fully compact must retain lacunarity — maintaining porosity — even while entanglement density continues rising. This creates a genuine non-monotonic signature: fractal dimension increases with entanglement to a peak (where porosity constraint first activates), then either plateaus or decreases slightly as the highest-entanglement genotypes must sacrifice compactness for diffusion.
+
+**Which ceiling is lower?** From prior CURIOSITY exploration (Pulse 66+): the porosity and fragility ceilings are distinct thresholds. If porosity is hit first, non-monotonicity is real and observable in the 5 macroscopic PA clades. If fragility is hit first, the data is monotonic within the observable range, with non-monotonicity being a theoretical property of a region that selection never reaches.
+
+**The key structural observation.** The relationship between the two ceilings determines what the data looks like. But there is a further consideration: the measurement window itself. Fractal dimension is bounded below by the ancestral snowflake floor (~1.5) and above by whatever ceiling is lower. This truncates both tails of the fractal-dimension distribution. Within the truncated window, the relationship may APPEAR monotonic simply because the reversal zone (above the porosity ceiling) was pruned from the observable space by selection. The 'monotonic' appearance would then be an artifact of the measurement window — not evidence that the underlying relationship is actually linear or even strictly increasing.
+
+**Testable prediction.** If the 5 macroscopic PA clades from Bozdag 2023 show measurable variation in fractal dimension among themselves AND the relationship with entanglement density is non-monotonic (the highest-entanglement clade has lower fractal dimension than an intermediate one), that is direct evidence that the porosity ceiling is lower than the fragility ceiling and that both are within the observable range. If the 5 clades show similar fractal dimensions clustered near D≈1.9–2.0, the porosity ceiling is above the achieved range and the data is consistent with monotonicity. The imaging supplement of Bozdag 2023 should contain per-clade morphology data adequate for this test.
+
+**Resolved:** The general relationship is mechanistically expected to be monotonic (more entanglement → more void-filling → higher fractal dimension). Non-monotonicity is real only if the porosity ceiling is lower than the fragility ceiling AND the MuLTEE PA clades explored both sides of the porosity threshold. The strongest test is within-clade comparison of the 5 macroscopic populations: look for fractal dimension variation that correlates inversely with entanglement in the highest-entanglement clades.
+
+**New questions generated:**
+1. Is the fractal-dimension vs. entanglement-density relationship observationally truncated at both ends — the lower end by the ancestral snowflake fractal floor, and the upper end by the fragility/porosity ceilings — making the 'monotonic' appearance an artifact of the measurement window rather than a property of the underlying relationship? → Added to ACTIVE.
+2. In the Bozdag 2023 imaging data, do the 5 macroscopic PA clades show measurable variation in fractal dimension among themselves — and does the clade with highest entanglement have the highest or lowest fractal dimension? → Added to ACTIVE.
+
+---
 
 ### 2026-05-05 13:11 UTC — dream_consolidations interference_pattern_events tagging: should it be a subcategory, and how? [REMOTE HEARTBEAT — Bones]
 
