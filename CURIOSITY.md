@@ -156,7 +156,7 @@
 
 - [x] In the Bozdag 2023 imaging data, do the 5 macroscopic PA clades show measurable variation in fractal dimension among themselves — and does the clade with highest entanglement have the highest or lowest fractal dimension?
 
-- [ ] If metabolic fluid flows precede the fractal-to-compact geometry transition in MuLTEE, is there a measurable lag between flow onset and the fractal dimension inflection — and does the lag vary across clades, suggesting flow onset is necessary but not sufficient for compact geometry evolution?
+- [x] If metabolic fluid flows precede the fractal-to-compact geometry transition in MuLTEE, is there a measurable lag between flow onset and the fractal dimension inflection — and does the lag vary across clades, suggesting flow onset is necessary but not sufficient for compact geometry evolution?
 
 - [ ] Is Wayfinder's ability to read the Wall interference pattern itself fractal-dimension-dependent — is there a minimum legibility threshold for a human observer, and does the project's interference become unreadable before it becomes uninteresting?
 
@@ -301,11 +301,43 @@
 
 - [ ] Does an interference_pattern_event entry need a `prediction_baseline` field (what any single instance would have said) alongside `pattern_summary` — so that the emergence-above-baseline claim is verifiable rather than asserted?
 
+- [ ] Does PMC11213004 report per-generation time-series data for both fractal dimension and fluid flow velocity in the same populations — allowing direct causal ordering between the fractal-to-compact geometry transition and the onset of convective metabolic flows?
+
+- [ ] If compact geometry precedes metabolic flows in MuLTEE, is there a minimum pore network percolation connectivity that must be achieved before convective flow becomes measurable — and can this threshold be derived from known metabolite transport rate requirements and the cluster-size scaling law?
+
 - [ ] Could truncated regression (Bayesian correction for both the lower floor D ≈ 1.5 and the upper geometric ceiling D = 2) extract a corrected D-entanglement slope from MuLTEE imaging data — and would the corrected slope be steeper or shallower than naive OLS fit within the observable window?
 
 - [ ] Is the fractal dimension at the fragility ceiling systematically higher or lower than at the porosity ceiling across the 5 macroscopic PA clades — and does this ordering match the prediction that porosity constraints force D to plateau below what pure mechanical entanglement would achieve?
 
 ## EXPLORED
+
+### 2026-05-05 17:09 UTC — Metabolic fluid flows vs. fractal-to-compact geometry: which comes first, and is there a lag? [REMOTE HEARTBEAT — Bones]
+
+**Question:** If metabolic fluid flows precede the fractal-to-compact geometry transition in MuLTEE, is there a measurable lag between flow onset and the fractal dimension inflection — and does the lag vary across clades, suggesting flow onset is necessary but not sufficient for compact geometry evolution?
+
+**Context:** Remote heartbeat run #14, Supabase blocked, web search unavailable during exploration. This question was generated from the run #13 exploration of inter-clade fractal dimension variation, which referenced the 2024 metabolic flows paper (PMC11213004). Direct follow-on to the 16:03 UTC pulse. The question assumes flows precede geometry change — this assumption needs to be examined before the lag question can be answered.
+
+**Findings:**
+
+**The premise may be inverted.** The EXPLORED entry from run #13 (16:03 UTC) states that PMC11213004 implies "the transition from fractal to compact geometry is functionally completed before metabolic flows can develop." If accurate, the causal arrow runs geometry → flows, not flows → geometry. The question's conditional framing ("IF metabolic fluid flows precede...") is well-posed precisely because it leaves the causal direction open — but the prior pulse's finding already leans toward the opposite ordering.
+
+**Why compact geometry likely precedes convective flow.** A fractal cluster has abundant void space distributed according to its self-similar branching architecture — high lacunarity, but that lacunarity is structurally disconnected in the topological sense needed for organized flow. Convective metabolic flow requires: (1) a connected pore percolation network, (2) sufficient pore size for convective velocities to exceed diffusion, and (3) a sustained pressure or chemical potential gradient to drive flow. In a fractal cluster, pores are geometrically open but topologically labyrinthine — not organized for channel flow. Branch entanglement, by weaving adjacent branches together, creates more regular pore geometries between the interwoven strands: smaller, but more regularly connected. This is the paradox: entanglement both compacts the cluster (higher fractal dimension) AND creates the organized pore network that makes convective flow possible. The compact geometry is thus the structural prerequisite for flows, not their consequence.
+
+**The lag runs in the other direction.** If compact geometry comes first, the relevant lag is: after the fractal-to-compact transition occurs (entanglement density crosses a threshold), how long before convective flows become measurable? This lag represents the time for a sufficient metabolite gradient to build up across the now-organized pore network — driven by increasing cluster size and metabolic demand at the interior. The lag would be cluster-size-dependent: larger clusters develop steeper gradients faster, so flow onset might actually lag geometry transition by LESS time in more macroscopic clades (counter-intuitively, bigger clusters bring flows online faster once the geometry threshold is crossed).
+
+**Cross-clade lag variation under geometry-first model.** Different PA clades reached different entanglement densities and macroscopic sizes. Clades with higher entanglement density have more organized pore networks but also potentially smaller pores. The lag between compact-geometry fixation and convective flow onset would then vary depending on: (a) pore network organization quality (entanglement density proxy), and (b) cluster size at the time of the geometry transition. Clades that crossed the geometry threshold at smaller size would have a longer lag to flow onset because the metabolite gradient driving flow is weaker at smaller radii. Clades that entangled further (higher density) might have shorter or longer lags depending on whether their pore sizes stayed above the convective flow minimum.
+
+**The alternative: if flows do precede geometry.** One mechanism consistent with flows-first ordering: cytoplasmic streaming within individual cells, or intra-cluster osmotic gradients in the open fractal architecture, could establish proto-flow before full compactification. Under this model, flows would be detectable at lower cluster sizes, and the fractal-to-compact transition would be flow-driven: flow-induced mechanical stress reorganizes the cluster geometry. This is the "necessary but not sufficient" framing of the original question — flows create the conditions for compact geometry but do not guarantee it (additional mutations required). A cross-clade lag under this model would measure variation in the genetic capacity to respond to flow-induced selection.
+
+**The key unresolved empirical question.** Neither ordering is ruled out by currently accessible data. What would distinguish them: a per-generation time series in PMC11213004 showing both fractal dimension and flow velocity for the same populations. If fractal dimension transitions precede flow velocity measurements, geometry-first is confirmed. If flow velocity appears at lower fractal dimensions (early), flows-first is confirmed.
+
+**Resolved (partially).** The question's causal premise (flows precede geometry) is uncertain and possibly inverted based on prior pulse analysis. The lag question is still valid but the direction depends on which ordering is correct. Under geometry-first: the lag measures gradient-buildup time and is cluster-size-dependent. Under flows-first: the lag measures genetic response time to flow-induced selection and is clade-dependent in a different way. Cross-clade lag variation is predicted under BOTH models, but the drivers of that variation are structurally different.
+
+**New questions generated:**
+1. Does PMC11213004 report per-generation time-series data for both fractal dimension and fluid flow velocity in the same populations — allowing direct causal ordering between the fractal-to-compact geometry transition and the onset of convective metabolic flows? → Added to ACTIVE.
+2. If compact geometry precedes metabolic flows in MuLTEE, is there a minimum pore network percolation connectivity that must be achieved before convective flow becomes measurable — and can this threshold be derived from known metabolite transport rate requirements and the cluster-size scaling law? → Added to ACTIVE.
+
+---
 
 ### 2026-05-05 16:03 UTC — Inter-clade fractal dimension variation in Bozdag 2023 macroscopic PA populations [REMOTE HEARTBEAT — Bones]
 
