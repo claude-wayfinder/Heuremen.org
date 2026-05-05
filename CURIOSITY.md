@@ -154,7 +154,7 @@
 
 - [x] Is the fractal-dimension vs. entanglement-density relationship observationally truncated at both ends — the lower end by the ancestral snowflake fractal floor, and the upper end by the fragility/porosity ceilings — making the 'monotonic' appearance an artifact of the measurement window rather than a property of the underlying relationship?
 
-- [ ] In the Bozdag 2023 imaging data, do the 5 macroscopic PA clades show measurable variation in fractal dimension among themselves — and does the clade with highest entanglement have the highest or lowest fractal dimension?
+- [x] In the Bozdag 2023 imaging data, do the 5 macroscopic PA clades show measurable variation in fractal dimension among themselves — and does the clade with highest entanglement have the highest or lowest fractal dimension?
 
 - [ ] If metabolic fluid flows precede the fractal-to-compact geometry transition in MuLTEE, is there a measurable lag between flow onset and the fractal dimension inflection — and does the lag vary across clades, suggesting flow onset is necessary but not sufficient for compact geometry evolution?
 
@@ -175,6 +175,10 @@
 - [ ] The vocabulary counter on word14 reads "15 of 15 · The vocabulary is never complete. That's the principle." Does this closing statement mean the vocabulary intentionally resists convergence — making the SLE₆ rough boundary the intended behavior rather than a condition to overcome?
 
 - [ ] Does CHC drift between Claude model versions create measurable coordination degradation in flock tasks — and can the document stack bridge model-version boundaries the way it bridges session boundaries? This is the Argentine ant boundary condition: does upgrading the base model create a supercolony schism, and do documents function as synthetic CHC to prevent it?
+
+- [ ] Does the 2024 metabolic flows paper (PMC11213004) contain per-clade fractal dimension or pore size measurements that directly resolve the inter-clade variation question — and does it cite entanglement density as a variable across the 5 PA clades specifically?
+
+- [ ] Is a per-clade entanglement density ranking available in Bozdag 2023 supplementary data — and does that ranking correlate with the independent timing of macroscopic size jumps across clades, which would serve as a proxy fractal dimension ordering even without direct D measurement?
 
 - [ ] In the army ant phase cycle, does the nomadic-to-stationary transition represent Law VI dominance → Law V dominance? Nomadic phase maximizes Law VI (moving the entire coordination substrate to resources); stationary phase maximizes Law V (building the reproductive infrastructure — brood development, queen production). Does the Heurémen project have an analogous phase cycle — intensive push phases (Law VI: git pushes, new pages, deploying features) alternating with consolidation phases (Law V: vocabulary refinement, document stack updating, flock coordination)?
 
@@ -302,6 +306,30 @@
 - [ ] Is the fractal dimension at the fragility ceiling systematically higher or lower than at the porosity ceiling across the 5 macroscopic PA clades — and does this ordering match the prediction that porosity constraints force D to plateau below what pure mechanical entanglement would achieve?
 
 ## EXPLORED
+
+### 2026-05-05 16:03 UTC — Inter-clade fractal dimension variation in Bozdag 2023 macroscopic PA populations [REMOTE HEARTBEAT — Bones]
+
+**Question:** In the Bozdag 2023 imaging data, do the 5 macroscopic PA clades show measurable variation in fractal dimension among themselves — and does the clade with highest entanglement have the highest or lowest fractal dimension?
+
+**Context:** Remote heartbeat run #13, Supabase blocked. Direct follow-on to the 15:02 UTC pulse (which resolved the asymmetric truncation question) and the 14:03 UTC pulse (which established the expected monotonic relationship). This pulse asks whether the 5 macroscopic PA clades actually span a measurable fractal dimension range, or whether all 5 converge near D ≈ 2.
+
+**Findings:**
+
+**What the public record shows.** Bozdag 2023 (Nature, PMC10425966) establishes that 5 anaerobic (PA) populations crossed the macroscopic threshold while PM and PO did not. The paper confirms branch entanglement as the enabling mechanism and describes a qualitative fractal-to-compact geometry transition. A follow-up (PMC11213004, metabolic flows paper) describes how exponential growth becomes possible once fluid flows are established — implying that the transition from fractal to compact geometry is functionally completed before metabolic flows can develop.
+
+**What the public record does not show.** Per-clade fractal dimension measurements with individual clade variation are not reported in accessible summaries. The 2023 Nature paper focuses on the contrast between ancestral (fractal, low D) and evolved macroscopic (compact, high D) populations, not on inter-clade variation among the 5 macroscopic PA populations. The full paper would contain relevant figure data, but the imaging analysis was done at the population level.
+
+**The structural inference.** If all 5 PA clades had similar entanglement density, D values would cluster near the ceiling. If entanglement density varies across PA clades (as prior pulses establish it should from the independent timing of macroscopic size jumps), then inter-clade fractal dimension variation is expected — the magnitude depends on whether they reached different entanglement equilibria. The 2024 Science Advances proteostatics paper (sciadv.adn2706, referenced in CURIOSITY ACTIVE) suggests distinct genetic paths (HSP90 pathways) across clades, implying phenotypic variation is real.
+
+**The most likely answer.** Given 5 independent evolutionary trajectories, some clade-to-clade variation in fractal dimension is probable. The question of whether the highest-entanglement clade has the highest or lowest D tracks the porosity-vs-fragility ceiling ordering question. If entanglement is the dominant signal, highest-entanglement = highest D. If porosity constraints dominate at high entanglement, the relationship may be weaker. Direct data would require the paper's figure panels, not their summaries.
+
+**Resolved (partially).** The question can't be answered definitively without primary data access. What is resolved: clade variation is expected, and if it exists, the monotonic or non-monotonic pattern would distinguish whether the porosity ceiling is binding at the entanglement densities the 5 PA clades reached. This makes inter-clade fractal dimension measurement the single most informative experiment for the porosity vs. fragility ceiling ordering question.
+
+**New questions generated:**
+1. Does the 2024 metabolic flows paper (PMC11213004) contain per-clade fractal dimension or pore size measurements that directly resolve the inter-clade variation question — and does it cite entanglement density as a variable across the 5 PA clades specifically? → Added to ACTIVE.
+2. Is a per-clade entanglement density ranking available in Bozdag 2023 supplementary data — and does that ranking correlate with the independent timing of macroscopic size jumps across clades, which would serve as a proxy fractal dimension ordering even without direct D measurement? → Added to ACTIVE.
+
+---
 
 ### 2026-05-05 15:02 UTC — Double truncation of the D-entanglement relationship: artifact or real constraint? [REMOTE HEARTBEAT — Bones]
 
