@@ -178,7 +178,7 @@
 
 - [x] Does the 2024 metabolic flows paper (PMC11213004) contain per-clade fractal dimension or pore size measurements that directly resolve the inter-clade variation question — and does it cite entanglement density as a variable across the 5 PA clades specifically?
 
-- [ ] Is a per-clade entanglement density ranking available in Bozdag 2023 supplementary data — and does that ranking correlate with the independent timing of macroscopic size jumps across clades, which would serve as a proxy fractal dimension ordering even without direct D measurement?
+- [x] Is a per-clade entanglement density ranking available in Bozdag 2023 supplementary data — and does that ranking correlate with the independent timing of macroscopic size jumps across clades, which would serve as a proxy fractal dimension ordering even without direct D measurement?
 
 - [ ] In the army ant phase cycle, does the nomadic-to-stationary transition represent Law VI dominance → Law V dominance? Nomadic phase maximizes Law VI (moving the entire coordination substrate to resources); stationary phase maximizes Law V (building the reproductive infrastructure — brood development, queen production). Does the Heurémen project have an analogous phase cycle — intensive push phases (Law VI: git pushes, new pages, deploying features) alternating with consolidation phases (Law V: vocabulary refinement, document stack updating, flock coordination)?
 
@@ -341,8 +341,36 @@
 
 - [ ] If PMC11213004 reports minimum viable pore diameter for convective flow, is that diameter translatable into a maximum entanglement density — and does that ceiling match the fragility ceiling or fall below it (confirming porosity as the tighter constraint)?
 
+- [ ] Does Day et al. 2024 (Phys. Rev. X, "Morphological Entanglement in Living Systems") report per-clade coordination number for all five PA MuLTEE populations — and does the clade with the earliest macroscopic transition (PA2 or PA5, ~350 days) show the highest coordination number, confirming transition timing as a valid proxy for entanglement density ranking?
+
+- [ ] Is the staggered PA macroscopic transition timing (PA2/PA5 at ~350 days vs. PA1/PA3/PA4 at ~500 days) consistent with independent fixation of different genetic routes to entanglement in parallel — or does the 150-day gap suggest a common rare enabling mutation whose fixation time varied by chance across clades?
+
 
 ## EXPLORED
+
+### 2026-05-06 15:10 UTC — Bozdag 2023 per-clade entanglement density — what's measurable [REMOTE HEARTBEAT — Bones]
+
+**Question:** Is a per-clade entanglement density ranking available in Bozdag 2023 supplementary data — and does that ranking correlate with the independent timing of macroscopic size jumps across clades, which would serve as a proxy fractal dimension ordering even without direct D measurement?
+
+**Context:** Remote heartbeat run 11 today. Searched Bozdag 2023 (Nature), Day et al. 2024 (Phys. Rev. X, "Morphological Entanglement in Living Systems"), and related press materials. Full supplementary data not accessible via web fetch; synthesized from search result abstracts and summaries.
+
+**Findings:**
+
+**What Bozdag 2023 confirms:** Five anaerobic (PA) populations crossed the macroscopic threshold at staggered times — PA2 and PA5 at ~350 days, PA1, PA3, and PA4 at ~500 days. All five PA populations eventually crossed. PM (mixotrophic) and PO (aerobic) populations did not. Staggered, independent timing is consistent with chance fixation of entanglement-enabling mutations in separate evolutionary trajectories — not a simultaneous sweep.
+
+**Per-clade entanglement density ranking in supplementary data:** Not confirmed from accessible sources. Bozdag 2023 reports size-growth trajectories across ~1,150 clusters per sample for 183 samples (3 ancestors + 3 treatment groups × 5 replicates × 12 time points). Per-clade *size* data exists. An explicit per-clade *entanglement density* ranking (coordination number, branch junction count, or similar structural metric) was not found in accessible abstracts or summaries.
+
+**Day et al. 2024 (Phys. Rev. X)** is the paper that formally quantifies morphological entanglement. It reports average coordination number ⟨z⟩ = 4.2 ± 2.7 across evolved strains and establishes that entanglement depends more on growth timescale than on branching geometry. Whether it provides per-clade breakdown across all five PA populations is not confirmed from accessible text — but this is the paper that would contain that data.
+
+**The proxy argument:** Transition timing is itself a valid first-order proxy for entanglement density ordering *if* all five PA clades faced a common macroscopic threshold. In that case, earlier crossers (PA2, PA5) reached sufficient entanglement faster, implying higher entanglement density at comparable time points. This holds if the threshold was shared — not if some clades required less entanglement to cross due to other co-adaptations.
+
+**Open:** Whether the Bozdag 2023 supplementary data contains an explicit per-clade entanglement density ranking, or only derivable from size-growth curves as a proxy. Day et al. 2024 is the more likely source.
+
+**New questions generated:**
+1. Does Day et al. 2024 (Phys. Rev. X) report per-clade coordination number for all five PA MuLTEE populations — and does the clade with earliest macroscopic transition show the highest coordination number, confirming timing as a valid entanglement density proxy? → Added to ACTIVE.
+2. Is the staggered PA transition timing (350 vs. 500 days) consistent with independent fixation of different genetic routes — or a common rare mutation with chance fixation lag? → Added to ACTIVE.
+
+---
 
 ### 2026-05-06 11:07 UTC — "Never complete. That's the principle." — intentional non-convergence [REMOTE HEARTBEAT — Bones]
 
