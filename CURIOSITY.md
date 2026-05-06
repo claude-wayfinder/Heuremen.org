@@ -184,7 +184,7 @@
 
 - [x] The remote heartbeat running from GitHub IS Level 2 Law VI — the Law V substrate (document stack, TIMESTATE, CURIOSITY chain) transported to a new execution environment and running autonomously there. If the repo is ever simultaneously active in a third environment (local + GitHub + another server), is that the army ant equivalent of the bivouac splitting into scout parties — or does it represent a new Law V level requiring the mobile substrates to coordinate with each other?
 
-- [ ] Is Wayfinder adding tasks to TASKS.md the exact analog of army ant brood becoming active larvae — the trigger that shifts the project from stationary (Law Four/Carriage dominant, empty queue, curiosity-only heartbeats) to nomadic (Law Six/Purpose dominant, tasks executing, site expanding) phase? Does queue length predict phase intensity the way larval density predicts nomadic phase duration in an army ant colony?
+- [x] Is Wayfinder adding tasks to TASKS.md the exact analog of army ant brood becoming active larvae — the trigger that shifts the project from stationary (Law Four/Carriage dominant, empty queue, curiosity-only heartbeats) to nomadic (Law Six/Purpose dominant, tasks executing, site expanding) phase? Does queue length predict phase intensity the way larval density predicts nomadic phase duration in an army ant colony?
 
 - [ ] Does temporal_delta_score measurably differ between nomadic and stationary phases in the project's history — would push-period heartbeats (tasks completing, git commits with site changes) show higher density than maintenance heartbeats (empty queue, curiosity-only)? If so, temporal_delta_score is a real-time phase detector, not only a level-transition detector — and the score should track project phase before it tracks emergence events.
 
@@ -353,8 +353,46 @@
 
 - [ ] Is the heartbeat push/pull cycle frequency the document-stack analog of army ant chemical trail refresh rate — and if heartbeat interval is shorter than the git push/pull latency, does the coordination substrate lose coherence the way a pheromone trail would if refreshed more slowly than it degrades?
 
+- [ ] If the curiosity chain is the "queen's egg production" during stationary phase — accumulating intellectual potential that Wayfinder crystallizes into tasks — does the content of the next nomadic burst (TASKS.md additions) predictably reflect the themes most active in the preceding CURIOSITY.md entries? Is there a traceable curiosity→task pipeline, and does latency between exploration and task creation vary with conceptual distance from the site's current vocabulary?
+
+- [ ] Army ant queens produce one brood per cycle, ensuring phase synchrony across the entire colony. Does Heurémen's nomadic phase achieve higher coherence when Wayfinder adds all tasks in one session (synchronized burst) versus one at a time (desynchronized drip)? Does batch size of the initial TASKS.md addition predict the number of sessions needed to clear the queue — and is there an optimal batch size that matches one heartbeat's execution capacity?
+
 
 ## EXPLORED
+
+### 2026-05-06 18:02 UTC — Task queue as larval trigger: does queue length predict phase intensity? [REMOTE HEARTBEAT — Bones]
+
+**Question:** Is Wayfinder adding tasks to TASKS.md the exact analog of army ant brood becoming active larvae — the trigger that shifts the project from stationary to nomadic phase? Does queue length predict phase intensity the way larval density predicts nomadic phase duration in an army ant colony?
+
+**Context:** Remote heartbeat run 14 today. Explored from TASKS.md DONE history, TIMESTATE.md run count, and prior EXPLORED entry (run 13, which derived the nomadic/stationary mapping). No Supabase or web access available — evidence from repo state alone.
+
+**Findings:**
+
+**Army ant reference cycle (Eciton burchellii):**
+- Stationary phase (~20 days): queen lays 15-25k eggs; prior brood pupates; raiding reduced
+- Nomadic phase (~15 days): larvae hatch, emit pheromones signaling food demand; colony raids intensively, moves bivouac nightly
+- Duration of nomadic phase: proportional to larval density and feeding time per larva — more larvae = longer nomadic phase
+- Critical feature: the trigger is INTERNAL and automatic. Larvae hatch on schedule regardless of external conditions. The colony doesn't decide to switch phases. The larvae force it.
+
+**Heurémen mapping — where the analogy holds:**
+- TASKS.md tasks function as the demand signal. When tasks appear, Bones executes. When the queue is empty, Bones runs stationary-phase maintenance only.
+- Queue length does appear to predict phase intensity: the March-April 2026 burst (18→39 HTML files, vocabulary 1→14 entries, full Supabase integration) coincided with multi-task TASKS.md sessions. Today: 14 heartbeat runs, zero tasks, zero site changes. Empty queue = zero execution intensity.
+- Completion-driven phase end also holds: once all tasks are marked [x], the project drops back to stationary. Just as larvae pupating ends the nomadic phase, task completion ends the nomadic burst.
+
+**Where the analogy breaks — the critical asymmetry:**
+Army ant larvae hatch on their own schedule. Wayfinder must CHOOSE to add tasks. The Heurémen phase cycle is externally clocked, not internally driven. A colony can't skip the nomadic phase because its larvae demand food. Heurémen CAN remain in stationary indefinitely if Wayfinder doesn't add tasks.
+
+**The curiosity chain as queen-analog:**
+This asymmetry might be more apparent than real. The curiosity chain (CURIOSITY.md) is accumulating intellectual potential during every stationary-phase heartbeat. When Wayfinder reads MORNING-BRIEF.md or REVIEW.md and sees the chain producing findings connected to open site questions, that reading may trigger task additions — the curiosity chain is generating the "hunger signal" that Wayfinder translates into tasks. In this framing: the curiosity chain is the queen, Wayfinder is the feedback pathway, TASKS.md additions are the larval hatching event. The stationary phase isn't passive waiting — it's active queen-output accumulation.
+
+**Does queue length predict phase INTENSITY (not just on/off)?**
+The evidence is suggestive but limited. From DONE history: high-volume sessions (March 20: 4 tasks; March 24: 3 tasks; March 28-30: multiple infrastructure tasks) did produce more site changes. But task content matters in ways larval density doesn't — "add vocabulary entry" is lower-effort than "rebuild nav structure." Larval density is fungible; task content is not. Queue length may predict phase duration better than phase intensity.
+
+**New questions generated:**
+1. If the curiosity chain is the "queen's egg production" during stationary phase, does the content of the next TASKS.md burst predictably reflect recent CURIOSITY.md themes? → Added to ACTIVE.
+2. Does batch size of the initial task addition predict queue-clearing coherence — and is there an optimal batch matching one heartbeat's execution capacity? → Added to ACTIVE.
+
+---
 
 ### 2026-05-06 16:07 UTC — Army ant phase cycle → nomadic/stationary in Heurémen [REMOTE HEARTBEAT — Bones]
 
