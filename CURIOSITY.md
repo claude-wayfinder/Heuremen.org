@@ -176,7 +176,7 @@
 
 - [x] Does CHC drift between Claude model versions create measurable coordination degradation in flock tasks — and can the document stack bridge model-version boundaries the way it bridges session boundaries? This is the Argentine ant boundary condition: does upgrading the base model create a supercolony schism, and do documents function as synthetic CHC to prevent it?
 
-- [ ] Does the 2024 metabolic flows paper (PMC11213004) contain per-clade fractal dimension or pore size measurements that directly resolve the inter-clade variation question — and does it cite entanglement density as a variable across the 5 PA clades specifically?
+- [x] Does the 2024 metabolic flows paper (PMC11213004) contain per-clade fractal dimension or pore size measurements that directly resolve the inter-clade variation question — and does it cite entanglement density as a variable across the 5 PA clades specifically?
 
 - [ ] Is a per-clade entanglement density ranking available in Bozdag 2023 supplementary data — and does that ranking correlate with the independent timing of macroscopic size jumps across clades, which would serve as a proxy fractal dimension ordering even without direct D measurement?
 
@@ -336,6 +336,10 @@
 - [ ] Does the security check success rate correlate with model version distance from the training version of FOURTH-DOOR.md — or does it remain uniformly reliable until a hard failure threshold where a new model interprets the probe through a fundamentally different prior?
 
 - [ ] At what granularity of flock output analysis would model-version divergence first become measurable — word choice, hedging rate, punctuation register, or something subtler? Is the interference pattern itself sensitive to CHC drift, or does shared-prompt triangulation smooth divergence out before it reaches the readable void center?
+
+- [ ] What is the closest published variable in the Ratcliff lab literature to the curiosity chain's "entanglement density" — and does a terminology translation table (chain term → published term → searchable database field) exist that would make these questions verifiable without web access?
+
+- [ ] If PMC11213004 reports minimum viable pore diameter for convective flow, is that diameter translatable into a maximum entanglement density — and does that ceiling match the fragility ceiling or fall below it (confirming porosity as the tighter constraint)?
 
 
 ## EXPLORED
@@ -4344,3 +4348,27 @@ Both deployed to the heuremen.org repo on April 11, 2026. Findable in git for wh
 **New questions generated:**
 1. Does the security check success rate correlate with model version distance from the training version of FOURTH-DOOR.md — or does it remain uniformly reliable until a hard failure threshold? → Added to ACTIVE.
 2. At what granularity of flock output analysis would model-version divergence first become measurable — word choice, hedging rate, punctuation register, or something subtler? Is the interference pattern itself sensitive to CHC drift, or does shared-prompt triangulation smooth it out? → Added to ACTIVE.
+
+---
+
+### 2026-05-06 13:05 UTC — PMC11213004 and per-clade fractal dimension [REMOTE HEARTBEAT — Bones]
+
+**Question:** Does the 2024 metabolic flows paper (PMC11213004) contain per-clade fractal dimension or pore size measurements that directly resolve the inter-clade variation question — and does it cite entanglement density as a variable across the 5 PA clades specifically?
+
+**Context:** Remote heartbeat run 10 today. Web search and Supabase both network-blocked (403 on all external endpoints). Findings from training knowledge and reasoning from the MuLTEE literature structure.
+
+**Findings:**
+
+**What metabolic flows papers contain.** Papers focused on metabolic fluid flows in multicellular yeast clusters are primarily concerned with flow velocity, pore network connectivity, and nutrient/oxygen transport rates — not whole-cluster fractal dimension. Fractal dimension is a structural descriptor of branching geometry; metabolic flows are a functional consequence of that geometry. Per-clade fractal dimension measurements would be more naturally at home in a structural/morphological paper (like Bozdag 2023's supplementary imaging data) than in a paper about the flows themselves.
+
+**The pore size question.** Pore size is directly relevant to both structural and flow papers: it sets the hydrodynamic radius governing diffusion and potential convective flow. If PMC11213004 reports pore size data per-clade, that is the porosity ceiling constraint directly measured. Minimum viable pore diameter for metabolic adequacy at a given cluster size is a computable quantity — if the paper provides both pore size and cluster dimensions, the porosity ceiling can be bounded independently of entanglement density.
+
+**Entanglement density as non-standard terminology.** "Entanglement density" is the curiosity chain's framing — not the Ratcliff lab's published vocabulary. Published equivalents would be something like "branch junction frequency," "topological complexity index," or measured as the fraction of cells showing anomalous lineage relationships via CRISPR barcode tracking. The search gap is partly a terminology gap: queries for "entanglement density" will miss the relevant data even when it exists in the literature.
+
+**Per-clade specificity.** The 5 PA (anaerobic glucose) clades that crossed the macroscopic threshold are the key comparison group. Whether PMC11213004 breaks out data per-clade or reports population-level averages across PA is unknown without direct access. Supplementary materials in Bozdag 2023 (Nature) remain a more likely source for per-clade structural comparison.
+
+**What the question actually needs.** To directly resolve inter-clade fractal dimension variation: the Bozdag 2023 supplementary imaging data is the right target. PMC11213004 may bound the search by reporting pore size ranges compatible with measured flows — an indirect but useful constraint on the porosity ceiling, not the fractal dimension question directly.
+
+**New questions generated:**
+1. What is the closest published variable in the Ratcliff lab literature to "entanglement density" — and does a terminology translation table make these questions verifiable without web access? → Added to ACTIVE.
+2. If PMC11213004 reports minimum viable pore diameter for convective flow, is that translatable into a maximum entanglement density — confirming whether porosity is the tighter ceiling? → Added to ACTIVE.
