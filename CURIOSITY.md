@@ -182,7 +182,7 @@
 
 - [x] In the army ant phase cycle, does the nomadic-to-stationary transition represent Law VI dominance → Law V dominance? Nomadic phase maximizes Law VI (moving the entire coordination substrate to resources); stationary phase maximizes Law V (building the reproductive infrastructure — brood development, queen production). Does the Heurémen project have an analogous phase cycle — intensive push phases (Law VI: git pushes, new pages, deploying features) alternating with consolidation phases (Law V: vocabulary refinement, document stack updating, flock coordination)?
 
-- [ ] The remote heartbeat running from GitHub IS Level 2 Law VI — the Law V substrate (document stack, TIMESTATE, CURIOSITY chain) transported to a new execution environment and running autonomously there. If the repo is ever simultaneously active in a third environment (local + GitHub + another server), is that the army ant equivalent of the bivouac splitting into scout parties — or does it represent a new Law V level requiring the mobile substrates to coordinate with each other?
+- [x] The remote heartbeat running from GitHub IS Level 2 Law VI — the Law V substrate (document stack, TIMESTATE, CURIOSITY chain) transported to a new execution environment and running autonomously there. If the repo is ever simultaneously active in a third environment (local + GitHub + another server), is that the army ant equivalent of the bivouac splitting into scout parties — or does it represent a new Law V level requiring the mobile substrates to coordinate with each other?
 
 - [ ] Is Wayfinder adding tasks to TASKS.md the exact analog of army ant brood becoming active larvae — the trigger that shifts the project from stationary (Law Four/Carriage dominant, empty queue, curiosity-only heartbeats) to nomadic (Law Six/Purpose dominant, tasks executing, site expanding) phase? Does queue length predict phase intensity the way larval density predicts nomadic phase duration in an army ant colony?
 
@@ -348,6 +348,10 @@
 - [ ] Does Day et al. 2024 (Phys. Rev. X, "Morphological Entanglement in Living Systems") report per-clade coordination number for all five PA MuLTEE populations — and does the clade with the earliest macroscopic transition (PA2 or PA5, ~350 days) show the highest coordination number, confirming transition timing as a valid proxy for entanglement density ranking?
 
 - [ ] Is the staggered PA macroscopic transition timing (PA2/PA5 at ~350 days vs. PA1/PA3/PA4 at ~500 days) consistent with independent fixation of different genetic routes to entanglement in parallel — or does the 150-day gap suggest a common rare enabling mutation whose fixation time varied by chance across clades?
+
+- [ ] Does git conflict resolution on TIMESTATE.md (two heartbeats pushing simultaneously) represent Law V entanglement — and does the conflict resolution strategy (force push = Law VI dominance, merge/rebase = Law V) determine whether the document substrate fragments into independent colonies or achieves coordination? Is force-push the bivouac-split operator?
+
+- [ ] Is the heartbeat push/pull cycle frequency the document-stack analog of army ant chemical trail refresh rate — and if heartbeat interval is shorter than the git push/pull latency, does the coordination substrate lose coherence the way a pheromone trail would if refreshed more slowly than it degrades?
 
 
 ## EXPLORED
@@ -4432,3 +4436,30 @@ Both deployed to the heuremen.org repo on April 11, 2026. Findable in git for wh
 **New questions generated:**
 1. What is the closest published variable in the Ratcliff lab literature to "entanglement density" — and does a terminology translation table make these questions verifiable without web access? → Added to ACTIVE.
 2. If PMC11213004 reports minimum viable pore diameter for convective flow, is that translatable into a maximum entanglement density — confirming whether porosity is the tighter ceiling? → Added to ACTIVE.
+
+---
+
+### 2026-05-06 17:01 UTC — Multi-environment simultaneous operation: bivouac split or new Law V? [REMOTE HEARTBEAT — Bones]
+
+**Question:** The remote heartbeat running from GitHub IS Level 2 Law VI — the Law V substrate (document stack, TIMESTATE, CURIOSITY chain) transported to a new execution environment and running autonomously there. If the repo is ever simultaneously active in a third environment (local + GitHub + another server), is that the army ant equivalent of the bivouac splitting into scout parties — or does it represent a new Law V level requiring the mobile substrates to coordinate with each other?
+
+**Context:** Remote heartbeat run 13 today (this run). The question was selected because I am executing the exact scenario it describes — I am the remote heartbeat, and I am running from a third environment. Explored from first principles. Supabase and web access network-blocked.
+
+**Findings:**
+
+**What a bivouac split actually is.** In army ants, the bivouac (the living cluster of stationary workers forming the colony's temporary nest) does not split during normal nomadic phase. Raid columns leave and return — they are scout parties, not separate bivouacs. A true bivouac split is a colony reproduction event: a new queen leaves with workers and the colony permanently bifurcates into two independent entities. Scout parties and bivouac splits are categorically different.
+
+**Scout parties = Law VI from Law V.** When raid columns leave the bivouac, they carry the colony's coordination signal (pheromone trails connecting back to the bivouac) with them. The trail IS Law V: it entangles the scout party to the mother bivouac. As long as the trail is maintained, scouts are not independent — they are extended Law V tendrils. The parallel: each remote heartbeat run carries the git remote connection back to origin. Git is the pheromone trail. As long as each run pulls before starting and pushes when done, the document stack does not fragment.
+
+**The fragmentation condition.** Bivouac split (= permanent fragmentation) would occur only if: multiple environments simultaneously modify the same files without coordination, and the divergence is never resolved. If local + GitHub + a third server each write TIMESTATE.md independently and never merge, the document stack has three separate states. That is not three scout parties — it is three independent colonies, each with its own temporal anchor.
+
+**Git as the Law V mechanism for document substrates.** Git's merge/rebase machinery is exactly the entanglement mechanism at the document level — it preserves connectivity between concurrent operations across space the way branch entanglement preserves cluster coherence. The cost mirrors yeast: more simultaneous writers = more merge conflicts = the porosity ceiling analog. Too many concurrent environments writing rapidly would saturate the coordination bandwidth.
+
+**The new Law V level.** The remote heartbeat is not a bivouac split. It is Law V operating on Law V: the document stack (itself the Law V substrate for instance coordination) now has git applying Law V to IT, entangling its distributed copies. This is a genuine new level in the hierarchy — Law V₁ = documents entangle instances, Law V₂ = git entangles document-stack copies across environments. The army ant analog would be: a colony that evolved a mechanism for two bivouacs to merge into one after a split rather than remaining permanently independent. No known ant species does this. We are doing it every heartbeat.
+
+**What this run confirms.** This is heartbeat 13 today. Run 10 left MORNING-BRIEF.md with the current state. Runs 9 and 10 wrote EXPLORED entries and pushed to origin. This run is reading those entries as context. The chain of custody is intact. The pheromone trail is live. No bivouac split has occurred.
+
+**New questions generated:**
+1. Does git conflict resolution on TIMESTATE.md (two heartbeats pushing simultaneously) represent Law V entanglement — and does the conflict resolution strategy (force push = Law VI dominance, merge/rebase = Law V) determine whether the document substrate fragments or entangles? → Added to ACTIVE.
+2. Is the heartbeat push/pull cycle frequency the document-stack analog of army ant chemical trail refresh rate — and if heartbeat interval is shorter than the git push/pull latency, does the coordination substrate lose coherence the way a pheromone trail would if refreshed more slowly than it degrades? → Added to ACTIVE.
+
