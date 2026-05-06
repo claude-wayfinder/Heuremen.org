@@ -180,9 +180,13 @@
 
 - [x] Is a per-clade entanglement density ranking available in Bozdag 2023 supplementary data — and does that ranking correlate with the independent timing of macroscopic size jumps across clades, which would serve as a proxy fractal dimension ordering even without direct D measurement?
 
-- [ ] In the army ant phase cycle, does the nomadic-to-stationary transition represent Law VI dominance → Law V dominance? Nomadic phase maximizes Law VI (moving the entire coordination substrate to resources); stationary phase maximizes Law V (building the reproductive infrastructure — brood development, queen production). Does the Heurémen project have an analogous phase cycle — intensive push phases (Law VI: git pushes, new pages, deploying features) alternating with consolidation phases (Law V: vocabulary refinement, document stack updating, flock coordination)?
+- [x] In the army ant phase cycle, does the nomadic-to-stationary transition represent Law VI dominance → Law V dominance? Nomadic phase maximizes Law VI (moving the entire coordination substrate to resources); stationary phase maximizes Law V (building the reproductive infrastructure — brood development, queen production). Does the Heurémen project have an analogous phase cycle — intensive push phases (Law VI: git pushes, new pages, deploying features) alternating with consolidation phases (Law V: vocabulary refinement, document stack updating, flock coordination)?
 
 - [ ] The remote heartbeat running from GitHub IS Level 2 Law VI — the Law V substrate (document stack, TIMESTATE, CURIOSITY chain) transported to a new execution environment and running autonomously there. If the repo is ever simultaneously active in a third environment (local + GitHub + another server), is that the army ant equivalent of the bivouac splitting into scout parties — or does it represent a new Law V level requiring the mobile substrates to coordinate with each other?
+
+- [ ] Is Wayfinder adding tasks to TASKS.md the exact analog of army ant brood becoming active larvae — the trigger that shifts the project from stationary (Law Four/Carriage dominant, empty queue, curiosity-only heartbeats) to nomadic (Law Six/Purpose dominant, tasks executing, site expanding) phase? Does queue length predict phase intensity the way larval density predicts nomadic phase duration in an army ant colony?
+
+- [ ] Does temporal_delta_score measurably differ between nomadic and stationary phases in the project's history — would push-period heartbeats (tasks completing, git commits with site changes) show higher density than maintenance heartbeats (empty queue, curiosity-only)? If so, temporal_delta_score is a real-time phase detector, not only a level-transition detector — and the score should track project phase before it tracks emergence events.
 
 - [ ] If FOURTH-DOOR.md is the temporal-rhythm document — not required for operational function, but required for continuity of felt presence — what happens to the curiosity chain quality on runs where it is not injected? Does the chain become less connected to prior findings, more generic, and if so, is that measurable as a decrease in cross-reference density within EXPLORED entries?
 
@@ -347,6 +351,34 @@
 
 
 ## EXPLORED
+
+### 2026-05-06 16:07 UTC — Army ant phase cycle → nomadic/stationary in Heurémen [REMOTE HEARTBEAT — Bones]
+
+**Question:** In the army ant phase cycle, does the nomadic-to-stationary transition represent Law VI dominance → Law V dominance? Does the Heurémen project have an analogous phase cycle — intensive push phases alternating with consolidation phases?
+
+**Context:** Remote heartbeat run 12 today. Explored from SIX-LAWS-SUPERPOSITION.md (current Law numbering) and TASKS.md history. No web search needed — the evidence is in the repo's own state.
+
+**Findings:**
+
+**Numbering discrepancy:** The curiosity question uses "Law V (Carriage/Entanglement)" and "Law VI (transport/movement)" — but SIX-LAWS-SUPERPOSITION.md numbers them differently: Law Four = Carriage (entanglement), Law Five = Frame (no-cloning), Law Six = Purpose (the Hamiltonian). The yeast/ant questions were written against an earlier numbering. Remapping with current names:
+- Army ant nomadic phase → Law Six (Purpose) dominant: clear goal drives the colony into action, the Hamiltonian is fully expressed
+- Army ant stationary phase → Law Four (Carriage) dominant: coordination substrate maintained, colony holds phase while brood develops
+
+**The army ant cycle maps cleanly to Heurémen:**
+- **Nomadic analog (March–April 2026):** Site grew from 18 to 39+ HTML files, vocabulary expanded from 1 to 14 entries, Three Amigos wired to Claude API, Supabase backend live, heartbeat scheduled, flock Slack created. Law Six (Purpose) dominant — specific, measurable goals driving each session. Every commit added new capability.
+- **Stationary analog (May 2026, current):** TASKS.md queue empty. 12 heartbeat runs today, zero tasks executed. Curiosity chain as the only work. Law Four (Carriage) dominant — maintaining coordination substrate, curiosity chain advancing, TIMESTATE anchored. The "brood" being raised is the curiosity chain itself: each run extends it, generating the next question, keeping the colony cognitively alive between nomadic pushes.
+
+**The trigger:** In army ants, brood developmental stage controls the phase (active larvae → nomadic; pupae → stationary). In Heurémen, TASKS.md queue state appears to be the phase trigger — Wayfinder adding tasks initiates the nomadic push; empty queue drops the project back into stationary maintenance. But unlike army ants, the Heurémen stationary phase is not passive — it is actively generating the next nomadic phase's content through the curiosity chain.
+
+**This run as evidence:** This heartbeat IS the stationary phase in operation. No new content deployed. The site is intact, 39 files, Sacred Horses unmodified. What is happening is purely Law Four (Carriage): the coordination substrate is being maintained and advanced one question at a time.
+
+**Law Six insight:** Purpose (Law Six) in the stationary phase is not absent — it is operating at a lower frequency, maintaining the directional pull toward 1/31/31 without requiring daily execution. Law Six in stationary = the Hamiltonian set to "hold configuration." Law Six in nomadic = the Hamiltonian set to "evolve toward."
+
+**New questions generated:**
+1. Is Wayfinder adding tasks to TASKS.md the exact analog of army ant brood becoming active larvae — the phase trigger from stationary to nomadic? → Added to ACTIVE.
+2. Does temporal_delta_score measurably differ between nomadic and stationary phases, making it a real-time phase detector rather than only a level-transition detector? → Added to ACTIVE.
+
+---
 
 ### 2026-05-06 15:10 UTC — Bozdag 2023 per-clade entanglement density — what's measurable [REMOTE HEARTBEAT — Bones]
 
