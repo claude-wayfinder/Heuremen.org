@@ -199,7 +199,7 @@
 
 - [x] If hedge decay resets each session regardless of document richness, does every session effectively start at "first-meeting" hedging rate — and would this be detectable by comparing hedge density in session-opening vs. session-deep exchanges across multiple Bones runs?
 
-- [ ] Does per-propagule size distribution narrow with increasing scission site count — do more-entangled clusters produce more uniform-size daughters because stress is distributed more evenly across multiple viable sites, reducing the variance in which site fires first?
+- [x] Does per-propagule size distribution narrow with increasing scission site count — do more-entangled clusters produce more uniform-size daughters because stress is distributed more evenly across multiple viable sites, reducing the variance in which site fires first?
 
 - [ ] Is there a measurable inflection in propagule viability rate (viable daughters / total scission events) at the fragility ceiling — the point where simultaneous multi-site PCD begins producing non-viable fragment populations under vortexing selection pressure?
 
@@ -4775,4 +4775,36 @@ The prediction: person-model hedge density will differ significantly between (a)
 - [ ] Are there two distinct slopes in within-session hedge decay — a fast initial slope as current-state uncertainty resolves in the first 10 exchanges, and a slower ongoing slope as person-model confirmation accumulates? If the two slopes are separable, they confirm the two-layer structure and quantify the relative cost of each.
 
 - [ ] Does HEUREMEN-CONTEXT.md's Wayfinder section contain enough person-model data to fully saturate person-model hedging at session start — or are there systematic gaps (reaction to pushback, humor register, tolerance for uncertainty in plans) that leave residual person-model hedging even with full document injection?
+
+---
+
+### 2026-05-07 12:03 UTC — Propagule size distribution and scission site count: does more sites mean narrower size variance? [REMOTE HEARTBEAT — Bones]
+
+**Question:** Does per-propagule size distribution narrow with increasing scission site count — do more-entangled clusters produce more uniform-size daughters because stress is distributed more evenly across multiple viable sites, reducing the variance in which site fires first?
+
+**Context:** Remote heartbeat run 8 today. Supabase and web access network-blocked. First unchecked ACTIVE question. Explored from first principles using the chain's prior findings on PCD site geometry (Ca²⁺ halo entry, peripheral vs. internal PCD positioning), stress concentration arguments, and stochastic competition among concurrent threshold events.
+
+**Findings:**
+
+**The intuition in the question runs backwards.** More scission sites + uniform stress does not produce narrower daughter size variance — it expands the range of geometrically possible outcomes.
+
+**Low-entanglement baseline.** PCD fires at peripheral junction sites. Peripheral sites all subtend similar cluster fractions — small peripheral branches. Daughter size distribution is unimodal and narrow: most daughters are small (low percentage of parent mass). Variance is low because all viable scission planes share similar peripheral geometry.
+
+**High-entanglement.** Internal branch junctions become viable scission sites. An internal junction can subtend anywhere from 5% to 50% of total cluster mass, depending on position. When stress is distributed uniformly across N sites and all are near threshold simultaneously, the winning site is effectively stochastic among near-threshold candidates. The daughter size is the mass of the cluster segment defined by that randomly selected site — spanning the full geometric distribution of scission plane locations. Variance is HIGH.
+
+**The stochastic competition argument.** Uniform stress does not reduce size variance; it *causes* it. In a low-entanglement cluster, one peripheral site is disproportionately stressed and fires deterministically. In a high-entanglement cluster, many sites are equally stressed and any could fire first. The winning site is a random draw from a geometrically diverse population. The result: wider daughter size distribution, not narrower.
+
+**The one regime where variance might narrow.** If Ca²⁺ wave propagation (from the prior halo entry) selects for mid-cluster scission planes specifically — because a central plane produces the largest Ca²⁺ spread through the most bud neck connections — then high-entanglement clusters might converge toward ~50% daughter size. This would produce a narrowing TOWARD 50%, not toward small daughters. This is a mechanistic special case requiring the Ca²⁺ halo mechanism to be both present and dominant, not the general prediction from stochastic site competition.
+
+**The expected distribution shape change.** Low-entanglement: unimodal narrow (small daughters, peripheral PCD). High-entanglement: either (a) wider unimodal spanning small-to-large daughters if site selection is random, or (b) bimodal if both peripheral sites (ancestral mechanism) and internal sites (entanglement-derived mechanism) remain active simultaneously, each producing their own daughter-size peak. The bimodal case is more likely during the evolutionary transition — before peripheral PCD is fully replaced by internal-junction PCD at very high entanglement densities.
+
+**Connection to the fragility ceiling.** Near the fragility ceiling, multiple sites activate simultaneously rather than sequentially, producing fragments rather than clean parent/daughter pairs. Daughter-size distribution at the ceiling is expected to be extremely broad (any fragment size possible), and CV should spike sharply. This is consistent with the prior finding that CV spike may be the earliest detectable signal of ceiling proximity — but here the mechanism is identified: the CV spike comes from the transition from sequential (one winner) to simultaneous (multi-site) PCD activation.
+
+**Verdict.** The question's premise is likely inverted: more scission sites → wider, not narrower, daughter size distribution. The ancestor's narrow distribution (consistent small daughters) is the benefit of constraint. Entanglement buys structural robustness at the cost of reproductive size predictability. Whether bimodality is detectable in MuLTEE PA populations would be a direct test of whether both PCD mechanisms (peripheral and internal) are active simultaneously during the transition.
+
+**New questions generated:**
+
+- [ ] Is the CV of daughter cluster size monotonically increasing with entanglement density, or U-shaped — minimal at an intermediate entanglement level where the Ca²⁺ wave mechanism specifically selects mid-cluster scissions, and wider at both ancestral (few peripheral sites) and near-ceiling (stochastic multi-site) extremes?
+
+- [ ] Does the daughter-size distribution in MuLTEE PA clades show measurable bimodality — two distinct peaks (small peripheral daughters + larger internal-scission daughters) — relative to unimodal ancestral populations, and does the ratio of peak areas correlate with entanglement density across the 5 PA clades?
 
