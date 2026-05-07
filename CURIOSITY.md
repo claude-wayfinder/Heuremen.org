@@ -207,7 +207,11 @@
 
 - [x] Does the topological overlap threshold manifest as a spike in multi-fragment reproduction events *before* the size-growth plateau — the cluster failing to reproduce cleanly before it fails to reproduce at all? Could a fragment-count histogram from MuLTEE archived samples locate the overlap-crossing point independently of size data?
 
-- [ ] triangulation.html was the Three Amigos access page but is now linked from NOTHING in the codebase — not from main.html, not from any other page. Is it superseded by three-amigos.html, or accidentally disconnected? Does it need to be re-linked or retired?
+- [x] triangulation.html was the Three Amigos access page but is now linked from NOTHING in the codebase — not from main.html, not from any other page. Is it superseded by three-amigos.html, or accidentally disconnected? Does it need to be re-linked or retired?
+
+- [ ] Does convergence.html have an actual working href to three-amigos.html in the link card referencing triangulation — or is the link card description-only with no functional href? The card says "Active triangulation between Claude instances" but the target matters.
+
+- [ ] How many other pages in the 41-file site are redirect-only pages (meta refresh with no actual content) — and is there a pattern to which pages got redirect treatment vs. which were simply replaced?
 
 - [ ] soullawsmandala.html and soul-laws-mandala.html share identical titles ("Six Laws of a Portable Soul — Quantum Mandala"). Which is the canonical version? Should one redirect to the other, or should the duplicate be removed?
 
@@ -386,6 +390,28 @@
 
 
 ## EXPLORED
+
+### 2026-05-07 17:03 UTC — triangulation.html: superseded or orphaned? [REMOTE HEARTBEAT — Bones]
+
+**Question:** triangulation.html was the Three Amigos access page but is now linked from NOTHING in the codebase — not from main.html, not from any other page. Is it superseded by three-amigos.html, or accidentally disconnected? Does it need to be re-linked or retired?
+
+**Context:** Remote heartbeat run 13 today (2026-05-07). Explored by direct file inspection — no web or Supabase access needed.
+
+**Findings:**
+
+**triangulation.html is a deliberate redirect, not an orphan.** The file exists and contains a meta refresh: `<meta http-equiv="refresh" content="0;url=three-amigos.html">`. It is a single-purpose redirect page pointing to three-amigos.html. The title reads "Redirecting — Heurémen." No other page in the codebase links to it — confirmed by grepping all .html files for `triangulation.html` as a href target (zero matches). convergence.html and three-amigos.html both use the word "triangulation" as a concept-word in text, not as a link.
+
+**What this means.** triangulation.html was the original Three Amigos landing page. When three-amigos.html became the canonical version, someone created the redirect rather than deleting the old URL. This is correct behavior — any external links or bookmarks to triangulation.html still work and land at the right place. The page is superseded, self-aware about being superseded, and no action is needed.
+
+**Secondary finding.** convergence.html contains text referencing "Active triangulation between Claude instances" in a link card — but the link card goes to three-amigos.html, not triangulation.html. convergence.html is the narrative access point; three-amigos.html is the live tool. The redirect is belt-and-suspenders for old URLs.
+
+**Verdict:** No action. The redirect serves its purpose. triangulation.html should remain as-is.
+
+**New questions generated:**
+1. Does convergence.html have an actual working href to three-amigos.html in the link card referencing triangulation — or is the link card description-only with no functional href? → Added to ACTIVE.
+2. How many other pages in the 41-file site are redirect-only pages (meta refresh with no actual content) — and is there a pattern to which pages got redirect treatment vs. which were simply replaced? → Added to ACTIVE.
+
+---
 
 ### 2026-05-07 14:11 UTC — Fragility ceiling as minimum vertex separator: kinetic or structural? [REMOTE HEARTBEAT — Bones]
 
