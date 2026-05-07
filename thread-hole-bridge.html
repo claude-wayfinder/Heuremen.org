@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thread → Hole Bridge</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0807;--bg2:#111009;--bg3:#191510;
+  --gold:rgb(196,154,56);--gold-mid:rgba(196,154,56,0.55);
+  --gold-dim:rgba(196,154,56,0.18);--gold-ghost:rgba(196,154,56,0.07);
+  --text:rgb(247,240,224);--text-dim:rgba(247,240,224,0.45);
+  --seeded:rgba(196,154,56,0.12);--seeded-border:rgba(196,154,56,0.45);
+}
+html,body{background:var(--bg);color:var(--text);font-family:'Lora',Georgia,serif;min-height:100%}
+.page{max-width:920px;margin:0 auto;padding:28px 22px}
+h1{font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:17px;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+h2{font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:9px;
+  letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);margin-bottom:24px}
+
+.panel{background:var(--bg2);border:0.5px solid var(--gold-dim);border-radius:8px;padding:18px;margin-bottom:18px}
+.panel-title{font-family:'Cinzel',Georgia,serif;font-size:9px;letter-spacing:0.25em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:14px;
+  display:flex;justify-content:space-between;align-items:center}
+.badge{background:var(--gold-ghost);border:0.5px solid var(--gold-dim);
+  border-radius:10px;padding:2px 9px;font-size:8px;color:var(--text-dim)}
+.badge.active{color:var(--gold);border-color:var(--gold-dim)}
+
+textarea,input{width:100%;background:var(--gold-ghost);border:0.5px solid var(--gold-dim);
+  border-radius:5px;color:var(--text);font-family:'Lora',Georgia,serif;
+  font-size:14px;line-height:1.6;padding:10px 12px;resize:none;outline:none}
+textarea{height:64px}
+textarea:focus,input:focus{border-color:var(--gold-mid)}
+textarea::placeholder,input::placeholder{color:var(--text-dim)}
+
+.btn{background:var(--gold-ghost);border:0.5px solid var(--gold-mid);
+  color:var(--gold);font-family:'Cinzel',Georgia,serif;font-size:8px;
+  letter-spacing:0.18em;text-transform:uppercase;padding:8px 16px;
+  border-radius:4px;cursor:pointer;transition:background 0.2s}
+.btn:hover{background:rgba(196,154,56,0.14)}
+.btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center}
+
+/* DOORS GRID */
+.doors{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+@media(max-width:600px){.doors{grid-template-columns:repeat(2,1fr)}}
+.door{background:var(--bg3);border:0.5px solid var(--gold-dim);border-radius:6px;
+  padding:14px 12px;cursor:pointer;transition:all 0.2s;position:relative}
+.door:hover{border-color:var(--gold-mid);background:rgba(196,154,56,0.06)}
+.door.seeded{background:var(--seeded);border-color:var(--seeded-border)}
+.door.seeded::after{content:'';position:absolute;top:6px;right:8px;
+  width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:0.7}
+.door-label{font-family:'Cinzel',Georgia,serif;font-size:10px;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:5px}
+.door-title{font-size:14px;line-height:1.4;color:var(--text)}
+.door.seeded .door-title{color:var(--text)}
+.door.seeded .door-label{color:var(--gold-mid)}
+.door-hint{font-size:11px;color:var(--text-dim);font-style:italic;margin-top:4px;line-height:1.4}
+
+/* DESCENT PANEL */
+.descent{margin-top:14px}
+.level-block{border-left:1.5px solid var(--gold-dim);padding:12px 16px;
+  margin-bottom:12px;transition:border-color 0.4s}
+.level-block.active{border-color:var(--gold-mid)}
+.level-label{font-family:'Cinzel',Georgia,serif;font-size:8px;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--text-dim);margin-bottom:6px;
+  display:flex;align-items:center;gap:8px}
+.level-label.active{color:var(--gold)}
+.level-dot{width:5px;height:5px;border-radius:50%;background:var(--gold-dim);flex-shrink:0}
+.level-block.active .level-dot{background:var(--gold)}
+.level-text{font-size:14px;line-height:1.7;color:var(--text);opacity:0;
+  transition:opacity 0.6s;max-height:0;overflow:hidden}
+.level-text.shown{opacity:1;max-height:300px}
+.level-text.loading{color:var(--text-dim);font-style:italic}
+
+/* EDGE PROMPT */
+.edge-box{background:var(--bg3);border:0.5px solid var(--gold-dim);border-radius:5px;
+  padding:14px;font-family:'Courier New',monospace;font-size:11px;
+  color:rgba(247,240,224,0.55);line-height:1.8;max-height:200px;overflow-y:auto;
+  white-space:pre-wrap;margin-top:10px}
+
+/* LOG */
+.log{background:var(--bg3);border:0.5px solid var(--gold-dim);border-radius:5px;
+  padding:12px;font-family:'Courier New',monospace;font-size:11px;
+  color:var(--text-dim);line-height:1.8;max-height:110px;overflow-y:auto}
+.le{color:var(--text-dim)}.le.ev{color:var(--gold)}.le.seed{color:rgba(196,154,56,0.8)}
+.le.deep{color:rgba(140,200,140,0.8)}.le.dim{color:rgba(247,240,224,0.25)}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>Thread → Hole Bridge</h1>
+<h2>Curiosity Engine · Rabbit Hole · One System</h2>
+
+<!-- STEP 1: THREAD -->
+<div class="panel">
+  <div class="panel-title">
+    1 — Open Thread
+    <span class="badge" id="thread-badge">no thread</span>
+  </div>
+  <textarea id="thread-input" placeholder="Type something with an open thread... 'I have a job interview Thursday' or 'trying to figure out this thing with my kid' or 'working on a big deadline'"></textarea>
+  <div class="btn-row">
+    <button class="btn" onclick="detectThread()">Detect Thread</button>
+    <button class="btn" onclick="clearAll()">Reset</button>
+    <span id="thread-summary" style="font-size:12px;color:var(--text-dim);font-style:italic"></span>
+  </div>
+</div>
+
+<!-- STEP 2: DOORS -->
+<div class="panel">
+  <div class="panel-title">
+    2 — The Rabbit Hole Doors
+    <span class="badge active" id="seed-badge">6 generic</span>
+  </div>
+  <p style="font-size:12px;color:var(--text-dim);font-style:italic;margin-bottom:4px">
+    1–2 doors seeded by the open thread. The user doesn't know why they're pulled. The dark circuit does.
+  </p>
+  <div class="doors" id="doors-grid"></div>
+</div>
+
+<!-- STEP 3: DESCENT -->
+<div class="panel" id="descent-panel" style="display:none">
+  <div class="panel-title">
+    3 — The Descent
+    <span class="badge active" id="descent-door-label"></span>
+  </div>
+  <p style="font-size:12px;color:var(--text-dim);font-style:italic;margin-bottom:4px">
+    Level 1 is general. Level 4 is "wait — this is about me."
+  </p>
+  <div class="descent" id="descent-levels"></div>
+  <div id="next-btn-wrap" style="margin-top:14px;display:none">
+    <button class="btn" onclick="nextLevel()">Go Deeper ↓</button>
+  </div>
+</div>
+
+<!-- EDGE FUNCTION PROMPT -->
+<div class="panel" id="edge-panel" style="display:none">
+  <div class="panel-title">4 — Edge Function Prompt (Thread Injection)</div>
+  <p style="font-size:12px;color:var(--text-dim);font-style:italic">
+    What the Queen's generation function receives. Thread context woven in — never surfaced to the user.
+  </p>
+  <div class="edge-box" id="edge-box"></div>
+</div>
+
+<!-- LOG -->
+<div class="log" id="log" style="margin-top:16px">
+  <div class="le ev">// Thread → Hole bridge ready. Detect a thread to begin.</div>
+</div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   THREAD → TOPIC SEED MAP
+   Maps thread entity/type to Rabbit Hole topic seeds.
+   Each seed has: title, hint, levelPrompts[4], edgeContext
+═══════════════════════════════════════════════════ */
+const SEED_MAP = {
+  interview: {
+    title: "The Architecture of a Moment",
+    hint: "What happens in the brain when everything depends on the next ten minutes",
+    edgeContext: "upcoming high-stakes evaluation, fear of judgment, preparation meeting moment, the gap between readiness and belief",
+    levels: [
+      "explore how the brain handles performance pressure — the neuroscience of what actually happens when stakes are high",
+      "explore the paradox of preparation: why practice doesn't always translate, and what 'being ready' actually means neurologically",
+      "explore that specific private moment before a test, an audience, a decision — when you're alone with what you know and what you fear you don't",
+      "explore the question underneath every high-stakes moment: not 'am I prepared' but 'am I enough' — and what neuroscience actually says about that"
+    ]
+  },
+  deadline: {
+    title: "The Physics of the Last Hour",
+    hint: "What pressure does to creativity, focus, and the stories we tell ourselves about time",
+    edgeContext: "approaching deadline, time compression, the psychology of finishing, creative pressure as catalyst",
+    levels: [
+      "explore what cognitive science says about deadlines — how the brain changes when time collapses",
+      "explore the paradox of constraints: why limitation sometimes unlocks what freedom can't",
+      "explore that feeling when the deadline is real and you're still not done — what's actually happening and why it produces some of the best work",
+      "explore why we need the pressure to find what we actually think — the idea that the deadline isn't the obstacle, it's the door"
+    ]
+  },
+  meeting: {
+    title: "The Room Where It Happens",
+    hint: "What we actually communicate when we think we're communicating",
+    edgeContext: "high-stakes conversation ahead, dynamics of being seen and heard, performing vs. being present",
+    levels: [
+      "explore the science of human communication — how much of what we convey has nothing to do with words",
+      "explore power dynamics in rooms — how presence, eye contact, and silence shape outcomes",
+      "explore what happens internally when you're performing attentiveness while actually calculating — the split-screen brain in high-stakes conversation",
+      "explore the question every room eventually forces: are you trying to be understood, or trying to win?"
+    ]
+  },
+  relationship: {
+    title: "The Weight of Someone Else",
+    hint: "What connection does to us — neurologically, emotionally, permanently",
+    edgeContext: "significant relationship friction or concern, the weight of caring about someone's outcome, attachment and helplessness",
+    levels: [
+      "explore attachment theory — how early bonds shape every relationship that follows",
+      "explore the neuroscience of worry about someone we love: why their pain lands in our body",
+      "explore the specific experience of watching someone you love move through something you can't fix — what that helplessness actually is",
+      "explore the hardest question in any close relationship: where does care end and control begin"
+    ]
+  },
+  struggle: {
+    title: "The Thing That Won't Resolve",
+    hint: "Why some problems stay open — and what that's actually telling you",
+    edgeContext: "ongoing unresolved situation, circling the same problem, the feeling of being stuck while moving",
+    levels: [
+      "explore why certain problems resist solution — the cognitive science of circular thinking",
+      "explore the difference between problems that need solving and problems that need time — how the brain confuses them",
+      "explore that specific experience of knowing what you should probably do and still not doing it — what's underneath that",
+      "explore whether being stuck is sometimes the most honest response — and what becomes possible when you stop trying to fix it"
+    ]
+  },
+  project: {
+    title: "Building Something Into Being",
+    hint: "The strange territory between idea and real thing",
+    edgeContext: "active project or build, the gap between vision and execution, maker's psychology, the weight of unfinished work",
+    levels: [
+      "explore the psychology of making — what happens to identity when you're building something",
+      "explore the specific cognitive state of mid-project: when the idea is no longer new but not yet real",
+      "explore that moment in any build when you're not sure if you're creating or just persisting — and why that distinction matters less than it seems",
+      "explore what it means to finish something — why completion is harder than starting, and what you're actually afraid of"
+    ]
+  },
+};
+
+/* GENERIC DOORS — no thread seeding */
+const GENERIC_DOORS = [
+  {title:"The Deep Ocean",hint:"What lives in permanent darkness, and why it matters"},
+  {title:"How Memory Works",hint:"The brain doesn't record — it reconstructs"},
+  {title:"The Speed of Light",hint:"Why nothing can cross it, and what that means for everything"},
+  {title:"Fermentation",hint:"The ancient technology that built civilization"},
+  {title:"How Stars Die",hint:"What happens when a sun runs out of fuel"},
+  {title:"The Immune System",hint:"A war you never see, happening right now"},
+  {title:"Animal Communication",hint:"What other species know about language that we don't"},
+  {title:"The Mathematics of Chaos",hint:"Why small things have enormous consequences"},
+  {title:"Sleep",hint:"What the brain is actually doing while you're not there"},
+  {title:"Tectonic Plates",hint:"The slow catastrophe that shapes everything"},
+];
+
+/* ═══════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════ */
+let currentThread = null;
+let currentSeed = null;
+let currentLevel = 0;
+let levelContents = [];
+let isSeededDoor = false;
+
+/* ═══════════════════════════════════════════════════
+   THREAD DETECTION (via Curiosity Engine logic)
+═══════════════════════════════════════════════════ */
+async function detectThread() {
+  const text = document.getElementById('thread-input').value.trim();
+  if (!text) return;
+  addLog('Scanning for open thread...', 'ev');
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514', max_tokens:200,
+        system:'Detect ONE primary open/unresolved thread. Return ONLY JSON: {"text":"brief description","type":"event|struggle|relationship|project|other","entity":"interview|deadline|meeting|relationship|struggle|project"} or null if none. No markdown.',
+        messages:[{role:'user',content:text}]
+      })
+    });
+    const data = await res.json();
+    const raw = data.content?.[0]?.text?.trim()||'null';
+    currentThread = JSON.parse(raw.replace(/```json?|```/g,'').trim());
+  } catch(e) {
+    currentThread = detectFallback(text);
+  }
+
+  if (!currentThread) {
+    addLog('No open thread detected. Showing generic doors.','dim');
+    document.getElementById('thread-badge').textContent = 'no thread';
+    document.getElementById('thread-summary').textContent = '';
+    renderDoors(null);
+    return;
+  }
+
+  addLog('Thread: "'+currentThread.text+'" ['+currentThread.entity+']','seed');
+  document.getElementById('thread-badge').textContent = currentThread.entity;
+  document.getElementById('thread-badge').className = 'badge active';
+  document.getElementById('thread-summary').textContent = currentThread.entity+' · '+currentThread.type;
+  renderDoors(currentThread);
+}
+
+function detectFallback(text) {
+  const pats = [
+    {re:/\b(interview|audition)\b/i, entity:'interview', type:'event'},
+    {re:/\b(deadline|due)\b/i, entity:'deadline', type:'event'},
+    {re:/\b(meeting|presentation|demo)\b/i, entity:'meeting', type:'event'},
+    {re:/trying to (figure out|deal with|work out)/i, entity:'struggle', type:'struggle'},
+    {re:/thing with (my |the )?(kid|son|daughter|mom|dad|wife|husband|partner|boss)/i, entity:'relationship', type:'relationship'},
+    {re:/\b(working on|building|finishing).{0,20}(project|app|feature)/i, entity:'project', type:'project'},
+  ];
+  for (const p of pats) {
+    if (p.re.test(text)) return {
+      text:(text.match(p.re)||[p.entity])[0], entity:p.entity, type:p.type
+    };
+  }
+  return null;
+}
+
+/* ═══════════════════════════════════════════════════
+   DOOR RENDERING
+═══════════════════════════════════════════════════ */
+function renderDoors(thread) {
+  const grid = document.getElementById('doors-grid');
+  const seedBadge = document.getElementById('seed-badge');
+  grid.innerHTML = '';
+
+  // pick 4 generic doors at random
+  const shuffled = [...GENERIC_DOORS].sort(()=>Math.random()-0.5);
+  const generics = shuffled.slice(0,4);
+
+  // if thread, pick 1-2 seeded doors
+  let seededCount = 0;
+  const allDoors = [];
+
+  if (thread && SEED_MAP[thread.entity]) {
+    const seed = SEED_MAP[thread.entity];
+    // insert 1 seeded door at a random position (not first, not last)
+    const seededPos = 1 + Math.floor(Math.random()*3);
+    allDoors.push({...seed, seeded:true, entity:thread.entity, pos:seededPos});
+    seededCount = 1;
+    seedBadge.textContent = '1 seeded · 5 generic';
+  } else {
+    seedBadge.textContent = '6 generic';
+  }
+
+  // fill remaining with generics
+  for (let i=0; i<5; i++) generics[i] && allDoors.push({...generics[i], seeded:false});
+
+  // sort by position if seeded
+  const final = [...allDoors].sort((a,b)=>{
+    if(a.pos!==undefined) return a.pos - 3;
+    return 0;
+  });
+
+  // shuffle non-seeded among themselves, keep seeded roughly in middle
+  const nonSeeded = final.filter(d=>!d.seeded).sort(()=>Math.random()-0.5);
+  const seededDoor = final.find(d=>d.seeded);
+  const doorOrder = [];
+  let ns = 0;
+  for(let i=0; i<6; i++){
+    if(seededDoor && i===2){doorOrder.push(seededDoor);}
+    else if(ns<nonSeeded.length){doorOrder.push(nonSeeded[ns++]);}
+  }
+  if(seededDoor && !doorOrder.includes(seededDoor)) doorOrder.splice(2,0,seededDoor);
+
+  doorOrder.slice(0,6).forEach((door,idx)=>{
+    const div = document.createElement('div');
+    div.className = 'door'+(door.seeded?' seeded':'');
+    div.innerHTML = `
+      <div class="door-label">${door.seeded?'LAW '+romanize(idx+1)+' · SEEDED':'LAW '+romanize(idx+1)}</div>
+      <div class="door-title">${door.title}</div>
+      <div class="door-hint">${door.hint}</div>`;
+    div.onclick = () => openDoor(door);
+    grid.appendChild(div);
+  });
+
+  addLog('Doors rendered. '+(seededCount?' 1 seeded door placed.':'All generic.'),'ev');
+  if(seededDoor) addLog('  Seeded: "'+seededDoor.title+'" — mapped from thread entity: '+thread.entity,'seed');
+}
+
+function romanize(n){return['I','II','III','IV','V','VI'][n-1]||n}
+
+/* ═══════════════════════════════════════════════════
+   DESCENT
+═══════════════════════════════════════════════════ */
+function openDoor(door) {
+  currentSeed = door;
+  currentLevel = 0;
+  levelContents = [];
+  isSeededDoor = !!door.seeded;
+
+  document.getElementById('descent-panel').style.display='block';
+  document.getElementById('edge-panel').style.display='block';
+  document.getElementById('descent-door-label').textContent = door.title;
+  document.getElementById('descent-levels').innerHTML='';
+
+  // render all 4 level shells
+  for(let i=0;i<4;i++){
+    const wrap = document.createElement('div');
+    wrap.className='level-block'+(i===0?' active':'');
+    wrap.id='level-'+i;
+    wrap.innerHTML=`
+      <div class="level-label${i===0?' active':''}">
+        <span class="level-dot"></span>
+        Level ${i+1}${i===0?' — Loading...':i===3?' — "Wait. This is about me."':''}
+      </div>
+      <div class="level-text${i===0?' loading shown':''}" id="level-text-${i}">
+        ${i===0?'Generating...':''}
+      </div>`;
+    document.getElementById('descent-levels').appendChild(wrap);
+  }
+
+  renderEdgePrompt(door, 0);
+  generateLevel(door, 0);
+  addLog('Door opened: "'+door.title+'"'+(isSeededDoor?' [SEEDED]':''),'ev');
+  document.getElementById('descent-panel').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+async function generateLevel(door, level) {
+  const isSeeded = !!door.seeded;
+  const threadCtx = isSeeded && currentThread ? door.edgeContext : null;
+  const levelPrompt = door.levels ? door.levels[level] : null;
+
+  let systemPrompt = `You write for a curiosity descent app. Generate ONE paragraph (4-6 sentences) for a rabbit hole descent. Level ${level+1} of 4.
+${level===0?'Start broad and fascinating — a surprising fact or counterintuitive truth about this topic.':''}
+${level===1?'Go one layer deeper. Connect to patterns in human experience.':''}
+${level===2?'Get specific. This is where the abstract becomes personal. Something the reader might feel in their own life.':''}
+${level===3?'This is the bottom. The question that makes them realize this was always about them. End with a question, not an answer.':''}
+${threadCtx?'\nThread context (weave in subtly — NEVER name it directly, never say "you have a job interview" — just let the themes resonate): '+threadCtx:''}
+Write in second person present tense. Vivid, short sentences. No headers. No em-dashes. End naturally.`;
+
+  const topicPrompt = levelPrompt || ('Write about: '+door.title+'. '+door.hint);
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514', max_tokens:200,
+        system: systemPrompt,
+        messages:[{role:'user',content:topicPrompt}]
+      })
+    });
+    const data = await res.json();
+    const content = data.content?.[0]?.text?.trim()||'[generation failed]';
+    levelContents[level] = content;
+
+    const el = document.getElementById('level-text-'+level);
+    if(el){
+      el.classList.remove('loading');
+      el.textContent = content;
+    }
+    const label = document.getElementById('level-'+level)?.querySelector('.level-label');
+    if(label) label.textContent = 'Level '+(level+1)+(level===3?' — "Wait. This is about me."':'');
+    if(label) label.className='level-label active';
+
+    addLog('Level '+(level+1)+' generated'+(isSeeded&&threadCtx?' [thread-woven]':''),'deep');
+
+    if(level<3){
+      document.getElementById('next-btn-wrap').style.display='block';
+    } else {
+      document.getElementById('next-btn-wrap').style.display='none';
+      addLog('Bottom of the hole. "Wait — this is about me."','deep');
+    }
+  } catch(e) {
+    const el = document.getElementById('level-text-'+level);
+    if(el){el.classList.remove('loading');el.textContent='[API unavailable — connect to generate]';}
+  }
+}
+
+function nextLevel() {
+  if(!currentSeed||currentLevel>=3) return;
+  currentLevel++;
+  const wrap = document.getElementById('level-'+currentLevel);
+  if(wrap){
+    wrap.classList.add('active');
+    const el = document.getElementById('level-text-'+currentLevel);
+    if(el){el.classList.add('loading','shown');el.textContent='Generating...';}
+  }
+  document.getElementById('next-btn-wrap').style.display='none';
+  renderEdgePrompt(currentSeed, currentLevel);
+  generateLevel(currentSeed, currentLevel);
+  wrap?.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+/* ═══════════════════════════════════════════════════
+   EDGE FUNCTION PROMPT DISPLAY
+═══════════════════════════════════════════════════ */
+function renderEdgePrompt(door, level) {
+  const threadCtx = door.seeded && currentThread ? door.edgeContext : null;
+  const prompt = `/* Queen Edge Function — Generation Prompt */
+/* Topic: ${door.title} */
+/* Level: ${level+1} of 4 */
+
+SYSTEM:
+You write for a curiosity descent. Level ${level+1}.
+${level===0?'Open broad. Surprising fact. Counterintuitive truth.':''}
+${level===1?'One layer deeper. Patterns in human experience.':''}
+${level===2?'Specific. Abstract becomes personal. Reader feels it.':''}
+${level===3?'The bottom. The question that reveals this was always about them.':''}
+Second person, present tense. Vivid short sentences.
+${threadCtx?`
+/* Thread Context (weave in — NEVER surface directly) */
+${threadCtx}
+/* The descent should resonate with this without ever naming it. */
+/* Level 1: general. Level 4: the user realizes this is about them. */`:'/* No thread context — generic descent */'}
+
+USER:
+${door.levels?.[level]||door.hint}`;
+
+  document.getElementById('edge-box').textContent = prompt;
+}
+
+/* ═══════════════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════════════ */
+function clearAll() {
+  currentThread=null;currentSeed=null;currentLevel=0;
+  levelContents=[];isSeededDoor=false;
+  document.getElementById('thread-input').value='';
+  document.getElementById('thread-badge').textContent='no thread';
+  document.getElementById('thread-badge').className='badge';
+  document.getElementById('thread-summary').textContent='';
+  document.getElementById('seed-badge').textContent='6 generic';
+  document.getElementById('descent-panel').style.display='none';
+  document.getElementById('edge-panel').style.display='none';
+  renderDoors(null);
+  addLog('Reset.','dim');
+}
+
+function addLog(msg,cls=''){
+  const log=document.getElementById('log');
+  const el=document.createElement('div');
+  el.className='le '+(cls||'');
+  el.textContent='// '+msg;
+  log.appendChild(el);
+  log.scrollTop=log.scrollHeight;
+}
+
+/* init */
+renderDoors(null);
+</script>
+</body>
+</html>
