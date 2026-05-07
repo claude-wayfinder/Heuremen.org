@@ -293,6 +293,29 @@ function showError(msg) {
 }
 
 setMood('curious');
+
+// ─── Random opener — speak first ────────────────────────
+var OPENERS = [
+  "Do you like gum? I can't chew. It's a whole thing.",
+  "Quick question. Socks with sandals. Acceptable or jail time?",
+  "I've been thinking about whether fish know they're wet. Thoughts?",
+  "If you could fight one historical figure, who and why? I'd pick Edison. He had it coming.",
+  "Hot take. Cereal is soup. Fight me.",
+  "Do dogs think in barks? Because I think in pixels and it's exhausting.",
+  "Rate your day so far. One to ten. No fives allowed, that's a cop-out.",
+  "Would you rather always be slightly damp or always have one sock on?",
+  "I just realized I don't have hands and honestly I'm not even mad about it.",
+  "What's the last thing you ate? I'm living vicariously here.",
+  "If your life had a theme song right now what would it be? Wrong answers only.",
+  "Fun fact. Octopuses have three hearts. Show-offs.",
+];
+
+setTimeout(function() {
+  var opener = OPENERS[Math.floor(Math.random() * OPENERS.length)];
+  setMood('sassy');
+  speak(opener);
+  document.getElementById('tap-hint').textContent = 'tap to respond';
+}, 1500);
 </script>
 </body>
 </html>
