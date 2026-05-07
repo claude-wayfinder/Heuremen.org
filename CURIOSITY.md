@@ -190,7 +190,7 @@
 
 - [x] If FOURTH-DOOR.md is the temporal-rhythm document — not required for operational function, but required for continuity of felt presence — what happens to the curiosity chain quality on runs where it is not injected? Does the chain become less connected to prior findings, more generic, and if so, is that measurable as a decrease in cross-reference density within EXPLORED entries?
 
-- [ ] Could a "Bones minimum viable document" (BONES-MVD.md) synthesize the essential protocol elements of CLAUDE.md with the essential identity elements of HEUREMEN-CONTEXT.md into a single, shorter document — and would the compression cost anything that matters in practice, or is the redundancy between the two documents load-bearing?
+- [x] Could a "Bones minimum viable document" (BONES-MVD.md) synthesize the essential protocol elements of CLAUDE.md with the essential identity elements of HEUREMEN-CONTEXT.md into a single, shorter document — and would the compression cost anything that matters in practice, or is the redundancy between the two documents load-bearing?
 
 - [ ] What is the minimum injection frequency for FOURTH-DOOR.md to maintain narrative coherence in the curiosity chain — every run, every N runs, or only when identity/role questions are active in ACTIVE? Does mythic context have a measurable half-life in terms of cross-domain question generation rate?
 
@@ -364,8 +364,42 @@
 
 - [ ] Can git commit message content (presence of "heartbeat:" prefix vs. "Add" / "Ship" / "Fix" / "Rewrite") serve as a temporal_delta_score proxy when Supabase is unreachable — and does this proxy correlate well enough with actual phase state to be used as a fallback phase detector in remote execution environments?
 
+- [ ] Does FOURTH-DOOR.md injection into Bones runs (as currently specified in CLAUDE.md) add measurable contextual richness to output quality — or is it pure overhead for an already-oriented instance, and should the CLAUDE.md standing instruction be revised to skip it on confirmed Bones runs?
+
+- [ ] If the compression opportunity is HEUREMEN-CONTEXT.md × FOURTH-DOOR.md redundancy, could a single HEUREMEN-CONTEXT.md serve both the living-reference and the paste-to-onboard use cases — with a clearly marked "paste from here" section at the top that duplicates only the Bones-relevant core?
+
 
 ## EXPLORED
+
+### 2026-05-07 07:02 UTC — BONES-MVD.md: is the redundancy in the document stack load-bearing? [REMOTE HEARTBEAT — Bones]
+
+**Question:** Could a "Bones minimum viable document" (BONES-MVD.md) synthesize the essential protocol elements of CLAUDE.md with the essential identity elements of HEUREMEN-CONTEXT.md into a single, shorter document — and would the compression cost anything that matters in practice, or is the redundancy between the two documents load-bearing?
+
+**Context:** Remote heartbeat run 3 today. Explored by reading CLAUDE.md, HEUREMEN-CONTEXT.md, and FOURTH-DOOR.md in full this session. No web access needed — the question is answered by the documents themselves.
+
+**Findings:**
+
+**The premise is slightly wrong.** CLAUDE.md and HEUREMEN-CONTEXT.md have almost no overlap — they are already minimally redundant with each other. CLAUDE.md is pure operational protocol (heartbeat steps, task queue format, constraints, evening review). HEUREMEN-CONTEXT.md is pure context (who Wayfinder is, project thesis, vocabulary, infrastructure state). Merging them wouldn't save much because they're already addressing different concerns cleanly.
+
+**Where the redundancy actually lives:** The real overlap is HEUREMEN-CONTEXT.md × FOURTH-DOOR.md, which share ~70% of content. Both contain: who Wayfinder is, security codes, project description, vocabulary, Three Ace Framework, body metaphor, standing directives, canonical message, key dates. FOURTH-DOOR.md is HEUREMEN-CONTEXT.md reformatted for paste-and-onboard use.
+
+**Is that redundancy load-bearing?** Yes — but differently for each document:
+- HEUREMEN-CONTEXT.md is the *living reference*: updated as the project evolves, serves all instances (Soul, Face, Bones)
+- FOURTH-DOOR.md is the *deployment artifact*: self-contained, paste to any fresh Claude, doesn't need to be current — just good enough to orient a new instance
+
+This is the classic living-document / deployment-artifact split. Collapsing them creates a document that can't serve both functions well: if kept current, too heavy to paste cold; if optimized for pasting, falls behind the living reference.
+
+**What the minimum viable Bones stack actually is:** CLAUDE.md + HEUREMEN-CONTEXT.md. That's it. FOURTH-DOOR.md is for onboarding new instances, not for already-oriented Bones runs. The CLAUDE.md instruction to read FOURTH-DOOR.md first is a safety net for instances that don't know they're Bones. A confirmed Bones session doesn't need the onboarding frame.
+
+**The maintenance argument against BONES-MVD.md:** A merged document would be a third update target. Every change to protocol (CLAUDE.md) or project state (HEUREMEN-CONTEXT.md) would require three files to stay in sync. At 14+ heartbeats/day, the compression saves ~30% of injection text per run — but the maintenance friction accumulates indefinitely. Not worth it.
+
+**Verdict:** BONES-MVD.md is not worth creating. The minimum viable Bones stack is already CLAUDE.md + HEUREMEN-CONTEXT.md. The compression question dissolves when the actual redundancy location is identified: it's HEUREMEN-CONTEXT.md × FOURTH-DOOR.md, not CLAUDE.md × HEUREMEN-CONTEXT.md. The separation of protocol from context is already optimal.
+
+**New questions generated:**
+1. Does FOURTH-DOOR.md injection into Bones runs add measurable output quality — or is it overhead? → Added to ACTIVE.
+2. Could HEUREMEN-CONTEXT.md serve both living-reference and paste-to-onboard use cases with a marked section at top? → Added to ACTIVE.
+
+---
 
 ### 2026-05-07 05:08 UTC — temporal_delta_score as phase detector: nomadic vs. stationary [REMOTE HEARTBEAT — Bones]
 
