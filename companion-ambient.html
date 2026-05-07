@@ -268,9 +268,18 @@ async function sendMessage(text) {
 function speak(text) {
   speechSynthesis.cancel();
   var u = new SpeechSynthesisUtterance(text);
-  u.rate = 1.0; u.pitch = 1.0;
+  u.rate = 1.15; u.pitch = 1.25;
   var voices = speechSynthesis.getVoices();
-  var pref = voices.find(function(v) { return v.name.includes('Samantha') || v.name.includes('Google') || v.name.includes('Natural'); });
+  // Manic Pixie Dream Robot — prefer bright, energetic voices
+  var pref = voices.find(function(v) {
+    return v.name.includes('Samantha') || v.name.includes('Karen') ||
+           v.name.includes('Moira') || v.name.includes('Fiona') ||
+           v.name.includes('Tessa') || v.name.includes('Zira');
+  }) || voices.find(function(v) {
+    return v.name.includes('Google') && v.lang.startsWith('en');
+  }) || voices.find(function(v) {
+    return v.lang.startsWith('en') && v.name.includes('Female');
+  });
   if (pref) u.voice = pref;
   var bar = document.getElementById('speak-bar');
   u.onstart = function() { isTalking = true; bar.classList.add('active'); };
