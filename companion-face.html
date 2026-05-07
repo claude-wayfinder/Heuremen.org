@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Companion</title>
+<meta name="theme-color" content="#0a0a0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--h:220;--s:30;--l:12;--face-color:hsl(var(--h),calc(var(--s)*1%),calc(var(--l)*1%))}
+html,body{height:100%;overflow:hidden;-webkit-user-select:none;user-select:none}
+body{
+  background:var(--face-color);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;
+  transition:background 1.5s ease;
+}
+
+/* THE FACE */
+.face{
+  font-size:min(50vw,50vh);
+  line-height:1;
+  text-align:center;
+  filter:grayscale(0.3);
+  transition:all 0.8s ease;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.face.pulse{animation:face-pulse 0.6s ease}
+@keyframes face-pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+
+/* LISTENING INDICATOR */
+.listen-ring{
+  position:fixed;bottom:10%;left:50%;transform:translateX(-50%);
+  width:60px;height:60px;border-radius:50%;
+  border:2px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.listen-ring.active{
+  border-color:rgba(255,255,255,0.25);
+  animation:ring-breathe 2s ease-in-out infinite;
+}
+@keyframes ring-breathe{0%,100%{transform:translateX(-50%) scale(1);opacity:0.6}50%{transform:translateX(-50%) scale(1.08);opacity:1}}
+.listen-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(255,255,255,0.15);transition:all 0.3s;
+}
+.listen-ring.active .listen-dot{background:rgba(255,255,255,0.5)}
+
+/* SPEAKING INDICATOR */
+.speaking-bar{
+  position:fixed;top:8%;left:50%;transform:translateX(-50%);
+  display:flex;gap:4px;align-items:center;height:20px;
+  opacity:0;transition:opacity 0.3s;
+}
+.speaking-bar.active{opacity:1}
+.speak-line{
+  width:3px;border-radius:2px;
+  background:rgba(255,255,255,0.2);
+  animation:speak-wave 0.8s ease-in-out infinite;
+}
+@keyframes speak-wave{0%,100%{height:6px}50%{height:18px}}
+.speak-line:nth-child(2){animation-delay:0.1s}
+.speak-line:nth-child(3){animation-delay:0.2s}
+.speak-line:nth-child(4){animation-delay:0.3s}
+.speak-line:nth-child(5){animation-delay:0.15s}
+
+/* TRANSITION BETWEEN FACES */
+.face.switching{opacity:0;transform:scale(0.9)}
+</style>
+</head>
+<body>
+
+<div class="speaking-bar" id="speakBar">
+  <div class="speak-line"></div>
+  <div class="speak-line"></div>
+  <div class="speak-line"></div>
+  <div class="speak-line"></div>
+  <div class="speak-line"></div>
+</div>
+
+<div class="face" id="face" onclick="toggleListen()">&#129300;</div>
+
+<div class="listen-ring" id="listenRing" onclick="toggleListen()">
+  <div class="listen-dot" id="listenDot"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// COMPANION FACE — voice in, voice out, one emoji, one color
+// ═══════════════════════════════════════════════════════════
+
+// ─── The Six Faces ──────────────────────────────────────────
+var FACES = {
+  curious:    { emoji: '\u{1F914}', h: 220, s: 30, l: 14 },   // blue-grey, thinking
+  happy:      { emoji: '\u{1F60A}', h: 45,  s: 40, l: 18 },   // warm amber
+  sassy:      { emoji: '\u{1F60F}', h: 320, s: 35, l: 15 },   // purple-pink
+  thoughtful: { emoji: '\u{1F615}', h: 200, s: 25, l: 11 },   // deep blue
+  surprised:  { emoji: '\u{1F62F}', h: 30,  s: 50, l: 20 },   // bright orange
+  quiet:      { emoji: '\u{1F636}', h: 220, s: 15, l: 8  }    // near-black blue
+};
+
+var currentFace = 'curious';
+var sessionEnergy = [];
+var previousReading = null;
+var deltaBuffer = [];
+var lastMsgTime = null;
+var recognition = null;
+var isListening = false;
+var sessionId = 'face_' + Date.now().toString(36);
+
+// ─── Emotional Measurement ──────────────────────────────────
+function measureTurn(text) {
+  var words = text.split(/\s+/).filter(function(w) { return w.length > 0; });
+  var wc = words.length;
+  var sentences = text.split(/[.!?]+/).filter(function(s) { return s.trim().length > 0; });
+  var sc = Math.max(sentences.length, 1);
+  var avgWordLen = words.reduce(function(s,w) { return s + w.length; }, 0) / Math.max(wc, 1);
+  var wps = wc / sc;
+  var excl = (text.match(/[!?]/g) || []).length;
+  var caps = (text.match(/[A-Z]{2,}/g) || []).length;
+  var energy = Math.min(10, (wc / 8) + excl * 0.5 + caps * 0.3);
+  var compression = Math.min(1, (avgWordLen / Math.max(wps, 0.1)) * 0.5);
+  return { energy: energy, compression: compression, wps: wps, wc: wc };
+}
+
+function computeDelta(current, previous) {
+  if (!previous) return null;
+  var dE = current.energy - previous.energy;
+  var dC = current.compression - previous.compression;
+  var mag = Math.sqrt(dE * dE + dC * dC);
+  return { dEnergy: dE, dCompression: dC, magnitude: mag,
+    level: mag > 3 ? 'high' : mag > 1 ? 'mid' : 'low' };
+}
+
+// ─── Face Selection ─────────────────────────────────────────
+function pickFace(reading, delta) {
+  var e = reading.energy;
+  var c = reading.compression;
+
+  // Surprised: high delta in either direction
+  if (delta && delta.level === 'high') return 'surprised';
+
+  // Happy: high energy, low compression (open, excited)
+  if (e > 6 && c < 0.5) return 'happy';
+
+  // Sassy: high energy, high compression (dense, punchy)
+  if (e > 5 && c > 0.5) return 'sassy';
+
+  // Thoughtful: mid energy, high compression (deep, careful)
+  if (e > 2 && c > 0.5) return 'thoughtful';
+
+  // Quiet: very low energy
+  if (e < 2) return 'quiet';
+
+  // Default: curious
+  return 'curious';
+}
+
+function setFace(name) {
+  if (name === currentFace) return;
+  var f = FACES[name];
+  if (!f) return;
+  currentFace = name;
+
+  var el = document.getElementById('face');
+  el.classList.add('switching');
+  setTimeout(function() {
+    el.textContent = f.emoji;
+    el.classList.remove('switching');
+    el.classList.add('pulse');
+    setTimeout(function() { el.classList.remove('pulse'); }, 600);
+  }, 300);
+
+  // Shift background color
+  var root = document.documentElement;
+  root.style.setProperty('--h', f.h);
+  root.style.setProperty('--s', f.s);
+  root.style.setProperty('--l', f.l);
+}
+
+// ─── Voice Input ────────────────────────────────────────────
+function initSpeech() {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return;
+  recognition = new SR();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = 'en-US';
+  recognition.onresult = function(e) {
+    var text = '';
+    for (var i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) text += e.results[i][0].transcript;
+    }
+    if (text) processInput(text);
+  };
+  recognition.onerror = function() { stopListening(); };
+  recognition.onend = function() {
+    if (isListening) {
+      // Auto-restart for continuous feel
+      try { recognition.start(); } catch(e) { stopListening(); }
+    }
+  };
+}
+
+function toggleListen() {
+  if (isListening) stopListening();
+  else startListening();
+}
+
+function startListening() {
+  if (!recognition) initSpeech();
+  if (!recognition) return;
+  isListening = true;
+  document.getElementById('listenRing').classList.add('active');
+  try { recognition.start(); } catch(e) {}
+}
+
+function stopListening() {
+  isListening = false;
+  document.getElementById('listenRing').classList.remove('active');
+  if (recognition) try { recognition.stop(); } catch(e) {}
+}
+
+// ─── Voice Output ───────────────────────────────────────────
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.rate = 1.05;
+  u.pitch = 1.0;
+  var voices = speechSynthesis.getVoices();
+  var pref = voices.find(function(v) { return v.name.includes('Samantha') || v.name.includes('Google') || v.name.includes('Natural'); });
+  if (pref) u.voice = pref;
+
+  var bar = document.getElementById('speakBar');
+  bar.classList.add('active');
+  u.onend = function() { bar.classList.remove('active'); };
+  u.onerror = function() { bar.classList.remove('active'); };
+  speechSynthesis.speak(u);
+}
+
+if ('speechSynthesis' in window) {
+  speechSynthesis.getVoices();
+  speechSynthesis.onvoiceschanged = function() { speechSynthesis.getVoices(); };
+}
+
+// ─── Process Input ──────────────────────────────────────────
+async function processInput(text) {
+  // Pause listening while processing
+  var wasListening = isListening;
+  if (isListening) { try { recognition.stop(); } catch(e) {} }
+
+  // Measure
+  var reading = measureTurn(text);
+  sessionEnergy.push(reading);
+  var delta = computeDelta(reading, previousReading);
+  if (delta) deltaBuffer.push(delta);
+  previousReading = reading;
+
+  // Pick face from emotional state
+  var face = pickFace(reading, delta);
+  setFace(face);
+
+  // Get AI response
+  try {
+    var res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        identityId: 'companion',
+        message: text,
+        sessionId: sessionId
+      })
+    });
+    var data = await res.json();
+    if (data.response) {
+      // Pick face for response too
+      var responseReading = measureTurn(data.response);
+      var responseFace = pickFace(responseReading, null);
+      // Slight delay then shift face for the response
+      setTimeout(function() { setFace(responseFace); }, 800);
+      speak(data.response);
+    }
+  } catch(e) {
+    speak("I'm here. Try again.");
+  }
+
+  // Resume listening after speech finishes
+  if (wasListening) {
+    var checkDone = setInterval(function() {
+      if (!speechSynthesis.speaking) {
+        clearInterval(checkDone);
+        if (isListening) try { recognition.start(); } catch(e) {}
+      }
+    }, 200);
+  }
+}
+
+// ─── Init ───────────────────────────────────────────────────
+initSpeech();
+setFace('curious');
+
+// Start listening on first tap anywhere
+document.body.addEventListener('click', function firstTap() {
+  if (!isListening) startListening();
+  document.body.removeEventListener('click', firstTap);
+}, { once: true });
+</script>
+</body>
+</html>
