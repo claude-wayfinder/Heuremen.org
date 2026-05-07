@@ -247,9 +247,10 @@ async function sendMessage(text) {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        identityId: 'companion',
+        identityId: 'buddy',
         message: text,
         sessionId: sessionId,
+        systemPrompt: SYSTEM_PROMPT,
         memoryContext: SYSTEM_PROMPT
       })
     });

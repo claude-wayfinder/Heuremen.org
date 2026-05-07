@@ -558,9 +558,10 @@ async function sendToCompanion(userText){
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
-        identityId: 'companion',
+        identityId: 'buddy',
         message: userText,
         sessionId: 'face_' + Date.now().toString(36),
+        systemPrompt: SYSTEM_PROMPT,
         memoryContext: SYSTEM_PROMPT
       })
     });
