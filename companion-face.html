@@ -468,18 +468,18 @@ async function sendToCompanion(userText){
   conversationHistory.push({role:'user', content:userText});
 
   try{
-    const res = await fetch('https://api.anthropic.com/v1/messages',{
+    const res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:200,
-        system: SYSTEM_PROMPT,
-        messages: conversationHistory
+        identityId: 'companion',
+        message: userText,
+        sessionId: 'face_' + Date.now().toString(36),
+        memoryContext: SYSTEM_PROMPT
       })
     });
     const data = await res.json();
-    const full = data.content?.[0]?.text || "Hmm. Something went quiet.";
+    const full = data.response || "Hmm. Something went quiet.";
 
     // extract state tag
     const stateMatch = full.match(/\[STATE:(\w+)\]/i);
