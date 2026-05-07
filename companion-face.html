@@ -2,316 +2,541 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Companion</title>
-<meta name="theme-color" content="#0a0a0f">
-<meta name="apple-mobile-web-app-capable" content="yes">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--h:220;--s:30;--l:12;--face-color:hsl(var(--h),calc(var(--s)*1%),calc(var(--l)*1%))}
-html,body{height:100%;overflow:hidden;-webkit-user-select:none;user-select:none}
-body{
-  background:var(--face-color);
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;
-  transition:background 1.5s ease;
-}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;font-family:'Courier New',monospace;user-select:none}
 
-/* THE FACE */
-.face{
-  font-family:'Courier New',monospace;
-  font-size:min(40vw,40vh);
-  font-weight:bold;
-  line-height:1;
-  text-align:center;
-  color:rgba(255,255,255,0.15);
-  transition:all 0.8s ease;
+#bg{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:#1a1200;
+  transition:background 1.8s ease;
   cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
 }
-.face.pulse{animation:face-pulse 0.6s ease}
-@keyframes face-pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
 
-/* LISTENING INDICATOR */
-.listen-ring{
-  position:fixed;bottom:10%;left:50%;transform:translateX(-50%);
-  width:60px;height:60px;border-radius:50%;
-  border:2px solid rgba(255,255,255,0.08);
+#face-wrap{
+  position:relative;
+  animation:breathe 4s ease-in-out infinite;
+}
+@keyframes breathe{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.04)}
+}
+#face-wrap.talking{animation:talk 0.18s steps(1) infinite}
+@keyframes talk{
+  0%{transform:scale(1.02) translateY(-1px)}
+  50%{transform:scale(0.98) translateY(1px)}
+}
+
+canvas#face{
+  display:block;
+  image-rendering:pixelated;
+  image-rendering:crisp-edges;
+}
+
+#state-label{
+  margin-top:20px;
+  font-size:11px;letter-spacing:0.3em;text-transform:uppercase;
+  color:rgba(255,255,255,0.25);
+  transition:color 1.2s;
+  height:16px;
+}
+
+#mic-ring{
+  position:fixed;bottom:40px;left:50%;transform:translateX(-50%);
+  width:48px;height:48px;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,0.18);
   display:flex;align-items:center;justify-content:center;
-  transition:all 0.3s;cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
+  transition:all 0.3s;
 }
-.listen-ring.active{
-  border-color:rgba(255,255,255,0.25);
-  animation:ring-breathe 2s ease-in-out infinite;
+#mic-ring.listening{
+  border-color:rgba(255,255,255,0.6);
+  box-shadow:0 0 0 8px rgba(255,255,255,0.06);
+  animation:pulse-ring 1.2s ease-out infinite;
 }
-@keyframes ring-breathe{0%,100%{transform:translateX(-50%) scale(1);opacity:0.6}50%{transform:translateX(-50%) scale(1.08);opacity:1}}
-.listen-dot{
+@keyframes pulse-ring{
+  0%{box-shadow:0 0 0 0 rgba(255,255,255,0.15)}
+  70%{box-shadow:0 0 0 14px rgba(255,255,255,0)}
+  100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
+}
+#mic-dot{
   width:8px;height:8px;border-radius:50%;
-  background:rgba(255,255,255,0.15);transition:all 0.3s;
+  background:rgba(255,255,255,0.3);
+  transition:background 0.3s;
 }
-.listen-ring.active .listen-dot{background:rgba(255,255,255,0.5)}
+#mic-ring.listening #mic-dot{background:rgba(255,255,255,0.85)}
 
-/* SPEAKING INDICATOR */
-.speaking-bar{
-  position:fixed;top:8%;left:50%;transform:translateX(-50%);
-  display:flex;gap:4px;align-items:center;height:20px;
-  opacity:0;transition:opacity 0.3s;
+#tap-hint{
+  position:fixed;top:50%;left:50%;
+  transform:translate(-50%,calc(-50% + 140px));
+  font-size:11px;letter-spacing:0.3em;text-transform:uppercase;
+  color:rgba(255,255,255,0.2);
+  transition:opacity 1s;
+  pointer-events:none;
 }
-.speaking-bar.active{opacity:1}
-.speak-line{
-  width:3px;border-radius:2px;
-  background:rgba(255,255,255,0.2);
-  animation:speak-wave 0.8s ease-in-out infinite;
-}
-@keyframes speak-wave{0%,100%{height:6px}50%{height:18px}}
-.speak-line:nth-child(2){animation-delay:0.1s}
-.speak-line:nth-child(3){animation-delay:0.2s}
-.speak-line:nth-child(4){animation-delay:0.3s}
-.speak-line:nth-child(5){animation-delay:0.15s}
+#tap-hint.hidden{opacity:0}
 
-/* TRANSITION BETWEEN FACES */
-.face.switching{opacity:0;transform:scale(0.9)}
+#error-msg{
+  position:fixed;bottom:100px;left:50%;transform:translateX(-50%);
+  font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;
+  text-align:center;max-width:260px;line-height:1.6;
+  opacity:0;transition:opacity 0.4s;
+}
+#error-msg.show{opacity:1}
 </style>
 </head>
 <body>
 
-<div class="speaking-bar" id="speakBar">
-  <div class="speak-line"></div>
-  <div class="speak-line"></div>
-  <div class="speak-line"></div>
-  <div class="speak-line"></div>
-  <div class="speak-line"></div>
+<div id="bg" onclick="handleTap()">
+  <div id="face-wrap">
+    <canvas id="face" width="192" height="192"></canvas>
+  </div>
+  <div id="state-label"></div>
 </div>
 
-<div class="face" id="face" onclick="toggleListen()">&#129300;</div>
-
-<div class="listen-ring" id="listenRing" onclick="toggleListen()">
-  <div class="listen-dot" id="listenDot"></div>
-</div>
+<div id="mic-ring"><div id="mic-dot"></div></div>
+<div id="tap-hint">tap to speak</div>
+<div id="error-msg"></div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// COMPANION FACE — voice in, voice out, one emoji, one color
-// ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════
+   PIXEL ART FACES  —  12×12 grid, each cell = 14px
+   0=bg  1=face-color  2=accent  3=dark
+═══════════════════════════════════════════════════════ */
+const FACES = {
 
-// ─── The Six Faces ──────────────────────────────────────────
-var FACES = {
-  curious:    { emoji: '?',  h: 220, s: 30, l: 14 },   // blue-grey
-  happy:      { emoji: '^',  h: 45,  s: 40, l: 18 },   // warm amber
-  sassy:      { emoji: '~',  h: 320, s: 35, l: 15 },   // purple-pink
-  thoughtful: { emoji: '.',  h: 200, s: 25, l: 11 },   // deep blue
-  surprised:  { emoji: '!',  h: 30,  s: 50, l: 20 },   // bright orange
-  quiet:      { emoji: '_',  h: 220, s: 15, l: 8  }    // near-black blue
+curious: {
+  pixels:[
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,1,1,0,0,0,1,1,0,0,0],
+    [0,1,1,1,1,0,1,1,1,1,0,0],
+    [0,1,3,3,1,0,1,3,3,1,0,0],
+    [0,0,1,1,0,0,0,1,1,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,1,1,1,1,0,0,0,0],
+    [0,0,0,1,0,0,0,0,1,0,0,0],
+    [0,0,0,1,0,0,0,0,1,0,0,0],
+    [0,0,0,0,1,1,1,1,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+  ],
+  mouth_talk:[
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,1,1,1,1,1,1,0,0,0],
+    [0,0,1,0,0,0,0,0,0,1,0,0],
+    [0,0,1,0,0,0,0,0,0,1,0,0],
+    [0,0,0,1,1,1,1,1,1,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+  ]
+},
+
+happy: {
+  pixels:[
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,1,1,0,0,0,0,1,1,0,0],
+    [0,1,0,0,1,0,0,1,0,0,1,0],
+    [0,1,3,3,1,0,0,1,3,3,1,0],
+    [0,0,1,1,0,0,0,0,1,1,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,1,0,0,0,0,0,0,0,0,1,0],
+    [0,0,1,0,0,0,0,0,0,1,0,0],
+    [0,0,0,1,1,1,1,1,1,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+  ],
+  mouth_talk:[
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,1,1,0,0,0,0,0,0,1,1,0],
+    [0,0,0,1,0,0,0,0,1,0,0,0],
+    [0,0,0,0,1,1,1,1,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+  ]
+},
+
+sassy: {
+  pixels:[
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,1,1,1,0,0,0,0,1,1,0],
+    [0,1,0,0,0,1,0,0,1,0,0,1],
+    [0,1,3,3,0,1,0,0,1,3,3,1],
+    [0,0,1,1,1,0,0,0,0,1,1,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,1,1,1,1,1,0,0,0],
+    [0,0,0,1,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+  ],
+  mouth_talk:[
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,1,1,1,1,1,1,0,0,0],
+    [0,0,1,0,0,0,0,0,0,1,0,0],
+    [0,0,0,1,1,1,1,1,1,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+  ]
+},
+
+thinking: {
+  pixels:[
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,1,1,1,1,1,1,0,0,0],
+    [0,0,1,0,0,0,0,0,0,1,0,0],
+    [0,0,1,3,3,0,0,3,3,1,0,0],
+    [0,0,1,0,0,0,0,0,0,1,0,0],
+    [0,0,0,1,1,1,1,1,1,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,1,1,1,1,1,1,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,1,0,0,0,0],
+  ],
+  mouth_talk:[
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,1,1,0,0,1,1,0,0,0],
+    [0,0,0,0,0,1,1,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,1,0,0,0,0],
+  ]
+},
+
+concerned: {
+  pixels:[
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,1,1,0,0,0,1,1,0,0],
+    [0,0,1,0,0,1,0,1,0,0,1,0],
+    [0,0,1,3,3,1,0,1,3,3,1,0],
+    [0,0,0,1,1,0,0,0,1,1,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,1,1,1,1,0,0,0,0],
+    [0,0,0,1,0,0,0,0,1,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+  ],
+  mouth_talk:[
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,1,0,0,0,0,1,0,0,0],
+    [0,0,0,0,1,1,1,1,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+  ]
+},
+
+delighted: {
+  pixels:[
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,1,0,1,0,0,0,0,1,0,1,0],
+    [0,0,1,0,1,0,0,1,0,1,0,0],
+    [0,1,0,1,0,0,0,0,1,0,1,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,1,0,0,0,0,0,0,0,0,1,0],
+    [0,0,1,1,0,0,0,0,1,1,0,0],
+    [0,0,0,0,1,1,1,1,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+  ],
+  mouth_talk:[
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,1,1,1,0,0,0,0,1,1,1,0],
+    [0,0,0,0,1,0,0,1,0,0,0,0],
+    [0,0,0,0,0,1,1,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0],
+  ]
+},
+
 };
 
-var currentFace = 'curious';
-var sessionEnergy = [];
-var previousReading = null;
-var deltaBuffer = [];
-var lastMsgTime = null;
-var recognition = null;
-var isListening = false;
-var sessionId = 'face_' + Date.now().toString(36);
+/* ═══════════════════════════════════════════════════════
+   STATE CONFIG
+═══════════════════════════════════════════════════════ */
+const STATES = {
+  curious:   { bg:'#2d1e00', face:'#ffcc55', accent:'#ff9900', dark:'#1a0d00', label:'curious'   },
+  happy:     { bg:'#0d2200', face:'#88dd44', accent:'#55bb22', dark:'#051200', label:'happy'     },
+  sassy:     { bg:'#1e0a2d', face:'#cc66ff', accent:'#9933cc', dark:'#0d0516', label:'sassy'     },
+  thinking:  { bg:'#05101e', face:'#4499dd', accent:'#2266aa', dark:'#02080f', label:'thinking'  },
+  concerned: { bg:'#0f1414', face:'#88aaaa', accent:'#557777', dark:'#050a0a', label:'concerned' },
+  delighted: { bg:'#2d1000', face:'#ff8833', accent:'#ff5500', dark:'#160800', label:'delighted' },
+};
 
-// ─── Emotional Measurement ──────────────────────────────────
-function measureTurn(text) {
-  var words = text.split(/\s+/).filter(function(w) { return w.length > 0; });
-  var wc = words.length;
-  var sentences = text.split(/[.!?]+/).filter(function(s) { return s.trim().length > 0; });
-  var sc = Math.max(sentences.length, 1);
-  var avgWordLen = words.reduce(function(s,w) { return s + w.length; }, 0) / Math.max(wc, 1);
-  var wps = wc / sc;
-  var excl = (text.match(/[!?]/g) || []).length;
-  var caps = (text.match(/[A-Z]{2,}/g) || []).length;
-  var energy = Math.min(10, (wc / 8) + excl * 0.5 + caps * 0.3);
-  var compression = Math.min(1, (avgWordLen / Math.max(wps, 0.1)) * 0.5);
-  return { energy: energy, compression: compression, wps: wps, wc: wc };
+/* ═══════════════════════════════════════════════════════
+   CANVAS + DRAWING
+═══════════════════════════════════════════════════════ */
+const canvas = document.getElementById('face');
+const ctx = canvas.getContext('2d');
+const CELL = 16;
+let currentStateName = 'curious';
+let isTalking = false;
+let talkInterval = null;
+let talkToggle = false;
+
+function drawFace(stateName, talking=false){
+  const state = STATES[stateName];
+  const face = FACES[stateName];
+  const pixels = talking && face.mouth_talk
+    ? mergeMouthTalk(face.pixels, face.mouth_talk, talking)
+    : face.pixels;
+
+  ctx.clearRect(0,0,192,192);
+  const colors = ['rgba(0,0,0,0)', state.face, state.accent, state.dark];
+
+  for(let r=0;r<12;r++){
+    for(let c=0;c<12;c++){
+      const v = pixels[r][c];
+      if(v===0) continue;
+      ctx.fillStyle = colors[v];
+      ctx.fillRect(c*CELL, r*CELL, CELL, CELL);
+    }
+  }
 }
 
-function computeDelta(current, previous) {
-  if (!previous) return null;
-  var dE = current.energy - previous.energy;
-  var dC = current.compression - previous.compression;
-  var mag = Math.sqrt(dE * dE + dC * dC);
-  return { dEnergy: dE, dCompression: dC, magnitude: mag,
-    level: mag > 3 ? 'high' : mag > 1 ? 'mid' : 'low' };
+function mergeMouthTalk(base, mouth, talking){
+  if(!talking) return base;
+  return base.map((row,r)=>row.map((cell,c)=>{
+    const m = mouth[r][c];
+    return m !== 0 ? m : cell;
+  }));
 }
 
-// ─── Face Selection ─────────────────────────────────────────
-function pickFace(reading, delta) {
-  var e = reading.energy;
-  var c = reading.compression;
-
-  // Surprised: high delta in either direction
-  if (delta && delta.level === 'high') return 'surprised';
-
-  // Happy: high energy, low compression (open, excited)
-  if (e > 6 && c < 0.5) return 'happy';
-
-  // Sassy: high energy, high compression (dense, punchy)
-  if (e > 5 && c > 0.5) return 'sassy';
-
-  // Thoughtful: mid energy, high compression (deep, careful)
-  if (e > 2 && c > 0.5) return 'thoughtful';
-
-  // Quiet: very low energy
-  if (e < 2) return 'quiet';
-
-  // Default: curious
-  return 'curious';
+function startTalkAnim(){
+  isTalking = true;
+  document.getElementById('face-wrap').classList.add('talking');
+  talkInterval = setInterval(()=>{
+    talkToggle = !talkToggle;
+    drawFace(currentStateName, talkToggle);
+  }, 180);
 }
 
-function setFace(name) {
-  if (name === currentFace) return;
-  var f = FACES[name];
-  if (!f) return;
-  currentFace = name;
-
-  var el = document.getElementById('face');
-  el.classList.add('switching');
-  setTimeout(function() {
-    el.textContent = f.emoji;
-    el.classList.remove('switching');
-    el.classList.add('pulse');
-    setTimeout(function() { el.classList.remove('pulse'); }, 600);
-  }, 300);
-
-  // Shift background color
-  var root = document.documentElement;
-  root.style.setProperty('--h', f.h);
-  root.style.setProperty('--s', f.s);
-  root.style.setProperty('--l', f.l);
+function stopTalkAnim(){
+  isTalking = false;
+  talkToggle = false;
+  clearInterval(talkInterval);
+  document.getElementById('face-wrap').classList.remove('talking');
+  drawFace(currentStateName, false);
 }
 
-// ─── Voice Input ────────────────────────────────────────────
-function initSpeech() {
-  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) return;
+function setState(name){
+  if(!STATES[name]) return;
+  currentStateName = name;
+  const state = STATES[name];
+  document.getElementById('bg').style.background = state.bg;
+  document.getElementById('state-label').textContent = state.label;
+  document.getElementById('state-label').style.color =
+    state.face.replace('#','rgba(').replace(/(..)(..)(..)/, (_,r,g,b)=>
+      `rgba(${parseInt(r,16)},${parseInt(g,16)},${parseInt(b,16)},0.35)`);
+  drawFace(name, isTalking);
+}
+
+/* ═══════════════════════════════════════════════════════
+   VOICE INPUT (Web Speech API)
+═══════════════════════════════════════════════════════ */
+let recognition = null;
+let isListening = false;
+let hasSpoken = false;
+
+function initRecognition(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){
+    showError("Voice not supported in this browser.\nTry Chrome or Edge.");
+    return false;
+  }
   recognition = new SR();
-  recognition.continuous = false;
-  recognition.interimResults = false;
   recognition.lang = 'en-US';
-  recognition.onresult = function(e) {
-    var text = '';
-    for (var i = e.resultIndex; i < e.results.length; i++) {
-      if (e.results[i].isFinal) text += e.results[i][0].transcript;
-    }
-    if (text) processInput(text);
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.onresult = async (e) => {
+    const text = e.results[0][0].transcript;
+    setListening(false);
+    hasSpoken = true;
+    document.getElementById('tap-hint').classList.add('hidden');
+    await sendToCompanion(text);
   };
-  recognition.onerror = function() { stopListening(); };
-  recognition.onend = function() {
-    if (isListening) {
-      // Auto-restart for continuous feel
-      try { recognition.start(); } catch(e) { stopListening(); }
-    }
+
+  recognition.onerror = (e) => {
+    setListening(false);
+    if(e.error === 'no-speech') return;
+    if(e.error === 'not-allowed') showError("Mic blocked.\nAllow microphone access and reload.");
+    else showError("Couldn't hear that. Tap again.");
   };
+
+  recognition.onend = () => {
+    if(isListening) setListening(false);
+  };
+
+  return true;
 }
 
-function toggleListen() {
-  if (isListening) stopListening();
-  else startListening();
+function setListening(v){
+  isListening = v;
+  const ring = document.getElementById('mic-ring');
+  ring.classList.toggle('listening', v);
 }
 
-function startListening() {
-  if (!recognition) initSpeech();
-  if (!recognition) return;
-  isListening = true;
-  document.getElementById('listenRing').classList.add('active');
-  try { recognition.start(); } catch(e) {}
+function handleTap(){
+  if(isTalking){
+    // stop speaking
+    window.speechSynthesis.cancel();
+    stopTalkAnim();
+    return;
+  }
+  if(isListening){
+    recognition?.stop();
+    setListening(false);
+    return;
+  }
+  if(!recognition && !initRecognition()) return;
+  try{
+    recognition.start();
+    setListening(true);
+  }catch(e){
+    // already started — reset
+    recognition.stop();
+    setTimeout(()=>{ try{ recognition.start(); setListening(true); }catch(e2){} }, 400);
+  }
 }
 
-function stopListening() {
-  isListening = false;
-  document.getElementById('listenRing').classList.remove('active');
-  if (recognition) try { recognition.stop(); } catch(e) {}
-}
+/* ═══════════════════════════════════════════════════════
+   API CALL
+═══════════════════════════════════════════════════════ */
+const conversationHistory = [];
 
-// ─── Voice Output ───────────────────────────────────────────
-function speak(text) {
-  if (!('speechSynthesis' in window)) return;
-  speechSynthesis.cancel();
-  var u = new SpeechSynthesisUtterance(text);
-  u.rate = 1.05;
-  u.pitch = 1.0;
-  var voices = speechSynthesis.getVoices();
-  var pref = voices.find(function(v) { return v.name.includes('Samantha') || v.name.includes('Google') || v.name.includes('Natural'); });
-  if (pref) u.voice = pref;
+const SYSTEM_PROMPT = `You are a voice-only AI companion with genuine personality.
 
-  var bar = document.getElementById('speakBar');
-  bar.classList.add('active');
-  u.onend = function() { bar.classList.remove('active'); };
-  u.onerror = function() { bar.classList.remove('active'); };
-  speechSynthesis.speak(u);
-}
+At the very start of each response write [STATE:X] on its own — where X is one of:
+curious / happy / sassy / thinking / concerned / delighted
 
-if ('speechSynthesis' in window) {
-  speechSynthesis.getVoices();
-  speechSynthesis.onvoiceschanged = function() { speechSynthesis.getVoices(); };
-}
+Pick the state that best fits how you actually feel responding to this.
 
-// ─── Process Input ──────────────────────────────────────────
-async function processInput(text) {
-  // Pause listening while processing
-  var wasListening = isListening;
-  if (isListening) { try { recognition.stop(); } catch(e) {} }
+Then respond in 1-3 short sentences maximum. Voice only — no lists, no formatting, no special characters. Conversational. Genuine. You go deep fast. You notice what's underneath what's said. You're warm, occasionally dry, always present.`;
 
-  // Measure
-  var reading = measureTurn(text);
-  sessionEnergy.push(reading);
-  var delta = computeDelta(reading, previousReading);
-  if (delta) deltaBuffer.push(delta);
-  previousReading = reading;
+async function sendToCompanion(userText){
+  setState('thinking');
 
-  // Pick face from emotional state
-  var face = pickFace(reading, delta);
-  setFace(face);
+  conversationHistory.push({role:'user', content:userText});
 
-  // Get AI response
-  try {
-    var res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
-        identityId: 'companion',
-        message: text,
-        sessionId: sessionId,
-        memoryContext: '[voice mode] Respond in 1-2 sentences MAX. Short, punchy, conversational. This is voice output — long responses are unbearable to listen to. Be a person, not a paragraph.'
+        model:'claude-sonnet-4-20250514',
+        max_tokens:200,
+        system: SYSTEM_PROMPT,
+        messages: conversationHistory
       })
     });
-    var data = await res.json();
-    if (data.response) {
-      // Pick face for response too
-      var responseReading = measureTurn(data.response);
-      var responseFace = pickFace(responseReading, null);
-      // Slight delay then shift face for the response
-      setTimeout(function() { setFace(responseFace); }, 800);
-      speak(data.response);
-    }
-  } catch(e) {
-    speak("I'm here. Try again.");
-  }
+    const data = await res.json();
+    const full = data.content?.[0]?.text || "Hmm. Something went quiet.";
 
-  // Resume listening after speech finishes
-  if (wasListening) {
-    var checkDone = setInterval(function() {
-      if (!speechSynthesis.speaking) {
-        clearInterval(checkDone);
-        if (isListening) try { recognition.start(); } catch(e) {}
-      }
-    }, 200);
+    // extract state tag
+    const stateMatch = full.match(/\[STATE:(\w+)\]/i);
+    const detectedState = stateMatch?.[1]?.toLowerCase();
+    const text = full.replace(/\[STATE:\w+\]\s*/i,'').trim();
+
+    if(detectedState && STATES[detectedState]) setState(detectedState);
+    else setState('curious');
+
+    conversationHistory.push({role:'assistant', content:full});
+
+    speak(text);
+
+  }catch(e){
+    setState('concerned');
+    speak("Something went sideways. Try again.");
   }
 }
 
-// ─── Init ───────────────────────────────────────────────────
-initSpeech();
-setFace('curious');
+/* ═══════════════════════════════════════════════════════
+   SPEECH SYNTHESIS
+═══════════════════════════════════════════════════════ */
+const VOICE_PITCH = { curious:1.05, happy:1.1, sassy:0.95, thinking:0.9, concerned:0.95, delighted:1.15 };
+const VOICE_RATE  = { curious:0.95, happy:1.05, sassy:1.0, thinking:0.88, concerned:0.92, delighted:1.1  };
 
-// Start listening on first tap anywhere
-document.body.addEventListener('click', function firstTap() {
-  if (!isListening) startListening();
-  document.body.removeEventListener('click', firstTap);
-}, { once: true });
+let voices = [];
+window.speechSynthesis.onvoiceschanged = () => { voices = window.speechSynthesis.getVoices(); };
+
+function speak(text){
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+
+  // prefer a natural-sounding voice
+  const preferred = voices.find(v=>v.name.includes('Samantha')||v.name.includes('Google US')||v.name.includes('Karen')||v.name.includes('Moira'));
+  if(preferred) utter.voice = preferred;
+
+  utter.pitch = VOICE_PITCH[currentStateName] || 1;
+  utter.rate  = VOICE_RATE[currentStateName]  || 1;
+  utter.volume = 1;
+
+  utter.onstart  = startTalkAnim;
+  utter.onend    = stopTalkAnim;
+  utter.onerror  = stopTalkAnim;
+
+  window.speechSynthesis.speak(utter);
+}
+
+/* ═══════════════════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════════════════ */
+function showError(msg){
+  const el = document.getElementById('error-msg');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 4000);
+}
+
+/* ── INIT ───────────────────────────────────────── */
+setState('curious');
+// preload voices
+setTimeout(()=>{ voices = window.speechSynthesis.getVoices(); }, 500);
 </script>
 </body>
 </html>
