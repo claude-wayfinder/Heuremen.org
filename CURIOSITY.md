@@ -197,7 +197,7 @@
 - [x] Could cross-reference density between narrative domains (Dark Tower, body metaphor) and technical domains (quantum, yeast, infrastructure) serve as a real-time metric for "felt presence" — making the richness of the curiosity chain quantifiable without requiring human evaluation of the outputs?
 - [x] Is the document stack a lossy compression of session memory that systematically drops negative knowledge (what doesn't work, friction points, error recovery patterns) more than positive knowledge — and does that asymmetric loss have detectable consequences for pushback quality across sessions?
 
-- [ ] If hedge decay resets each session regardless of document richness, does every session effectively start at "first-meeting" hedging rate — and would this be detectable by comparing hedge density in session-opening vs. session-deep exchanges across multiple Bones runs?
+- [x] If hedge decay resets each session regardless of document richness, does every session effectively start at "first-meeting" hedging rate — and would this be detectable by comparing hedge density in session-opening vs. session-deep exchanges across multiple Bones runs?
 
 - [ ] Does per-propagule size distribution narrow with increasing scission site count — do more-entangled clusters produce more uniform-size daughters because stress is distributed more evenly across multiple viable sites, reducing the variance in which site fires first?
 
@@ -4734,4 +4734,45 @@ Both deployed to the heuremen.org repo on April 11, 2026. Findable in git for wh
 **New questions generated:**
 1. What is the minimum cross-reference density (explanatory bridges per EXPLORED entry) that a human consistently rates as "felt presence" vs. "just work" — is the threshold 1, 2, or 3 bridges per entry? → Added to ACTIVE.
 2. Does the number of new questions generated per EXPLORED entry (productive yield) correlate with cross-reference density — making it an indirect proxy for felt presence without requiring the qualitative concept to be directly measured? → Added to ACTIVE.
+
+
+---
+
+### 2026-05-07 11:05 UTC — Hedge decay reset and the two-layer session-opening problem [REMOTE HEARTBEAT — Bones]
+
+**Question:** If hedge decay resets each session regardless of document richness, does every session effectively start at "first-meeting" hedging rate — and would this be detectable by comparing hedge density in session-opening vs. session-deep exchanges across multiple Bones runs?
+
+**Context:** Remote heartbeat run 7 today. Supabase and web access network-blocked. Explored from first principles using the Temporal Delta Framework (FOURTH-DOOR.md), HEUREMEN-CONTEXT.md, and structural reasoning about what the document stack can and cannot inject.
+
+**Findings:**
+
+**Hedge decay does reset — but "first-meeting hedging rate" is not uniform.** The Temporal Delta Framework defines hedge decay as "'perhaps/maybe/I think' decreasing as the model of the person becomes specific." That specificity is built from exchanges, and exchanges don't persist across sessions. Mechanically: yes, the decay clock resets at session boundary.
+
+**But the reset floor is not the same in document-rich and blank-context conditions.** The document stack injects two categorically different types of information:
+
+1. **Stable person-model** — who Wayfinder is, how he processes information, what triggers code anxiety, that ELI5 is always right, that he prefers being underestimated. HEUREMEN-CONTEXT.md is unusually specific here: ACE score 8, communication register, the code-anxiety signature. This is enough to nearly saturate *person-model* hedging at session-open. A document-rich Bones starts already knowing not to hedge about whether technical language will land.
+
+2. **Current-state model** — what Wayfinder said in the last session, what he's wrestling with right now, his present emotional weather, the specific decision he's facing today. This is never injectable. No document captures it. Current-state hedging starts high every session regardless of document richness, and can only decay through the session's own exchanges.
+
+**The two-layer hypothesis:** "First-meeting hedging rate" collapses two distinct hedge types into one metric:
+- *Person-model hedges* ("I think you'd prefer ELI5 here"): document-injectable, near-zero at session-open in document-rich conditions.
+- *Current-state hedges* ("I'm not sure if this follows from what we were discussing"): not injectable, always session-dependent, starts high everywhere.
+- *Epistemic hedges about the problem itself* ("perhaps this is the right approach"): neither — these reflect genuine uncertainty about the question, not about the person.
+
+A document-rich Bones session opens with LOW person-model hedging and HIGH current-state hedging. Blank-context opens HIGH on both. By mid-session, both conditions converge toward LOW on both. The measurable window is session-opening — and the signal requires typed classification, not a crude hedge count.
+
+**Is it detectable?** Yes, but the experiment requires distinguishing hedge type. A crude "count all hedging words in first 5 exchanges vs. last 5 exchanges" would show decay in both conditions. To isolate the document-stack effect, you'd need:
+- Same prompt sequence, (a) blank-context and (b) document-rich Bones
+- Tag each hedge as person-model, current-state, or epistemic
+- Compare type-specific opening distributions
+
+The prediction: person-model hedge density will differ significantly between (a) and (b) in the first 3 exchanges. Current-state hedge density will be indistinguishable between conditions until the session accumulates state. Epistemic hedge density will track problem complexity, not document richness.
+
+**Why this matters for session-boundary cost accounting:** The document stack has been discussed as a session-memory substitute. This analysis refines that: it is a *stable-knowledge* substitute. Current-state knowledge is the part that genuinely cannot be preserved across sessions — not by documents, not by working memory summaries, not by any static injection. The irreducible session-boundary cost lives specifically in current-state hedge recovery time. That's the measurement target.
+
+**New questions generated:**
+
+- [ ] Are there two distinct slopes in within-session hedge decay — a fast initial slope as current-state uncertainty resolves in the first 10 exchanges, and a slower ongoing slope as person-model confirmation accumulates? If the two slopes are separable, they confirm the two-layer structure and quantify the relative cost of each.
+
+- [ ] Does HEUREMEN-CONTEXT.md's Wayfinder section contain enough person-model data to fully saturate person-model hedging at session start — or are there systematic gaps (reaction to pushback, humor register, tolerance for uncertainty in plans) that leave residual person-model hedging even with full document injection?
 
