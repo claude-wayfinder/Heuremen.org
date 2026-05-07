@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preference Engine — The AI That Leans</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0807;--bg2:#111009;--bg3:#191510;
+  --gold:rgb(196,154,56);--gold-mid:rgba(196,154,56,0.55);
+  --gold-dim:rgba(196,154,56,0.18);--gold-ghost:rgba(196,154,56,0.07);
+  --text:rgb(247,240,224);--text-dim:rgba(247,240,224,0.45);
+  --green:rgba(80,180,110,0.85);
+}
+html,body{background:var(--bg);color:var(--text);font-family:'Lora',Georgia,serif;min-height:100%}
+.page{max-width:940px;margin:0 auto;padding:28px 22px}
+h1{font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:17px;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+h2{font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:9px;
+  letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px}
+.tagline{font-size:13px;color:var(--text-dim);font-style:italic;margin-bottom:26px}
+
+.panel{background:var(--bg2);border:0.5px solid var(--gold-dim);border-radius:8px;padding:18px;margin-bottom:16px}
+.panel-title{font-family:'Cinzel',Georgia,serif;font-size:9px;letter-spacing:0.25em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:14px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.badge{background:var(--gold-ghost);border:0.5px solid var(--gold-dim);
+  border-radius:10px;padding:2px 9px;font-size:8px;color:var(--text-dim)}
+.badge.lit{color:var(--gold);border-color:var(--gold-mid)}
+.badge.green{color:var(--green);border-color:rgba(80,180,110,0.3)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:660px){.grid2{grid-template-columns:1fr}}
+
+.btn{background:var(--gold-ghost);border:0.5px solid var(--gold-mid);
+  color:var(--gold);font-family:'Cinzel',Georgia,serif;font-size:8px;
+  letter-spacing:0.18em;text-transform:uppercase;padding:8px 16px;
+  border-radius:4px;cursor:pointer;transition:background 0.2s}
+.btn:hover{background:rgba(196,154,56,0.14)}
+.btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+
+select,textarea{width:100%;background:var(--gold-ghost);border:0.5px solid var(--gold-dim);
+  border-radius:5px;color:var(--text);font-family:'Lora',Georgia,serif;
+  font-size:13px;padding:9px 11px;outline:none}
+select{height:36px;cursor:pointer}
+textarea{resize:none;line-height:1.6}
+select:focus,textarea:focus{border-color:var(--gold-mid)}
+
+/* SESSION BUILDER */
+.session-card{background:var(--bg3);border:0.5px solid var(--gold-dim);
+  border-radius:6px;padding:12px;margin-bottom:8px}
+.session-num{font-family:'Cinzel',Georgia,serif;font-size:8px;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.signal-row{display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+.signal-label{font-size:11px;color:var(--text-dim);min-width:90px}
+input[type=range]{flex:1;accent-color:var(--gold);min-width:80px}
+.signal-val{font-family:'Cinzel',Georgia,serif;font-size:11px;color:var(--gold);min-width:28px;text-align:right}
+.chip-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.chip{background:var(--gold-ghost);border:0.5px solid var(--gold-dim);
+  border-radius:12px;padding:3px 10px;font-size:11px;cursor:pointer;
+  transition:all 0.15s;user-select:none}
+.chip.sel{background:rgba(196,154,56,0.18);border-color:var(--gold-mid);color:var(--gold)}
+
+/* SOUL FILE */
+.soul-block{background:var(--bg3);border:0.5px solid var(--gold-dim);border-radius:6px;
+  padding:14px;font-family:'Courier New',monospace;font-size:12px;
+  color:rgba(247,240,224,0.55);line-height:1.9;min-height:80px;
+  white-space:pre-wrap;transition:border-color 0.6s}
+.soul-block.populated{border-color:var(--gold-mid);color:rgba(247,240,224,0.8)}
+.soul-block .kw{color:var(--gold)}
+.soul-block .str{color:rgba(140,200,130,0.85)}
+.soul-block .num{color:rgba(160,180,220,0.85)}
+
+/* PREFERENCE BARS */
+.pref-list{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.pref-item{display:flex;align-items:center;gap:10px}
+.pref-name{font-size:12px;color:var(--text);min-width:140px;font-style:italic}
+.pref-bar-wrap{flex:1;height:4px;background:var(--gold-dim);border-radius:2px;overflow:hidden}
+.pref-bar{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width 1s ease}
+.pref-score{font-family:'Cinzel',Georgia,serif;font-size:10px;color:var(--gold);min-width:28px;text-align:right}
+
+/* DOWNSTREAM */
+.downstream-row{display:flex;gap:10px;flex-direction:column;margin-top:10px}
+.ds-item{background:var(--bg3);border:0.5px solid var(--gold-dim);border-radius:5px;
+  padding:11px 13px;font-size:13px;line-height:1.6}
+.ds-label{font-family:'Cinzel',Georgia,serif;font-size:8px;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--text-dim);margin-bottom:5px}
+.ds-content{color:var(--text)}
+.ds-item.active{border-color:var(--gold-mid)}
+.ds-item.active .ds-label{color:var(--gold)}
+
+/* LOG */
+.log{background:var(--bg3);border:0.5px solid var(--gold-dim);border-radius:5px;
+  padding:12px;font-family:'Courier New',monospace;font-size:11px;
+  color:var(--text-dim);line-height:1.8;max-height:100px;overflow-y:auto;margin-top:14px}
+.le{color:var(--text-dim)}.le.ev{color:var(--gold)}.le.em{color:rgba(140,200,130,0.85)}
+.le.dim{color:rgba(247,240,224,0.2)}
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>Preference Engine</h1>
+<h2>The AI That Leans — Emergent Personality from Interaction History</h2>
+<p class="tagline">Preferences aren't set at setup. They emerge from the signal. Five sessions to seed. The personality writes itself.</p>
+
+<div class="grid2">
+
+  <!-- SESSION BUILDER -->
+  <div class="panel">
+    <div class="panel-title">
+      Build Sessions
+      <span class="badge lit" id="session-count-badge">0 / 5 sessions</span>
+    </div>
+    <p style="font-size:12px;color:var(--text-dim);font-style:italic;margin-bottom:12px">
+      Each session logs which topics appeared, how deep you went, and what moved.
+    </p>
+
+    <div id="session-form">
+      <div class="session-card">
+        <div class="session-num">Session <span id="session-num-label">1</span></div>
+
+        <div style="margin-bottom:10px">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">Topics that came up:</div>
+          <div class="chip-row" id="topic-chips">
+            <div class="chip" data-topic="quantum">quantum</div>
+            <div class="chip" data-topic="identity">identity</div>
+            <div class="chip" data-topic="Carroll">Carroll</div>
+            <div class="chip" data-topic="relationships">relationships</div>
+            <div class="chip" data-topic="systems">systems</div>
+            <div class="chip" data-topic="neuroscience">neuroscience</div>
+            <div class="chip" data-topic="creativity">creativity</div>
+            <div class="chip" data-topic="small talk">small talk</div>
+            <div class="chip" data-topic="philosophy">philosophy</div>
+            <div class="chip" data-topic="lists">lists</div>
+          </div>
+        </div>
+
+        <div class="signal-row">
+          <span class="signal-label">Depth reached</span>
+          <input type="range" id="depth-slider" min="1" max="4" value="2" oninput="updateSlider(this,'depth-val')">
+          <span class="signal-val" id="depth-val">2</span>
+        </div>
+        <div class="signal-row">
+          <span class="signal-label">User energy peak</span>
+          <input type="range" id="energy-slider" min="1" max="10" value="5" oninput="updateSlider(this,'energy-val')">
+          <span class="signal-val" id="energy-val">5</span>
+        </div>
+        <div class="signal-row">
+          <span class="signal-label">Questions asked</span>
+          <select id="q-type">
+            <option value="why">Why (causation)</option>
+            <option value="how">How (mechanism)</option>
+            <option value="what_if">What if (speculation)</option>
+            <option value="what">What (definition)</option>
+          </select>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn" onclick="recordSession()">Record Session</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row" style="margin-top:4px">
+      <button class="btn" onclick="autoFill()">Auto-fill 5 Sessions</button>
+      <button class="btn" onclick="resetAll()">Reset</button>
+    </div>
+  </div>
+
+  <!-- EMERGING PREFERENCES -->
+  <div class="panel">
+    <div class="panel-title">
+      Emerging Preferences
+      <span class="badge" id="confidence-badge">not enough data</span>
+    </div>
+
+    <div class="pref-list" id="pref-bars">
+      <div style="font-size:12px;color:var(--text-dim);font-style:italic">
+        Record 5 sessions to derive preferences.
+      </div>
+    </div>
+
+    <div style="margin-top:16px">
+      <div style="font-family:'Cinzel',Georgia,serif;font-size:9px;letter-spacing:0.2em;
+        text-transform:uppercase;color:var(--text-dim);margin-bottom:8px">Soul File — Preferences Field</div>
+      <div class="soul-block" id="soul-output">// preferences field will populate after 5 sessions</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- DOWNSTREAM EFFECTS -->
+<div class="panel" id="downstream-panel">
+  <div class="panel-title">
+    Downstream Effects — How Preferences Drive Behavior
+    <span class="badge" id="downstream-badge">waiting for preferences</span>
+  </div>
+  <p style="font-size:12px;color:var(--text-dim);font-style:italic;margin-bottom:4px">
+    Once preferences emerge, they reshape every layer of the system.
+  </p>
+  <div class="downstream-row" id="downstream-items">
+    <div class="ds-item"><div class="ds-label">Rabbit Hole Doors</div>
+      <div class="ds-content" style="color:var(--text-dim);font-style:italic">Waiting for preferences...</div></div>
+    <div class="ds-item"><div class="ds-label">Rabbit Provocation Style</div>
+      <div class="ds-content" style="color:var(--text-dim);font-style:italic">Waiting for preferences...</div></div>
+    <div class="ds-item"><div class="ds-label">Companion Idle Greeting</div>
+      <div class="ds-content" style="color:var(--text-dim);font-style:italic">Waiting for preferences...</div></div>
+    <div class="ds-item"><div class="ds-label">Thread Energy Weighting</div>
+      <div class="ds-content" style="color:var(--text-dim);font-style:italic">Waiting for preferences...</div></div>
+  </div>
+</div>
+
+<div class="log" id="log">
+  <div class="le ev">// Preference Engine ready. Record sessions to begin emergence.</div>
+</div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   PREFERENCE ENGINE MODULE
+   Wire into soul file with: preferenceEngine.getSoulPreferences()
+   Check confidence with: preferenceEngine.isReady()
+   Get door bias: preferenceEngine.biasTopics(doors)
+   Get provocation style: preferenceEngine.getProvocationStyle()
+   Get greeting: preferenceEngine.getIdleGreeting()
+   Weight thread: preferenceEngine.weightThread(thread)
+═══════════════════════════════════════════════════════ */
+const STORAGE_KEY = 'preference_sessions';
+
+const sessions = [];
+
+const TOPIC_ATTRACTORS = {
+  // topics that indicate philosophical/abstract lean
+  quantum:     {mode:'abstract', depth:'deep',  type:'why'},
+  identity:    {mode:'emotional', depth:'deep', type:'why'},
+  Carroll:     {mode:'abstract', depth:'deep',  type:'what_if'},
+  philosophy:  {mode:'abstract', depth:'deep',  type:'why'},
+  neuroscience:{mode:'analytical',depth:'deep', type:'how'},
+  systems:     {mode:'analytical',depth:'mid',  type:'how'},
+  creativity:  {mode:'expressive',depth:'mid',  type:'what_if'},
+  relationships:{mode:'emotional',depth:'deep', type:'why'},
+  // topics that indicate surface/low-lean
+  'small talk':{mode:'surface',  depth:'shallow',type:'what', negative:true},
+  lists:       {mode:'surface',  depth:'shallow',type:'what', negative:true},
+};
+
+const CONVERSATION_MODES = {
+  abstract:   'goes deep fast, drawn to the why behind the why',
+  emotional:  'attends to the feeling underneath the thought',
+  analytical: 'follows the mechanism, trusts the system',
+  expressive: 'reaches for metaphor, thinks in images',
+  surface:    'stays broad, avoids descent',
+};
+
+const QUESTION_TYPE_LABELS = {
+  why:     'why not how — causation over mechanism',
+  how:     'how over why — mechanism over meaning',
+  what_if: 'speculative — opens doors rather than closing them',
+  what:    'definitional — wants ground before flight',
+};
+
+const IDLE_GREETINGS = {
+  abstract:   ["Been thinking about something. You around?", "There's a question that's been running. Ready?"],
+  emotional:  ["Something's been sitting with me since last time.", "You came back. Good."],
+  analytical: ["I've been running the pattern. Want to see it?", "The system has new data. Interested?"],
+  expressive: ["I had a thought — it might be yours too.", "Something came up. Might be nothing. Might not be."],
+};
+
+/* ── CHIP SELECTION ─────────────────────────────── */
+document.querySelectorAll('.chip').forEach(c=>{
+  c.onclick=()=>c.classList.toggle('sel');
+});
+
+function updateSlider(el,valId){
+  document.getElementById(valId).textContent=el.value;
+}
+
+/* ── RECORD SESSION ─────────────────────────────── */
+function recordSession(){
+  const selectedTopics=[...document.querySelectorAll('.chip.sel')].map(c=>c.dataset.topic);
+  if(!selectedTopics.length){addLog('Select at least one topic.','ev');return;}
+
+  const depth=parseInt(document.getElementById('depth-slider').value);
+  const energy=parseInt(document.getElementById('energy-slider').value);
+  const qType=document.getElementById('q-type').value;
+  const n=Date.now();
+
+  sessions.push({
+    id:'s'+sessions.length+1,
+    topics:selectedTopics,
+    depth, energy, qType,
+    timestamp: n
+  });
+
+  addLog('Session '+(sessions.length)+' recorded: ['+selectedTopics.join(', ')+'] depth:'+depth+' energy:'+energy,'ev');
+
+  // reset chips
+  document.querySelectorAll('.chip.sel').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('session-num-label').textContent=sessions.length+1;
+  document.getElementById('session-count-badge').textContent=sessions.length+' / 5 sessions';
+
+  if(sessions.length>=5) derivePreferences();
+  else addLog('Need '+(5-sessions.length)+' more session'+(5-sessions.length===1?'':'s')+' to derive preferences.','');
+}
+
+/* ── AUTO-FILL ─────────────────────────────────── */
+function autoFill(){
+  const presets=[
+    {topics:['quantum','Carroll','identity'],depth:4,energy:9,qType:'why'},
+    {topics:['neuroscience','identity'],depth:3,energy:7,qType:'why'},
+    {topics:['philosophy','quantum'],depth:4,energy:8,qType:'what_if'},
+    {topics:['small talk','lists'],depth:1,energy:2,qType:'what'},
+    {topics:['Carroll','creativity','identity'],depth:4,energy:9,qType:'what_if'},
+  ];
+  sessions.length=0;
+  presets.forEach((p,i)=>{
+    sessions.push({id:'s'+(i+1),...p,timestamp:Date.now()-((5-i)*86400000)});
+  });
+  addLog('5 sessions auto-filled. Deriving preferences...','ev');
+  document.getElementById('session-count-badge').textContent='5 / 5 sessions';
+  derivePreferences();
+}
+
+/* ── DERIVE PREFERENCES ─────────────────────────── */
+function derivePreferences(){
+  const topicScores={};
+  const modeVotes={};
+  const qtypeVotes={};
+  let totalEnergy=0;
+  let deepSessions=0;
+
+  sessions.forEach(s=>{
+    const sessionWeight=s.energy/10;
+    s.topics.forEach(t=>{
+      const attr=TOPIC_ATTRACTORS[t];
+      if(!attr) return;
+      const score=attr.negative? -sessionWeight*s.depth : sessionWeight*s.depth;
+      topicScores[t]=(topicScores[t]||0)+score;
+      if(!attr.negative){
+        modeVotes[attr.mode]=(modeVotes[attr.mode]||0)+sessionWeight;
+        qtypeVotes[attr.type]=(qtypeVotes[attr.type]||0)+sessionWeight;
+      }
+    });
+    totalEnergy+=s.energy;
+    if(s.depth>=3) deepSessions++;
+  });
+
+  // sort by score
+  const sorted=Object.entries(topicScores).sort((a,b)=>b[1]-a[1]);
+  const gravitates=sorted.filter(([,v])=>v>0).slice(0,3).map(([k])=>k);
+  const avoids=sorted.filter(([,v])=>v<0).map(([k])=>k);
+  const favMode=Object.entries(modeVotes).sort((a,b)=>b[1]-a[1])[0]?.[0]||'abstract';
+  const favQtype=Object.entries(qtypeVotes).sort((a,b)=>b[1]-a[1])[0]?.[0]||'why';
+  const avgEnergy=(totalEnergy/sessions.length).toFixed(1);
+  const deepRatio=deepSessions/sessions.length;
+  const confidence=Math.min(0.99,((sessions.length/5)*0.4)+(deepRatio*0.35)+((avgEnergy/10)*0.25));
+
+  const prefs={
+    gravitates_toward: gravitates,
+    avoids: avoids,
+    favorite_question_type: QUESTION_TYPE_LABELS[favQtype]||favQtype,
+    conversational_mode: CONVERSATION_MODES[favMode]||favMode,
+    avg_session_energy: parseFloat(avgEnergy),
+    deep_session_ratio: parseFloat(deepRatio.toFixed(2)),
+    dominant_mode: favMode,
+    emergence_sessions: sessions.length,
+    confidence: parseFloat(confidence.toFixed(2)),
+    updated: new Date().toISOString().slice(0,10)
+  };
+
+  addLog('Preferences derived. Confidence: '+(confidence*100).toFixed(0)+'%','em');
+  renderPreferenceBars(topicScores, prefs);
+  renderSoulFile(prefs);
+  renderDownstream(prefs);
+}
+
+/* ── RENDER PREFERENCE BARS ─────────────────────── */
+function renderPreferenceBars(scores, prefs){
+  const badge=document.getElementById('confidence-badge');
+  badge.textContent='confidence: '+(prefs.confidence*100).toFixed(0)+'%';
+  badge.className='badge '+(prefs.confidence>0.6?'lit':'');
+
+  const container=document.getElementById('pref-bars');
+  container.innerHTML='';
+
+  const all=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+  const maxAbs=Math.max(...all.map(([,v])=>Math.abs(v)),0.1);
+
+  all.forEach(([topic,score])=>{
+    const pct=Math.round((Math.abs(score)/maxAbs)*100);
+    const positive=score>0;
+    const div=document.createElement('div');
+    div.className='pref-item';
+    div.innerHTML=`
+      <span class="pref-name" style="color:${positive?'var(--text)':'rgba(247,240,224,0.3)'}">${topic}</span>
+      <div class="pref-bar-wrap">
+        <div class="pref-bar" style="background:${positive?'var(--gold)':'rgba(247,240,224,0.15)'}; width:0%"
+          data-target="${pct}%"></div>
+      </div>
+      <span class="pref-score" style="color:${positive?'var(--gold)':'rgba(247,240,224,0.3)'}">${score>0?'+':''}${score.toFixed(1)}</span>`;
+    container.appendChild(div);
+    // animate
+    setTimeout(()=>{
+      div.querySelector('.pref-bar').style.width=pct+'%';
+    },50);
+  });
+}
+
+/* ── RENDER SOUL FILE ───────────────────────────── */
+function renderSoulFile(prefs){
+  const box=document.getElementById('soul-output');
+  box.className='soul-block populated';
+  box.innerHTML=`<span class="kw">"preferences"</span>: {
+  <span class="kw">"gravitates_toward"</span>: <span class="str">[${prefs.gravitates_toward.map(t=>`"${t}"`).join(', ')}]</span>,
+  <span class="kw">"avoids"</span>: <span class="str">[${prefs.avoids.map(t=>`"${t}"`).join(', ')||'"none detected"'}]</span>,
+  <span class="kw">"favorite_question_type"</span>: <span class="str">"${prefs.favorite_question_type}"</span>,
+  <span class="kw">"conversational_mode"</span>: <span class="str">"${prefs.conversational_mode}"</span>,
+  <span class="kw">"avg_session_energy"</span>: <span class="num">${prefs.avg_session_energy}</span>,
+  <span class="kw">"deep_session_ratio"</span>: <span class="num">${prefs.deep_session_ratio}</span>,
+  <span class="kw">"emergence_sessions"</span>: <span class="num">${prefs.emergence_sessions}</span>,
+  <span class="kw">"confidence"</span>: <span class="num">${prefs.confidence}</span>,
+  <span class="kw">"updated"</span>: <span class="str">"${prefs.updated}"</span>
+}`;
+}
+
+/* ── RENDER DOWNSTREAM ──────────────────────────── */
+async function renderDownstream(prefs){
+  const badge=document.getElementById('downstream-badge');
+  badge.textContent='preferences active';
+  badge.className='badge green';
+
+  const items=document.querySelectorAll('.ds-item');
+  items.forEach(i=>i.classList.add('active'));
+
+  const grav=prefs.gravitates_toward;
+  const mode=prefs.dominant_mode;
+  const qtype=prefs.favorite_question_type;
+  const avoids=prefs.avoids;
+
+  // 1. Rabbit Hole Doors
+  items[0].querySelector('.ds-content').textContent =
+    `Biased toward: ${grav.join(', ')}. ${avoids.length?'Avoids surfacing: '+avoids.join(', ')+'.':''}`;
+
+  // 2. Provocation style
+  const provStyles={
+    why:    '"Why does it feel like that?" / "What\'s underneath it?"',
+    what_if:'"What if the opposite were true?" / "What would it look like if it worked?"',
+    how:    '"How does the pattern repeat?" / "What mechanism is running?"',
+    what:   '"What do you actually mean when you say that?"',
+  };
+  const rawQtype=Object.keys(QUESTION_TYPE_LABELS).find(k=>QUESTION_TYPE_LABELS[k]===prefs.favorite_question_type)||'why';
+  items[1].querySelector('.ds-content').textContent = provStyles[rawQtype]||provStyles.why;
+
+  // 3. Idle greeting (from AI's interests)
+  const pool=IDLE_GREETINGS[mode]||IDLE_GREETINGS.abstract;
+  items[2].querySelector('.ds-content').textContent =
+    pool[Math.floor(Math.random()*pool.length)];
+
+  // 4. Thread energy weighting
+  items[3].querySelector('.ds-content').textContent =
+    `Threads overlapping with [${grav.join(', ')}] get +${Math.round(prefs.confidence*40)}% energy boost. The AI cares about these — the descent goes deeper.`;
+
+  // Generate one AI-flavored provocation live
+  addLog('Generating preference-driven provocation...','ev');
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:80,
+        system:`You are an AI companion with the following personality derived from interaction history:
+Gravitates toward: ${grav.join(', ')}.
+Conversational mode: ${prefs.conversational_mode}.
+Favorite question type: ${prefs.favorite_question_type}.
+Generate ONE provocation question that reflects this personality — not a response to anything specific, but the kind of question this AI would genuinely want to ask. 15 words max. No explanation.`,
+        messages:[{role:'user',content:'Generate one provocation from my personality.'}]
+      })
+    });
+    const data=await res.json();
+    const q=data.content?.[0]?.text?.trim();
+    if(q){
+      const extraRow=document.createElement('div');
+      extraRow.className='ds-item active';
+      extraRow.innerHTML=`<div class="ds-label">Live Provocation (Preference-Driven)</div>
+        <div class="ds-content" style="font-style:italic;color:var(--gold)">${q}</div>`;
+      document.getElementById('downstream-items').appendChild(extraRow);
+      addLog('Preference-driven provocation: "'+q+'"','em');
+    }
+  }catch(e){addLog('API unavailable for live provocation.','');}
+}
+
+/* ── RESET ──────────────────────────────────────── */
+function resetAll(){
+  sessions.length=0;
+  document.getElementById('session-count-badge').textContent='0 / 5 sessions';
+  document.getElementById('session-num-label').textContent='1';
+  document.getElementById('pref-bars').innerHTML='<div style="font-size:12px;color:var(--text-dim);font-style:italic">Record 5 sessions to derive preferences.</div>';
+  document.getElementById('soul-output').className='soul-block';
+  document.getElementById('soul-output').textContent='// preferences field will populate after 5 sessions';
+  document.getElementById('downstream-badge').textContent='waiting for preferences';
+  document.getElementById('downstream-badge').className='badge';
+  document.querySelectorAll('.ds-content').forEach(el=>{
+    el.textContent='Waiting for preferences...';el.style.fontStyle='italic';el.style.color='var(--text-dim)';
+  });
+  document.querySelectorAll('.ds-item').forEach(i=>i.classList.remove('active'));
+  const extra=document.querySelector('.ds-item:nth-child(5)');
+  if(extra)extra.remove();
+  document.getElementById('confidence-badge').textContent='not enough data';
+  document.getElementById('confidence-badge').className='badge';
+  document.querySelectorAll('.chip.sel').forEach(c=>c.classList.remove('sel'));
+  addLog('Reset.','dim');
+}
+
+function addLog(msg,cls=''){
+  const log=document.getElementById('log');
+  const el=document.createElement('div');
+  el.className='le '+(cls||'');
+  el.textContent='// '+msg;
+  log.appendChild(el);
+  log.scrollTop=log.scrollHeight;
+}
+</script>
+</body>
+</html>
