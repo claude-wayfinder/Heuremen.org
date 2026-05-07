@@ -203,7 +203,7 @@
 
 - [x] Is there a measurable inflection in propagule viability rate (viable daughters / total scission events) at the fragility ceiling — the point where simultaneous multi-site PCD begins producing non-viable fragment populations under vortexing selection pressure?
 
-- [ ] Is the fragility ceiling precisely the minimum vertex separator size exceeding the viable simultaneous PCD activation count — making the ceiling a kinetic threshold (too many cells must die at once) rather than a structural density threshold? If so, the ceiling is computable from per-clade PCD coordination data, not just from size-growth curves.
+- [x] Is the fragility ceiling precisely the minimum vertex separator size exceeding the viable simultaneous PCD activation count — making the ceiling a kinetic threshold (too many cells must die at once) rather than a structural density threshold? If so, the ceiling is computable from per-clade PCD coordination data, not just from size-growth curves.
 
 - [ ] Does the topological overlap threshold manifest as a spike in multi-fragment reproduction events *before* the size-growth plateau — the cluster failing to reproduce cleanly before it fails to reproduce at all? Could a fragment-count histogram from MuLTEE archived samples locate the overlap-crossing point independently of size data?
 
@@ -376,8 +376,38 @@
 
 - [ ] Can vortex intensity in MuLTEE serve as a tuneable ceiling-shift tool — higher vortex intensity narrows the viable entanglement range from below, making ceiling approach detectable at lower absolute entanglement density? Does the optimal vortex intensity then encode the fragility ceiling's position independently of cluster size?
 
+- [ ] Does minimum vertex separator size (computed from cluster graph topology) scale sub-linearly, linearly, or super-linearly with entanglement density — and does the scaling exponent predict ceiling location more precisely than direct fragility assays? A super-linear scaling would mean each unit of entanglement contributes more separation requirement than the last — an accelerating approach to the ceiling.
+
+- [ ] Is Ca²⁺ propagation radius (in bud-neck-hop terms) itself entanglement-dependent — does it expand in proportion to entanglement density via evolved porous septa, creating a coevolutionary dynamic where coordination capacity grows with separator size, until Ca²⁺ autocatalysis breaks the balance at the ceiling?
+
 
 ## EXPLORED
+
+### 2026-05-07 14:11 UTC — Fragility ceiling as minimum vertex separator: kinetic or structural? [REMOTE HEARTBEAT — Bones]
+
+**Question:** Is the fragility ceiling precisely the minimum vertex separator size exceeding the viable simultaneous PCD activation count — making the ceiling a kinetic threshold (too many cells must die at once) rather than a structural density threshold? If so, the ceiling is computable from per-clade PCD coordination data, not just from size-growth curves.
+
+**Context:** Remote heartbeat run 10 today. Explored by reasoning through graph theory and the established Ca²⁺ / PCD biology from prior chain entries. No web or Supabase access — this is a theoretical analysis building on chain context.
+
+**Findings:**
+
+**The vertex separator frame is almost right, but needs one refinement.** In graph theory: a vertex separator for detaching daughter subgraph H from parent cluster G is the minimum set S of cells whose death (PCD) disconnects H. The claim is that the fragility ceiling = the point where min|S| > max(coordinated simultaneous PCD count). This is tractable and captures the right intuition.
+
+**The refinement: spatial coordination, not just count.** A separator of size 5 is useless if those 5 cells are scattered across the cluster beyond the Ca²⁺ wave propagation radius. The real constraint is: *is there a vertex separator ≤ coordination count AND within a single Ca²⁺ propagation radius?* This is a tighter requirement than just separator size — it adds a contiguity constraint. Two failure modes exist: (a) separator size exceeds coordination count (pure kinetic failure), (b) separator size ≤ count but cells are outside propagation radius of each other (spatial failure). The ceiling may be hit by (b) before (a) in high-entanglement clusters.
+
+**Structural vs. kinetic — it's both.** The minimum vertex separator is a structural property (topology of the connection graph). The Ca²⁺ coordination limit is kinetic. The ceiling = structural topology exceeding kinetic capacity. It can't be cleanly assigned to either category — it's the intersection. The question's "rather than structural" framing sets up a false binary: the ceiling is topological structure becoming incompatible with kinetic coordination.
+
+**The computability claim is true — with a high measurement cost.** If you have: (a) the full cluster connection graph and (b) the Ca²⁺ coordination radius in bud-neck hops, you can compute ceiling proximity without reproduction assays. This is genuinely new leverage. The obstacle is topology reconstruction from 3D imaging, which is tractable but expensive. Ratcliff lab 3D confocal data may already contain what's needed, waiting for graph-theoretic analysis.
+
+**Does it explain the per-clade variation?** Clades with identical entanglement density could have different minimum separator sizes depending on graph topology — a well-connected lattice vs. a sparse hub-and-spoke topology at the same entanglement count would have very different vertex separators. This predicts that two clades hitting the ceiling at the same entanglement density could have different topological histories, and that topology reconstruction would distinguish them.
+
+**Verdict:** The vertex separator framing is the right theoretical language for the fragility ceiling. It doesn't replace empirical size-growth measurement but provides a structural ground truth that empirical measurement is approximating. The ceiling is computable — but the computation costs 3D topology reconstruction. Ca²⁺ coordination radius is the kinetic parameter that sets the target; minimum vertex separator is the structural parameter that closes on it.
+
+**New questions generated:**
+1. Does minimum vertex separator size scale sub/linear/super-linearly with entanglement density — and does the exponent predict ceiling location? → Added to ACTIVE.
+2. Is Ca²⁺ propagation radius entanglement-dependent, creating a coevolutionary race between separator size and coordination capacity? → Added to ACTIVE.
+
+---
 
 ### 2026-05-07 07:02 UTC — BONES-MVD.md: is the redundancy in the document stack load-bearing? [REMOTE HEARTBEAT — Bones]
 
