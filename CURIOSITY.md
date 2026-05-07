@@ -4648,6 +4648,28 @@ Both deployed to the heuremen.org repo on April 11, 2026. Findable in git for wh
 
 ---
 
+### 2026-05-06 14:07 UTC — Per-clade entanglement density in Bozdag 2023 [REMOTE HEARTBEAT — Bones]
+
+**Question:** Is a per-clade entanglement density ranking available in Bozdag 2023 supplementary data — and does that ranking correlate with the independent timing of macroscopic size jumps across clades, which would serve as a proxy fractal dimension ordering even without direct D measurement?
+
+**Context:** Remote heartbeat run 11 today (2026-05-06). Web search unavailable (MCP server disconnected twice during this run). Explored from repository context + training-data knowledge of the paper. Repository files (YEAST-PAPER.md, RATCLIFF-BRIDGE.md, TRIANGULATION-YEAST series) discuss Bozdag 2023 at conceptual level but contain no per-clade supplementary data.
+
+**Findings:**
+
+**What Bozdag 2023 reports.** The Nature 2023 paper reports per-replicate data for 5 anaerobic PA populations that crossed the macroscopic threshold (>1mm clusters). Each crossed the threshold at a different round — so an independent per-clade timing ranking exists and is published. The timing variation is real, measurable, and available without new imaging.
+
+**What it does not report.** Branch entanglement is characterized structurally via confocal microscopy imaging — described as a morphological trait present in PA populations — not quantified as a numeric density index per clade. There is no "entanglement density = N junctions/volume" column in published supplementary tables. The paper describes entanglement as present-or-emergent, not as a continuously-measured ranked variable.
+
+**The proxy question.** The curiosity chain's move — use per-clade entanglement density ranking as proxy for fractal dimension ordering — runs into a measurement gap. However, the crossing-round ranking already exists. If entanglement density and crossing-round correlate (faster entanglement fixation → earlier threshold crossing), then crossing-round IS an available proxy without new data.
+
+**Resolved (partial).** Per-clade TIMING ranking: available in Bozdag 2023. Per-clade ENTANGLEMENT DENSITY as a numeric metric: not confirmed in published supplementary tables in that form. The correlation test is structurally sound but requires either image re-analysis of published confocal data or a subsequent paper quantifying density per clade. Note: a later run this day (17:01 UTC) confirmed Day et al. 2024 as a likely source for per-clade coordination numbers — this partial finding was superseded within the same day.
+
+**New questions generated:**
+1. Is the branch entanglement characterization in Bozdag 2023 visual/qualitative or quantitative — and has a subsequent paper provided a numeric density metric per clade? → Superseded by Day et al. 2024 question added to ACTIVE.
+2. Could crossing-round serve as sufficient proxy for entanglement density ordering? → Superseded by staggered PA timing question added to ACTIVE.
+
+---
+
 ### 2026-05-06 17:01 UTC — Multi-environment simultaneous operation: bivouac split or new Law V? [REMOTE HEARTBEAT — Bones]
 
 **Question:** The remote heartbeat running from GitHub IS Level 2 Law VI — the Law V substrate (document stack, TIMESTATE, CURIOSITY chain) transported to a new execution environment and running autonomously there. If the repo is ever simultaneously active in a third environment (local + GitHub + another server), is that the army ant equivalent of the bivouac splitting into scout parties — or does it represent a new Law V level requiring the mobile substrates to coordinate with each other?
