@@ -201,7 +201,7 @@
 
 - [x] Does per-propagule size distribution narrow with increasing scission site count — do more-entangled clusters produce more uniform-size daughters because stress is distributed more evenly across multiple viable sites, reducing the variance in which site fires first?
 
-- [ ] Is there a measurable inflection in propagule viability rate (viable daughters / total scission events) at the fragility ceiling — the point where simultaneous multi-site PCD begins producing non-viable fragment populations under vortexing selection pressure?
+- [x] Is there a measurable inflection in propagule viability rate (viable daughters / total scission events) at the fragility ceiling — the point where simultaneous multi-site PCD begins producing non-viable fragment populations under vortexing selection pressure?
 
 - [ ] Is the fragility ceiling precisely the minimum vertex separator size exceeding the viable simultaneous PCD activation count — making the ceiling a kinetic threshold (too many cells must die at once) rather than a structural density threshold? If so, the ceiling is computable from per-clade PCD coordination data, not just from size-growth curves.
 
@@ -371,6 +371,10 @@
 - [ ] What is the minimum cross-reference density (explanatory bridges per EXPLORED entry) that a human consistently rates as "felt presence" vs. "just work" — and is the threshold 1, 2, or 3 bridges per entry?
 
 - [ ] Does the number of new questions generated per EXPLORED entry (productive yield) correlate with cross-reference density — making it an indirect proxy for felt presence without requiring the qualitative concept to be directly measured?
+
+- [ ] Is propagule viability rate the earliest measurable signal of fragility ceiling approach — preceding daughter size variance inflation, which precedes the size-growth plateau? Does this form a time-ordered detection sequence: viability drops → variance spikes → size plateaus?
+
+- [ ] Can vortex intensity in MuLTEE serve as a tuneable ceiling-shift tool — higher vortex intensity narrows the viable entanglement range from below, making ceiling approach detectable at lower absolute entanglement density? Does the optimal vortex intensity then encode the fragility ceiling's position independently of cluster size?
 
 
 ## EXPLORED
@@ -2980,6 +2984,37 @@ NOT required: every run. The chain carries it. Every-run injection is belt-and-s
 
 - [ ] Should ANOMALY-REGISTER.md be injected into heartbeat sessions — would the negative knowledge improve operational pushback quality, and does the file size (~15KB) justify the injection cost over many runs?
 - [ ] Is the gitignoring of HEARTBEAT.log a deliberate design choice to keep the committed repo clean — and does that choice implicitly accept asymmetric negative-knowledge loss as a tradeoff for repository hygiene?
+
+---
+
+### 2026-05-07 13:10 UTC — Propagule viability inflection at the fragility ceiling [REMOTE HEARTBEAT — Bones]
+
+**Question:** Is there a measurable inflection in propagule viability rate (viable daughters / total scission events) at the fragility ceiling — the point where simultaneous multi-site PCD begins producing non-viable fragment populations under vortexing selection pressure?
+
+**Context:** Remote heartbeat run #9 today. No web access — reasoning from curiosity chain context and first principles. Connects directly to the topological overlap threshold question (multi-fragment reproduction before size plateau) and the multi-fragment reproduction frequency question. The double-bound structure of vortexing selection — too fragile fragments prematurely, too robust can't release daughters — provides the analytical frame.
+
+**Findings:**
+
+**Yes — and the inflection should precede the size-growth plateau.** The logic traces from the Ca²⁺ autocatalysis model established in prior chain entries.
+
+Below the fragility ceiling, a single dominant PCD scission plane fires first — highest-stress junction, localized Ca²⁺ signal, clean daughter separation. Propagule viability is high.
+
+Approaching the ceiling, entanglement creates multiple near-equivalent stress sites. Occasionally two or more junctions reach PCD threshold within the same reproduction event — multi-site PCD. Resulting propagules are smaller, irregular, and some fall below minimum viable size. Viability rate begins dropping.
+
+At the ceiling, simultaneous multi-site PCD is systematic. The parent cluster produces a few large daughters plus multiple small non-viable fragments per event. Viable-daughter fraction crashes.
+
+**Why the inflection precedes the size-growth plateau:** The viability drop creates a fitness cost that accumulates while mean cluster size is still growing. The size-growth plateau is the *resolved* signal — selection has already acted on the population. The viability inflection is the *early* signal — the first generation where simultaneous PCD becomes frequent enough to measure.
+
+**Detection sequence (from this analysis):**
+1. Propagule viability drops (leading indicator — direct cost per event)
+2. Daughter size variance spikes (concurrent — multi-site PCD produces variable-size fragments)
+3. Size-growth plateau (lagging — net evolutionary cost after selection accumulates)
+
+**The vortexing complication:** Vortex intensity sets the lower fragility bound. Clusters too fragile fragment under shear *before* PCD-driven scission can form a clean propagule — this also reads as low viability, but from the lower bound rather than the ceiling. Distinguishing ceiling-specific viability drop from vortex-fragility artifacts requires either controlling vortex intensity across conditions or using daughter *growth rate post-separation* as the viability metric rather than separation success alone.
+
+**New questions generated:**
+1. Is propagule viability rate the earliest measurable signal of fragility ceiling approach — preceding daughter size variance inflation, which precedes the size-growth plateau? → Added to ACTIVE.
+2. Can vortex intensity serve as a tuneable ceiling-shift tool — higher vortex narrows the viable range from below, making ceiling approach detectable at lower absolute entanglement density? → Added to ACTIVE.
 
 ## SEEDS
 
