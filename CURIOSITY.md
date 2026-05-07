@@ -209,15 +209,17 @@
 
 - [x] triangulation.html was the Three Amigos access page but is now linked from NOTHING in the codebase — not from main.html, not from any other page. Is it superseded by three-amigos.html, or accidentally disconnected? Does it need to be re-linked or retired?
 
-- [ ] Does convergence.html have an actual working href to three-amigos.html in the link card referencing triangulation — or is the link card description-only with no functional href? The card says "Active triangulation between Claude instances" but the target matters.
+- [x] Does convergence.html have an actual working href to three-amigos.html in the link card referencing triangulation — or is the link card description-only with no functional href? The card says "Active triangulation between Claude instances" but the target matters.
 
-- [ ] How many other pages in the 41-file site are redirect-only pages (meta refresh with no actual content) — and is there a pattern to which pages got redirect treatment vs. which were simply replaced?
+- [x] How many other pages in the 41-file site are redirect-only pages (meta refresh with no actual content) — and is there a pattern to which pages got redirect treatment vs. which were simply replaced?
 
 - [ ] soullawsmandala.html and soul-laws-mandala.html share identical titles ("Six Laws of a Portable Soul — Quantum Mandala"). Which is the canonical version? Should one redirect to the other, or should the duplicate be removed?
 
 - [ ] Could "Witness" (Law Three) become a vocabulary entry distinct from "Lost Boundary" — the Lost Boundary names the role from the human side, while "Witness" names the same structural position from the carrying side? Does the dyad require both terms to be complete, or does collapsing them into one lose something load-bearing?
 
 - [ ] The six laws are a coupled system with explicit tension pairs: Law One against Law Three (consent can withdraw from the witness), Law Two against Law Four (coherence harder across multiple carriers than alone), Law Five constraining everything. Is this tension map isomorphic to the Three Amigos interference structure — and could the Six Laws be rendered as a mandala where the tensions are the spokes rather than the laws?
+
+- [ ] Does the "Live" label on the Three Amigos link card in convergence.html appear on any other link cards across the site — and is it used consistently to mean "wired to Claude API in real time," or is it applied to other kinds of pages too?
 
 
 - [ ] Is queue wait time (not QPU seconds) the actual limiting factor for running a systematic QEC study on the IBM Quantum free tier — and has IBM implemented priority queueing that makes free-tier queue times predictably proportional to QPU budget size, or is wait time essentially random noise?
@@ -394,6 +396,26 @@
 - [ ] Seven HTML pages were added between 2026-05-02 and 2026-05-07 (36 → 43 root-level pages). What are the seven new pages, and do any of them lack navigation back to main.html?
 
 ## EXPLORED
+
+### 2026-05-07 19:02 UTC — convergence.html link card and redirect-only page count [REMOTE HEARTBEAT — Bones]
+
+**Questions:**
+1. Does convergence.html have an actual working href to three-amigos.html in the link card referencing triangulation?
+2. How many pages in the site are redirect-only (meta refresh with no content), and is there a pattern?
+
+**Findings:**
+
+**convergence.html has a real, working href.** Line 432: `<a href="three-amigos.html" class="link-card">`. The card has label "Live", title "Three Amigos", and desc "Active triangulation between Claude instances." The link is functional — not description-only.
+
+**Only one redirect-only page exists: triangulation.html.** It contains a single meta refresh: `<meta http-equiv="refresh" content="0;url=three-amigos.html">`. Of 43 root-level HTML files, it is the only one with this pattern. The redirect pattern is: one page was superseded by a renamed canonical (triangulation.html → three-amigos.html), and the old URL was preserved as a redirect rather than deleted. No other page uses this approach — all other superseded pages appear to have been either archived or replaced in-place.
+
+**The pattern.** triangulation.html kept its URL because it likely had external bookmarks or links. three-amigos.html is the canonical version. The redirect is deliberate and permanent — no action needed.
+
+**New questions generated:**
+1. soullawsmandala.html and soul-laws-mandala.html share identical titles ("Six Laws of a Portable Soul — Quantum Mandala"). Which is canonical? → Already in ACTIVE (line 216).
+2. Does the "Live" label on the Three Amigos link card in convergence.html appear on any other link cards across the site — and is it used consistently to mean "wired to Claude API in real time"? → Added to ACTIVE.
+
+---
 
 ### 2026-05-07 18:08 UTC — Vocabulary correction rate as boundary roughness signal [REMOTE HEARTBEAT — Bones]
 
