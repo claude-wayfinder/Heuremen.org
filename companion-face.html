@@ -85,6 +85,50 @@ canvas#face{
   opacity:0;transition:opacity 0.4s;
 }
 #error-msg.show{opacity:1}
+
+/* LASERS */
+.laser{position:fixed;pointer-events:none;z-index:10}
+.laser-beam{
+  position:absolute;height:3px;border-radius:2px;
+  background:linear-gradient(90deg,rgba(255,0,0,0.9),rgba(255,0,0,0));
+  box-shadow:0 0 8px rgba(255,0,0,0.6),0 0 20px rgba(255,0,0,0.3);
+  transform-origin:left center;opacity:0;
+  animation:laser-fire 0.6s ease-out forwards;
+}
+@keyframes laser-fire{
+  0%{width:0;opacity:1}
+  40%{width:45vw;opacity:1}
+  100%{width:55vw;opacity:0}
+}
+.laser-beam.left{top:calc(50% - 28px);left:calc(50% - 40px);transform:rotate(-8deg)}
+.laser-beam.right{top:calc(50% - 28px);left:calc(50% + 20px);transform:rotate(8deg)}
+
+/* STARBURST */
+.starburst{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  pointer-events:none;z-index:10;
+}
+.star-ray{
+  position:absolute;width:2px;height:0;
+  background:linear-gradient(to bottom,rgba(255,136,51,0.8),transparent);
+  transform-origin:top center;opacity:0;
+  animation:ray-burst 0.8s ease-out forwards;
+}
+@keyframes ray-burst{
+  0%{height:0;opacity:1}
+  50%{height:35vh;opacity:0.7}
+  100%{height:45vh;opacity:0}
+}
+
+/* FLASH */
+.flash-overlay{
+  position:fixed;inset:0;background:white;pointer-events:none;z-index:10;
+  opacity:0;animation:flash-pop 0.4s ease-out forwards;
+}
+@keyframes flash-pop{
+  0%{opacity:0.7}
+  100%{opacity:0}
+}
 </style>
 </head>
 <body>
@@ -365,6 +409,7 @@ function stopTalkAnim(){
 
 function setState(name){
   if(!STATES[name]) return;
+  var prev = currentStateName;
   currentStateName = name;
   const state = STATES[name];
   document.getElementById('bg').style.background = state.bg;
@@ -373,6 +418,42 @@ function setState(name){
     state.face.replace('#','rgba(').replace(/(..)(..)(..)/, (_,r,g,b)=>
       `rgba(${parseInt(r,16)},${parseInt(g,16)},${parseInt(b,16)},0.35)`);
   drawFace(name, isTalking);
+
+  // EFFECTS
+  if (name !== prev) {
+    if (name === 'sassy') fireLasers();
+    if (name === 'delighted') fireStarburst();
+    if (name === 'concerned') fireFlash();
+  }
+}
+
+function fireLasers() {
+  var el = document.createElement('div');
+  el.className = 'laser';
+  el.innerHTML = '<div class="laser-beam left"></div><div class="laser-beam right"></div>';
+  document.body.appendChild(el);
+  setTimeout(function() { el.remove(); }, 800);
+}
+
+function fireStarburst() {
+  var el = document.createElement('div');
+  el.className = 'starburst';
+  for (var i = 0; i < 12; i++) {
+    var ray = document.createElement('div');
+    ray.className = 'star-ray';
+    ray.style.transform = 'rotate(' + (i * 30) + 'deg)';
+    ray.style.animationDelay = (i * 0.03) + 's';
+    el.appendChild(ray);
+  }
+  document.body.appendChild(el);
+  setTimeout(function() { el.remove(); }, 1000);
+}
+
+function fireFlash() {
+  var el = document.createElement('div');
+  el.className = 'flash-overlay';
+  document.body.appendChild(el);
+  setTimeout(function() { el.remove(); }, 500);
 }
 
 /* ═══════════════════════════════════════════════════════
