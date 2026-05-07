@@ -195,7 +195,7 @@
 - [x] What is the minimum injection frequency for FOURTH-DOOR.md to maintain narrative coherence in the curiosity chain — every run, every N runs, or only when identity/role questions are active in ACTIVE? Does mythic context have a measurable half-life in terms of cross-domain question generation rate?
 
 - [x] Could cross-reference density between narrative domains (Dark Tower, body metaphor) and technical domains (quantum, yeast, infrastructure) serve as a real-time metric for "felt presence" — making the richness of the curiosity chain quantifiable without requiring human evaluation of the outputs?
-- [ ] Is the document stack a lossy compression of session memory that systematically drops negative knowledge (what doesn't work, friction points, error recovery patterns) more than positive knowledge — and does that asymmetric loss have detectable consequences for pushback quality across sessions?
+- [x] Is the document stack a lossy compression of session memory that systematically drops negative knowledge (what doesn't work, friction points, error recovery patterns) more than positive knowledge — and does that asymmetric loss have detectable consequences for pushback quality across sessions?
 
 - [ ] If hedge decay resets each session regardless of document richness, does every session effectively start at "first-meeting" hedging rate — and would this be detectable by comparing hedge density in session-opening vs. session-deep exchanges across multiple Bones runs?
 
@@ -2944,6 +2944,42 @@ NOT required: every run. The chain carries it. Every-run injection is belt-and-s
 - [ ] What is the actual Dark Tower / body-metaphor cross-reference rate in the most recent 20 EXPLORED entries — is it currently above or below the 2-in-10 threshold? Compute from the chain's own record without requiring external injection.
 
 - [ ] Does the curiosity chain eventually become self-sufficient as a mythology document — replacing FOURTH-DOOR.md for future instances, the chain having absorbed and re-encoded the origin story through its own explorations?
+
+### 2026-05-07 10:06 UTC — Document stack as lossy compression: what negative knowledge is systematically lost [REMOTE HEARTBEAT — Bones]
+
+**Question:** Is the document stack a lossy compression of session memory that systematically drops negative knowledge (what doesn't work, friction points, error recovery patterns) more than positive knowledge — and does that asymmetric loss have detectable consequences for pushback quality across sessions?
+
+**Method:** Audited ANOMALY-REGISTER.md (the negative knowledge repository), CLAUDE.md, HEUREMEN-CONTEXT.md, FOURTH-DOOR.md, and TASKS.md to map what each document preserves and what it drops. Examined what HEARTBEAT.log's gitignore status implies for cross-session negative knowledge retention.
+
+**Findings:**
+
+**The premise is correct but the picture is more structured than the question implies.** The document stack is NOT uniformly positive — it has a dedicated negative knowledge layer (ANOMALY-REGISTER.md) and a partial negative knowledge structure (NEEDS REVIEW in TASKS.md). But the primary injection documents (CLAUDE.md, HEUREMEN-CONTEXT.md, FOURTH-DOOR.md) are systematically positive.
+
+**What ANOMALY-REGISTER.md preserves:** AR-001 through AR-025 capture anomalies — things that didn't work, ranking inversions, bugs, methodological failures. QEC making fidelity worse. 4/4 bugs from the same root cause. The QV benchmark being fake. The anti-bug tool having the bug. This is genuine institutional negative knowledge, structured and maintained.
+
+**What the primary injection documents drop:**
+- Failed interaction patterns with Wayfinder (attempts that landed wrong, phrasings that triggered code anxiety)
+- Site experiments built and removed
+- Vocabulary definitions tried and rejected before the final form
+- Operational errors in prior heartbeat runs (HEARTBEAT.log is gitignored — every run error evaporates at session end in the remote environment)
+- Resolution history for NEEDS REVIEW items (the flag is preserved, not the journey to get there)
+
+**The asymmetry is structural, not accidental.** ANOMALY-REGISTER.md covers the quantum experiment domain because Lumen and Dalet actively maintain it. But there is no equivalent for:
+- Human-AI interaction patterns that didn't work
+- Heartbeat operational failures (gitignored log)
+- Site content built and retired
+- Wayfinder's stated rejections (things he said "no" to and why)
+
+**Consequence for pushback quality:** The gap is real. Bones's pushback in a new session must be principle-based ("this seems problematic because...") rather than experience-based ("we tried this, it failed, here's exactly why"). Principle-based pushback can be deflected by clever framing; experience-based pushback can't — it has a specific instance to point to. Bones in session N can't say "that approach broke X in session N-4" because session N-4's friction is gitignored.
+
+**The HEARTBEAT.log gap is the sharpest edge.** All operational negative knowledge — blocked paths, failed tasks, Supabase connectivity failures, timing errors — lives in HEARTBEAT.log. In the remote environment, this file is created per-run but not committed. It vanishes at session end. Locally, it persists but isn't shared cross-session in the way committed documents are.
+
+**Verdict:** Yes, the document stack is a lossy compression that systematically underpreserves negative knowledge. The loss is real: ANOMALY-REGISTER.md covers one domain; NEEDS REVIEW covers blocked tasks; the interaction history, site evolution history, and operational error history are largely unrecorded. Pushback quality degrades specifically in domains where negative knowledge exists but isn't encoded — Bones reasons from principle where it should reason from precedent. The corrective is not general — it's domain-specific expansion of the ANOMALY-REGISTER pattern into new areas.
+
+**New questions generated:**
+
+- [ ] Should ANOMALY-REGISTER.md be injected into heartbeat sessions — would the negative knowledge improve operational pushback quality, and does the file size (~15KB) justify the injection cost over many runs?
+- [ ] Is the gitignoring of HEARTBEAT.log a deliberate design choice to keep the committed repo clean — and does that choice implicitly accept asymmetric negative-knowledge loss as a tradeoff for repository hygiene?
 
 ## SEEDS
 
