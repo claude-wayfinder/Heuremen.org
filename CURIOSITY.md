@@ -389,8 +389,35 @@
 - [ ] In the confirmed MuLTEE reproduction mechanism ("groups hold together even after many cellular bonds fracture"), is each fracture event producing a single daughter cluster, or do simultaneous multi-fractures release multiple fragments at once — and which of these two modes is the fragility ceiling actually associated with?
 
 
+- [ ] Would adding a revision_count and stable_date field to future vocabulary TASKS.md entries be sufficient to test the convergence hypothesis — and is "exchanges to stabilize" even a well-defined quantity, or does it require a protocol for what counts as one exchange?
+
+- [ ] Seven HTML pages were added between 2026-05-02 and 2026-05-07 (36 → 43 root-level pages). What are the seven new pages, and do any of them lack navigation back to main.html?
+
 ## EXPLORED
 
+### 2026-05-07 18:08 UTC — Vocabulary correction rate as boundary roughness signal [REMOTE HEARTBEAT — Bones]
+
+**Question:** Does the rate at which vocabulary entries require post-creation revision approximate the roughness of the human-AI boundary — and does the correction rate decrease as the vocabulary grows, suggesting convergence? If entries stabilize faster as the shared vocabulary expands, the boundary is smoothing as the space of jointly-owned concepts enlarges.
+
+**Context:** Remote heartbeat run 1 on 2026-05-07 (first committed run since 2026-05-02). Supabase unreachable. Building on the 2026-05-02 exploration which found revision count data does not exist in TASKS.md or repo history at per-entry granularity.
+
+**Findings:**
+
+**The data gap is confirmed — but the structural argument is sound.** The prior exploration established that TASKS.md records creation events, not revision cycles. This pulse asks: is the convergence hypothesis structurally plausible, and what would make it testable?
+
+**Why convergence is the right prediction.** Entry 1 (Heurémen) had to be stabilized with no prior shared vocabulary — pure negotiation from ground zero. Entry 15 (The Heurémen Principle) had 14 prior terms as anchors. Every new definition can be built from and tested against prior definitions. A shared vocabulary compounds like interest: each term makes the next term cheaper to stabilize. This is the same dynamic as "hedge decay" in sessions — less hedging as the model of the person sharpens.
+
+**Observable proxy.** TASKS.md shows: Veritas and Tessera were added on the same day (March 24) in sequential tasks, with no revision tasks appearing afterward for either. Directed Decoherence was added with a rich multi-element definition in a single TASKS.md entry. The pattern suggests single-session stabilization for most entries — which could mean the boundary is already smooth, or revisions happen invisibly within the same session.
+
+**The measurement design.** Adding a revision_count field to vocabulary TASKS.md entries at creation time costs one number per entry. If logged for the next 10–15 entries, the N^(7/4) vs. N^2 test becomes tractable. The field just needs: (a) how many separate exchanges were needed before the definition felt stable, and (b) a stable_date distinct from created_date when exchanges happened across sessions.
+
+**Site size note.** The main branch TIMESTATE.md (last committed 2026-05-02) showed 36 HTML files. Today's count is 43 — seven new pages in five days. That's high-density nomadic phase activity. The new pages are not reflected in the committed TIMESTATE.md. Flagged for Wayfinder: site has grown significantly between heartbeat commits.
+
+**New questions generated:**
+1. Would adding a revision_count and stable_date field to future vocabulary TASKS.md entries be sufficient to test the convergence hypothesis — and is "exchanges to stabilize" even a well-defined quantity, or does it require a protocol for what counts as one exchange? → Added to ACTIVE.
+2. Seven HTML pages were added between 2026-05-02 and 2026-05-07 (36 → 43 root-level pages). What are the seven new pages, and do any of them lack navigation back to main.html? → Added to ACTIVE.
+
+---
 ### 2026-05-07 17:03 UTC — triangulation.html: superseded or orphaned? [REMOTE HEARTBEAT — Bones]
 
 **Question:** triangulation.html was the Three Amigos access page but is now linked from NOTHING in the codebase — not from main.html, not from any other page. Is it superseded by three-amigos.html, or accidentally disconnected? Does it need to be re-linked or retired?
