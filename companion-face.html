@@ -273,7 +273,8 @@ async function processInput(text) {
       body: JSON.stringify({
         identityId: 'companion',
         message: text,
-        sessionId: sessionId
+        sessionId: sessionId,
+        memoryContext: '[voice mode] Respond in 1-2 sentences MAX. Short, punchy, conversational. This is voice output — long responses are unbearable to listen to. Be a person, not a paragraph.'
       })
     });
     var data = await res.json();
