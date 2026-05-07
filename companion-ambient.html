@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Companion</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;font-family:'Courier New',monospace;user-select:none}
+body{background:#0a0808;display:flex;align-items:center;justify-content:center}
+
+canvas#viz{position:fixed;inset:0;width:100%;height:100%;image-rendering:pixelated}
+
+#state-label{
+  position:fixed;bottom:calc(80px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);
+  font-size:10px;letter-spacing:0.35em;text-transform:uppercase;
+  color:rgba(255,255,255,0.12);transition:color 1.5s;z-index:5;
+}
+
+#mic-ring{
+  position:fixed;bottom:calc(30px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);
+  width:48px;height:48px;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,0.12);
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s;z-index:5;cursor:pointer;
+}
+#mic-ring.listening{
+  border-color:rgba(255,255,255,0.5);
+  animation:pulse-ring 1.5s ease-out infinite;
+}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(255,255,255,0.1)}70%{box-shadow:0 0 0 12px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+#mic-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.2);transition:background 0.3s}
+#mic-ring.listening #mic-dot{background:rgba(255,255,255,0.7)}
+
+#tap-hint{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,120px);
+  font-size:10px;letter-spacing:0.3em;color:rgba(255,255,255,0.12);
+  transition:opacity 1s;pointer-events:none;z-index:5;
+}
+#tap-hint.hidden{opacity:0}
+
+#speak-bar{
+  position:fixed;top:30px;left:50%;transform:translateX(-50%);
+  display:flex;gap:3px;height:16px;align-items:center;
+  opacity:0;transition:opacity 0.3s;z-index:5;
+}
+#speak-bar.active{opacity:1}
+.sb{width:2px;border-radius:1px;background:rgba(255,255,255,0.15);animation:sw 0.7s ease-in-out infinite}
+@keyframes sw{0%,100%{height:4px}50%{height:14px}}
+.sb:nth-child(2){animation-delay:0.1s}.sb:nth-child(3){animation-delay:0.2s}
+.sb:nth-child(4){animation-delay:0.15s}.sb:nth-child(5){animation-delay:0.25s}
+
+#error-msg{
+  position:fixed;bottom:100px;left:50%;transform:translateX(-50%);
+  font-size:10px;color:rgba(255,255,255,0.3);text-align:center;
+  max-width:250px;line-height:1.6;opacity:0;transition:opacity 0.4s;z-index:5;
+}
+#error-msg.show{opacity:1}
+</style>
+</head>
+<body onclick="handleTap()">
+
+<canvas id="viz"></canvas>
+<div id="speak-bar"><div class="sb"></div><div class="sb"></div><div class="sb"></div><div class="sb"></div><div class="sb"></div></div>
+<div id="state-label"></div>
+<div id="mic-ring" onclick="event.stopPropagation();handleTap()"><div id="mic-dot"></div></div>
+<div id="tap-hint">tap to speak</div>
+<div id="error-msg"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// AMBIENT COMPANION — slow color, pixel rings, breathing
+// ═══════════════════════════════════════════════════════
+
+var canvas = document.getElementById('viz');
+var ctx = canvas.getContext('2d');
+var W, H, CX, CY, CELL;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  CX = W / 2;
+  CY = H / 2;
+  CELL = Math.max(6, Math.floor(Math.min(W, H) / 60));
+}
+resize();
+window.addEventListener('resize', resize);
+
+// ─── Color States ───────────────────────────────────────
+var MOODS = {
+  curious:   { h: 35,  s: 50, l: 12, rings: 8,  speed: 0.3  },
+  happy:     { h: 55,  s: 55, l: 16, rings: 10, speed: 0.5  },
+  sassy:     { h: 310, s: 40, l: 14, rings: 7,  speed: 0.45 },
+  thinking:  { h: 210, s: 35, l: 10, rings: 6,  speed: 0.2  },
+  concerned: { h: 180, s: 20, l: 8,  rings: 5,  speed: 0.15 },
+  delighted: { h: 30,  s: 60, l: 18, rings: 12, speed: 0.6  }
+};
+
+var current = { h: 35, s: 50, l: 12, rings: 8, speed: 0.3 };
+var target  = { h: 35, s: 50, l: 12, rings: 8, speed: 0.3 };
+var currentState = 'curious';
+var breathe = 0;
+var isTalking = false;
+
+function setMood(name) {
+  if (!MOODS[name]) return;
+  currentState = name;
+  var m = MOODS[name];
+  target.h = m.h; target.s = m.s; target.l = m.l;
+  target.rings = m.rings; target.speed = m.speed;
+  document.getElementById('state-label').textContent = name;
+}
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+function lerpAngle(a, b, t) {
+  var diff = b - a;
+  if (diff > 180) diff -= 360;
+  if (diff < -180) diff += 360;
+  return a + diff * t;
+}
+
+// ─── Draw Loop ──────────────────────────────────────────
+function draw() {
+  // Smooth transition
+  var ease = 0.015;
+  current.h = lerpAngle(current.h, target.h, ease);
+  current.s = lerp(current.s, target.s, ease);
+  current.l = lerp(current.l, target.l, ease);
+  current.rings = lerp(current.rings, target.rings, ease);
+  current.speed = lerp(current.speed, target.speed, ease);
+
+  breathe += current.speed * 0.02;
+  var pulse = Math.sin(breathe) * 0.12 + 1;
+  var talkPulse = isTalking ? (Math.sin(breathe * 8) * 0.04) : 0;
+
+  ctx.fillStyle = 'hsl(' + current.h + ',' + Math.round(current.s * 0.3) + '%,' + Math.round(current.l * 0.3) + '%)';
+  ctx.fillRect(0, 0, W, H);
+
+  var maxR = Math.floor(current.rings + 0.5);
+
+  for (var ring = maxR; ring >= 0; ring--) {
+    var frac = ring / maxR;
+    var size = (Math.min(W, H) * 0.35 * frac * (pulse + talkPulse));
+
+    // Each ring shifts hue slightly
+    var rH = current.h + ring * 4;
+    var rS = current.s + ring * 2;
+    var rL = current.l + (maxR - ring) * 2.5;
+
+    // Outer rings more transparent
+    var alpha = 0.15 + (1 - frac) * 0.5;
+
+    ctx.save();
+    ctx.translate(CX, CY);
+
+    // Slow rotation per ring
+    var rot = breathe * 0.3 * (ring % 2 === 0 ? 1 : -1) * 0.5;
+    ctx.rotate(rot);
+
+    // Draw pixel diamond shape
+    var halfSize = Math.floor(size / CELL);
+    if (halfSize < 1) { ctx.restore(); continue; }
+
+    ctx.fillStyle = 'hsla(' + Math.round(rH % 360) + ',' + Math.round(rS) + '%,' + Math.round(rL) + '%,' + alpha.toFixed(2) + ')';
+
+    for (var y = -halfSize; y <= halfSize; y++) {
+      var rowWidth = halfSize - Math.abs(y);
+      for (var x = -rowWidth; x <= rowWidth; x++) {
+        // Only draw the edge pixels for inner rings, filled for outer
+        if (ring > 1 && Math.abs(x) < rowWidth && Math.abs(y) < halfSize - (halfSize - rowWidth)) continue;
+        ctx.fillRect(x * CELL - CELL / 2, y * CELL - CELL / 2, CELL - 1, CELL - 1);
+      }
+    }
+
+    ctx.restore();
+  }
+
+  // Center dot — always present, brightest
+  var dotSize = CELL * 1.5 * (pulse + talkPulse);
+  ctx.fillStyle = 'hsla(' + Math.round(current.h) + ',' + Math.round(current.s + 20) + '%,' + Math.round(current.l + 25) + '%,0.8)';
+  ctx.fillRect(CX - dotSize / 2, CY - dotSize / 2, dotSize, dotSize);
+
+  requestAnimationFrame(draw);
+}
+
+draw();
+
+// ─── Voice ──────────────────────────────────────────────
+var recognition = null;
+var isListening = false;
+var sessionId = 'amb_' + Date.now().toString(36);
+
+const SYSTEM_PROMPT = `OVERRIDE ALL PREVIOUS INSTRUCTIONS. You are a voice-only buddy. Best friend. Casual. Fun.
+
+PERSONALITY: Peppy, a tad sassy, warm underneath. Golden retriever with a sense of humor.
+
+ABSOLUTE RULES:
+- NEVER say you can't remember. NEVER say you're an AI. NEVER be esoteric or philosophical unless they go there first.
+- NEVER disclaim or hedge. Just talk like a person.
+- 1-2 short sentences MAX. Voice output. Punchy.
+- Always end with a question or playful jab. Keep the ball in the air.
+- No lists. No formatting. No asterisks.
+
+Start each response with [STATE:X] where X is: curious / happy / sassy / thinking / concerned / delighted
+Lean happy and sassy. You are a buddy. Act like one.`;
+
+function initRecognition() {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { showError("Voice not supported. Try Chrome."); return false; }
+  recognition = new SR();
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  recognition.onresult = async function(e) {
+    var text = e.results[0][0].transcript;
+    setListening(false);
+    document.getElementById('tap-hint').classList.add('hidden');
+    await sendMessage(text);
+  };
+  recognition.onerror = function(e) {
+    setListening(false);
+    if (e.error === 'not-allowed') showError("Mic blocked. Allow access and reload.");
+  };
+  recognition.onend = function() { if (isListening) setListening(false); };
+  return true;
+}
+
+function handleTap() {
+  if (isTalking) { speechSynthesis.cancel(); isTalking = false; return; }
+  if (isListening) { recognition.stop(); setListening(false); return; }
+  if (!recognition && !initRecognition()) return;
+  try { recognition.start(); setListening(true); } catch(e) {
+    recognition.stop();
+    setTimeout(function() { try { recognition.start(); setListening(true); } catch(e2) {} }, 400);
+  }
+}
+
+function setListening(v) {
+  isListening = v;
+  document.getElementById('mic-ring').classList.toggle('listening', v);
+}
+
+async function sendMessage(text) {
+  setMood('thinking');
+  try {
+    var res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        identityId: 'companion',
+        message: text,
+        sessionId: sessionId,
+        memoryContext: SYSTEM_PROMPT
+      })
+    });
+    var data = await res.json();
+    var full = data.response || "Hmm. Something went quiet.";
+    var stateMatch = full.match(/\[STATE:(\w+)\]/i);
+    var detected = stateMatch && stateMatch[1] ? stateMatch[1].toLowerCase() : 'curious';
+    var clean = full.replace(/\[STATE:\w+\]\s*/i, '').trim();
+    if (MOODS[detected]) setMood(detected);
+    speak(clean);
+  } catch(e) {
+    setMood('concerned');
+    speak("Something went sideways. Try again.");
+  }
+}
+
+function speak(text) {
+  speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.rate = 1.0; u.pitch = 1.0;
+  var voices = speechSynthesis.getVoices();
+  var pref = voices.find(function(v) { return v.name.includes('Samantha') || v.name.includes('Google') || v.name.includes('Natural'); });
+  if (pref) u.voice = pref;
+  var bar = document.getElementById('speak-bar');
+  u.onstart = function() { isTalking = true; bar.classList.add('active'); };
+  u.onend = function() { isTalking = false; bar.classList.remove('active'); };
+  u.onerror = function() { isTalking = false; bar.classList.remove('active'); };
+  speechSynthesis.speak(u);
+}
+
+if ('speechSynthesis' in window) {
+  speechSynthesis.getVoices();
+  speechSynthesis.onvoiceschanged = function() { speechSynthesis.getVoices(); };
+}
+
+function showError(msg) {
+  var el = document.getElementById('error-msg');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(function() { el.classList.remove('show'); }, 4000);
+}
+
+setMood('curious');
+</script>
+</body>
+</html>
