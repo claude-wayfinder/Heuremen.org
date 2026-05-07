@@ -554,15 +554,13 @@ async function sendToCompanion(userText){
   conversationHistory.push({role:'user', content:userText});
 
   try{
-    const res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat',{
+    const res = await fetch('https://buddy-companion.kory-indahl.workers.dev',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
-        identityId: 'buddy',
         message: userText,
         sessionId: 'face_' + Date.now().toString(36),
-        systemPrompt: SYSTEM_PROMPT,
-        memoryContext: SYSTEM_PROMPT
+        systemPrompt: SYSTEM_PROMPT
       })
     });
     const data = await res.json();

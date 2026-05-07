@@ -243,15 +243,13 @@ function setListening(v) {
 async function sendMessage(text) {
   setMood('thinking');
   try {
-    var res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat', {
+    var res = await fetch('https://buddy-companion.kory-indahl.workers.dev', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        identityId: 'buddy',
         message: text,
         sessionId: sessionId,
-        systemPrompt: SYSTEM_PROMPT,
-        memoryContext: SYSTEM_PROMPT
+        systemPrompt: SYSTEM_PROMPT
       })
     });
     var data = await res.json();
