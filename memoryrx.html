@@ -237,6 +237,63 @@ var audioCtx = null, analyser = null, micStream = null, passiveInterval = null;
 var smoothedEnergy = 0, smoothedCentroid = 0.5, sampleCount = 0;
 var chatRecognition = null, orbRecognition = null;
 var chatRecording = false, orbRecording = false;
+var curiosityFollowUpActive = false;
+
+// ─── Curiosity Engine (inline) ──────────────────────────────
+var curiosityEngine = {
+  key: 'curiosity_threads', MIN_GAP_HOURS: 2, FADE_DAYS: 7, activeThreadId: null,
+  load: function() { try { return JSON.parse(localStorage.getItem(this.key)||'[]'); } catch(e) { return []; } },
+  save: function(t) { localStorage.setItem(this.key, JSON.stringify(t)); },
+  scanMessage: function(text, energy) {
+    var d = this._detect(text); if (!d.length) return;
+    var threads = this.load(), now = Date.now();
+    d.forEach(function(det) {
+      if (!threads.some(function(t) { return t.status==='open' && curiosityEngine._sim(t.text,det.text)>0.55; }))
+        threads.push({ id:'t_'+now+'_'+Math.random().toString(36).slice(2,6), text:det.text, type:det.type, entity:det.entity, energy:energy, openedAt:now, lastMentionedAt:now, status:'open' });
+    });
+    this.save(threads);
+  },
+  getReentryQuestion: function(ms) {
+    var gap=(Date.now()-ms)/3600000; if(gap<this.MIN_GAP_HOURS)return null;
+    var threads=this.load(); var cutoff=Date.now()-(this.FADE_DAYS*86400000);
+    threads.forEach(function(t){if(t.status==='open'&&t.lastMentionedAt<cutoff)t.status='faded';}); this.save(threads);
+    var open=threads.filter(function(t){return t.status==='open';}); if(!open.length)return null;
+    var pick=open.sort(function(a,b){return(b.energy-a.energy)||(b.openedAt-a.openedAt);})[0];
+    this.activeThreadId=pick.id; return this._followUp(pick);
+  },
+  scanResolution: function(text) {
+    if(!this.activeThreadId)return false; var threads=this.load();
+    var t=threads.find(function(t){return t.id===curiosityEngine.activeThreadId;});if(!t)return false;
+    if([/\b(got the|didn't get|landed|accepted|rejected|passed|failed)\b/i,/\b(went well|went great|went badly|didn't go)\b/i,/\b(worked out|didn't work out|figured it out|done|finished|over)\b/i,/never mind|doesn't matter|forget it/i].some(function(r){return r.test(text);})){
+      t.status='resolved';t.resolvedAt=Date.now();this.save(threads);this.activeThreadId=null;return true;} return false;
+  },
+  _detect: function(text) {
+    return [{re:/\b(interview|audition)\b/i,type:'event',entity:'interview'},{re:/\b(deadline|due)\b/i,type:'event',entity:'deadline'},{re:/\b(meeting|presentation|demo|pitch)\b/i,type:'event',entity:'meeting'},{re:/trying to (figure out|deal with|work out)/i,type:'struggle',entity:'struggle'},{re:/thing with (my |the )?(kid|son|daughter|mom|dad|wife|husband|partner|boss)/i,type:'relationship',entity:'relationship'},{re:/\b(working on|building|finishing).{0,20}(project|app|feature)/i,type:'project',entity:'project'}].filter(function(p){return p.re.test(text);}).map(function(p){return{text:(text.match(p.re)||[p.entity])[0],type:p.type,entity:p.entity};});
+  },
+  _followUp: function(t) {
+    var m={interview:["How'd the interview go?","Did you hear back?"],deadline:["Did you make the deadline?"],meeting:["How'd the meeting go?"],struggle:["How'd that turn out?","Did you figure it out?"],relationship:["How'd that go?","Did you sort that out?"],project:["Where'd the project land?","Did you ship it?"]};
+    var pool=m[t.entity]||m[t.type]||["How'd that go?"]; return pool[Math.floor(Math.random()*pool.length)];
+  },
+  _sim: function(a,b){var wa=a.toLowerCase().split(/\s+/),wb=b.toLowerCase().split(/\s+/),s={};wb.forEach(function(w){s[w]=true;});return wa.filter(function(w){return s[w];}).length/Math.max(wa.length,wb.length);}
+};
+
+// ─── Preference Engine (inline) ─────────────────────────────
+var preferenceEngine = {
+  key: 'preference_sessions',
+  load: function(){try{return JSON.parse(localStorage.getItem(this.key)||'[]');}catch(e){return[];}},
+  save: function(s){localStorage.setItem(this.key,JSON.stringify(s));},
+  recordSession: function(topics,depth,energy,qType){var s=this.load();s.push({topics:topics,depth:depth,energy:energy,qType:qType||'why',timestamp:Date.now()});if(s.length>20)s=s.slice(-20);this.save(s);},
+  isReady: function(){return this.load().length>=5;},
+  getIdleGreeting: function(){
+    if(!this.isReady())return null;
+    var sessions=this.load(),qtypeVotes={};
+    sessions.forEach(function(s){var w=s.energy/10;qtypeVotes[s.qType]=(qtypeVotes[s.qType]||0)+w;});
+    var fav=Object.entries(qtypeVotes).sort(function(a,b){return b[1]-a[1];})[0];
+    var qt=fav?fav[0]:'why';
+    var g={why:["Been thinking about something. You around?"],what_if:["I had a thought — it might be yours too."],how:["I've been running the pattern. Want to see it?"],what:["Something's been sitting with me since last time."]};
+    var pool=g[qt]||g.why; return pool[Math.floor(Math.random()*pool.length)];
+  }
+};
 
 // ─── Soul ───────────────────────────────────────────────────
 function loadSoul() {
@@ -467,6 +524,16 @@ function bootFromSoul() {
     var prev = mem.sessions[mem.sessions.length-1];
     if (prev.lastReading) previousReading = prev.lastReading;
     showMemoryBar();
+
+    // Curiosity Engine: follow up on open threads after greeting
+    var lastTime = new Date(prev.date).getTime();
+    var followUp = curiosityEngine.getReentryQuestion(lastTime);
+    if (followUp) {
+      curiosityFollowUpActive = true;
+      setTimeout(function() {
+        addChatMsg('ai', followUp, soul ? soul.aiName : 'Rex');
+      }, 2500);
+    }
   }
 }
 
@@ -561,6 +628,9 @@ async function sendChat() {
   flashOrb(delta);
   saveSession();
 
+  // Curiosity Engine: scan for open threads
+  curiosityEngine.scanMessage(text, reading.energy);
+
   var typing = document.createElement('div');
   var tClass = 'typing';
   var tText = (soul?soul.aiName:'Rex')+' is thinking';
@@ -594,6 +664,7 @@ async function sendChat() {
       addChatMsg('ai', data.response, soul?soul.aiName:'Rex');
       currentTurns.push({role:'ai', text:data.response});
       saveSession();
+      if (curiosityFollowUpActive) { curiosityEngine.scanResolution(text); curiosityFollowUpActive = false; }
     }
   } catch(e) { typing.remove(); addChatMsg('system','Connection lost.'); }
   inp.focus();
