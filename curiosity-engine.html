@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curiosity Engine — Module Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0807;--bg2:#111009;--bg3:#191510;
+  --gold:rgb(196,154,56);--gold-mid:rgba(196,154,56,0.55);
+  --gold-dim:rgba(196,154,56,0.18);--gold-ghost:rgba(196,154,56,0.07);
+  --text:rgb(247,240,224);--text-dim:rgba(247,240,224,0.45);
+  --green:rgba(80,160,100,0.85);--red:rgba(180,70,50,0.85);
+}
+html,body{background:var(--bg);color:var(--text);font-family:'Lora',Georgia,serif;min-height:100%}
+h1{font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:18px;
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+h2{font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:11px;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px}
+.page{max-width:900px;margin:0 auto;padding:32px 24px}
+.subtitle{font-size:13px;color:var(--text-dim);font-style:italic;margin-bottom:32px}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+@media(max-width:680px){.grid{grid-template-columns:1fr}}
+
+/* PANELS */
+.panel{background:var(--bg2);border:0.5px solid var(--gold-dim);border-radius:8px;padding:20px}
+.panel-title{
+  font-family:'Cinzel',Georgia,serif;font-size:9px;letter-spacing:0.25em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:14px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.panel-badge{
+  background:var(--gold-ghost);border:0.5px solid var(--gold-dim);
+  border-radius:10px;padding:3px 10px;font-size:8px;color:var(--text-dim);
+}
+
+/* INPUT */
+textarea,input[type=text]{
+  width:100%;background:var(--gold-ghost);
+  border:0.5px solid var(--gold-dim);border-radius:5px;
+  color:var(--text);font-family:'Lora',Georgia,serif;
+  font-size:14px;line-height:1.6;padding:10px 12px;
+  resize:none;outline:none;
+}
+textarea{height:72px}
+textarea:focus,input:focus{border-color:var(--gold-mid)}
+textarea::placeholder,input::placeholder{color:var(--text-dim)}
+
+.btn{
+  background:var(--gold-ghost);border:0.5px solid var(--gold-mid);
+  color:var(--gold);font-family:'Cinzel',Georgia,serif;
+  font-size:8px;letter-spacing:0.18em;text-transform:uppercase;
+  padding:8px 16px;border-radius:4px;cursor:pointer;
+  transition:background 0.2s;white-space:nowrap;
+}
+.btn:hover{background:rgba(196,154,56,0.14)}
+.btn.danger{border-color:rgba(180,70,50,0.5);color:rgba(180,70,50,0.8)}
+.btn-row{display:flex;gap:8px;margin-top:10px;align-items:center;flex-wrap:wrap}
+
+/* THREAD LIST */
+.thread-list{margin-top:12px;display:flex;flex-direction:column;gap:8px;min-height:40px}
+.thread-item{
+  background:var(--bg3);border:0.5px solid var(--gold-dim);
+  border-radius:5px;padding:10px 12px;font-size:13px;
+  display:flex;justify-content:space-between;align-items:flex-start;gap:8px;
+}
+.thread-item.resolved{opacity:0.4;border-color:rgba(80,160,100,0.3)}
+.thread-item.faded{opacity:0.3}
+.thread-text{flex:1;line-height:1.5}
+.thread-meta{
+  font-family:'Cinzel',Georgia,serif;font-size:8px;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--text-dim);white-space:nowrap;margin-top:2px;
+}
+.thread-energy{
+  font-family:'Cinzel',Georgia,serif;font-size:9px;
+  color:var(--gold);padding:2px 7px;border:0.5px solid var(--gold-dim);
+  border-radius:10px;white-space:nowrap;flex-shrink:0;
+}
+.thread-status{
+  font-size:9px;font-family:'Cinzel',Georgia,serif;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:2px 7px;border-radius:10px;flex-shrink:0;
+}
+.thread-status.open{color:var(--gold);border:0.5px solid var(--gold-dim)}
+.thread-status.resolved{color:var(--green);border:0.5px solid rgba(80,160,100,0.4)}
+.thread-status.faded{color:var(--text-dim);border:0.5px solid rgba(247,240,224,0.1)}
+
+/* CURIOSITY OUTPUT */
+.curiosity-box{
+  background:var(--bg3);border:0.5px solid var(--gold-mid);
+  border-radius:6px;padding:16px;margin-top:12px;
+  font-style:italic;font-size:15px;line-height:1.7;
+  color:var(--text);min-height:52px;
+  transition:opacity 0.4s;
+}
+.curiosity-box.empty{color:var(--text-dim);font-size:13px}
+.curiosity-label{
+  font-family:'Cinzel',Georgia,serif;font-size:8px;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:8px;
+}
+
+/* GAP CONTROL */
+.gap-row{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.gap-label{font-size:12px;color:var(--text-dim)}
+input[type=range]{width:120px;accent-color:var(--gold)}
+#gap-display{
+  font-family:'Cinzel',Georgia,serif;font-size:11px;color:var(--gold);
+  min-width:60px;
+}
+
+/* LOG */
+.log{
+  background:var(--bg3);border:0.5px solid var(--gold-dim);
+  border-radius:5px;padding:12px;margin-top:16px;
+  font-family:'Courier New',monospace;font-size:11px;
+  color:var(--text-dim);line-height:1.8;max-height:130px;
+  overflow-y:auto;
+}
+.log-entry{color:var(--text-dim)}
+.log-entry.event{color:var(--gold)}
+.log-entry.rabbit{color:rgba(180,140,60,0.9)}
+.log-entry.resolve{color:var(--green)}
+.log-entry.fade{color:rgba(247,240,224,0.25)}
+
+/* MODULE CODE */
+.code-section{margin-top:24px}
+.code-box{
+  background:#080706;border:0.5px solid var(--gold-dim);
+  border-radius:6px;padding:16px;overflow-x:auto;
+  font-family:'Courier New',monospace;font-size:12px;
+  color:rgba(247,240,224,0.6);line-height:1.7;
+  max-height:280px;overflow-y:auto;
+}
+.code-box .kw{color:rgba(196,154,56,0.8)}
+.code-box .cm{color:rgba(247,240,224,0.3)}
+.code-box .str{color:rgba(140,200,120,0.8)}
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Curiosity Engine</h1>
+  <h2>Open Thread Detection · Storage · Follow-Up Generation</h2>
+  <p class="subtitle">A module for Companion and MemoryRX. Detects what was left open. Asks about it when you return.</p>
+
+  <div class="grid">
+
+    <!-- SESSION 1: Thread Detection -->
+    <div class="panel">
+      <div class="panel-title">
+        Session 1 — Incoming
+        <span class="panel-badge" id="thread-count">0 threads</span>
+      </div>
+      <textarea id="s1-input" placeholder="Type something with an open thread... 'I have a job interview Thursday' or 'trying to figure out this thing with my kid' or 'big deadline coming up'"></textarea>
+      <div class="btn-row">
+        <button class="btn" onclick="scanMessage()">Scan Message</button>
+        <button class="btn danger" onclick="clearThreads()">Clear All</button>
+      </div>
+      <div class="thread-list" id="thread-list">
+        <div style="font-size:12px;color:var(--text-dim);font-style:italic;padding:4px 0">
+          No threads detected yet.
+        </div>
+      </div>
+    </div>
+
+    <!-- SESSION 2: Curiosity Fire -->
+    <div class="panel">
+      <div class="panel-title">
+        Session 2 — Re-entry
+        <span class="panel-badge" id="will-ask-badge">—</span>
+      </div>
+
+      <div class="gap-row">
+        <span class="gap-label">Time since last session:</span>
+        <input type="range" id="gap-slider" min="0" max="240" value="48" oninput="updateGap()">
+        <span id="gap-display">48h</span>
+      </div>
+
+      <div class="btn-row" style="margin-top:14px">
+        <button class="btn" onclick="fireReentry()">Simulate Re-entry</button>
+      </div>
+
+      <div style="margin-top:14px">
+        <div class="curiosity-label">Companion says:</div>
+        <div class="curiosity-box empty" id="curiosity-out">
+          Simulate a re-entry to see what the Companion asks.
+        </div>
+      </div>
+
+      <div style="margin-top:14px">
+        <textarea id="s2-input" placeholder="Respond to the follow-up... engine watches for resolution signals"></textarea>
+        <div class="btn-row">
+          <button class="btn" onclick="scanResolution()">Scan for Resolution</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LOG -->
+  <div class="log" id="engine-log">
+    <div class="log-entry event">// Curiosity Engine ready. Scan a message to begin.</div>
+  </div>
+
+  <!-- MODULE CODE FOR BONES -->
+  <div class="code-section">
+    <div class="panel-title" style="margin-bottom:10px">
+      curiosity-engine.js — Wire Into Companion / MemoryRX
+      <button class="btn" onclick="copyModule()">Copy Module</button>
+    </div>
+    <div class="code-box" id="module-code"></div>
+  </div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   CURIOSITY ENGINE MODULE
+   Wire into Companion/MemoryRX via CuriosityEngine class.
+   Requires: Anthropic API access (passed in as apiCaller)
+═══════════════════════════════════════════════════════════════ */
+
+const MODULE_SOURCE = `/* ── CURIOSITY ENGINE ──────────────────────────────────────────
+   Detects open threads from user messages, stores them with
+   energy readings, and generates follow-up questions on re-entry.
+   
+   Usage:
+     const curiosity = new CuriosityEngine('companion_threads');
+     
+     // On message send:
+     await curiosity.scanMessage(text, energy);
+     
+     // On session start (after gap check):
+     const question = await curiosity.getReentryQuestion(lastSessionMs);
+     if (question) showAsCompanionMessage(question);
+     
+     // On user response to follow-up:
+     curiosity.scanResolution(text);
+─────────────────────────────────────────────────────────────── */
+
+class CuriosityEngine {
+  constructor(storageKey = 'curiosity_threads') {
+    this.key = storageKey;
+    this.MIN_GAP_HOURS = 2;    // don't ask if back within 2h
+    this.FADE_DAYS = 7;        // let threads fade after 7d silence
+    this.activeThreadId = null; // thread we asked about this session
+  }
+
+  // ── STORAGE ──────────────────────────────────────────────────
+  load() {
+    try { return JSON.parse(localStorage.getItem(this.key) || '[]'); }
+    catch(e) { return []; }
+  }
+  save(threads) {
+    localStorage.setItem(this.key, JSON.stringify(threads));
+  }
+
+  // ── SCAN INCOMING MESSAGE FOR OPEN THREADS ────────────────────
+  async scanMessage(text, energy = 5) {
+    const detected = await this._detectThreads(text, energy);
+    if (!detected.length) return [];
+    
+    const threads = this.load();
+    const now = Date.now();
+    
+    detected.forEach(d => {
+      // avoid near-duplicates
+      const exists = threads.some(t =>
+        t.status === 'open' &&
+        this._similarity(t.text, d.text) > 0.6
+      );
+      if (!exists) {
+        threads.push({
+          id: 'thread_' + now + '_' + Math.random().toString(36).slice(2,6),
+          text: d.text,
+          type: d.type,
+          entity: d.entity,
+          energy: energy,
+          openedAt: now,
+          lastMentionedAt: now,
+          status: 'open'
+        });
+      } else {
+        // refresh timestamp on re-mention
+        const t = threads.find(t => this._similarity(t.text, d.text) > 0.6);
+        if (t) t.lastMentionedAt = now;
+      }
+    });
+    
+    this.save(threads);
+    return detected;
+  }
+
+  // ── GET RE-ENTRY QUESTION ─────────────────────────────────────
+  async getReentryQuestion(lastSessionMs) {
+    const gapHours = (Date.now() - lastSessionMs) / 3600000;
+    if (gapHours < this.MIN_GAP_HOURS) return null;
+    
+    const thread = this._pickThread();
+    if (!thread) return null;
+    
+    this.activeThreadId = thread.id;
+    return await this._generateFollowUp(thread);
+  }
+
+  // ── SCAN RESPONSE FOR RESOLUTION ─────────────────────────────
+  scanResolution(text) {
+    if (!this.activeThreadId) return null;
+    const threads = this.load();
+    const thread = threads.find(t => t.id === this.activeThreadId);
+    if (!thread) return null;
+    
+    const resolved = this._detectResolution(text, thread);
+    if (resolved) {
+      thread.status = 'resolved';
+      thread.resolvedAt = Date.now();
+      this.save(threads);
+      this.activeThreadId = null;
+      return thread;
+    }
+    return null;
+  }
+
+  // ── FADE OLD THREADS ──────────────────────────────────────────
+  fadeOldThreads() {
+    const threads = this.load();
+    const cutoff = Date.now() - (this.FADE_DAYS * 86400000);
+    let changed = false;
+    threads.forEach(t => {
+      if (t.status === 'open' && t.lastMentionedAt < cutoff) {
+        t.status = 'faded';
+        changed = true;
+      }
+    });
+    if (changed) this.save(threads);
+    return threads.filter(t => t.status === 'faded').length;
+  }
+
+  // ── INTERNAL: PICK BEST THREAD ────────────────────────────────
+  _pickThread() {
+    this.fadeOldThreads();
+    const threads = this.load().filter(t => t.status === 'open');
+    if (!threads.length) return null;
+    // sort: highest energy first, then most recent
+    return threads.sort((a, b) =>
+      (b.energy - a.energy) || (b.openedAt - a.openedAt)
+    )[0];
+  }
+
+  // ── INTERNAL: AI THREAD DETECTION ────────────────────────────
+  async _detectThreads(text, energy) {
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 300,
+          system: 'You are a thread detector. Extract ONLY genuinely open/unresolved situations from the message — upcoming events, ongoing struggles, unfinished situations. Ignore general statements, opinions, or already-resolved things. Return ONLY a JSON array (can be empty). Format: [{"text":"brief plain-language description","type":"event|struggle|relationship|project|other","entity":"key noun"}]. No markdown, no explanation.',
+          messages: [{ role: 'user', content: text }]
+        })
+      });
+      const data = await res.json();
+      const raw = data.content?.[0]?.text || '[]';
+      return JSON.parse(raw.replace(/\`\`\`json?|'\`\`\`/g,'').trim());
+    } catch(e) {
+      return this._detectThreadsFallback(text);
+    }
+  }
+
+  // ── INTERNAL: FALLBACK THREAD DETECTION (no API) ─────────────
+  _detectThreadsFallback(text) {
+    const patterns = [
+      { re: /\\b(interview|audition|tryout)\\b/i, type:'event', entity:'interview' },
+      { re: /\\b(deadline|due date|due by|due\\s+\\w+day)\\b/i, type:'event', entity:'deadline' },
+      { re: /\\b(meeting|presentation|demo|pitch)\\b.{0,25}\\b(tomorrow|monday|tuesday|wednesday|thursday|friday|saturday|sunday|next week|tonight)\\b/i, type:'event', entity:'meeting' },
+      { re: /\\btrying to (figure out|deal with|work out|handle|sort out)\\b/i, type:'struggle', entity:'situation' },
+      { re: /\\bthing with (my |the )?(kid|son|daughter|mom|dad|wife|husband|partner|boss|friend)\\b/i, type:'relationship', entity:'relationship' },
+      { re: /\\b(working on|building|finishing)\\b.{0,20}\\b(project|app|thing|feature)\\b/i, type:'project', entity:'project' },
+    ];
+    const found = [];
+    patterns.forEach(p => {
+      if (p.re.test(text)) {
+        const m = text.match(p.re);
+        found.push({ text: m[0], type: p.type, entity: p.entity });
+      }
+    });
+    return found;
+  }
+
+  // ── INTERNAL: AI FOLLOW-UP GENERATION ────────────────────────
+  async _generateFollowUp(thread) {
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 80,
+          system: 'Generate ONE follow-up question about an open thread. Rules: sound curious, not concerned. Direct. Conversational. NOT "I hope..." or "Are you okay?" — just ask what happened. 10 words max. No quotes, no explanation, just the question.',
+          messages: [{ role: 'user', content: 'Thread: ' + thread.text }]
+        })
+      });
+      const data = await res.json();
+      return data.content?.[0]?.text?.trim() || this._generateFollowUpFallback(thread);
+    } catch(e) {
+      return this._generateFollowUpFallback(thread);
+    }
+  }
+
+  // ── INTERNAL: FALLBACK FOLLOW-UP (no API) ────────────────────
+  _generateFollowUpFallback(thread) {
+    const templates = {
+      interview: ["How'd the interview go?","Did you hear back?","How'd that interview turn out?"],
+      deadline:  ["Did you make the deadline?","How'd the deadline go?","Did you get it done?"],
+      meeting:   ["How'd the meeting go?","How'd that go?"],
+      exam:      ["How'd the exam go?","How'd the test go?"],
+      struggle:  ["How'd that turn out?","Did you figure it out?","Where'd that land?"],
+      relationship:["How'd that go with them?","Did you sort that out?"],
+      project:   ["Where'd the project land?","Did you ship it?","How's the build going?"],
+    };
+    const pool = templates[thread.entity] || templates[thread.type] ||
+                 ["Last time you mentioned " + thread.text + ". How'd that go?"];
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  // ── INTERNAL: RESOLUTION DETECTION ───────────────────────────
+  _detectResolution(text, thread) {
+    const signals = [
+      /\\b(got the|didn't get|got a|landed|accepted|rejected|turned down|passed|failed|aced)\\b/i,
+      /\\b(went well|went great|went okay|went badly|went terribly|didn't go)\\b/i,
+      /\\b(worked out|didn't work out|figured it out|sorted out|resolved|done|finished|over)\\b/i,
+      /\\b(they (hired|rejected|offered|let me go|fired))\\b/i,
+      /\\bnever mind\\b|\\bdoesn't matter\\b|\\bforget it\\b/i,
+    ];
+    // also check if entity word appears near a resolution signal
+    const entityPresent = thread.entity &&
+      new RegExp('\\\\b' + thread.entity + '\\\\b', 'i').test(text);
+    return signals.some(r => r.test(text)) || entityPresent;
+  }
+
+  // ── INTERNAL: ROUGH SIMILARITY ───────────────────────────────
+  _similarity(a, b) {
+    const wa = new Set(a.toLowerCase().split(/\\s+/));
+    const wb = new Set(b.toLowerCase().split(/\\s+/));
+    const intersection = [...wa].filter(w => wb.has(w)).length;
+    return intersection / Math.max(wa.size, wb.size);
+  }
+}`;
+
+/* ═══════════════════════════════════════════════════════════════
+   DEMO RUNTIME
+═══════════════════════════════════════════════════════════════ */
+
+// Live instance using sessionStorage for demo isolation
+const engine = new (class CuriosityEngine {
+  constructor() {
+    this.key = 'demo_threads';
+    this.MIN_GAP_HOURS = 2;
+    this.FADE_DAYS = 7;
+    this.activeThreadId = null;
+  }
+  load() {
+    try { return JSON.parse(sessionStorage.getItem(this.key) || '[]'); }
+    catch(e) { return []; }
+  }
+  save(threads) { sessionStorage.setItem(this.key, JSON.stringify(threads)); }
+
+  async scanMessage(text, energy) {
+    const detected = await this._detectThreads(text, energy);
+    if (!detected.length) return [];
+    const threads = this.load();
+    const now = Date.now();
+    detected.forEach(d => {
+      const exists = threads.some(t =>
+        t.status==='open' && this._similarity(t.text, d.text)>0.55);
+      if (!exists) {
+        threads.push({
+          id: 'thread_'+now+'_'+Math.random().toString(36).slice(2,6),
+          text: d.text, type: d.type, entity: d.entity,
+          energy: energy, openedAt: now, lastMentionedAt: now, status:'open'
+        });
+      }
+    });
+    this.save(threads);
+    return detected;
+  }
+
+  async getReentryQuestion(gapHours) {
+    if (gapHours < this.MIN_GAP_HOURS) return null;
+    const thread = this._pickThread();
+    if (!thread) return null;
+    this.activeThreadId = thread.id;
+    return { question: await this._generateFollowUp(thread), thread };
+  }
+
+  scanResolution(text) {
+    if (!this.activeThreadId) return null;
+    const threads = this.load();
+    const thread = threads.find(t => t.id === this.activeThreadId);
+    if (!thread) return null;
+    const resolved = this._detectResolution(text, thread);
+    if (resolved) {
+      thread.status = 'resolved';
+      thread.resolvedAt = Date.now();
+      this.save(threads);
+      this.activeThreadId = null;
+      return thread;
+    }
+    return null;
+  }
+
+  _pickThread() {
+    const threads = this.load().filter(t => t.status==='open');
+    if (!threads.length) return null;
+    return threads.sort((a,b)=>(b.energy-a.energy)||(b.openedAt-a.openedAt))[0];
+  }
+
+  async _detectThreads(text, energy) {
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          model:'claude-sonnet-4-20250514', max_tokens:300,
+          system:'You are a thread detector. Extract ONLY genuinely open/unresolved situations — upcoming events, ongoing struggles, unfinished situations. Ignore general statements or resolved things. Return ONLY a JSON array (can be empty). Format: [{"text":"brief plain description","type":"event|struggle|relationship|project|other","entity":"key noun"}]. No markdown.',
+          messages:[{role:'user',content:text}]
+        })
+      });
+      const data = await res.json();
+      const raw = data.content?.[0]?.text||'[]';
+      return JSON.parse(raw.replace(/```json?|```/g,'').trim());
+    } catch(e) { return this._fallbackDetect(text); }
+  }
+
+  _fallbackDetect(text) {
+    const pats = [
+      {re:/\b(interview|audition)\b/i, type:'event', entity:'interview'},
+      {re:/\b(deadline|due)\b/i, type:'event', entity:'deadline'},
+      {re:/\b(meeting|presentation|demo|pitch)\b/i, type:'event', entity:'meeting'},
+      {re:/trying to (figure out|deal with|work out|handle|sort)/i, type:'struggle', entity:'situation'},
+      {re:/thing with (my |the )?(kid|son|daughter|mom|dad|wife|husband|partner|boss)/i, type:'relationship', entity:'relationship'},
+      {re:/\b(working on|building|finishing).{0,20}(project|app|feature)/i, type:'project', entity:'project'},
+    ];
+    return pats.filter(p=>p.re.test(text)).map(p=>({
+      text: (text.match(p.re)||[p.entity])[0], type:p.type, entity:p.entity
+    }));
+  }
+
+  async _generateFollowUp(thread) {
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          model:'claude-sonnet-4-20250514', max_tokens:60,
+          system:'Generate ONE follow-up question about an open thread. Sound curious, not concerned. Direct and conversational. NOT "I hope..." — just ask what happened. Under 12 words. No quotes or explanation, just the question.',
+          messages:[{role:'user',content:'Open thread: '+thread.text}]
+        })
+      });
+      const data = await res.json();
+      return data.content?.[0]?.text?.trim()||this._fallbackQ(thread);
+    } catch(e) { return this._fallbackQ(thread); }
+  }
+
+  _fallbackQ(t) {
+    const m = {
+      interview:["How'd the interview go?","Did you hear back?"],
+      deadline: ["Did you make the deadline?","How'd the deadline go?"],
+      meeting:  ["How'd the meeting go?"],
+      situation:["How'd that turn out?","Did you figure it out?"],
+      relationship:["How'd that go?","Did you sort that out?"],
+      project:  ["Where'd the project land?","Did you ship it?"],
+    };
+    const pool = m[t.entity]||m[t.type]||["Last time you mentioned "+t.text+". How'd that go?"];
+    return pool[Math.floor(Math.random()*pool.length)];
+  }
+
+  _detectResolution(text, thread) {
+    const sigs = [
+      /\b(got the|didn't get|got a|landed|accepted|rejected|passed|failed|aced)\b/i,
+      /\b(went well|went great|went okay|went badly|didn't go)\b/i,
+      /\b(worked out|didn't work out|figured it out|sorted|resolved|done|finished|over)\b/i,
+      /never mind|doesn't matter|forget it/i,
+    ];
+    return sigs.some(r=>r.test(text));
+  }
+
+  _similarity(a,b) {
+    const wa=new Set(a.toLowerCase().split(/\s+/));
+    const wb=new Set(b.toLowerCase().split(/\s+/));
+    return [...wa].filter(w=>wb.has(w)).length/Math.max(wa.size,wb.size);
+  }
+})();
+
+/* ── DEMO UI ──────────────────────────────────────────────────── */
+const log = document.getElementById('engine-log');
+function addLog(msg, cls='') {
+  const el = document.createElement('div');
+  el.className = 'log-entry '+(cls||'');
+  el.textContent = msg;
+  log.appendChild(el);
+  log.scrollTop = log.scrollHeight;
+}
+
+function renderThreads() {
+  const threads = engine.load();
+  const list = document.getElementById('thread-list');
+  const ct = document.getElementById('thread-count');
+  const open = threads.filter(t=>t.status==='open').length;
+  ct.textContent = open + ' thread' + (open!==1?'s':'');
+
+  if (!threads.length) {
+    list.innerHTML = '<div style="font-size:12px;color:var(--text-dim);font-style:italic;padding:4px 0">No threads detected yet.</div>';
+    return;
+  }
+  list.innerHTML = '';
+  [...threads].reverse().forEach(t => {
+    const div = document.createElement('div');
+    div.className = 'thread-item ' + (t.status!=='open'?t.status:'');
+    const age = Math.round((Date.now()-t.openedAt)/3600000);
+    const ageStr = age<1?'just now':age<24?age+'h ago':Math.round(age/24)+'d ago';
+    div.innerHTML = `
+      <div style="flex:1">
+        <div class="thread-text">${t.text}</div>
+        <div class="thread-meta">${t.type} · ${ageStr} · e:${t.energy.toFixed(1)}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
+        <span class="thread-energy">e ${t.energy.toFixed(1)}</span>
+        <span class="thread-status ${t.status}">${t.status}</span>
+      </div>`;
+    list.appendChild(div);
+  });
+  updateWillAsk();
+}
+
+function updateWillAsk() {
+  const gap = parseInt(document.getElementById('gap-slider').value);
+  const badge = document.getElementById('will-ask-badge');
+  const openThreads = engine.load().filter(t=>t.status==='open');
+  if (!openThreads.length) { badge.textContent='no threads'; return; }
+  if (gap < engine.MIN_GAP_HOURS) { badge.textContent='gap too short'; return; }
+  badge.textContent = 'will ask';
+  badge.style.color = 'var(--gold)';
+  badge.style.borderColor = 'var(--gold-dim)';
+}
+
+function updateGap() {
+  const v = parseInt(document.getElementById('gap-slider').value);
+  const d = document.getElementById('gap-display');
+  d.textContent = v<24 ? v+'h' : Math.round(v/24)+'d';
+  updateWillAsk();
+}
+
+async function scanMessage() {
+  const text = document.getElementById('s1-input').value.trim();
+  if (!text) return;
+  const energy = 3 + Math.random()*4; // simulate energy reading
+  addLog('// Scanning: "'+text.slice(0,50)+(text.length>50?'...':'')+'"', 'event');
+  const found = await engine.scanMessage(text, parseFloat(energy.toFixed(1)));
+  if (found.length) {
+    found.forEach(f => addLog('  ↳ thread detected: "'+f.text+'" ['+f.type+']', 'rabbit'));
+  } else {
+    addLog('  ↳ no open threads detected', '');
+  }
+  renderThreads();
+}
+
+async function fireReentry() {
+  const gap = parseInt(document.getElementById('gap-slider').value);
+  const box = document.getElementById('curiosity-out');
+  box.textContent = 'Generating...';
+  box.className = 'curiosity-box';
+  addLog('// Session re-entry. Gap: '+gap+'h', 'event');
+
+  const result = await engine.getReentryQuestion(gap);
+  if (!result) {
+    const why = gap < engine.MIN_GAP_HOURS ? 'gap too short (< 2h)' : 'no open threads';
+    box.textContent = '[no curiosity question — '+why+']';
+    box.className = 'curiosity-box empty';
+    addLog('  ↳ no question fired: '+why, '');
+  } else {
+    box.textContent = result.question;
+    box.className = 'curiosity-box';
+    addLog('  ↳ picked thread: "'+result.thread.text+'"', 'rabbit');
+    addLog('  ↳ question: "'+result.question+'"', 'rabbit');
+  }
+}
+
+function scanResolution() {
+  const text = document.getElementById('s2-input').value.trim();
+  if (!text) return;
+  addLog('// Scanning response for resolution...', 'event');
+  const resolved = engine.scanResolution(text);
+  if (resolved) {
+    addLog('  ↳ thread RESOLVED: "'+resolved.text+'"', 'resolve');
+    renderThreads();
+  } else {
+    addLog('  ↳ no resolution detected. Thread stays open.', '');
+  }
+}
+
+function clearThreads() {
+  sessionStorage.removeItem('demo_threads');
+  engine.activeThreadId = null;
+  document.getElementById('curiosity-out').textContent = 'Simulate a re-entry to see what the Companion asks.';
+  document.getElementById('curiosity-out').className = 'curiosity-box empty';
+  addLog('// Threads cleared.', 'fade');
+  renderThreads();
+}
+
+function copyModule() {
+  navigator.clipboard.writeText(MODULE_SOURCE).then(()=>{
+    addLog('// Module source copied to clipboard.', 'resolve');
+  });
+}
+
+/* render module source */
+document.getElementById('module-code').textContent = MODULE_SOURCE;
+renderThreads();
+updateGap();
+</script>
+</body>
+</html>
