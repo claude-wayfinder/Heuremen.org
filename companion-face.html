@@ -19,10 +19,12 @@ body{
 
 /* THE FACE */
 .face{
-  font-size:min(50vw,50vh);
+  font-family:'Courier New',monospace;
+  font-size:min(40vw,40vh);
+  font-weight:bold;
   line-height:1;
   text-align:center;
-  filter:grayscale(0.3);
+  color:rgba(255,255,255,0.15);
   transition:all 0.8s ease;
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
@@ -95,12 +97,12 @@ body{
 
 // ─── The Six Faces ──────────────────────────────────────────
 var FACES = {
-  curious:    { emoji: '\u{1F914}', h: 220, s: 30, l: 14 },   // blue-grey, thinking
-  happy:      { emoji: '\u{1F60A}', h: 45,  s: 40, l: 18 },   // warm amber
-  sassy:      { emoji: '\u{1F60F}', h: 320, s: 35, l: 15 },   // purple-pink
-  thoughtful: { emoji: '\u{1F615}', h: 200, s: 25, l: 11 },   // deep blue
-  surprised:  { emoji: '\u{1F62F}', h: 30,  s: 50, l: 20 },   // bright orange
-  quiet:      { emoji: '\u{1F636}', h: 220, s: 15, l: 8  }    // near-black blue
+  curious:    { emoji: '?',  h: 220, s: 30, l: 14 },   // blue-grey
+  happy:      { emoji: '^',  h: 45,  s: 40, l: 18 },   // warm amber
+  sassy:      { emoji: '~',  h: 320, s: 35, l: 15 },   // purple-pink
+  thoughtful: { emoji: '.',  h: 200, s: 25, l: 11 },   // deep blue
+  surprised:  { emoji: '!',  h: 30,  s: 50, l: 20 },   // bright orange
+  quiet:      { emoji: '_',  h: 220, s: 15, l: 8  }    // near-black blue
 };
 
 var currentFace = 'curious';
