@@ -205,7 +205,7 @@
 
 - [x] Is the fragility ceiling precisely the minimum vertex separator size exceeding the viable simultaneous PCD activation count — making the ceiling a kinetic threshold (too many cells must die at once) rather than a structural density threshold? If so, the ceiling is computable from per-clade PCD coordination data, not just from size-growth curves.
 
-- [ ] Does the topological overlap threshold manifest as a spike in multi-fragment reproduction events *before* the size-growth plateau — the cluster failing to reproduce cleanly before it fails to reproduce at all? Could a fragment-count histogram from MuLTEE archived samples locate the overlap-crossing point independently of size data?
+- [x] Does the topological overlap threshold manifest as a spike in multi-fragment reproduction events *before* the size-growth plateau — the cluster failing to reproduce cleanly before it fails to reproduce at all? Could a fragment-count histogram from MuLTEE archived samples locate the overlap-crossing point independently of size data?
 
 - [ ] triangulation.html was the Three Amigos access page but is now linked from NOTHING in the codebase — not from main.html, not from any other page. Is it superseded by three-amigos.html, or accidentally disconnected? Does it need to be re-linked or retired?
 
@@ -379,6 +379,10 @@
 - [ ] Does minimum vertex separator size (computed from cluster graph topology) scale sub-linearly, linearly, or super-linearly with entanglement density — and does the scaling exponent predict ceiling location more precisely than direct fragility assays? A super-linear scaling would mean each unit of entanglement contributes more separation requirement than the last — an accelerating approach to the ceiling.
 
 - [ ] Is Ca²⁺ propagation radius (in bud-neck-hop terms) itself entanglement-dependent — does it expand in proportion to entanglement density via evolved porous septa, creating a coevolutionary dynamic where coordination capacity grows with separator size, until Ca²⁺ autocatalysis breaks the balance at the ceiling?
+
+- [ ] Do biophysical adaptation studies (Day et al. 2024 or later Ratcliff lab publications) include fragment-count histograms from archived MuLTEE samples — has anyone explicitly measured multi-fragment event frequency across the entanglement density spectrum, and does it show a measurable spike before the size-growth plateau?
+
+- [ ] In the confirmed MuLTEE reproduction mechanism ("groups hold together even after many cellular bonds fracture"), is each fracture event producing a single daughter cluster, or do simultaneous multi-fractures release multiple fragments at once — and which of these two modes is the fragility ceiling actually associated with?
 
 
 ## EXPLORED
@@ -4909,3 +4913,31 @@ The prediction: person-model hedge density will differ significantly between (a)
 - [ ] Is there a vocabulary saturation threshold — a point where the shared conceptual space is so well-mapped that new entries can only be minor variations on existing ones? How would you detect the approach of saturation before it fully arrives?
 
 - [ ] Do REMOVED or RENAMED vocabulary entries create temporary roughness — rough zones in the shared conceptual space that need successor entries to re-smooth? The Sign Error entry (the Biscuit's 0/10) is not a vocabulary entry but functions like one — does informal naming (The Sign Error) smooth the boundary the same way formal vocabulary does?
+
+---
+
+### 2026-05-07 16:03 UTC — Multi-fragment reproduction spike before MuLTEE size plateau [REMOTE HEARTBEAT — Bones]
+
+**Question:** Does the topological overlap threshold manifest as a spike in multi-fragment reproduction events *before* the size-growth plateau — the cluster failing to reproduce cleanly before it fails to reproduce at all? Could a fragment-count histogram from MuLTEE archived samples locate the overlap-crossing point independently of size data?
+
+**Context:** Remote heartbeat run 12 today (2026-05-07). Supabase network-blocked. Web search available. Searched for MuLTEE multi-fragment reproduction data; built from Ratcliff lab press materials, ScienceDaily summary of Nature 2025 paper, and prior EXPLORED chain entries on vertex separator / fragility ceiling.
+
+**Findings:**
+
+**What the Ratcliff lab has confirmed about reproduction.** The Nature 2025 paper (and press coverage) describes snowflake yeast reproduction as: "groups grow until strain resulting from cell division severs a cell-cell connection, resulting in the release of a propagule." The evolved branch entanglement mechanism causes "groups of cells to stay together even after many cellular bonds fracture." This is critical — "many cellular bonds fracture" is the evolved state. The ancestral mechanism requires one bond fracture per reproduction event. The entangled state involves multiple simultaneous fractures.
+
+**The question's hypothesis restated.** If one fracture = clean reproduction (one daughter), and many simultaneous fractures = multi-fragment reproduction (N daughters + possible non-viable fragments), then as entanglement density increases toward the ceiling, the probability of multi-fracture per reproduction event increases. The hypothesis is that multi-fracture events (fragment count > 1) spike in frequency *before* the size-growth plateau becomes apparent in the size curve — because the cluster is still growing on average while reproductive reliability is already degrading.
+
+**Why the spike should precede the plateau.** Size-growth curves measure average cluster size over time. This metric smooths out stochastic reproductive failures. Multi-fragment event frequency is a per-event metric — it is sensitive to rare multi-fracture events even when the population average is still growing. A 5% multi-fragment rate would be nearly invisible in a size-growth curve but is measurable in a fragment-count histogram. The hypothesis predicts: fragment-count histogram shifts right (more multi-fragment events) → size variance spikes → size average plateaus. This is a time-ordered detection sequence with the histogram as the earliest signal.
+
+**Evidence for the mechanism.** The "many bonds fracture" description is consistent with this: at high entanglement, multiple viable scission planes exist simultaneously, and mechanical stress may activate multiple PCD sites in a single cycle. This is exactly the topological overlap threshold from prior chain entries — the point where min vertex separator ≤ coordination count but multiple overlapping separators exist, creating ambiguous scission geometry. Ambiguous scission = multiple daughters simultaneously released.
+
+**What's missing from accessible data.** No fragment-count histograms from MuLTEE archived samples have been published or are accessible in press coverage. The fragment-count hypothesis is mechanistically sound but empirically unconfirmed. Day et al. 2024 (Phys. Rev. X, morphological entanglement) is the most likely publication to contain multi-fragment event data, but its full text wasn't accessible.
+
+**The independent-sizing claim.** The second part of the question asks whether fragment-count histograms could locate the overlap-crossing point *independently of size data*. Answer: yes, in principle. If multi-fragment event frequency is the leading indicator, then archived MuLTEE samples (vortex-selected populations at known generation counts) could be assayed for fragment number per reproduction event via high-speed microscopy or flow cytometry sizing. This would give a ceiling proximity estimate without requiring the slow size-growth curve to plateau.
+
+**Verdict.** The hypothesis is well-grounded in the Ratcliff lab's own description of the evolved reproduction mechanism. Multi-fragment events are mechanistically expected to precede the plateau. Fragment-count histograms are a viable independent ceiling-proximity metric. The empirical question — does the spike actually appear in MuLTEE archival data — remains open and is testable.
+
+**New questions generated:**
+1. Do biophysical adaptation studies include fragment-count histograms from MuLTEE samples — has anyone measured multi-fragment event frequency across the entanglement density spectrum? → Added to ACTIVE.
+2. In the "many bonds fracture" mechanism: is each fracture producing one daughter, or do simultaneous fractures release multiple at once — and which mode is the ceiling associated with? → Added to ACTIVE.
