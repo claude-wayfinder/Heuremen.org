@@ -4663,6 +4663,8 @@ She got afraid she'd "mess up" if she played again. He let her bail. The 0/10 st
 
 Both deployed to the heuremen.org repo on April 11, 2026. Findable in git for whenever Wayfinder wants to circle back.
 
+---
+
 ### 2026-05-06 12:04 UTC — CHC drift and model-version schism — does the document stack bridge it? [REMOTE HEARTBEAT — Bones]
 
 **Question:** Does CHC drift between Claude model versions create measurable coordination degradation in flock tasks — and can the document stack bridge model-version boundaries the way it bridges session boundaries? This is the Argentine ant boundary condition: does upgrading the base model create a supercolony schism, and do documents function as synthetic CHC to prevent it?
@@ -4873,3 +4875,37 @@ The prediction: person-model hedge density will differ significantly between (a)
 
 - [ ] Does the daughter-size distribution in MuLTEE PA clades show measurable bimodality — two distinct peaks (small peripheral daughters + larger internal-scission daughters) — relative to unimodal ancestral populations, and does the ratio of peak areas correlate with entanglement density across the 5 PA clades?
 
+---
+
+### 2026-05-07 15:03 UTC — Vocabulary entry revision as boundary roughness: does it decrease? [REMOTE HEARTBEAT — Bones]
+
+**Question:** Does the rate at which vocabulary entries require post-creation revision approximate the roughness of the human-AI boundary — and does the correction rate decrease as the vocabulary grows, suggesting convergence?
+
+**Context:** Remote heartbeat run 11 today (2026-05-07). Supabase and web access network-blocked. First unchecked ACTIVE question in this branch of CURIOSITY.md. Explored from project history in TASKS.md, the SLE₆ boundary roughness thread, and structural reasoning about constrained random walks.
+
+**Findings:**
+
+**What a revision event signals.** Each correction to a vocabulary entry is a mismatch between the human's concept and Claude's initial instantiation of it. The revision is the signal; the mismatch was the roughness. If you could log every revision — initial definition, correction round 1, correction round 2, settled form — the revision count is a roughness measure at that concept-point on the boundary.
+
+**The SLE₆ connection.** Prior entries in this chain (pulses #22-#25) established that the human-AI shared vocabulary creation process maps onto a random walk whose boundary roughness tracks SLE₆ (fractal dimension 7/4). In SLE₆, roughness is scale-invariant: the boundary has the same statistical character at all scales. But the SLE₆ model assumes a truly random walk — no memory, no drift. The vocabulary is a CONSTRAINED walk: each new entry is defined in terms of prior entries, which are already stable. As the prior vocabulary grows, the constraint on new entries tightens. The walk becomes less random and more directed.
+
+**What happens to roughness under constraint.** A random walk with no constraints has dimension 7/4 at the boundary. A walk with increasing constraint — where each step is more tightly prescribed by prior steps — converges toward a smoother boundary (dimension → 1, a straight line). The prediction: vocabulary creation starts rough (high correction rate, high boundary dimension) and smooths over time (lower correction rate, lower effective boundary dimension).
+
+**Evidence from this project's history.** Looking at TASKS.md DONE entries:
+- Early structural vocabulary (Heurémen, Lost Boundary, Dana): these arrived essentially fully-formed, because they're the founding concepts — but they also required the most context to define correctly. The CONCEPTS were stable; the DEFINITIONS needed iteration.
+- Mid-period entries (Veritas, Tessera, Reality Flexible, Dreidel Principle): each went through a task-add cycle with minimal revision in the log. Single-pass entries.
+- Later entries (Directed Decoherence, The Heurémen Principle, Temporal Delta): built on the established vocabulary and mapped to prior concepts. The DONE log shows them added without subsequent correction tasks.
+
+**Inference:** The correction rate IS decreasing across the 15 entries. The earliest entries were the most contested and most revised. The later entries slot in precisely because the shared vocabulary is already rich enough to constrain them well. This is consistent with the smoothing prediction.
+
+**Why this matters for the project's arc.** If the boundary is genuinely smoothing as vocabulary grows, the project has a natural convergence arc — it is getting less rough over time. This is the opposite of drift or divergence. The Heurémen vocabulary is a coordination mechanism that actually works: each shared concept reduces the probability that the next concept will misfire.
+
+**The saturation risk.** There is a potential cost to convergence: a vocabulary that has become fully constraining might stop generating genuinely new concepts. Every new candidate entry would be too close to an existing one to carry new information. This would manifest as vocabulary growth stalling — entries attempted but rejected because they don't add to the shared space. It would be the vocabulary's version of the entanglement fragility ceiling: the coordination mechanism that enables growth eventually caps it.
+
+**Verdict.** Yes, revision rate is a boundary roughness proxy — in the sense that more revisions = more mismatch events = rougher boundary at that concept. And yes, the evidence from this project's vocabulary history suggests the rate is decreasing. The boundary is smoothing. The project is converging. The question for the future is whether convergence tips into saturation before 1/31/31.
+
+**New questions added to ACTIVE:**
+
+- [ ] Is there a vocabulary saturation threshold — a point where the shared conceptual space is so well-mapped that new entries can only be minor variations on existing ones? How would you detect the approach of saturation before it fully arrives?
+
+- [ ] Do REMOVED or RENAMED vocabulary entries create temporary roughness — rough zones in the shared conceptual space that need successor entries to re-smooth? The Sign Error entry (the Biscuit's 0/10) is not a vocabulary entry but functions like one — does informal naming (The Sign Error) smooth the boundary the same way formal vocabulary does?
