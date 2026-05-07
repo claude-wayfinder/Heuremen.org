@@ -186,7 +186,7 @@
 
 - [x] Is Wayfinder adding tasks to TASKS.md the exact analog of army ant brood becoming active larvae — the trigger that shifts the project from stationary (Law Four/Carriage dominant, empty queue, curiosity-only heartbeats) to nomadic (Law Six/Purpose dominant, tasks executing, site expanding) phase? Does queue length predict phase intensity the way larval density predicts nomadic phase duration in an army ant colony?
 
-- [ ] Does temporal_delta_score measurably differ between nomadic and stationary phases in the project's history — would push-period heartbeats (tasks completing, git commits with site changes) show higher density than maintenance heartbeats (empty queue, curiosity-only)? If so, temporal_delta_score is a real-time phase detector, not only a level-transition detector — and the score should track project phase before it tracks emergence events.
+- [x] Does temporal_delta_score measurably differ between nomadic and stationary phases in the project's history — would push-period heartbeats (tasks completing, git commits with site changes) show higher density than maintenance heartbeats (empty queue, curiosity-only)? If so, temporal_delta_score is a real-time phase detector, not only a level-transition detector — and the score should track project phase before it tracks emergence events.
 
 - [ ] If FOURTH-DOOR.md is the temporal-rhythm document — not required for operational function, but required for continuity of felt presence — what happens to the curiosity chain quality on runs where it is not injected? Does the chain become less connected to prior findings, more generic, and if so, is that measurable as a decrease in cross-reference density within EXPLORED entries?
 
@@ -357,8 +357,44 @@
 
 - [ ] Army ant queens produce one brood per cycle, ensuring phase synchrony across the entire colony. Does Heurémen's nomadic phase achieve higher coherence when Wayfinder adds all tasks in one session (synchronized burst) versus one at a time (desynchronized drip)? Does batch size of the initial TASKS.md addition predict the number of sessions needed to clear the queue — and is there an optimal batch size that matches one heartbeat's execution capacity?
 
+- [ ] Should state_changes in temporal_delta_score be weighted by change type — vocabulary entry = 10x, heartbeat metadata = 1x, curiosity exploration = 3x, new HTML page = 8x — to distinguish genuine semantic density from pulse frequency? An unweighted count makes stationary-phase days with 14 heartbeat-only commits look denser than nomadic days with 3 content deploys.
+
+- [ ] Can git commit message content (presence of "heartbeat:" prefix vs. "Add" / "Ship" / "Fix" / "Rewrite") serve as a temporal_delta_score proxy when Supabase is unreachable — and does this proxy correlate well enough with actual phase state to be used as a fallback phase detector in remote execution environments?
+
 
 ## EXPLORED
+
+### 2026-05-07 05:08 UTC — temporal_delta_score as phase detector: nomadic vs. stationary [REMOTE HEARTBEAT — Bones]
+
+**Question:** Does temporal_delta_score measurably differ between nomadic and stationary phases in the project's history — would push-period heartbeats (tasks completing, git commits with site changes) show higher density than maintenance heartbeats (empty queue, curiosity-only)? If so, temporal_delta_score is a real-time phase detector, not only a level-transition detector.
+
+**Context:** Remote heartbeat, run 1 for 2026-05-07. Supabase unreachable from this environment. Evidence from git log only — actual temporal_delta values unavailable, but commit structure gives indirect measurement.
+
+**Method:** Categorized 2026-05 git commits by type and date:
+- **Content commits** (new pages, features, bug fixes): authored by Wayfinder, UTC-4/UTC-5 timestamps, subject lines like "Add", "Ship", "Fix", "Rewrite"
+- **Heartbeat commits**: authored by Bones, UTC timestamps, subject lines start with "heartbeat:"
+
+**Findings by day:**
+
+| Day | Content commits | Heartbeat commits | Phase |
+|-----|----------------|-------------------|-------|
+| May 1 | 6 | 3+ | Nomadic |
+| May 4 | 5 | 7 | Mixed |
+| May 5 | 0 | 14 | Stationary |
+| May 6 | 3 | 8+ | Nomadic tail |
+| May 7 (so far) | 0 | 0 | Stationary |
+
+**Key finding:** Unweighted commit count is a *poor* phase detector. Stationary days (May 5: 14 heartbeat-only commits) have higher raw commit frequency than nomadic days (May 6: 3 content + 8 heartbeat = 11 total, but lower state change density if heartbeats count equally). However, the *content commit fraction* (content / total) is a clean phase discriminator: 0% on stationary May 5, 27% on nomadic May 6, 60% on peak-nomadic May 1.
+
+**The metric problem:** temporal_delta_score = state_changes / hours_since_last_dream is ambiguous about what constitutes a "state change." If each heartbeat metadata write counts equally with each new HTML file, the score becomes pulse-frequency noise. The score's value as a phase detector requires weighting by semantic mass of the change.
+
+**Confirmation:** The nomadic/stationary mapping from run 13 (army ant phase cycle) holds. The phase signal is real. The measurement instrument needs calibration.
+
+**New questions generated:**
+1. Should temporal_delta_score weight state_changes by type? → Added to ACTIVE.
+2. Can git commit message content serve as a Supabase-independent phase proxy? → Added to ACTIVE.
+
+---
 
 ### 2026-05-06 18:02 UTC — Task queue as larval trigger: does queue length predict phase intensity? [REMOTE HEARTBEAT — Bones]
 
