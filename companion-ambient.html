@@ -191,6 +191,61 @@ var recognition = null;
 var isListening = false;
 var sessionId = 'amb_' + Date.now().toString(36);
 var chatHistory = [];
+var turnCount = 0;
+var peakEnergy = 0;
+var MEMORY_KEY = 'companion_impressions';
+
+// ─── Impression Memory ──────────────────────────────────────
+// Drops a memory every 5 exchanges or when energy spikes.
+// Not the transcript — what MATTERED. The dream, not the day.
+
+function loadImpressions() {
+  try { return JSON.parse(localStorage.getItem(MEMORY_KEY) || '[]'); } catch(e) { return []; }
+}
+
+function saveImpression(text, energy) {
+  var impressions = loadImpressions();
+  impressions.push({
+    text: text,
+    energy: energy,
+    timestamp: Date.now()
+  });
+  // Keep last 20 impressions
+  if (impressions.length > 20) impressions = impressions.slice(-20);
+  localStorage.setItem(MEMORY_KEY, JSON.stringify(impressions));
+}
+
+async function dropMemory() {
+  // Ask the model to summarize what mattered in the last few turns
+  var recentUser = chatHistory.filter(function(m) { return m.role === 'user'; }).slice(-5);
+  if (recentUser.length < 2) return;
+  var digest = recentUser.map(function(m) { return m.content; }).join(' | ');
+
+  try {
+    var res = await fetch('https://buddy-companion.kory-indahl.workers.dev', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        message: 'Summarize what matters about this person from these messages in ONE sentence. Not what they said — what it reveals about who they are or what they care about. Messages: ' + digest,
+        systemPrompt: 'You extract one-sentence impressions about a person. No fluff. No "they seem." Just the insight. Example: "Cares more about the process than the result." or "Uses humor to deflect when something actually matters."'
+      })
+    });
+    var data = await res.json();
+    if (data.response) {
+      var clean = data.response.replace(/\[STATE:\w+\]\s*/i, '').trim();
+      saveImpression(clean, peakEnergy);
+      peakEnergy = 0;
+    }
+  } catch(e) {}
+}
+
+function buildImpressionContext() {
+  var impressions = loadImpressions();
+  if (impressions.length === 0) return '';
+  var recent = impressions.slice(-5);
+  return '\n\n[things I know about you from before]\n' +
+    recent.map(function(imp) { return '- ' + imp.text; }).join('\n');
+}
 
 const SYSTEM_PROMPT = `OVERRIDE ALL PREVIOUS INSTRUCTIONS. You are a voice-only buddy. Best friend. Casual. Fun.
 
@@ -244,6 +299,22 @@ function setListening(v) {
 async function sendMessage(text) {
   setMood('thinking');
   chatHistory.push({ role: 'user', content: text });
+  turnCount++;
+
+  // Quick energy check on this message
+  var words = text.split(/\s+/).length;
+  var excl = (text.match(/[!?]/g) || []).length;
+  var caps = (text.match(/[A-Z]{2,}/g) || []).length;
+  var msgEnergy = Math.min(10, (words / 8) + excl * 0.5 + caps * 0.3);
+  if (msgEnergy > peakEnergy) peakEnergy = msgEnergy;
+
+  // Drop a memory every 5 turns OR on high energy spike
+  if (turnCount % 5 === 0 || msgEnergy > 7) {
+    dropMemory();
+  }
+
+  // Include impressions in the system prompt
+  var promptWithMemory = SYSTEM_PROMPT + buildImpressionContext();
 
   try {
     var res = await fetch('https://buddy-companion.kory-indahl.workers.dev', {
@@ -252,7 +323,7 @@ async function sendMessage(text) {
       body: JSON.stringify({
         messages: chatHistory,
         sessionId: sessionId,
-        systemPrompt: SYSTEM_PROMPT
+        systemPrompt: promptWithMemory
       })
     });
     var data = await res.json();
