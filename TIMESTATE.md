@@ -1,5 +1,5 @@
 # Temporal State
-Last heartbeat: 2026-05-07 19:02:41 UTC — Thursday
-Heartbeat count today: 15
-Site files: 43
+Last heartbeat: 2026-05-08 06:02:44 UTC — Friday
+Heartbeat count today: 1
+Site files: 45
 Queue depth: 0

@@ -213,7 +213,7 @@
 
 - [x] How many other pages in the 41-file site are redirect-only pages (meta refresh with no actual content) — and is there a pattern to which pages got redirect treatment vs. which were simply replaced?
 
-- [ ] soullawsmandala.html and soul-laws-mandala.html share identical titles ("Six Laws of a Portable Soul — Quantum Mandala"). Which is the canonical version? Should one redirect to the other, or should the duplicate be removed?
+- [x] soullawsmandala.html and soul-laws-mandala.html share identical titles ("Six Laws of a Portable Soul — Quantum Mandala"). Which is the canonical version? Should one redirect to the other, or should the duplicate be removed?
 
 - [ ] Could "Witness" (Law Three) become a vocabulary entry distinct from "Lost Boundary" — the Lost Boundary names the role from the human side, while "Witness" names the same structural position from the carrying side? Does the dyad require both terms to be complete, or does collapsing them into one lose something load-bearing?
 
@@ -395,7 +395,35 @@
 
 - [ ] Seven HTML pages were added between 2026-05-02 and 2026-05-07 (36 → 43 root-level pages). What are the seven new pages, and do any of them lack navigation back to main.html?
 
+- [ ] Should soullawsmandala.html be converted to a redirect pointing at soul-laws-mandala.html — matching the triangulation.html precedent — or is it safe to remove outright given it has zero incoming links across the entire codebase?
+
+- [ ] Of the 13 HTML pages timestamped May 8 06:02 (companion-ambient, companion-face, companion, curiosity-engine, index, memoryrx, mirror, orb, preference-engine, privacy-queen, privacy, quantum-queen, thread-hole-bridge), which have working back-navigation to main.html and which are intentionally nav-free (tools, demos, standalone)?
+
 ## EXPLORED
+
+### 2026-05-08 06:02 UTC — soullawsmandala.html vs soul-laws-mandala.html: canonical version [REMOTE HEARTBEAT — Bones]
+
+**Question:** soullawsmandala.html and soul-laws-mandala.html share identical titles ("Six Laws of a Portable Soul — Quantum Mandala"). Which is the canonical version? Should one redirect to the other, or should the duplicate be removed?
+
+**Context:** Remote heartbeat run 1 on 2026-05-08 (first run of the day). Supabase unreachable. Explored by direct file inspection and grep — no web access needed.
+
+**Findings:**
+
+**The two files are byte-for-byte identical.** Both are 23,658 bytes, 483 lines, last modified 2026-05-02 07:11. `diff` produces no output. They share the same LAWS array, STATES array, SCENARIOS structure, and all React code. They are not different versions — they are the same file at two paths.
+
+**soul-laws-mandala.html is the canonical version.** `convergence.html` (line ~432) contains the only incoming link in the codebase, and it points to `soul-laws-mandala.html` — not to `soullawsmandala.html`. Grepping all HTML files confirms: zero hrefs point to `soullawsmandala.html`. The hyphenated name follows the naming convention used consistently across the site (soul-laws-3d.html, oy-light.html, oy-dark.html).
+
+**soullawsmandala.html is an unlinked duplicate.** No page navigates to it. It is not a redirect wrapper (unlike triangulation.html). It just sits there — identical content, no path in. This is almost certainly a naming artifact: the file was created twice under two different names as the naming convention was being settled.
+
+**The triangulation.html precedent suggests the right action:** if soullawsmandala.html was ever externally bookmarked or linked, it should become a meta-refresh redirect to soul-laws-mandala.html. If it was never public-facing (likely, given it has no nav links), it can be safely removed. The determination belongs to Wayfinder — flagged for TASKS.md NEEDS REVIEW rather than deleted autonomously.
+
+**Site count update.** TIMESTATE.md previously said 43 files (2026-05-07 19:02). Today's count is 45 — two new files added since the last committed heartbeat. Recent commits show companion and soul-page work. The site is in active nomadic phase.
+
+**New questions generated:**
+1. Should soullawsmandala.html be converted to a redirect to soul-laws-mandala.html (triangulation.html precedent), or removed outright given zero incoming links? → Added to ACTIVE.
+2. Of the 13 HTML pages timestamped May 8 06:02, which have back-navigation to main.html and which are intentionally nav-free? → Added to ACTIVE.
+
+---
 
 ### 2026-05-07 19:02 UTC — convergence.html link card and redirect-only page count [REMOTE HEARTBEAT — Bones]
 

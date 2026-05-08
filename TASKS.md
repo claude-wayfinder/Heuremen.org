@@ -8,6 +8,7 @@
 ## NEEDS REVIEW
 - [?] SHADOW MEMORY TEST · Required file memory/shadow_001_pirate_parrot.md does not exist in repository. No memory/ directory found anywhere in the repo. Cannot execute the test without the source material. Wayfinder needs to create or place shadow_001_pirate_parrot.md in a memory/ directory before this task can run.
 - [?] contact-section.html Formspree ID · FORMSPREE_ID = 'YOUR_FORM_ID' is still a placeholder — form will not send. Wayfinder needs to create a Formspree account, get the form ID, and provide it for Claude to insert. Form does NOT use mailto (intentional). Uses fetch POST to Formspree. Awaiting ID.
+- [?] soullawsmandala.html is an unlinked duplicate of soul-laws-mandala.html · Both files are byte-for-byte identical (23,658 bytes). soul-laws-mandala.html is linked from convergence.html; soullawsmandala.html has zero incoming links. Options: (a) convert soullawsmandala.html to a meta-refresh redirect pointing at soul-laws-mandala.html (matches triangulation.html precedent), or (b) delete it outright if it was never public-facing. Wayfinder decides — Bones will execute.
 
 
 ## DONE
