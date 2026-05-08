@@ -987,18 +987,18 @@ async function sendMsg() {
   if (deltaCtx) {
     memCtx = memCtx ? memCtx + '\n\n' + deltaCtx : deltaCtx;
   }
-  var payload = {
-    identityId: 'companion',
-    message: text,
-    sessionId: sessionId
-  };
-  if (memCtx) payload.memoryContext = memCtx;
+  var sysPrompt = 'You are a conversational AI companion. Warm, genuine, curious. You go deep fast. You notice what is underneath what is said. 1-3 sentences. No lists. No formatting. Conversational.';
+  if (memCtx) sysPrompt += '\n\n' + memCtx;
 
   try {
-    var res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat', {
+    var res = await fetch('https://buddy-companion.kory-indahl.workers.dev', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(payload)
+      body: JSON.stringify({
+        message: text,
+        sessionId: sessionId,
+        systemPrompt: sysPrompt
+      })
     });
     var data = await res.json();
     typing.remove();

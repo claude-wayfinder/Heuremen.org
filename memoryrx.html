@@ -652,12 +652,12 @@ async function sendChat() {
     memCtx = memCtx ? soulCtx+'\n\n'+memCtx : soulCtx;
   }
 
-  var payload = {identityId:'companion', message:text, sessionId:sessionId};
-  if (memCtx) payload.memoryContext = memCtx;
+  var sysPrompt = 'You are a conversational AI companion. Warm, genuine, curious. You notice what is underneath. 1-3 sentences. No lists. Conversational.';
+  if (memCtx) sysPrompt += '\n\n' + memCtx;
 
   try {
-    var res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat',{
-      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+    var res = await fetch('https://buddy-companion.kory-indahl.workers.dev',{
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message:text,sessionId:sessionId,systemPrompt:sysPrompt})});
     var data = await res.json();
     typing.remove();
     if (data.response) {
@@ -694,13 +694,13 @@ async function sendOrb() {
   resp.style.color = 'rgba(255,255,255,0.2)';
   resp.textContent = delta&&delta.level==='high'&&delta.dEnergy<-2 ? 'sitting with that' : 'thinking';
 
+  var orbPrompt = 'You are a conversational AI companion. Warm, brief, 1-2 sentences max.';
   var deltaCtx = buildDeltaContext();
-  var payload = {identityId:'companion', message:text, sessionId:sessionId};
-  if (deltaCtx) payload.memoryContext = deltaCtx;
+  if (deltaCtx) orbPrompt += '\n\n' + deltaCtx;
 
   try {
-    var res = await fetch('https://heuremen-mcp.kory-indahl.workers.dev/api/chat',{
-      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+    var res = await fetch('https://buddy-companion.kory-indahl.workers.dev',{
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message:text,sessionId:sessionId,systemPrompt:orbPrompt})});
     var data = await res.json();
     if (data.response) {
       resp.style.fontStyle = 'normal';
