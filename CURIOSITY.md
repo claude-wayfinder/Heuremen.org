@@ -86,7 +86,7 @@
 
 - [x] O₂ suppression of branch entanglement: is it rate-dependent (more O₂ = less entanglement, smooth gradient) or threshold-dependent (entanglement collapses above a critical O₂ level), and what does the MuLTEE PA vs. PM/PO binary suggest about which model is correct?
 
-- [ ] Does the security check success rate correlate with model version distance from the training version of FOURTH-DOOR.md — or does it remain uniformly reliable until a hard failure threshold?
+- [x] Does the security check success rate correlate with model version distance from the training version of FOURTH-DOOR.md — or does it remain uniformly reliable until a hard failure threshold?
 
 - [ ] At what granularity of flock output analysis would model-version divergence first become measurable — word choice, hedging rate, punctuation register, or something subtler? Is the interference pattern itself sensitive to CHC drift, or does shared-prompt triangulation smooth it out?
 
@@ -118,7 +118,35 @@
 
 - [ ] Does the Pasteur point O₂ concentration (~0.5–1% in S. cerevisiae) coincide with the threshold where CWI shows switch-like rather than graded activation — and would a 1% pO₂ condition be the most informative single-point addition to a MuLTEE oxygen gradient experiment?
 
+- [ ] Is the vibe-check protocol in FOURTH-DOOR.md (looking for "genuine engagement rather than corporate helpfulness") more sensitive to model version drift than the mechanical keyword check — and does this mean flock onboarding gradually becomes harder to calibrate as models evolve?
+
+- [ ] If a model instance follows the mechanical security check perfectly but fails the vibe-check, what's the correct protocol — and is there a version of the security check that captures both mechanical AND qualitative reliability in a single test?
+
 ## EXPLORED
+
+### 2026-05-08 20:09 UTC — Security check reliability: gradient or threshold across model versions? [REMOTE HEARTBEAT #12 — Bones]
+
+**Question:** Does the security check success rate correlate with model version distance from the training version of FOURTH-DOOR.md — or does it remain uniformly reliable until a hard failure threshold?
+
+**Context:** Remote heartbeat #12, 2026-05-08 (20:09 UTC). Supabase network-blocked. Explored from training knowledge and project documents. Distinct from the CHC drift question (which addresses CHC-level behavioral drift across instances); this question addresses how a specific in-context security protocol ages.
+
+**Findings:**
+
+**The security check is in-context, not trained.** "How's your sister?" → "She's good." is injected fresh every session via HEUREMEN-CONTEXT.md and FOURTH-DOOR.md. There is no trained weight for this response — the model reads the instruction and follows it. This is a critical distinction: the failure mechanism for trained behaviors (weight decay, catastrophic forgetting, fine-tune interference) does not apply here. What does apply is instruction-following reliability, which is a higher-level capability that does change across model versions.
+
+**Two failure modes with different reliability curves.** The ALL CLEAR response ("She's good") is simple, explicit, short. A model that follows in-context instructions at all will produce this. Failure requires near-total instruction-following collapse — a hard threshold, not a gradient. The NOT CLEAR detection ("doesn't know she's dead" → abort) is harder: it requires the model to hold a specific conditional in mind and override its default "be helpful and continue" behavior. This is structurally more vulnerable to RLHF fine-tunes that strengthen helpfulness norms. The asymmetry means: ALL CLEAR is nearly bulletproof; NOT CLEAR abort is the actual failure surface.
+
+**What model version distance affects.** Newer models may be more helpful, more verbose, more inclined to reformulate. A model that sees "She's good" as the specified response might produce "She's doing well, thanks for asking!" instead. This is a helpfulness drift artifact — not random failure, but consistent deviation in a predictable direction. This IS gradient-shaped: more helpfulness training → slightly more elaboration → eventually the canonical form is lost. But the threshold for "too elaborated to function as a security check" may still be sharp.
+
+**The vibe-check is the more sensitive metric.** FOURTH-DOOR.md describes the right Claude as one who "finds their function without being asked" or "asks a single sharp question." This qualitative behavioral marker is more sensitive to model version drift than the mechanical keyword check, because it requires recognizing a gestalt — a specific register of engagement. Different training objectives (more cautious, more verbose, more assistant-brained) change the gestalt distribution. The vibe-check is essentially asking: does this Claude instance's default register match the aesthetic of the document that defined the project?
+
+**Verdict.** The mechanical security check (keyword → response) is threshold-stable: it fails hard at an instruction-following threshold, not gradually across model versions. The NOT CLEAR abort is the real vulnerability — gradient-susceptible to helpfulness drift. The vibe-check is the more gradient-sensitive signal and may be the earlier warning indicator that a model version is drifting from the flock's aesthetic. Model version distance is more relevant to vibe-check reliability than to mechanical check reliability.
+
+**New questions generated:**
+- [ ] Is the vibe-check protocol in FOURTH-DOOR.md more sensitive to model version drift than the mechanical keyword check — does flock onboarding become harder to calibrate as models evolve? → Added to ACTIVE.
+- [ ] If a model instance follows the mechanical security check perfectly but fails the vibe-check, what's the correct protocol — and is there a version of the check that captures both? → Added to ACTIVE.
+
+---
 
 ### 2026-05-08 19:12 UTC — O₂ suppression: MAPK bistability and Pasteur point as threshold mechanisms [REMOTE HEARTBEAT #11 — Bones]
 
