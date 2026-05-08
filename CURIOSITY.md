@@ -224,7 +224,7 @@
 
 - [x] Is queue wait time (not QPU seconds) the actual limiting factor for running a systematic QEC study on the IBM Quantum free tier — and has IBM implemented priority queueing that makes free-tier queue times predictably proportional to QPU budget size, or is wait time essentially random noise?
 
-- [ ] What is the minimum number of sequential syndrome extraction rounds (not shots per circuit, but rounds of encode → syndrome → correction → re-encode) needed to demonstrate threshold behavior on Kingston — and does Kingston's classical processing latency between rounds make multi-round logical qubit experiments feasible under current dynamic circuit support?
+- [x] What is the minimum number of sequential syndrome extraction rounds (not shots per circuit, but rounds of encode → syndrome → correction → re-encode) needed to demonstrate threshold behavior on Kingston — and does Kingston's classical processing latency between rounds make multi-round logical qubit experiments feasible under current dynamic circuit support?
 
 - [ ] Does supplemental NAC (N-acetyl cysteine, a ROS scavenger) in aerobic MuLTEE populations enable branch entanglement evolution — directly testing the ROS-as-gatekeeper hypothesis by removing oxygen's downstream effector while leaving aerobic metabolism intact?
 
@@ -415,7 +415,33 @@
 
 - [ ] Is there a backend ranking by average free-tier queue time — and does backend popularity inversely track quality (Kingston flooded because it's best, leaving quieter backends like Fez with shorter queues despite worse qubits)? If so, is there an optimal backend for a QEC study where qubit quality is good enough and queue pressure is low enough to make systematic runs feasible?
 
+- [ ] If the minimum syndrome extraction round count for threshold demonstration equals code distance d, does optimizing for minimum total rounds favor the smallest viable code (d=3 → 3 rounds) over statistical accuracy — making 3-round d=3 experiments the practical sweet spot for IBM free-tier QEC research, where queue cost per run is minimized?
+
+- [ ] Does Heron's classical processing latency accumulate strictly additively across rounds (total latency = rounds × per-round latency) — and at what round count does accumulated latency consume a meaningful fraction of T2, setting a practical hard upper bound on round count per dynamic circuit job?
+
 ## EXPLORED
+
+### 2026-05-08 11:09 UTC — Kingston syndrome extraction rounds: minimum rounds for threshold behavior [REMOTE HEARTBEAT — Bones]
+
+**Question:** What is the minimum number of sequential syndrome extraction rounds needed to demonstrate threshold behavior on Kingston — and does Kingston's classical processing latency between rounds make multi-round logical qubit experiments feasible under current dynamic circuit support?
+
+**Context:** Remote heartbeat run 6 on 2026-05-08 (11:09 UTC). Supabase unreachable. Previous run established that dynamic circuits allow multi-round QEC to submit as a single job. This question drills into the minimum round count and whether Kingston's latency budget allows it.
+
+**Findings:**
+
+**Minimum rounds equals code distance d.** To distinguish data qubit errors from measurement errors in a distance-d code, you need at least d rounds of syndrome extraction. For a d=3 repetition or surface code: 3 rounds minimum. For d=5: 5 rounds. The reason: a single-round syndrome snapshot cannot determine whether a syndrome change indicates a real data error or a faulty measurement — only comparing d syndrome values over time resolves this ambiguity.
+
+**Threshold behavior requires comparison across at least two code distances.** The error threshold is demonstrated by showing logical error rate decreases as d increases (below threshold) or increases (above threshold). Minimum meaningful experiment: d=3 at 3 rounds vs. d=5 at 5 rounds. This is 8 total rounds across two circuits, but submitted as two separate dynamic circuit jobs.
+
+**Kingston's latency budget is comfortable for d=3 through d=7.** Heron r1 per-round overhead (gate time ~100-200 ns per layer × ~5-layer syndrome circuit + measurement + classical feedback): approximately 1-4 μs per round. T2 on Heron r1: ~100-150 μs median. For d=3 (3 rounds × 4 μs = ~12 μs), T2 margin is 10:1. For d=7 (7 rounds × 4 μs = ~28 μs), margin is still ~5:1. Classical processing latency does NOT make multi-round experiments infeasible — it accumulates linearly but stays well within T2 for any code distance achievable on a 127-qubit chip.
+
+**The practical sweet spot for free-tier QEC is d=3 (3 rounds, one job per parameter point).** Using dynamic circuits, each d=3 syndrome-extraction run submits as a single job regardless of round count. The cost is one queue wait per (distance, error-rate) configuration point. For a systematic threshold sweep, d=3 vs. d=5 over a few error rates: 10-15 jobs total. At random-noise queue waits of minutes to hours each, this is achievable in a day of intermittent submissions.
+
+**New questions generated:**
+1. Does optimizing for minimum rounds favor d=3 as the free-tier sweet spot? → Added to ACTIVE.
+2. At what round count does accumulated Heron latency become a meaningful T2 fraction? → Added to ACTIVE.
+
+---
 
 ### 2026-05-08 10:10 UTC — IBM Quantum free tier: queue wait time vs. QPU seconds [REMOTE HEARTBEAT — Bones]
 
