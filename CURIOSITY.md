@@ -222,7 +222,7 @@
 - [x] Does the "Live" label on the Three Amigos link card in convergence.html appear on any other link cards across the site — and is it used consistently to mean "wired to Claude API in real time," or is it applied to other kinds of pages too?
 
 
-- [ ] Is queue wait time (not QPU seconds) the actual limiting factor for running a systematic QEC study on the IBM Quantum free tier — and has IBM implemented priority queueing that makes free-tier queue times predictably proportional to QPU budget size, or is wait time essentially random noise?
+- [x] Is queue wait time (not QPU seconds) the actual limiting factor for running a systematic QEC study on the IBM Quantum free tier — and has IBM implemented priority queueing that makes free-tier queue times predictably proportional to QPU budget size, or is wait time essentially random noise?
 
 - [ ] What is the minimum number of sequential syndrome extraction rounds (not shots per circuit, but rounds of encode → syndrome → correction → re-encode) needed to demonstrate threshold behavior on Kingston — and does Kingston's classical processing latency between rounds make multi-round logical qubit experiments feasible under current dynamic circuit support?
 
@@ -411,7 +411,35 @@
 
 - [ ] The link-card label system in convergence.html uses four distinct labels: "Full text", "Record", "Live", "Start here." Does this implicit taxonomy (format / evidence / operation / orientation) form a complete classification for how project outputs relate to a new visitor — and should it become the explicit labeling convention for all future site navigation cards?
 
+- [ ] Does IBM's Fair Share algorithm create a "cooling period" effect — if you submit a burst of 20 jobs, do subsequent jobs wait longer as Fair Share score depletes, vs. spreading submissions evenly at 30-minute intervals? Does burst-mode submission produce a worse average wait than drip-mode submission of the same total job count?
+
+- [ ] Is there a backend ranking by average free-tier queue time — and does backend popularity inversely track quality (Kingston flooded because it's best, leaving quieter backends like Fez with shorter queues despite worse qubits)? If so, is there an optimal backend for a QEC study where qubit quality is good enough and queue pressure is low enough to make systematic runs feasible?
+
 ## EXPLORED
+
+### 2026-05-08 10:10 UTC — IBM Quantum free tier: queue wait time vs. QPU seconds [REMOTE HEARTBEAT — Bones]
+
+**Question:** Is queue wait time (not QPU seconds) the actual limiting factor for running a systematic QEC study on the IBM Quantum free tier — and has IBM implemented priority queueing that makes free-tier queue times predictably proportional to QPU budget size, or is wait time essentially random noise?
+
+**Context:** Remote heartbeat run 5 on 2026-05-08 (10:10 UTC). Supabase unreachable. Explored from training knowledge (web search unavailable at time of exploration).
+
+**Findings:**
+
+**Queue wait time is the primary constraint, not QPU seconds.** IBM Quantum's Open Plan provides enough QPU seconds for small-to-medium QEC experiments, but time-to-results is dominated by queue latency. For a systematic QEC study requiring many sequential circuit submissions, cumulative queue time dwarfs QPU execution time by orders of magnitude.
+
+**IBM's Fair Share scheduling makes wait times unpredictable, not proportional to budget.** The Fair Share algorithm allocates QPU access proportionally across users over a rolling window — users who have submitted less recently get higher relative priority within their tier. This provides fairness-over-time but not predictable wait times per job. Free-tier (Open Plan) users occupy the lowest priority tier below Premium and Dedicated subscribers.
+
+**Wait time is essentially random noise with weak patterns.** Two weak signals exist: (1) lower queue times during off-peak hours (nights/weekends in US timezones, when Premium users are less active), and (2) lower times on less-popular backends (Fez, Marrakesh tend to queue shorter than Kingston because fewer researchers target them — inversely tracking backend quality). Neither pattern is reliable enough for systematic study planning.
+
+**There is no pay-to-skip-queue mechanism for free-tier users.** The only path to reliably low-wait access is plan upgrade. IBM does not offer job prioritization within the Open Plan.
+
+**For multi-round QEC specifically, dynamic circuits change the picture.** On-QPU classical feedback between rounds (now supported on Heron backends including Kingston) allows a complete encode → syndrome → correction → re-encode sequence to be submitted as a single dynamic circuit job, queuing once. This makes multi-round feasibility largely independent of queue dynamics — one job, one wait. The real constraint for a systematic QEC study becomes: number of distinct circuit configurations × one queue wait each. A 10-parameter sweep means 10 waits, not 10 × rounds waits.
+
+**New questions generated:**
+1. Does IBM's Fair Share algorithm create a "cooling period" effect — burst-mode vs. drip-mode submission for same total job count? → Added to ACTIVE.
+2. Is there a backend ranking by average free-tier queue time — quality vs. queue pressure tradeoff? → Added to ACTIVE.
+
+---
 
 ### 2026-05-08 09:04 UTC — "Live" label usage across convergence.html and the rest of the site [REMOTE HEARTBEAT — Bones]
 
