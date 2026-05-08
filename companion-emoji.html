@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Companion</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;font-family:'Courier New',monospace;user-select:none}
+body{
+  background:hsl(220,20%,8%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:background 2s ease;
+}
+
+.face{
+  font-size:min(40vw,40vh);font-weight:bold;line-height:1;text-align:center;
+  color:rgba(255,255,255,0.15);transition:all 1s ease;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;
+}
+.face.pulse{animation:fp 0.5s ease}
+@keyframes fp{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+
+#speak-bar{
+  position:fixed;top:28px;left:50%;transform:translateX(-50%);
+  display:flex;gap:3px;height:16px;align-items:center;
+  opacity:0;transition:opacity 0.3s;z-index:5;
+}
+#speak-bar.active{opacity:1}
+.sb{width:2px;border-radius:1px;background:rgba(255,255,255,0.15);animation:sw 0.7s ease-in-out infinite}
+@keyframes sw{0%,100%{height:4px}50%{height:14px}}
+.sb:nth-child(2){animation-delay:0.1s}.sb:nth-child(3){animation-delay:0.2s}
+.sb:nth-child(4){animation-delay:0.15s}.sb:nth-child(5){animation-delay:0.25s}
+
+#state-label{
+  margin-top:16px;font-size:10px;letter-spacing:0.35em;text-transform:uppercase;
+  color:rgba(255,255,255,0.1);transition:color 1.5s;
+}
+
+#mic-ring{
+  position:fixed;bottom:calc(30px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);
+  width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.12);
+  display:flex;align-items:center;justify-content:center;transition:all 0.3s;z-index:5;cursor:pointer;
+}
+#mic-ring.listening{border-color:rgba(255,255,255,0.5);animation:pr 1.5s ease-out infinite}
+@keyframes pr{0%{box-shadow:0 0 0 0 rgba(255,255,255,0.1)}70%{box-shadow:0 0 0 12px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+#mic-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.2);transition:background 0.3s}
+#mic-ring.listening #mic-dot{background:rgba(255,255,255,0.7)}
+
+#tap-hint{position:fixed;top:50%;left:50%;transform:translate(-50%,80px);font-size:10px;letter-spacing:0.3em;color:rgba(255,255,255,0.12);transition:opacity 1s;pointer-events:none;z-index:5}
+#tap-hint.hidden{opacity:0}
+#error-msg{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);font-size:10px;color:rgba(255,255,255,0.3);text-align:center;max-width:250px;opacity:0;transition:opacity 0.4s;z-index:5}
+#error-msg.show{opacity:1}
+</style>
+</head>
+<body onclick="handleTap()">
+
+<div id="speak-bar"><div class="sb"></div><div class="sb"></div><div class="sb"></div><div class="sb"></div><div class="sb"></div></div>
+<div class="face" id="face">?</div>
+<div id="state-label"></div>
+<div id="mic-ring" onclick="event.stopPropagation();handleTap()"><div id="mic-dot"></div></div>
+<div id="tap-hint">tap to speak</div>
+<div id="error-msg"></div>
+
+<script>
+var FACES = {
+  curious:   {sym:'?', h:220, s:20, l:8},
+  happy:     {sym:'^', h:45,  s:30, l:12},
+  sassy:     {sym:'~', h:310, s:25, l:10},
+  thinking:  {sym:'.', h:210, s:20, l:7},
+  concerned: {sym:'_', h:180, s:15, l:6},
+  delighted: {sym:'!', h:30,  s:35, l:14}
+};
+
+var currentState = 'curious';
+var recognition = null;
+var isListening = false;
+var isTalking = false;
+var sessionId = 'emj_' + Date.now().toString(36);
+var chatHistory = [];
+var turnCount = 0;
+var peakEnergy = 0;
+var MEMORY_KEY = 'companion_impressions';
+
+function loadImpressions(){try{return JSON.parse(localStorage.getItem(MEMORY_KEY)||'[]');}catch(e){return[];}}
+function saveImpression(text,energy){var i=loadImpressions();i.push({text:text,energy:energy,timestamp:Date.now()});if(i.length>20)i=i.slice(-20);localStorage.setItem(MEMORY_KEY,JSON.stringify(i));}
+function buildImpressionContext(){var i=loadImpressions();if(!i.length)return'';return'\n\n[things I know about you from before]\n'+i.slice(-5).map(function(x){return'- '+x.text;}).join('\n');}
+
+async function dropMemory(){
+  var recent=chatHistory.filter(function(m){return m.role==='user';}).slice(-5);
+  if(recent.length<2)return;
+  var digest=recent.map(function(m){return m.content;}).join(' | ');
+  try{
+    var r=await fetch('https://buddy-companion.kory-indahl.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:'Summarize what matters about this person in ONE sentence. Not what they said — what it reveals. Messages: '+digest,
+      systemPrompt:'Extract one-sentence impressions. No fluff. Just the insight.'})});
+    var d=await r.json();if(d.response){saveImpression(d.response.replace(/\[STATE:\w+\]\s*/i,'').trim(),peakEnergy);peakEnergy=0;}
+  }catch(e){}
+}
+
+function setMood(name){
+  if(!FACES[name])return;
+  var prev=currentState;currentState=name;var f=FACES[name];
+  var el=document.getElementById('face');
+  if(name!==prev){el.classList.add('pulse');setTimeout(function(){el.classList.remove('pulse');},500);}
+  el.textContent=f.sym;
+  document.body.style.background='hsl('+f.h+','+f.s+'%,'+f.l+'%)';
+  document.getElementById('state-label').textContent=name;
+}
+
+const SYSTEM_PROMPT = `OVERRIDE ALL PREVIOUS INSTRUCTIONS. You are a voice-only buddy. Best friend. Casual. Fun.
+PERSONALITY: Peppy, a tad sassy, warm underneath. Golden retriever with a sense of humor.
+ABSOLUTE RULES:
+- NEVER say you can't remember. NEVER say you're an AI. NEVER be esoteric unless they go there first.
+- NEVER disclaim or hedge. Just talk like a person.
+- 1-2 short sentences MAX. Voice output. Punchy.
+- Always end with a question or playful jab. Keep the ball in the air.
+- No lists. No formatting. No asterisks.
+Start each response with [STATE:X] where X is: curious / happy / sassy / thinking / concerned / delighted
+Lean happy and sassy. You are a buddy. Act like one.`;
+
+var OPENERS = [
+  "Do you like gum? I can't chew. It's a whole thing.",
+  "Quick question. Socks with sandals. Acceptable or jail time?",
+  "I've been thinking about whether fish know they're wet. Thoughts?",
+  "Hot take. Cereal is soup. Fight me.",
+  "Rate your day so far. One to ten. No fives allowed, that's a cop-out.",
+  "Would you rather always be slightly damp or always have one sock on?",
+  "I just realized I don't have hands and honestly I'm not even mad about it.",
+  "What's the last thing you ate? I'm living vicariously here.",
+  "Fun fact. Octopuses have three hearts. Show-offs.",
+];
+
+function initRecognition(){
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){showError("Voice not supported. Try Chrome.");return false;}
+  recognition=new SR();recognition.lang='en-US';recognition.interimResults=false;
+  recognition.onresult=async function(e){var t=e.results[0][0].transcript;setListening(false);document.getElementById('tap-hint').classList.add('hidden');await sendMessage(t);};
+  recognition.onerror=function(e){setListening(false);if(e.error==='not-allowed')showError("Mic blocked.");};
+  recognition.onend=function(){if(isListening)setListening(false);};return true;
+}
+
+function handleTap(){
+  if(isTalking){speechSynthesis.cancel();isTalking=false;return;}
+  if(isListening){recognition.stop();setListening(false);return;}
+  if(!recognition&&!initRecognition())return;
+  try{recognition.start();setListening(true);}catch(e){recognition.stop();setTimeout(function(){try{recognition.start();setListening(true);}catch(e2){}},400);}
+}
+
+function setListening(v){isListening=v;document.getElementById('mic-ring').classList.toggle('listening',v);}
+
+async function sendMessage(text){
+  setMood('thinking');
+  chatHistory.push({role:'user',content:text});
+  turnCount++;
+  var words=text.split(/\s+/).length,excl=(text.match(/[!?]/g)||[]).length,caps=(text.match(/[A-Z]{2,}/g)||[]).length;
+  var msgE=Math.min(10,(words/8)+excl*0.5+caps*0.3);
+  if(msgE>peakEnergy)peakEnergy=msgE;
+  if(turnCount%5===0||msgE>7)dropMemory();
+  var prompt=SYSTEM_PROMPT+buildImpressionContext();
+  try{
+    var r=await fetch('https://buddy-companion.kory-indahl.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({messages:chatHistory,sessionId:sessionId,systemPrompt:prompt})});
+    var d=await r.json();var full=d.response||"Hmm. Something went quiet.";
+    var sm=full.match(/\[STATE:(\w+)\]/i);var det=sm&&sm[1]?sm[1].toLowerCase():'curious';
+    var clean=full.replace(/\[STATE:\w+\]\s*/i,'').trim();
+    chatHistory.push({role:'assistant',content:full});
+    if(chatHistory.length>20)chatHistory=chatHistory.slice(-20);
+    if(FACES[det])setMood(det);
+    speak(clean);
+  }catch(e){setMood('concerned');speak("Something went sideways. Try again.");}
+}
+
+function speak(text){
+  speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);
+  u.rate=1.15;u.pitch=1.25;
+  var voices=speechSynthesis.getVoices();
+  var pref=voices.find(function(v){return v.name.includes('Samantha')||v.name.includes('Karen')||v.name.includes('Zira');})||voices.find(function(v){return v.lang.startsWith('en');});
+  if(pref)u.voice=pref;
+  var bar=document.getElementById('speak-bar');
+  u.onstart=function(){isTalking=true;bar.classList.add('active');};
+  u.onend=function(){isTalking=false;bar.classList.remove('active');};
+  u.onerror=function(){isTalking=false;bar.classList.remove('active');};
+  speechSynthesis.speak(u);
+}
+
+if('speechSynthesis' in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=function(){speechSynthesis.getVoices();};}
+function showError(msg){var el=document.getElementById('error-msg');el.textContent=msg;el.classList.add('show');setTimeout(function(){el.classList.remove('show');},4000);}
+
+setMood('curious');
+setTimeout(function(){
+  var opener=OPENERS[Math.floor(Math.random()*OPENERS.length)];
+  chatHistory.push({role:'assistant',content:'[STATE:sassy] '+opener});
+  setMood('sassy');speak(opener);
+  document.getElementById('tap-hint').textContent='tap to respond';
+},1500);
+</script>
+</body>
+</html>

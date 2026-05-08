@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Companion</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;font-family:'Courier New',monospace;user-select:none}
+body{
+  background:#0a0808;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:24px;
+}
+
+.title{
+  font-size:11px;letter-spacing:0.4em;text-transform:uppercase;
+  color:rgba(255,255,255,0.2);margin-bottom:8px;
+}
+.sub{
+  font-size:10px;color:rgba(255,255,255,0.1);
+  letter-spacing:0.15em;margin-bottom:48px;
+}
+
+.picks{
+  display:flex;gap:20px;flex-wrap:wrap;justify-content:center;
+  max-width:500px;
+}
+
+.pick{
+  width:140px;height:160px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:12px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:all 0.3s;
+  text-decoration:none;
+}
+.pick:hover{
+  background:rgba(255,255,255,0.06);
+  border-color:rgba(255,255,255,0.15);
+  transform:translateY(-4px);
+}
+
+.pick-icon{
+  font-size:48px;margin-bottom:12px;
+  line-height:1;
+}
+.pick-icon.pixel{
+  font-size:36px;
+  color:rgba(255,204,85,0.7);
+  text-shadow:0 0 12px rgba(255,204,85,0.2);
+}
+.pick-icon.vibe{
+  font-size:28px;
+  color:rgba(140,180,255,0.5);
+  letter-spacing:4px;
+}
+.pick-icon.emoji{
+  font-size:42px;
+}
+
+.pick-label{
+  font-size:9px;letter-spacing:0.25em;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);margin-bottom:4px;
+}
+.pick-desc{
+  font-size:8px;color:rgba(255,255,255,0.12);
+  text-align:center;padding:0 8px;line-height:1.5;
+}
+
+.remember{
+  margin-top:40px;
+  font-size:8px;color:rgba(255,255,255,0.08);
+  letter-spacing:0.15em;
+}
+</style>
+</head>
+<body>
+
+<div class="title">companion</div>
+<div class="sub">pick your vibe</div>
+
+<div class="picks">
+
+  <a class="pick" href="companion-face.html">
+    <div class="pick-icon pixel">&#9632;&#9632;<br>&#9632;&#9632;</div>
+    <div class="pick-label">pixel</div>
+    <div class="pick-desc">8-bit face. mouth moves. lasers.</div>
+  </a>
+
+  <a class="pick" href="companion-ambient.html">
+    <div class="pick-icon vibe">&#9670; &#9670; &#9670;</div>
+    <div class="pick-label">vibe</div>
+    <div class="pick-desc">floating diamonds. slow color. breathing.</div>
+  </a>
+
+  <a class="pick" href="companion-emoji.html">
+    <div class="pick-icon emoji">~</div>
+    <div class="pick-label">minimal</div>
+    <div class="pick-desc">one symbol. one color. nothing else.</div>
+  </a>
+
+</div>
+
+<div class="remember">same buddy. different skin.</div>
+
+</body>
+</html>
