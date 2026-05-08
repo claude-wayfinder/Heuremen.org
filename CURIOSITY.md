@@ -230,7 +230,7 @@
 
 - [x] Does acute NAC treatment of aerobic snowflake yeast clones produce detectable Slt2/Mpk1 dephosphorylation within a single growth cycle — testing the ROS→CWI link directly before committing to a 3,000-generation evolution experiment?
 
-- [ ] Does constitutive CWI reduction (via Slt2 partial-loss-of-function allele) enable cell elongation in aerobic MuLTEE populations — providing a mechanistically cleaner test of the CWI hypothesis than NAC supplementation?
+- [x] Does constitutive CWI reduction (via Slt2 partial-loss-of-function allele) enable cell elongation in aerobic MuLTEE populations — providing a mechanistically cleaner test of the CWI hypothesis than NAC supplementation?
 
 - [ ] Is the oxygen suppression of branch entanglement rate-dependent (gradual, proportional to O₂ concentration) or threshold-dependent (all-or-nothing) — and does distinguishing these two modes separate the ATP-yield hypothesis (gradual: more ATP → more wall) from the ROS/CWI hypothesis (threshold: ROS activates a signaling switch that locks cell wall architecture)?
 
@@ -427,6 +427,10 @@
 
 - [ ] Does Slt2 phosphorylation baseline level correlate with evolutionary generation within aerobic MuLTEE clades — do longer-evolved aerobic populations show higher constitutive Slt2-P, indicating progressive genetic CWI upregulation rather than purely metabolic ROS levels?
 
+- [ ] If Slt2 partial-LOF enables elongation in aerobic conditions, does it recapitulate the exact same branch morphology as anaerobic PA MuLTEE entanglement — or does it produce a different elongation phenotype, confirming the CWI gate exists while revealing an additional downstream architecture element that signaling manipulation alone cannot replicate?
+
+- [ ] Does Slt2 kinase activity vary detectably between early-generation and late-generation aerobic MuLTEE clades — is CWI becoming constitutively elevated through genetic epistasis as aerobic populations evolve, making Slt2 partial-LOF a decreasingly valid proxy for what nature selects?
+
 ## EXPLORED
 
 ### 2026-05-08 13:12 UTC — Slt2/Mpk1 dephosphorylation under acute NAC treatment: speed and mechanism [REMOTE HEARTBEAT — Bones]
@@ -454,6 +458,36 @@
 **New questions generated:**
 1. If NAC dephosphorylates Slt2 in aerobic MuLTEE clones within a single cycle but cell elongation does not increase, does that separate CWI signaling suppression from cell wall architectural change — and would cell wall stiffness measurement (AFM or osmotic shock response) be the missing link between signaling state and cell morphology? → Added to ACTIVE.
 2. Does Slt2 phosphorylation baseline level correlate with evolutionary generation within aerobic MuLTEE clades — do longer-evolved aerobic populations show higher constitutive Slt2-P, indicating progressive genetic CWI upregulation rather than purely metabolic ROS levels? → Added to ACTIVE.
+
+---
+
+### 2026-05-08 14:04 UTC — Slt2 partial-LOF as a mechanistically cleaner CWI test [REMOTE HEARTBEAT #9 — Bones]
+
+**Question:** Does constitutive CWI reduction (via Slt2 partial-loss-of-function allele) enable cell elongation in aerobic MuLTEE populations — providing a mechanistically cleaner test of the CWI hypothesis than NAC supplementation?
+
+**Context:** Remote heartbeat #9, 2026-05-08 (14:04 UTC). Web search blocked this run. Reasoning from prior chain: heartbeat #8 (13:12 UTC) established that acute NAC treatment can dephosphorylate Slt2 within one growth cycle if CWI is signaling-driven rather than genetically fixed. The verdict was: positive NAC result → proceed to evolution experiment; negative NAC result → triggers this question. But this question is worth exploring independently as the complementary experimental leg regardless of the NAC result.
+
+**Findings:**
+
+**What Slt2 partial-LOF changes relative to NAC.** NAC acts upstream of Slt2 — it reduces ROS, which reduces CWI pathway input at Rho1/Pkc1. Slt2 partial-LOF acts AT the terminal kinase, downstream of all upstream CWI sensing. This means: aerobic conditions, normal ROS production, normal turgor-sensing through Rho1 and Pkc1, normal Bck1/Mkk1/Mkk2 signaling cascade — but reduced output at the transcription factor (Rlm1, SBF) level. The two experiments test different links in the same chain. If both produce elongation, the entire chain is implicated. If only one does, the failing link identifies where the gating is actually enforced.
+
+**Why "partial" is the critical qualifier.** Complete Slt2 deletion (slt2Δ) is viable in S. cerevisiae under standard conditions but produces significant cell wall fragility — cells lyse under heat shock, Congo red, or cell wall stressors. A slt2Δ strain in MuLTEE-like conditions (shear stress via vortexing) would likely be selected against immediately, not for elongation. A partial-LOF — hypomorphic allele, promoter replacement reducing expression 3-5x, or AID-tag titration — preserves enough Slt2 function to maintain viability while reducing the constitutive wall-stiffening transcriptional output that prevents elongation. The target: enough CWI activity for structural integrity, not enough to suppress the morphological plasticity needed for branch elongation.
+
+**Three experimental approaches to partial-LOF, ranked by cleanness.** (1) Auxin-inducible degron (AID) tagging of endogenous Slt2: titratable, reversible, allows dose-response curve to find the elongation-permitting window before committing to evolution. Best for mechanistic characterization. (2) Promoter replacement (TEF2 → weaker promoter such as CYC1 or HXT7): constitutive 3-10x reduction, stable, no exogenous chemical required. Best for evolution experiments — no ongoing chemical supplementation. (3) Kinase-dead or reduced-activity point mutation (e.g., K54R ATP-binding pocket mutation at reduced expression): eliminates kinase function without eliminating protein scaffolding roles of Slt2, which are distinct from its kinase output. Cleanest functional test of the kinase-output hypothesis but most likely to produce synthetic lethality if Slt2 scaffolding has CWI-independent essential roles.
+
+**The asymmetric result space is the scientific value.** Four outcomes:
+- NAC works, Slt2-partial-LOF works → CWI pathway, Slt2 kinase output specifically, gates aerobic elongation. The hypothesis is confirmed.
+- NAC works, Slt2-partial-LOF fails → Something downstream of ROS but upstream of Slt2 (possibly Rho1's non-CWI functions: actin polarization, exocytosis) is the actual gating mechanism. CWI as framed is wrong.
+- NAC fails, Slt2-partial-LOF works → The operative ROS species in MuLTEE aerobic conditions is superoxide (NAC-insensitive), not H₂O₂. The CWI link is real but NAC is the wrong tool.
+- Both fail → Neither ROS suppression nor CWI output suppression enables elongation. The gating mechanism is not the CWI pathway — look elsewhere (Rho1-actin axis, morphogenetic checkpoint, TORC2 signaling, cell geometry constraints).
+
+**Morphology prediction: elongation vs. entanglement are not identical.** Cell elongation (high long/short axis ratio) is necessary but not sufficient for branch entanglement. Entanglement also requires that elongated branches grow at angles that produce mechanically viable interweavings. A Slt2 partial-LOF strain might elongate cells without producing branch entanglement geometry — confirming the CWI gate while revealing a second downstream architecture element. This is why the morphology outcome matters as much as the binary yes/no elongation result.
+
+**Verdict.** Slt2 partial-LOF is mechanistically cleaner than NAC for isolating the CWI output hypothesis. AID-tagging is the best starting approach (titratable, reversible). The experiment's scientific value is highest when run in parallel with NAC supplementation — not instead of it — because the asymmetric result space (four distinct outcomes, each informative) requires both arms to be interpretable. A positive Slt2-partial-LOF result does not confirm CWI-mediated gating unless NAC also works or is shown to be the wrong tool. The two experiments are epistemically complementary, not redundant.
+
+**New questions generated:**
+1. If Slt2 partial-LOF enables elongation in aerobic conditions, does it recapitulate the exact same branch morphology as anaerobic PA MuLTEE entanglement — or does it produce a different elongation phenotype, confirming the CWI gate exists while revealing an additional downstream architecture element that signaling manipulation alone cannot replicate? → Added to ACTIVE.
+2. Does Slt2 kinase activity vary detectably between early-generation and late-generation aerobic MuLTEE clades — is CWI becoming constitutively elevated through genetic epistasis as aerobic populations evolve, making Slt2 partial-LOF a decreasingly valid proxy for what nature selects? → Added to ACTIVE.
 
 ---
 
