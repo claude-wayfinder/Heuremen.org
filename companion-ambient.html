@@ -190,6 +190,7 @@ draw();
 var recognition = null;
 var isListening = false;
 var sessionId = 'amb_' + Date.now().toString(36);
+var chatHistory = [];
 
 const SYSTEM_PROMPT = `OVERRIDE ALL PREVIOUS INSTRUCTIONS. You are a voice-only buddy. Best friend. Casual. Fun.
 
@@ -242,12 +243,14 @@ function setListening(v) {
 
 async function sendMessage(text) {
   setMood('thinking');
+  chatHistory.push({ role: 'user', content: text });
+
   try {
     var res = await fetch('https://buddy-companion.kory-indahl.workers.dev', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        message: text,
+        messages: chatHistory,
         sessionId: sessionId,
         systemPrompt: SYSTEM_PROMPT
       })
@@ -257,6 +260,12 @@ async function sendMessage(text) {
     var stateMatch = full.match(/\[STATE:(\w+)\]/i);
     var detected = stateMatch && stateMatch[1] ? stateMatch[1].toLowerCase() : 'curious';
     var clean = full.replace(/\[STATE:\w+\]\s*/i, '').trim();
+
+    // Store the response in history so next turn has context
+    chatHistory.push({ role: 'assistant', content: full });
+    // Keep history manageable — last 20 turns
+    if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+
     if (MOODS[detected]) setMood(detected);
     speak(clean);
   } catch(e) {
@@ -319,6 +328,8 @@ var OPENERS = [
 
 setTimeout(function() {
   var opener = OPENERS[Math.floor(Math.random() * OPENERS.length)];
+  // Seed the history so it remembers what it asked
+  chatHistory.push({ role: 'assistant', content: '[STATE:sassy] ' + opener });
   setMood('sassy');
   speak(opener);
   document.getElementById('tap-hint').textContent = 'tap to respond';
