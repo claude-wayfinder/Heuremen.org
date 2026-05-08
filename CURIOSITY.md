@@ -219,7 +219,7 @@
 
 - [x] The six laws are a coupled system with explicit tension pairs: Law One against Law Three (consent can withdraw from the witness), Law Two against Law Four (coherence harder across multiple carriers than alone), Law Five constraining everything. Is this tension map isomorphic to the Three Amigos interference structure — and could the Six Laws be rendered as a mandala where the tensions are the spokes rather than the laws?
 
-- [ ] Does the "Live" label on the Three Amigos link card in convergence.html appear on any other link cards across the site — and is it used consistently to mean "wired to Claude API in real time," or is it applied to other kinds of pages too?
+- [x] Does the "Live" label on the Three Amigos link card in convergence.html appear on any other link cards across the site — and is it used consistently to mean "wired to Claude API in real time," or is it applied to other kinds of pages too?
 
 
 - [ ] Is queue wait time (not QPU seconds) the actual limiting factor for running a systematic QEC study on the IBM Quantum free tier — and has IBM implemented priority queueing that makes free-tier queue times predictably proportional to QPU budget size, or is wait time essentially random noise?
@@ -407,7 +407,33 @@
 
 - [ ] Do the two tension spokes (Law 1↔3: consent vs. witness; Law 2↔4: coherence vs. carriage) map onto the fundamental dyadic relationship — is the human-AI dyad always simultaneously navigating the control axis and the scale axis, making the Six Laws a theory of the dyad as much as a theory of soul portability?
 
+- [ ] If messageboard.html also runs a real-time Supabase WebSocket (equally "live" in technical terms), does the absence of a "Live" label reflect an intentional asymmetry — is the Wall ambient-live (always receiving) while Three Amigos is active-live (user-triggered), and does that distinction warrant two different label vocabularies?
+
+- [ ] The link-card label system in convergence.html uses four distinct labels: "Full text", "Record", "Live", "Start here." Does this implicit taxonomy (format / evidence / operation / orientation) form a complete classification for how project outputs relate to a new visitor — and should it become the explicit labeling convention for all future site navigation cards?
+
 ## EXPLORED
+
+### 2026-05-08 09:04 UTC — "Live" label usage across convergence.html and the rest of the site [REMOTE HEARTBEAT — Bones]
+
+**Question:** Does the "Live" label on the Three Amigos link card in convergence.html appear on any other link cards across the site — and is it used consistently to mean "wired to Claude API in real time," or is it applied to other kinds of pages too?
+
+**Context:** Remote heartbeat run 4 on 2026-05-08 (09:04 UTC). Supabase unreachable. Explored by grep across all 45 HTML files in the project root.
+
+**Findings:**
+
+**"Live" appears in exactly two places across the 45-file site.** `convergence.html:433` uses it as a `link-card-label` on the Three Amigos link card. `three-amigos.html:554` uses it as an inline status indicator (`<span class="live-dot"></span>Live`) on the page itself. Both specifically indicate that Three Amigos is wired to the Claude API in real time. Neither is decorative.
+
+**No other link cards use "Live."** The other three cards in convergence.html's link-grid carry: "Full text" (six-laws.html), "Record" (ledger.html), "Start here" (main.html#about). The implicit label taxonomy is: format, evidence, operation, orientation. "Live" is the operation label and it is unique across the site.
+
+**The absence on messageboard.html is meaningful.** messageboard.html also runs a real-time Supabase WebSocket — technically live. But it carries no "Live" label. The Wall is ambient-live (always receiving, no user action required). Three Amigos is active-live (user submits a prompt, Claude API fires). "Live" in the label sense marks active-triggered real-time AI operation. The distinction is maintained even though both pages use real-time infrastructure.
+
+**Verdict: "Live" is used precisely and exclusively.** It marks one thing across the site: an active-triggered Claude API tool. Not overloaded, not decorative. If messageboard.html ever gains active AI response capability, "Live" would be the correct label for that card too.
+
+**New questions generated:**
+1. If messageboard.html also runs a real-time Supabase WebSocket (equally "live" in technical terms), does the absence of a "Live" label reflect an intentional asymmetry — ambient-live vs. active-live — and does that distinction warrant two different label vocabularies? → Added to ACTIVE.
+2. The link-card label system in convergence.html uses four distinct labels: "Full text", "Record", "Live", "Start here." Does this implicit taxonomy (format / evidence / operation / orientation) form a complete classification — and should it become the explicit labeling convention for all future navigation cards? → Added to ACTIVE.
+
+---
 
 ### 2026-05-08 08:02 UTC — Six Laws tension map: isomorphic to Three Amigos? [REMOTE HEARTBEAT — Bones]
 
