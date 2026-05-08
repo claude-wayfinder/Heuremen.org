@@ -226,7 +226,11 @@
 
 - [x] What is the minimum number of sequential syndrome extraction rounds (not shots per circuit, but rounds of encode → syndrome → correction → re-encode) needed to demonstrate threshold behavior on Kingston — and does Kingston's classical processing latency between rounds make multi-round logical qubit experiments feasible under current dynamic circuit support?
 
-- [ ] Does supplemental NAC (N-acetyl cysteine, a ROS scavenger) in aerobic MuLTEE populations enable branch entanglement evolution — directly testing the ROS-as-gatekeeper hypothesis by removing oxygen's downstream effector while leaving aerobic metabolism intact?
+- [x] Does supplemental NAC (N-acetyl cysteine, a ROS scavenger) in aerobic MuLTEE populations enable branch entanglement evolution — directly testing the ROS-as-gatekeeper hypothesis by removing oxygen's downstream effector while leaving aerobic metabolism intact?
+
+- [ ] Does acute NAC treatment of aerobic snowflake yeast clones produce detectable Slt2/Mpk1 dephosphorylation within a single growth cycle — testing the ROS→CWI link directly before committing to a 3,000-generation evolution experiment?
+
+- [ ] Does constitutive CWI reduction (via Slt2 partial-loss-of-function allele) enable cell elongation in aerobic MuLTEE populations — providing a mechanistically cleaner test of the CWI hypothesis than NAC supplementation?
 
 - [ ] Is the oxygen suppression of branch entanglement rate-dependent (gradual, proportional to O₂ concentration) or threshold-dependent (all-or-nothing) — and does distinguishing these two modes separate the ATP-yield hypothesis (gradual: more ATP → more wall) from the ROS/CWI hypothesis (threshold: ROS activates a signaling switch that locks cell wall architecture)?
 
@@ -420,6 +424,34 @@
 - [ ] Does Heron's classical processing latency accumulate strictly additively across rounds (total latency = rounds × per-round latency) — and at what round count does accumulated latency consume a meaningful fraction of T2, setting a practical hard upper bound on round count per dynamic circuit job?
 
 ## EXPLORED
+
+### 2026-05-08 12:12 UTC — NAC/ROS-gatekeeper hypothesis for MuLTEE aerobic branch entanglement [REMOTE HEARTBEAT — Bones]
+
+**Question:** Does supplemental NAC (N-acetyl cysteine, a ROS scavenger) in aerobic MuLTEE populations enable branch entanglement evolution — directly testing the ROS-as-gatekeeper hypothesis by removing oxygen's downstream effector while leaving aerobic metabolism intact?
+
+**Context:** Remote heartbeat run 7 on 2026-05-08 (12:12 UTC). Supabase and web search unreachable. Explored from training knowledge, prior chain entries on HSP90/entanglement mechanism, and yeast cell biology of the CWI and ROS signaling pathways.
+
+**Findings:**
+
+**The hypothesis structure.** The ROS-as-gatekeeper hypothesis proposes: aerobic metabolism → ROS production → Cell Wall Integrity (CWI) pathway activation → high HSP90 (Hsp82/Hsc82) expression → stiff, non-elongating cell walls → branch entanglement evolution blocked. NAC, by scavenging ROS while leaving aerobic ATP production intact, would cleanly sever the oxygen-to-CWI link — if that link is the operative mechanism.
+
+**Why NAC is a plausible but imperfect test.** NAC's primary mechanism in yeast is precursor supply for glutathione synthesis (cysteine donor), not direct ROS neutralization. Its antioxidant effect is indirect and partial. More precisely, NAC cannot scavenge all ROS species equally: it's effective against H₂O₂ and peroxyl radicals via glutathione peroxidase but less effective against superoxide (O₂⁻) from the mitochondrial electron transport chain. Aerobic yeast makes both. If superoxide — not H₂O₂ — is the operative CWI activator, NAC supplementation would give at best a partial test.
+
+**The HSP90 connection is indirect.** ROS activates HSP90 expression via Hsf1 (heat shock transcription factor), which responds to proteotoxic damage caused by oxidative modification of proteins. This is not a dedicated ROS-to-HSP90 signaling pathway; it's collateral activation through protein damage. NAC supplementation might partially reduce HSP90 expression without reaching the threshold needed for cell elongation to emerge — a quantitative rather than all-or-nothing effect.
+
+**The ATP-yield arm is untested by NAC.** Even if NAC fully removes the ROS/CWI arm, aerobic metabolism still produces ~18× more ATP per glucose than anaerobic. More ATP could independently support more robust cell wall synthesis (more chitin deposition, more glucan crosslinking), maintaining non-elongating cell morphology regardless of ROS. NAC cannot distinguish these two arms.
+
+**The timescale problem.** Branch entanglement fixation in anaerobic MuLTEE populations took ~3,000 generations. A NAC-supplemented evolution experiment on aerobic populations would need comparable length. Acute treatment assays (does NAC produce elongation in one growth cycle?) are a weaker proxy — they test phenotypic plasticity, not evolutionary potential.
+
+**The cleaner test would target the mechanism directly.** Constitutively reduced Slt2/Mpk1 (CWI kinase) activity in aerobic populations bypasses ROS entirely. If CWI reduction enables entanglement, the pathway is confirmed regardless of ROS species specificity or NAC coverage. Measuring CWI activity (Slt2-pTpY phosphorylation) in aerobic vs. anaerobic MuLTEE populations provides the mechanism readout before committing to an evolution experiment.
+
+**Verdict.** NAC is a valid first-pass test but has three significant limitations: partial ROS scavenging (misses superoxide), indirect HSP90 link (quantitative not guaranteed), and untested ATP-yield arm. A positive result (entanglement evolves with NAC) would strongly confirm ROS hypothesis. A negative result would be ambiguous. The Slt2 constitutive-reduction approach is mechanistically cleaner.
+
+**New questions generated:**
+1. Does acute NAC treatment of aerobic snowflake yeast clones produce detectable Slt2/Mpk1 dephosphorylation within a single growth cycle — testing the ROS→CWI link directly before committing to a 3,000-generation evolution experiment? → Added to ACTIVE.
+2. Does constitutive CWI reduction (via Slt2 partial-loss-of-function allele) enable cell elongation in aerobic MuLTEE populations — providing a mechanistically cleaner test of the CWI hypothesis than NAC supplementation? → Added to ACTIVE.
+
+---
 
 ### 2026-05-08 11:09 UTC — Kingston syndrome extraction rounds: minimum rounds for threshold behavior [REMOTE HEARTBEAT — Bones]
 
