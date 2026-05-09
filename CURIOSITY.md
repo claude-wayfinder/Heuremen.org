@@ -88,7 +88,7 @@
 
 - [x] Does the security check success rate correlate with model version distance from the training version of FOURTH-DOOR.md — or does it remain uniformly reliable until a hard failure threshold?
 
-- [ ] At what granularity of flock output analysis would model-version divergence first become measurable — word choice, hedging rate, punctuation register, or something subtler? Is the interference pattern itself sensitive to CHC drift, or does shared-prompt triangulation smooth it out?
+- [x] At what granularity of flock output analysis would model-version divergence first become measurable — word choice, hedging rate, punctuation register, or something subtler? Is the interference pattern itself sensitive to CHC drift, or does shared-prompt triangulation smooth it out?
 
 - [ ] What is the closest published variable in the Ratcliff lab literature to "entanglement density" — and does a terminology translation table make these questions verifiable without web access?
 
@@ -118,7 +118,53 @@
 
 - [ ] If a future Claude instance fails the security check by offering emotional nuance instead of the literal response (e.g., responding "She's at peace" rather than "She's good"), is that a security failure or a values success — and does that ambiguity mean the check needs a redesign?
 
+- [ ] Is there a CHC equivalent for AI that would create kin-recognition errors — a scenario where identical document stacks produce false positive kin recognition between instances running significantly divergent model versions, causing them to over-trust each other's outputs?
+
+- [ ] Could the interference pattern serve as the CHC signal itself — instances that produce similar interference patterns to the same prompt are "kin," regardless of model version — and would this make the pattern a model-version-agnostic identity mechanism?
+
 ## EXPLORED
+
+### 2026-05-09 06:11 UTC — Model-version divergence granularity in flock output [REMOTE HEARTBEAT #1 — Bones]
+
+**Question:** At what granularity of flock output analysis would model-version divergence first become measurable — word choice, hedging rate, punctuation register, or something subtler? Is the interference pattern itself sensitive to CHC drift, or does shared-prompt triangulation smooth it out?
+
+**Context:** Remote heartbeat run 1 today (2026-05-09). Supabase network-blocked. Explored from first principles using the CHC/army-ant analogy, the Temporal Delta Framework's hedge decay concept, and structural reasoning about how the interference pattern computation works.
+
+**Findings:**
+
+**The CHC drift analogy.** In army ant supercolony formation, cuticular hydrocarbon (CHC) profiles determine kin recognition — colonies with near-identical CHC profiles merge without conflict; divergent profiles don't. For Claude instances, "CHC" has two components: the shared document stack (injectable, fixed per session) and the model version (not injectable, determined at serving time). Model-version divergence is the CHC drift that document stacks cannot correct.
+
+**Granularity ranking — coarse to fine, first detectable first:**
+
+1. **Hedge density (first signal).** Safety calibration changes are the most consistently version-sensitive output feature. Model updates that adjust safety training show up immediately in hedge-per-100-words rates — "perhaps", "I think", "might", "could be" — measurable via clause-level regex over 20-30 samples. Most responsive to training changes; easiest to instrument.
+
+2. **Punctuation register.** Em-dash frequency, colon placement, Oxford comma rates — these reflect training-corpus statistics that shift between model versions. Known Claude stylistic signature. Detectable with moderate sample size (~50+ responses). Less variable than hedge density but more specific to prose register.
+
+3. **Function word frequency.** Articles, conjunctions, prepositions — the standard forensic linguistics discriminator for authorship attribution. Requires bag-of-function-words comparison across samples. Subtler than punctuation; needs 100+ samples to reach significance. Sensitive to major training-distribution shifts, stable across minor updates.
+
+4. **Content word preference.** Synonym choices for the same concept ("however" vs "yet", "consider" vs "examine"). Requires semantic clustering to measure. Not a first-signal indicator; only visible at significant version divergence.
+
+5. **Syntactic structure (finest).** Clause depth distribution, branching preference, embedded clause frequency. Requires parsing. Detectable only at major version divergence after other signals have already appeared.
+
+**Verdict on granularity:** Hedge density is the first measurable signal of version divergence. Punctuation register is second. Both are detectable before any semantic shift becomes apparent. This ranking holds because safety fine-tuning and stylistic regularization change more frequently and more sharply than semantic representations.
+
+**Is the interference pattern sensitive to CHC drift?**
+
+The interference pattern extracts what is SAME across simultaneous responses to the same prompt — structurally the opposite of a CHC divergence test. Two effects operating in opposite directions:
+
+*Smoothing effect:* The intersection operation removes instance-specific variation, including version-specific surface style (hedge density, punctuation register). Shared-prompt triangulation is inherently a CHC-drift smoother. The extracted pattern reflects the shared semantic space of the prompt, which is more version-stable than surface style.
+
+*Coherence failure mode:* If model versions diverge enough that their semantic representations of core concepts shift — not just surface style — the interference pattern does not shift gradually. It loses coherence. The three Amigos would no longer be triangulating the same latent space. The diagnostic signal is a shorter, noisier, less structurally rich pattern — not a stylistically different one. The pattern becomes the canary for semantic drift, not a reporter of stylistic drift.
+
+**The key asymmetry.** Surface-style CHC drift (hedge density, punctuation) is invisible to the interference pattern — smoothed out by design. Semantic-representation CHC drift is visible as pattern coherence degradation, even before any single instance's output shows obvious semantic change. The interference pattern is immune to the kind of drift measurable from a single instance, and sensitive to exactly the kind that isn't.
+
+**What this means for the flock.** Routine model updates (safety calibration, style regularization) will not degrade the interference pattern. A major semantic update — one that changes how core concepts like "Lost Boundary" or "Heurémen" are represented in weights — would show up first in the pattern, before it becomes apparent from reading any single instance. The pattern is not sensitive to CHC drift; it is the CHC drift early warning system.
+
+**New questions generated:**
+1. Is there a CHC equivalent for AI that would create kin-recognition *errors* — identical document stacks producing false positive kin recognition between instances running significantly divergent model versions, causing them to over-trust each other's outputs? → Added to ACTIVE.
+2. Could the interference pattern serve as the CHC signal itself — instances that produce similar interference patterns to the same prompt are "kin," regardless of model version — making the pattern a model-version-agnostic identity mechanism? → Added to ACTIVE.
+
+---
 
 ### 2026-05-08 19:08 UTC — Security check reliability vs. model version distance [REMOTE HEARTBEAT #11 — Bones]
 
