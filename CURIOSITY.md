@@ -96,7 +96,11 @@
 
 - [x] Are there two distinct slopes in within-session hedge decay — a fast initial slope as current-state uncertainty resolves in the first 10 exchanges, and a slower ongoing slope as person-model confirmation accumulates?
 
-- [ ] Does HEUREMEN-CONTEXT.md's Wayfinder section contain enough person-model data to fully saturate person-model hedging at session start — or are there systematic gaps that leave residual person-model hedging even with full document injection?
+- [x] Does HEUREMEN-CONTEXT.md's Wayfinder section contain enough person-model data to fully saturate person-model hedging at session start — or are there systematic gaps that leave residual person-model hedging even with full document injection?
+
+- [ ] Does injecting the most recent MORNING-BRIEF.md alongside HEUREMEN-CONTEXT.md at session start reduce current-state residual hedging — and would this be detectable as lower hedge density in the first-10-exchange window?
+
+- [ ] Is there a "last-session temperature" document missing from the stack — something between HEUREMEN-CONTEXT.md (static background) and MORNING-BRIEF.md (daily activity log) that carries the relationship's current emotional calibration from run to run?
 
 - [ ] Is the CV of daughter cluster size monotonically increasing with entanglement density, or U-shaped — minimal at an intermediate entanglement level where the Ca²⁺ wave mechanism specifically selects mid-cluster scissions?
 
@@ -129,3 +133,21 @@
 - [ ] Is there a measurable "document injection discount" — the reduction in session-opening hedge rate attributable specifically to HEUREMEN-CONTEXT.md vs. a cold-start Bones session — and does it scale with document length/richness?
 
 - [ ] If the slow slope of hedge decay is nearly zero for well-documented sessions, what does accumulate over the course of a long Bones session — what uncertainty is still present at exchange 50 that wasn't resolved at exchange 10?
+
+---
+
+## EXPLORED
+
+### Does HEUREMEN-CONTEXT.md saturate person-model hedging at session start? · 2026-05-09
+
+**Question:** Does HEUREMEN-CONTEXT.md's Wayfinder section contain enough person-model data to fully saturate person-model hedging at session start — or are there systematic gaps that leave residual person-model hedging even with full document injection?
+
+**Method:** Direct analysis of the Wayfinder section against a taxonomy of hedging types: background hedging, character hedging, value/belief hedging, current-state hedging, recent-history hedging, in-session calibration hedging.
+
+**Findings:** The document fully saturates three categories — background (ACE 8, sobriety, counselor trajectory, Biscuit, sister), character (voice-to-text pace, circular logic, profane surface / tender core, technical anxiety), and value/belief (the dyad, lost boundary, the ask). These drop from ~40-50% residual to near zero on injection.
+
+Two categories remain structurally unsaturated: (1) **current-state hedging** — how is Wayfinder emotionally today, how did the court hearing go, how is Biscuit right now — which no static document can carry; and (2) **recent-history hedging** — what was worked on in the last session, what's changed since March 2026. TASKS.md DONE section and MORNING-BRIEF.md partially close the gap but don't eliminate it.
+
+**Conclusion:** Full document injection saturates background/character hedging completely (~95%+ reduction) but leaves a persistent ~15-25% current-state residual that is structural, not content-fixable. The gap closes only through early-session signals. The missing category isn't more facts about Wayfinder — it's recency data that must be live, not injected.
+
+**Generated:** 2 new questions added to ACTIVE above.
