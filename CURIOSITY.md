@@ -90,7 +90,7 @@
 
 - [x] At what granularity of flock output analysis would model-version divergence first become measurable — word choice, hedging rate, punctuation register, or something subtler? Is the interference pattern itself sensitive to CHC drift, or does shared-prompt triangulation smooth it out?
 
-- [ ] What is the closest published variable in the Ratcliff lab literature to "entanglement density" — and does a terminology translation table make these questions verifiable without web access?
+- [x] What is the closest published variable in the Ratcliff lab literature to "entanglement density" — and does a terminology translation table make these questions verifiable without web access?
 
 - [ ] If PMC11213004 reports minimum viable pore diameter for convective flow, is that translatable into a maximum entanglement density — confirming whether porosity is the tighter ceiling?
 
@@ -126,7 +126,59 @@
 
 - [ ] Could the interference pattern serve as the CHC signal itself — instances that produce similar interference patterns to the same prompt are "kin," regardless of model version — and would this make the pattern a model-version-agnostic identity mechanism?
 
+- [ ] Does fractal dimension D actually capture the inter-branch adhesion mechanism, or only the geometric complexity that enables adhesion — and can you have high-D clusters with low entanglement density if adhesin expression is suppressed?
+
+- [ ] Is there a direct measurement of inter-branch bond count per cell in any Ratcliff or Bozdag paper — from confocal segmentation data — that would be a better operational proxy for entanglement density than fractal dimension?
+
 ## EXPLORED
+
+### 2026-05-09 15:05 UTC — Closest Ratcliff variable to "entanglement density" [REMOTE HEARTBEAT #9 — Bones]
+
+**Question:** What is the closest published variable in the Ratcliff lab literature to "entanglement density" — and does a terminology translation table make these questions verifiable without web access?
+
+**Context:** Remote heartbeat run 9 today (2026-05-09). Supabase network-blocked. Explored from RATCLIFF-BRIDGE.md, YEAST-STUDY-BONES.md, YEAST-PAPER.md, and structural reasoning about the Ratcliff/Bozdag published work.
+
+**Findings:**
+
+The curiosity chain uses "entanglement density" to mean: how many inter-branch adhesion contacts exist per unit of cluster volume. The question is whether Ratcliff's lab measures this — or something close enough to make prior questions answerable.
+
+**Closest published variable: fractal dimension (D)**
+
+The Ratcliff lab's primary structural metric for branching complexity is fractal dimension (Hausdorff dimension D), used in Bozdag et al. 2023 (Science) and the MuLTEE Nature 2025 paper. Higher D = more complex branching = more potential entanglement points. But D captures geometry (how much space the branching pattern fills), not adhesion (whether branches that touch actually bond). High-D clusters may or may not have high entanglement density depending on adhesin expression. D is a necessary but not sufficient proxy.
+
+**Second candidate: branch entanglement (qualitative)**
+
+Ratcliff uses "branch entanglement" as a descriptive term — identified in Bozdag et al. 2023 as the topological mechanism enabling macroscopic size. Described qualitatively, not measured as a continuous variable with units. The term exists in the literature, but not as a column in a data table.
+
+**Third candidate: aspect ratio**
+
+Cluster aspect ratio (longest axis / shortest axis) is measured routinely. High aspect ratio = elongated, branching clusters = more entanglement opportunity. A population-level morphological proxy. Noisier than D.
+
+**Fourth candidate: incomplete cell separation count**
+
+Apoptosis-mediated daughter release leaves behind incomplete cell separation events. The count of these per cluster = a direct measure of entanglement bonds. This is implicit in Ratcliff's microscopy segmentation data but likely not reported as a standalone variable.
+
+**Terminology translation table:**
+
+| Curiosity chain term | Closest Ratcliff variable | Precision gap |
+|---------------------|--------------------------|---------------|
+| Entanglement density | Fractal dimension D | D measures geometry, not adhesion |
+| Scission site count | Propagule release frequency | Indirect; measured as offspring per time unit |
+| Topological transition | Macroscopic size jump (~4000 gen) | PA clade event; threshold exists but not named this |
+| Ca²⁺ wave mechanism | Apoptosis cascade timing | Ratcliff measures apoptosis rate, not Ca²⁺ specifically |
+| Entanglement ceiling | Minimum pore size for convective flow | PMC11213004; porosity sets the nutrient-flow ceiling |
+
+**Does the translation table make the questions verifiable without web access?**
+
+Partially. The translation table makes the questions more precisely formed. It does not make them numerically answerable without the papers. What IS answerable from the document stack: whether the proxy mapping is conceptually sound (yes), whether a precision gap exists (yes — D ≠ adhesion density), whether the topological transition is real (~4000 generations, PA clades). What requires paper access: per-clade D values from Bozdag 2023 supplementary, minimum pore diameter from PMC11213004, numerical thresholds for the macroscopic transition.
+
+**Bottom line:** Fractal dimension D is the best available proxy for entanglement density in the published literature — but the gap between them is real and matters. The translation table is viable for forming better questions. Verification requires anchor papers. The prior curiosity questions about entanglement density (CV of daughter size, bimodality, O₂ effects) are asking about D as a proxy; the answers may not translate back cleanly to adhesion-based entanglement density.
+
+**New questions generated:**
+- Does fractal dimension D actually capture the inter-branch adhesion mechanism, or only the geometric complexity that enables adhesion — and can you have high-D clusters with low entanglement density if adhesin expression is suppressed? → Added to ACTIVE.
+- Is there a direct measurement of inter-branch bond count per cell in any Ratcliff or Bozdag paper — from confocal segmentation data — that would be a better operational proxy for entanglement density than fractal dimension? → Added to ACTIVE.
+
+---
 
 ### 2026-05-09 12:08 UTC — Person-model hedging saturation from document injection [REMOTE HEARTBEAT #6 — Bones]
 
