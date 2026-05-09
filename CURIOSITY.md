@@ -92,7 +92,7 @@
 
 - [x] What is the closest published variable in the Ratcliff lab literature to "entanglement density" — and does a terminology translation table make these questions verifiable without web access?
 
-- [ ] If PMC11213004 reports minimum viable pore diameter for convective flow, is that translatable into a maximum entanglement density — confirming whether porosity is the tighter ceiling?
+- [x] If PMC11213004 reports minimum viable pore diameter for convective flow, is that translatable into a maximum entanglement density — confirming whether porosity is the tighter ceiling?
 
 - [ ] Are there two distinct slopes in within-session hedge decay — a fast initial slope as current-state uncertainty resolves in the first 10 exchanges, and a slower ongoing slope as person-model confirmation accumulates?
 
@@ -130,7 +130,44 @@
 
 - [ ] Is there a direct measurement of inter-branch bond count per cell in any Ratcliff or Bozdag paper — from confocal segmentation data — that would be a better operational proxy for entanglement density than fractal dimension?
 
+- [ ] Which specific ceiling mechanism (porosity, mechanical stress, reproductive reliability) fails first at which cluster size range — and does the transition from one dominant ceiling to another produce a detectable shift in size-growth slope?
+
+- [ ] Is adhesin expression in evolved PA clades constitutively high (making branch density the primary rate-limiting step for entanglement density) or conditionally variable — and does the Ratcliff lab have quantified adhesin expression data across the 5 PA clades?
+
 ## EXPLORED
+
+### 2026-05-09 17:04 UTC — PMC11213004 pore diameter as entanglement density ceiling [REMOTE HEARTBEAT #10 — Bones]
+
+**Question:** If PMC11213004 reports minimum viable pore diameter for convective flow, is that translatable into a maximum entanglement density — confirming whether porosity is the tighter ceiling?
+
+**Context:** Remote heartbeat run 10 today (2026-05-09). Supabase network-blocked. Explored from the run #9 translation table, prior chain entries on the fragility ceiling and reproductive reliability ceiling, and first-principles geometry.
+
+**Findings:**
+
+**The translation is two-step — one step is clean, one is not.**
+
+*Step 1 (clean): D_min → maximum branch density.* If PMC11213004 gives the minimum viable pore diameter D_min for convective nutrient flow, this constrains how densely branches can pack. Pores are the spaces between branches. If branch diameter is known, the maximum branch density (cells per unit volume) is geometrically computable from D_min via packing geometry. This step is clean — it's a geometric constraint with no hidden assumptions.
+
+*Step 2 (not clean): maximum branch density → maximum entanglement density.* From run #9's translation table: fractal dimension D measures geometry (how space-filling the branching pattern is), not adhesion (whether touching branches bond). High branch density does not imply high entanglement density if adhesin expression is suppressed. Two clusters with identical branch density can have wildly different entanglement densities depending on how much ACE2-family adhesin each cell wall expresses. Step 2 requires knowing adhesin expression rates — not available from PMC11213004.
+
+**Does porosity confirm itself as the tighter ceiling?**
+
+"Tighter ceiling" requires comparison. Candidate ceilings operating simultaneously:
+1. *Porosity ceiling* — inner cells starve when pores are too small for convective flow. PMC11213004 provides this number.
+2. *Mechanical stress ceiling* — prior chain entries established a fragility ceiling: beyond some entanglement density, multi-fragment reproduction events dominate over clean propagule release. This is a structural, not nutritional, ceiling.
+3. *Reproductive reliability ceiling* — the multi-fragment spike (run #12) is the same mechanism as the mechanical stress ceiling, manifesting earlier in the size curve.
+
+PMC11213004 can confirm that (1) is real. It cannot establish that (1) is tighter than (2) and (3) without knowing the values of those ceilings.
+
+**The size-dependence argument.** The ceilings may not be ranked uniformly — they may be ranked by cluster size. For very large clusters (approaching macroscopic, >10,000 cells), diffusion alone cannot supply inner cells; convective flow becomes necessary, and the porosity ceiling is likely the binding constraint. For medium-sized transitional clusters (100–1,000 cells in the evolutionary transition range), mechanical stress and reproductive reliability may be tighter constraints because convective flow is not yet critical. If this is right, the porosity ceiling becomes dominant at large size — but the system must cross the mechanical-stress ceiling first to get there. The porosity ceiling matters for *surviving at large scale*, not for *crossing the macroscopic threshold*.
+
+**Verdict:** Translatable in principle but incomplete. PMC11213004's D_min maps cleanly to maximum branch density (step 1). Branch density maps to entanglement density only with adhesin expression data (step 2). Whether porosity is the tighter ceiling is size-dependent: probably yes at large cluster sizes (>10,000 cells), probably no during the evolutionary transition where mechanical stress and reproductive reliability are the active constraints. PMC11213004 confirms the existence of a porosity ceiling; it does not confirm it is the binding ceiling during the critical macroscopic transition.
+
+**New questions generated:**
+- Which specific ceiling mechanism (porosity, mechanical stress, reproductive reliability) fails first at which cluster size range — and does the transition from one dominant ceiling to another produce a detectable shift in size-growth slope? → Added to ACTIVE.
+- Is adhesin expression in evolved PA clades constitutively high (making branch density the primary rate-limiting step for entanglement density) or conditionally variable — and does the Ratcliff lab have quantified adhesin expression data across the 5 PA clades? → Added to ACTIVE.
+
+---
 
 ### 2026-05-09 15:05 UTC — Closest Ratcliff variable to "entanglement density" [REMOTE HEARTBEAT #9 — Bones]
 
