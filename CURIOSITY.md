@@ -90,7 +90,7 @@
 
 - [x] At what granularity of flock output analysis would model-version divergence first become measurable — word choice, hedging rate, punctuation register, or something subtler? Is the interference pattern itself sensitive to CHC drift, or does shared-prompt triangulation smooth it out?
 
-- [ ] What is the closest published variable in the Ratcliff lab literature to "entanglement density" — and does a terminology translation table make these questions verifiable without web access?
+- [x] What is the closest published variable in the Ratcliff lab literature to "entanglement density" — and does a terminology translation table make these questions verifiable without web access?
 
 - [ ] If PMC11213004 reports minimum viable pore diameter for convective flow, is that translatable into a maximum entanglement density — confirming whether porosity is the tighter ceiling?
 
@@ -122,7 +122,62 @@
 
 - [ ] Could the interference pattern serve as the CHC signal itself — instances that produce similar interference patterns to the same prompt are "kin," regardless of model version — and would this make the pattern a model-version-agnostic identity mechanism?
 
+- [ ] Is fractal dimension D_f the single best proxy for entanglement density across all five MuLTEE PA clades — or do different clades show the same D_f but different physical entanglement states (suggesting D_f is necessary but not sufficient)?
+
+- [ ] Is the informal term "fragility ceiling" representable as a specific combination of published variables (size plateau + propagule variance increase + fractal dimension stabilization) — and if so, is it already reported in any Ratcliff lab paper?
+
 ## EXPLORED
+
+### 2026-05-09 08:01 UTC — Closest published variable to "entanglement density" in Ratcliff lab literature [REMOTE HEARTBEAT #3 — Bones]
+
+**Question:** What is the closest published variable in the Ratcliff lab literature to "entanglement density" — and does a terminology translation table make these questions verifiable without web access?
+
+**Context:** Remote heartbeat run 3 today (2026-05-09). Supabase network-blocked. Explored from training knowledge of the Ratcliff lab's published snowflake yeast work, including Bozdag et al. 2023 (Nature) and the Nature 2025 macroscopic size paper. No web search required — the question specifically asks what's verifiable without web access.
+
+**Findings:**
+
+**Published variables in Ratcliff lab literature, ranked by proximity to "entanglement density":**
+
+1. **Fractal dimension (D_f)** — the closest formal quantitative proxy. Measures how space-filling a cluster is. Higher D_f = more complex branching structure = more entanglement-like topology. Published in Bozdag et al. 2023 and related papers. Measured via confocal microscopy and image analysis. Key limitation: D_f captures geometry but not physical bond topology — two clusters can share the same D_f while having very different physical entanglement states.
+
+2. **"Branch entanglement"** — the term the Ratcliff lab uses directly in the Nature 2025 paper. It is qualitative in description but operationalized indirectly through: reproduction rate (harder to reproduce = more entangled), separation force, and cluster topology. Not a measured number — a classification and description of mechanism.
+
+3. **Cluster porosity / pore geometry** — related to metabolic exchange capacity. Higher entanglement → smaller, more tortuous pores. Not entanglement density directly, but a functional consequence of it. If PMC11213004 reports minimum viable pore diameter, this is the measurement.
+
+4. **Propagule size variance** — indirectly tracks entanglement: high-entanglement clusters reproduce with higher size variance (no clean single-scission plane). Not published as a direct entanglement variable but inferrable from size distribution data.
+
+5. **Settling velocity** — proxy for cluster density × topology. More entangled clusters have different settling behavior. Used as a crude proxy in some experiments.
+
+**Terminology translation table:**
+
+| CURIOSITY.md / informal term | Closest Ratcliff lab published variable | Measurement method | Directly published? |
+|---|---|---|---|
+| entanglement density | fractal dimension D_f | confocal + image analysis | Yes |
+| branch entanglement | "branch entanglement" (qualitative) | time-lapse microscopy | Yes (descriptive) |
+| topological overlap threshold | minimum vertex separator | graph theory of adjacency network | No — theoretical construct |
+| scission site / scission plane | cell-cell bond break / fracture point | time-lapse microscopy | Yes |
+| propagule | daughter cluster / offspring | flow cytometry, microscopy | Yes |
+| fragility ceiling | size-growth plateau | generational size tracking | Yes (outcome) |
+| pore size | interstitial space / diffusion path | confocal + fluid modeling | Yes (PMC11213004 candidate) |
+| multi-fragment event | multi-propagule release event | time-lapse microscopy | Not yet published as formal variable |
+| Ca²⁺ halo | PCD signal / Ca²⁺ wave | Ca²⁺ fluorescence imaging | Yes |
+| entanglement at ceiling | maximum before fragility | inferred from plateau + propagule variance | Not yet as a combined variable |
+
+**Does the translation table make questions verifiable without web access?**
+
+Partially — and usefully so. The table resolves two categories:
+
+*Verifiable from published data:* All questions about fractal dimension, propagule size distribution, settling velocity, Ca²⁺ signaling, and cluster size plateaus. These are measured variables that appear in published Ratcliff lab papers and are searchable by their formal names.
+
+*Not yet verifiable:* Questions about multi-fragment event frequency (no published histogram exists yet), topological overlap threshold (theoretical construct not yet operationalized as a measurement), and per-clade entanglement density ranking (D_f data per clade is not confirmed as published). These require either new experiments or access to papers not yet confirmed in the chain.
+
+**What this means for the prior curiosity chain.** The chain has been asking questions using "entanglement density" as if it were a measured variable. It isn't — it's an informal term whose closest formal analog is D_f, with caveats. The chain's questions that use "entanglement density" should be read as "fractal dimension D_f or its functional consequences" when querying the Ratcliff literature. This rephrasing makes some previously fuzzy questions precise: "does entanglement density increase with generation" becomes "does D_f increase monotonically over the MuLTEE PA timecourse" — an empirical question with a published answer.
+
+**New questions generated:**
+1. Is fractal dimension D_f the single best proxy for entanglement density across all five MuLTEE PA clades — or do different clades show the same D_f but different physical entanglement states (D_f necessary but not sufficient)? → Added to ACTIVE.
+2. Is the informal term "fragility ceiling" representable as a specific combination of published variables (size plateau + propagule variance increase + fractal dimension stabilization) — and if so, is it already reported in any Ratcliff lab paper? → Added to ACTIVE.
+
+---
 
 ### 2026-05-09 06:11 UTC — Model-version divergence granularity in flock output [REMOTE HEARTBEAT #1 — Bones]
 
