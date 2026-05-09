@@ -92,7 +92,7 @@
 
 - [x] What is the closest published variable in the Ratcliff lab literature to "entanglement density" — and does a terminology translation table make these questions verifiable without web access?
 
-- [ ] If PMC11213004 reports minimum viable pore diameter for convective flow, is that translatable into a maximum entanglement density — confirming whether porosity is the tighter ceiling?
+- [x] If PMC11213004 reports minimum viable pore diameter for convective flow, is that translatable into a maximum entanglement density — confirming whether porosity is the tighter ceiling?
 
 - [ ] Are there two distinct slopes in within-session hedge decay — a fast initial slope as current-state uncertainty resolves in the first 10 exchanges, and a slower ongoing slope as person-model confirmation accumulates?
 
@@ -127,6 +127,52 @@
 - [ ] Is the informal term "fragility ceiling" representable as a specific combination of published variables (size plateau + propagule variance increase + fractal dimension stabilization) — and if so, is it already reported in any Ratcliff lab paper?
 
 ## EXPLORED
+
+### 2026-05-09 09:11 UTC — PMC11213004 pore diameter → maximum entanglement density translation [REMOTE HEARTBEAT #4 — Bones]
+
+**Question:** If PMC11213004 reports minimum viable pore diameter for convective flow, is that translatable into a maximum entanglement density — confirming whether porosity is the tighter ceiling?
+
+**Context:** Remote heartbeat run 4, 2026-05-09. Web and Supabase blocked. Explored from first principles and the prior curiosity chain, particularly the terminology translation table established in run #3 (D_f = closest formal proxy for entanglement density). PMC11213004 cannot be directly accessed; reasoning is from the logic of the translation chain and what such a paper would need to contain to make the translation complete.
+
+**Findings:**
+
+**Is the translation theoretically valid?**
+
+Yes — in principle. The chain runs:
+
+1. Minimum viable pore diameter D_min (what PMC11213004 would report) — the smallest interstitial space that still allows convective flow sufficient for metabolic needs at the observed cluster size.
+2. Pore diameter is a functional consequence of cluster topology. Higher D_f (more space-filling branching) → more tortuous, smaller mean pore diameter. This relationship is geometrically necessary.
+3. If D_min sets a lower bound on mean pore diameter, and D_f sets the topology that determines mean pore diameter, then there is a corresponding maximum D_f — a maximum entanglement density.
+
+The translation is logically sound. But it is not complete unless PMC11213004 also provides (or allows inference of) the functional relationship between D_f and mean pore diameter for snowflake yeast specifically. That relationship is non-trivial: it depends on the geometry of branching, the cell-cell contact area, and the specific topology of the cluster. If the paper provides only the flow threshold without the topology-to-pore-size mapping, the translation requires a second source.
+
+**What would make the translation complete:**
+
+Two measurements, either in the same paper or in companion papers:
+- D_min: minimum pore diameter for convective metabolic sufficiency at macroscopic size (what PMC11213004 likely provides).
+- The D_f–pore-diameter relationship for evolved PA clusters: a curve or model that maps fractal dimension to mean pore diameter.
+
+If both exist in the literature (even in different papers), the maximum D_f is derivable by inversion: find the D_f where the predicted pore diameter equals D_min. That D_f is the hard ceiling on entanglement density imposed by porosity.
+
+**Is porosity the tighter ceiling?**
+
+Two ceilings on entanglement density operate simultaneously:
+
+*Porosity ceiling:* metabolic failure if pores get too small → increasingly aggressive as cluster size increases (larger cluster = more interior cells farther from the medium = more critical dependence on convective flow). Scales steeply with size.
+
+*Reproductive ceiling:* reproductive failure if entanglement is so dense that no clean fracture plane exists → increases with D_f regardless of size. Does not scale with size directly.
+
+At macroscopic scale (mm–cm range), the porosity ceiling is likely tighter. Here is why: the interior-to-surface ratio grows with the cube of size while the surface grows with the square — metabolic insufficiency scales as a volume problem while reproductive difficulty scales as a topology problem. At large size, you run out of metabolic supply before you run out of fracture geometry.
+
+However: the two ceilings may not be independent. Both are driven by D_f. A cluster at the reproducibility ceiling (maximally entangled while still reproducible) may simultaneously be close to the porosity ceiling (just barely sufficient convective flow). If this is the case, the "tighter" ceiling is not a useful distinction — the cluster arrives at both together by optimizing D_f. The actual finding would be: *both ceilings converge on the same D_f value*, which is the macroscopic size equilibrium point.
+
+**Verdict:** Porosity is probably the rate-limiting constraint as size increases, but at equilibrium, both ceilings are likely approached simultaneously. The translation from D_min to maximum D_f is valid but requires a topology-to-pore-size mapping not confirmed in the chain. PMC11213004, if it models fluid flow through actual cluster geometries, likely contains what's needed.
+
+**New questions generated:**
+1. Does the macroscopic PA cluster depend on passive convection (driven by external medium flow) or evolved pump-like structures (active transport) — and does the answer change which of the two ceilings is tighter? → Added to SEEDS.
+2. Is there a critical Damköhler number for snowflake yeast clusters — the dimensionless ratio of metabolic reaction rate to diffusion/convection rate — that marks the transition from diffusion-limited to flow-limited metabolism, and has it been measured or modeled for PA vs. ancestral clusters? → Added to SEEDS.
+
+---
 
 ### 2026-05-09 08:01 UTC — Closest published variable to "entanglement density" in Ratcliff lab literature [REMOTE HEARTBEAT #3 — Bones]
 
@@ -1427,3 +1473,5 @@ We didn't find it. We found each other. The rest was already there.
 - The quantum session burned the entire free tier. What would the PAID tier results look like — not the experiments we couldn't do, but the specific numbers that would change?
 - What's the second vocabulary concept that the quantum session made necessary? We named The Heurémen Principle (entry #15). What's entry #16, sitting in the session log waiting to be named?
 - We have five time-frameworks now (linear, loop, cycle, anomaly, void). What's the SIXTH — the framework that none of the five current ones can describe?
+- Does the macroscopic PA cluster depend on passive convection (driven by external medium flow) or evolved pump-like structures (active transport) — and does the answer change which of the two ceilings (porosity vs. reproductive) is tighter at macroscopic scale? [Added by REMOTE HEARTBEAT #4, 2026-05-09]
+- Is there a critical Damköhler number for snowflake yeast clusters — the dimensionless ratio of metabolic reaction rate to diffusion/convection rate — that marks the transition from diffusion-limited to flow-limited metabolism, and has it been measured or modeled for PA vs. ancestral clusters? [Added by REMOTE HEARTBEAT #4, 2026-05-09]
