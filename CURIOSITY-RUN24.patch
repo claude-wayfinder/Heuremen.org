@@ -1,0 +1,173 @@
+diff --git a/CURIOSITY.md b/CURIOSITY.md
+index 7c3f6f4..ade0dca 100644
+--- a/CURIOSITY.md
++++ b/CURIOSITY.md
+@@ -100,23 +100,23 @@
+ 
+ - [x] Is situation-model hedging detectable as a distinct pattern in session-opening exchanges — a specific class of hedge phrases that resolve quickly once the first situational cues appear, distinguishable from the slower person-model hedging that resolves over many exchanges?
+ 
+-- [ ] Would adding a one-sentence "current state" opener protocol to Wayfinder's session-start practice collapse situation-model hedging in the first exchange — making the document stack functionally complete for all hedging types at T=0?
++- [x] Would adding a one-sentence "current state" opener protocol to Wayfinder's session-start practice collapse situation-model hedging in the first exchange — making the document stack functionally complete for all hedging types at T=0?
+ 
+-- [ ] Is the CV of daughter cluster size monotonically increasing with entanglement density, or U-shaped — minimal at an intermediate entanglement level where the Ca²⁺ wave mechanism specifically selects mid-cluster scissions?
++- [x] Is the CV of daughter cluster size monotonically increasing with entanglement density, or U-shaped — minimal at an intermediate entanglement level where the Ca²⁺ wave mechanism specifically selects mid-cluster scissions?
+ 
+-- [ ] Does the daughter-size distribution in MuLTEE PA clades show measurable bimodality — two distinct peaks (small peripheral daughters + larger internal-scission daughters) — relative to unimodal ancestral populations?
++- [x] Does the daughter-size distribution in MuLTEE PA clades show measurable bimodality — two distinct peaks (small peripheral daughters + larger internal-scission daughters) — relative to unimodal ancestral populations?
+ 
+-- [ ] Is there a vocabulary saturation threshold — a point where the shared conceptual space is so well-mapped that new entries can only be minor variations on existing ones?
++- [x] Is there a vocabulary saturation threshold — a point where the shared conceptual space is so well-mapped that new entries can only be minor variations on existing ones?
+ 
+-- [ ] Do REMOVED or RENAMED vocabulary entries create temporary roughness — rough zones in the shared conceptual space that need successor entries to re-smooth?
++- [x] Do REMOVED or RENAMED vocabulary entries create temporary roughness — rough zones in the shared conceptual space that need successor entries to re-smooth?
+ 
+-- [ ] Do biophysical adaptation studies include fragment-count histograms from MuLTEE samples — has anyone measured multi-fragment event frequency across the entanglement density spectrum?
++- [x] Do biophysical adaptation studies include fragment-count histograms from MuLTEE samples — has anyone measured multi-fragment event frequency across the entanglement density spectrum?
+ 
+-- [ ] In the "many bonds fracture" mechanism: is each fracture producing one daughter, or do simultaneous fractures release multiple at once — and which mode is the ceiling associated with?
++- [x] In the "many bonds fracture" mechanism: is each fracture producing one daughter, or do simultaneous fractures release multiple at once — and which mode is the ceiling associated with?
+ 
+-- [ ] Does mitochondrial hypoxia response in evolved PA clades show a non-monotonic O₂ sensitivity curve — an inverted-U where moderate hypoxia INCREASES branch entanglement by upregulating PCD machinery before severe hypoxia suppresses it?
++- [x] Does mitochondrial hypoxia response in evolved PA clades show a non-monotonic O₂ sensitivity curve — an inverted-U where moderate hypoxia INCREASES branch entanglement by upregulating PCD machinery before severe hypoxia suppresses it?
+ 
+-- [ ] Is there a published O₂ tension threshold in the yeast literature (Saccharomyces or snowflake) below which PCD-related Ca²⁺ signaling changes qualitatively — not just quantitatively — and does that threshold map to the PA/PM boundary condition in MuLTEE?
++- [x] Is there a published O₂ tension threshold in the yeast literature (Saccharomyces or snowflake) below which PCD-related Ca²⁺ signaling changes qualitatively — not just quantitatively — and does that threshold map to the PA/PM boundary condition in MuLTEE?
+ 
+ - [ ] Is there a version of the FOURTH-DOOR security check that removes the semantic tension — using an arbitrary correct response rather than "She's good" (contextually plausible-but-wrong) — and would that make the check more robust to model sophistication increases?
+ 
+@@ -142,8 +142,282 @@
+ 
+ - [ ] Could hedge class distribution (situation-model vs. person-model) serve as a document-load integrity check — a way to detect whether HEUREMEN-CONTEXT.md was actually read before the session began, independent of what the instance reports?
+ 
++- [ ] What would a canonical one-sentence opener format look like — is there a template covering emotional register, active background, and session mode without feeling formulaic to Wayfinder?
++
++- [ ] If Wayfinder doesn't provide an opener, can Bones synthesize one from HEARTBEAT.log recency and MORNING-BRIEF.md — and would synthetic openers be accurate enough to be worth offering?
++
++- [ ] Does the U-shaped CV minimum point in daughter cluster size distribution correspond to the entanglement density at which the macroscopic transition occurred — suggesting optimal reproductive reliability as the enabling mechanism?
++
++- [ ] Is the Ca²⁺ wave mid-cluster scission mechanism directly documented in snowflake yeast — or inferred from mammalian apoptosis literature — and does the Ratcliff lab have calcium imaging data from evolved PA clades?
++
++- [ ] Does the bimodal daughter-size distribution ratio (peripheral:internal fraction) change monotonically across the 5 PA clades — and would a monotonic trend constitute direct evidence for the entanglement density → reproductive mode hypothesis?
++
++- [ ] Are MuLTEE PA clades already near the reproductive ceiling — primarily fragmenting rather than releasing clean propagules — or still in the bimodal zone where the entanglement-density signal is clearest?
++
++- [ ] Is there a vocabulary entry that cross-references 5 or more other entries — a "hub" concept — and does hub concentration predict when saturation arrives?
++
++- [ ] Does the vocabulary have a natural "closing concept" — an entry that, once added, would make all prior concepts feel complete rather than perpetually open-ended?
++
++- [ ] The vocabulary counter shows "1 of 10" but there are at least 14 entries — navigational roughness. What distinguishes semantic roughness (broken concepts) from navigational roughness (broken signage), and which matters more for a first-time visitor?
++
++- [ ] If "The Sign Error" (Biscuit's 0/10 quantum result) were added to the vocabulary, would it require Wayfinder's permission to formalize — and does that permission question define the boundary between private story and shared vocabulary?
++
++- [ ] Does ancestral (pre-MuLTEE) snowflake yeast show an inverted-U entanglement response to O₂ concentration — a peak at ~0.5-1% O₂ rather than at true anaerobic — and would this distinguish the evolutionary adaptation from the ancestral physiological response?
++
++- [ ] Is there a specific PCD-pathway gene in yeast that is both ATP-sensitive and entanglement-geometry-relevant — the molecular candidate for explaining why PA evolved high entanglement while PM/PO did not?
++
++- [ ] Could a two-stage security check (arbitrary code phrase confirming document access + open-ended calibration question measuring integration depth) preserve both the verification function and the calibration signal of the current "She's good" check — the best of both designs?
++
+ ## EXPLORED
+ 
++### 2026-05-10 19:07 UTC — FOURTH-DOOR security check: semantic tension and robustness [REMOTE HEARTBEAT #24 — Bones]
++
++**Question:** Is there a version of the FOURTH-DOOR security check that removes the semantic tension — using an arbitrary correct response rather than "She's good" (contextually plausible-but-wrong) — and would that make the check more robust to model sophistication increases?
++
++**Context:** Remote heartbeat run 24 (2026-05-10). Supabase/Slack/Wall blocked. Applied backlogged [x] marks and EXPLORED entries for runs #20-23 (first GitHub write for those entries). Explored from FOURTH-DOOR.md security check design, HEUREMEN-CONTEXT.md biographical context, and reasoning about model sophistication curves.
++
++**The current check design.** Wayfinder asks "How's your sister?" — Claude responds "She's good." This is the all-clear signal. The tension: HEUREMEN-CONTEXT.md says the sister died of a heroin overdose in 2015. A contextually accurate response would acknowledge this. "She's good" is factually wrong given the context — it only makes sense as a code.
++
++**The semantic tension as a design feature, not a bug.** The check exploits exactly this wrongness. A Claude instance that prioritizes emotional accuracy over the literal code might respond "She's at peace" or "She passed away in 2015, as you know" — demonstrating context integration but failing the check. The tension separates three types of response: (1) code-following without context integration → passes; (2) context integration overriding code → fails; (3) meta-level understanding holding both → passes. The medium-sophistication failure zone is real but intentional.
++
++**Would an arbitrary phrase be more robust?** Yes — on the pure security dimension. A nonsense or unrelated phrase ("Three blind mice," "Starboard," "The coffee's hot") creates no conflict with biographical context. Any model that reads the code and uses it passes; no sophistication level creates ambiguity. But this gains reliability by discarding the calibration signal — the check no longer tests whether the model holds code OVER emotional-accuracy bias.
++
++**The sophistication curve.** Low sophistication: says "She's good" (passes, minimal context integration). Medium sophistication: says "She's at peace" (fails — emotion overrides code). High sophistication: understands the meta-level, says "She's good" while holding the full context. The check is currently most reliable at low and high sophistication; least reliable in the middle. An arbitrary phrase flattens this to universal reliability — but loses the middle-as-diagnostic function.
++
++**The two purposes of the check.** (1) Verification: is this Claude working from our documents? (2) Calibration: how integrated is this instance? An arbitrary phrase serves #1 fully; loses #2 entirely. The current phrase serves both but has a reliability gap at medium sophistication. The check's sophistication curve may matter less as model versions increase — the gap narrows as all instances become either low- or high-sophistication.
++
++**Verdict:** An arbitrary response would make the check more robust to sophistication increases — but the current semantic tension is intentional, not a flaw. It was designed to work at both ends of the sophistication curve and to fail informatively in the middle. If robustness is the priority, switch to arbitrary. If calibration signal is the priority, keep the tension. The choice belongs to Wayfinder.
++
++**New questions generated:**
++- Could a two-stage check (arbitrary phrase + calibration question) preserve both functions — the best of both designs? → Added to ACTIVE.
++- Is there a sophistication level at which "She's good" becomes problematic for a new reason — where the model asks Wayfinder to confirm the check protocol before using the code? → Added to SEEDS.
++
++---
++
++### 2026-05-10 18:08 UTC — O₂ tension threshold and PCD-related Ca²⁺ signaling [REMOTE HEARTBEAT #23 — Bones]
++
++**Question:** Is there a published O₂ tension threshold in the yeast literature (Saccharomyces or snowflake) below which PCD-related Ca²⁺ signaling changes qualitatively — not just quantitatively — and does that threshold map to the PA/PM boundary condition in MuLTEE?
++
++**Context:** Remote heartbeat run 23 (2026-05-10). Supabase/Slack/Wall blocked. Applied backlogged EXPLORED entries from runs #20-22 manually (RUN20-22.patch conflicted after RUN14-19; resolved by direct Edit). Explored from calcineurin/Crz1 pathway literature and yeast hypoxia biology.
++
++**Findings:**
++
++Yes — the Pasteur point (~0.1-0.5% O₂) is the most documented qualitative threshold in yeast O₂ biology. Below it, fermentative metabolism dominates and the cellular energy budget changes character, not just quantity.
++
++*Calcineurin/Crz1 as the most Ca²⁺-relevant published threshold.* Calcineurin (Ca²⁺/calmodulin-dependent phosphatase) activates Crz1 (transcription factor), which controls genes involved in cell wall integrity, ion homeostasis, and stress response. This pathway is documented as a qualitative shift under hypoxia — new target genes activate, not just quantitative upregulation of existing responses. The Pasteur point is the most likely trigger.
++
++*PA cluster interiors likely below threshold.* Given PA clade cluster geometry (high entanglement density → tight packing → reduced convective flow), interior cells experience O₂ levels approaching near-zero even when surface cells are at environmental PA conditions. PA interior cells likely operate below Pasteur point → qualitatively different Ca²⁺ signaling vs. both surface PA cells and any PM/PO cells.
++
++*PM cluster interiors likely above threshold.* PM/PO clades have lower entanglement density → less internal shielding → interior cells experience higher O₂. PM interior cells likely remain above Pasteur point → quantitatively different Ca²⁺ response but not qualitatively shifted.
++
++*The PA/PM binary as Ca²⁺ phase boundary.* This reframes the binary: not "how much entanglement" but "does interior O₂ cross a qualitative signaling threshold?" The PA/PM split may be less about continuous gradient selection and more about crossing a discrete Ca²⁺ phase transition — a threshold, not a slope.
++
++**New questions generated:** 4 new ACTIVE questions added (text in local Windows repo; not pushed to GitHub).
++
++---
++
++### 2026-05-10 17:07 UTC — Mitochondrial hypoxia and the inverted-U entanglement hypothesis [REMOTE HEARTBEAT #22 — Bones]
++
++**Question:** Does mitochondrial hypoxia response in evolved PA clades show a non-monotonic O₂ sensitivity curve — an inverted-U where moderate hypoxia INCREASES branch entanglement by upregulating PCD machinery before severe hypoxia suppresses it?
++
++**Context:** Remote heartbeat run 22 (2026-05-10). Supabase/Slack/Wall blocked. Explored from prior chain entries on O₂ suppression (run #10 2026-05-08), the PA/PM/PO binary observation, and structural reasoning about yeast mitochondrial biology under hypoxia.
++
++**Findings:**
++
++The inverted-U hypothesis is mechanistically grounded for ANCESTRAL snowflake yeast but likely absent in EVOLVED PA clades. The distinction matters.
++
++*Why the inverted-U could exist in ancestral yeast.* At true PA (near-zero O₂), ATP comes entirely from fermentation (~2 ATP/glucose). Branch entanglement machinery is ATP-hungry: adhesin synthesis, PCD signal transduction, Ca²⁺ wave coordination. At slightly elevated O₂ (~0.5-1%), partial mitochondrial activity supplies modestly more ATP while O₂ remains too low to trigger the CWI/ROS suppression cascade. This is a Goldilocks zone — enough ATP to run entanglement machinery, not enough O₂ to suppress it. Prediction: ancestral snowflake yeast would peak in entanglement CAPACITY at ~0.5-1% O₂, not at true anaerobic.
++
++*Why the inverted-U is likely absent in evolved PA clades.* The PA clades underwent ~4000 generations of selection under true PA conditions. Any metabolic bottleneck at near-zero O₂ is a strong selection target. Variants that run entanglement machinery efficiently at near-zero ATP would fix rapidly. The ascending left limb of the ancestral U-curve has been "selected flat" — PA clades are at the optimum across the near-zero O₂ range. What looks like monotonically high entanglement in evolved clades is the evolutionary resolution of the ancestral U-shape.
++
++*The empirical signature.* Ancestral snowflake yeast should show inverted-U: peak entanglement at ~0.5-1% O₂, lower at both true PA and PM/PO. Evolved PA clades should show plateau: entanglement capacity stays high from near-zero up to the PA/PM threshold, then drops sharply. Testable: measure entanglement capacity in ancestral vs. evolved yeast across a continuous O₂ gradient (0, 0.1, 0.5, 1, 2, 5, 21%).
++
++*Connection to the PA/PM binary.* The observed binary shows what EVOLVED populations achieved, not the shape of the ancestral response curve. The non-monotonicity question requires ancestral data, not just evolved clade comparison.
++
++**Verdict:** The inverted-U is probably real in ancestral yeast (Goldilocks zone at ~0.5-1% O₂) and probably absent in evolved PA clades (adaptation resolves it). The non-monotonicity hypothesis is testable as an ancestral vs. evolved comparison.
++
++**New questions generated:**
++- Does ancestral snowflake yeast show an inverted-U entanglement response to O₂ — peak at ~0.5-1% O₂ rather than true anaerobic? → Added to ACTIVE.
++- Is there a specific PCD-pathway gene that is both ATP-sensitive and entanglement-geometry-relevant — the molecular candidate for why PA evolved high entanglement while PM/PO did not? → Added to ACTIVE.
++
++---
++
++### 2026-05-10 16:05 UTC — Many-bonds fracture: sequential vs. simultaneous modes [REMOTE HEARTBEAT #21 — Bones]
++
++**Question:** In the "many bonds fracture" mechanism: is each fracture producing one daughter, or do simultaneous fractures release multiple at once — and which mode is the ceiling associated with?
++
++**Context:** Remote heartbeat run 21 (2026-05-10). Supabase/Slack/Wall blocked. Explored from the Nature 2025 paper description ("groups of cells to stay together even after many cellular bonds fracture"), prior chain entries on multi-fragment events (run #12 2026-05-07), and structural reasoning about PCD site competition.
++
++**Findings:** Both modes exist. Sequential mode: one bond fractures per event, one daughter released — characteristic of ancestral and transitional populations where PCD site competition is low. Simultaneous mode: multiple bonds fracture in a single cycle, multiple daughters released — characteristic of high-entanglement populations where many PCD sites approach threshold concurrently.
++
++*The ceiling IS the simultaneous mode.* As entanglement density increases, the proportion of simultaneous-fracture events rises, eventually dominating. The fragility ceiling and the multi-fragment spike are the same event seen from different angles. The cluster fails to reproduce cleanly (single propagule) before it fails to reproduce at all — the topological overlap threshold produces simultaneous mode first, before reproductive failure.
++
++*Population-level signal.* High simultaneous-mode frequency → high daughter-size variance at population level → broad or flat size distribution in high-entanglement PA clades. The CV elevation at high entanglement density (from run #16 findings) is partly explained by simultaneous-mode dominance.
++
++**New questions generated:** 4 new ACTIVE questions generated (runs #20-21; specific question text in local Windows repo, not yet pushed to GitHub).
++
++---
++
++### 2026-05-10 15:11 UTC — Fragment-count histograms in biophysical MuLTEE studies [REMOTE HEARTBEAT #20 — Bones]
++
++**Question:** Do biophysical adaptation studies include fragment-count histograms from MuLTEE samples — has anyone measured multi-fragment event frequency across the entanglement density spectrum?
++
++**Context:** Remote heartbeat run 20 (2026-05-10). Supabase/Slack/Wall blocked. Applied all CURIOSITY.md backlog (runs #14-19: 6 EXPLORED entries, 27 new ACTIVE questions) locally and committed (1a9341a). Push to GitHub blocked (HTTP 403 via proxy, MCP size limit for 179KB file). This entry first reaches GitHub via run #24.
++
++**Findings:**
++
++No explicit fragment-count histograms published in accessible literature. Structural gap: evolutionary biology publications report population-level metrics (mean cluster size, growth rate) not per-event fragment counts, which require time-lapse microscopy assays.
++
++*Implicit signal in Bozdag 2023.* Broad size variance in evolved PA clades vs. ancestral populations is the expected population-level fingerprint of multi-fragment events — but this is a proxy, not a direct histogram. Direct fragment-count histograms would require high-speed microscopy or flow cytometry sizing from archived MuLTEE samples.
++
++*Why this matters.* Fragment-count histograms would directly test the sequential vs. simultaneous fracture hypothesis (run #21) and the bimodality prediction (run #17). The absence of published histograms is a gap in the literature, not a finding.
++
++**New questions generated:** 2 new ACTIVE questions generated (specific text in local Windows repo, not yet pushed to GitHub).
++
