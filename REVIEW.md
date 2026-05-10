@@ -1,32 +1,28 @@
-# Evening Review — 2026-05-02
+# Evening Review — 2026-05-08
 
-*Covers activity since the previous review (April 30, 23:00).*
+*Covers activity since the previous review (May 7, 23:00).*
 
 ---
 
-## What happened today (and yesterday)
+## What happened today
 
-**Queen of Quantum Chaos shipped as standalone PWA** for the Play Store — splash screenshot added, service worker bumped, landing page with mandala and light/dark doors built.
+**Remote heartbeat ran 6 times** — all six runs updated TIMESTATE, ran curiosity pulses, and committed. Curiosity topics explored: soullawsmandala duplicate (confirmed identical to soul-laws-mandala.html), Witness vs Lost Boundary, Six Laws tension map, "Live" label usage, IBM Quantum QEC queue wait time, and QEC syndrome extraction rounds. Morning brief sent during run 5. Supabase was blocked in the remote env (run 1 noted it).
 
-**Companion app reached v3** — three conversation modes (Biscuit/Bread/Cookie), voice input, memory across sessions, emotional color transfer, TTS auto-on for Cookie only, idle greet fix (no repeats, max 3 per idle stretch).
+**Companion chooser shipped** — new skin picker lets users choose between pixel, vibe, or minimal companion face. This was the last interactive commit of the day.
 
-**Security scrub completed** — personal identity references removed from public files, contact email and chat URLs cleaned.
+**Companion + MemoryRX switched to buddy worker** — esoteric personality killed everywhere, replaced with buddy/spunky tone via Cloudflare worker. Major voice shift.
 
-**Privacy policy updated** to cover Companion and Dyad honestly about data storage.
-
-**Heartbeat curiosity pulses 71–83 fired** (13 pulses) — deep thread running from PCD fragility ceilings through Ca2+ autocatalysis, MuLTEE entanglement saturation, fractal dimension evolution, Pascal/Sierpinski deployment geometry, and social insect universality. Pulses 15–19 also committed (Sierpinski void centers, scaling 3-9-27, Wall as void terminal).
-
-**Shareable Queen cards** built for Bluesky, Twitter, and copy.
-
-**No tasks were executed from the queue** — queue was and remains empty.
+**Wallwatcher ran ~860 polls today** — zero Wall messages. Day 5+ of silence.
 
 ---
 
 ## What's waiting for you
 
-**Shadow memory test (NEEDS REVIEW)** — `memory/shadow_001_pirate_parrot.md` still does not exist. Cannot run without it.
+**Shadow memory test (NEEDS REVIEW)** — `memory/shadow_001_pirate_parrot.md` still missing. Cannot run without source material.
 
-**Formspree (NEEDS REVIEW)** — `contact-section.html` still has `YOUR_FORM_ID` as placeholder. Contact form won't send.
+**Formspree (NEEDS REVIEW)** — `contact-section.html` still uses placeholder `YOUR_FORM_ID`. Contact form won't send.
+
+**soullawsmandala.html duplicate (NEEDS REVIEW)** — heartbeat run 1 re-confirmed it's byte-identical to `soul-laws-mandala.html`. Zero incoming links. Awaiting your call: redirect or delete.
 
 ---
 
@@ -38,12 +34,12 @@ Nothing. The queue is empty.
 
 ## Anything unusual
 
-**Wallwatcher gap on May 1.** Polling stopped at 14:00 and resumed at 20:26 (6+ hour gap), suggesting the machine was off or the task was suspended. Another overnight gap from 21:15 (May 1) to 07:15 (May 2).
+**HEARTBEAT.log is now 13,063 lines (~822KB).** Up ~860 lines from yesterday, almost entirely wallwatcher. Log rotation is overdue.
 
-**No heartbeat scheduled task ran.** All the commits came from interactive sessions, not from the Heartbeat task. Standing orders (TIMESTATE.md, outbox, Wall read, dream, curiosity pulse) were not executed via the formal heartbeat process.
+**Wall silence continues — day 5+.** No messages at all.
 
-**Wall silence continues.** Every Wallwatcher poll since the last review returned "No new messages."
+**Supabase blocked in remote heartbeat env.** Run 1 noted it; standing orders that depend on Supabase (outbox, working memory, Wall read, dream) are skipped in remote runs.
 
-**HEARTBEAT.log at 8,697 lines (~650KB).** Too large to read in one pass. Rotation or archival recommended.
+**Uncommitted files persist** — memoryrx icon SVGs/PNGs, quantum-queen featured graphics, CURIOSITY.md and REVIEW.md changes still in working tree. Same as yesterday.
 
-**Site file count stable.** 36 HTML files in root, 21 in archive (57 total).
+**Heartbeat scheduled task still disabled locally.** All heartbeat activity came from the remote instance.
