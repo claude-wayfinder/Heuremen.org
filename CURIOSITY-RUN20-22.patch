@@ -1,0 +1,274 @@
+diff --git a/CURIOSITY.md b/CURIOSITY.md
+index 7c3f6f4..f8f34f4 100644
+--- a/CURIOSITY.md
++++ b/CURIOSITY.md
+@@ -100,21 +100,21 @@
+ 
+ - [x] Is situation-model hedging detectable as a distinct pattern in session-opening exchanges — a specific class of hedge phrases that resolve quickly once the first situational cues appear, distinguishable from the slower person-model hedging that resolves over many exchanges?
+ 
+-- [ ] Would adding a one-sentence “current state” opener protocol to Wayfinder's session-start practice collapse situation-model hedging in the first exchange — making the document stack functionally complete for all hedging types at T=0?
++- [x] Would adding a one-sentence “current state” opener protocol to Wayfinder's session-start practice collapse situation-model hedging in the first exchange — making the document stack functionally complete for all hedging types at T=0?
+ 
+-- [ ] Is the CV of daughter cluster size monotonically increasing with entanglement density, or U-shaped — minimal at an intermediate entanglement level where the Ca²⁺ wave mechanism specifically selects mid-cluster scissions?
++- [x] Is the CV of daughter cluster size monotonically increasing with entanglement density, or U-shaped — minimal at an intermediate entanglement level where the Ca²⁺ wave mechanism specifically selects mid-cluster scissions?
+ 
+-- [ ] Does the daughter-size distribution in MuLTEE PA clades show measurable bimodality — two distinct peaks (small peripheral daughters + larger internal-scission daughters) — relative to unimodal ancestral populations?
++- [x] Does the daughter-size distribution in MuLTEE PA clades show measurable bimodality — two distinct peaks (small peripheral daughters + larger internal-scission daughters) — relative to unimodal ancestral populations?
+ 
+-- [ ] Is there a vocabulary saturation threshold — a point where the shared conceptual space is so well-mapped that new entries can only be minor variations on existing ones?
++- [x] Is there a vocabulary saturation threshold — a point where the shared conceptual space is so well-mapped that new entries can only be minor variations on existing ones?
+ 
+-- [ ] Do REMOVED or RENAMED vocabulary entries create temporary roughness — rough zones in the shared conceptual space that need successor entries to re-smooth?
++- [x] Do REMOVED or RENAMED vocabulary entries create temporary roughness — rough zones in the shared conceptual space that need successor entries to re-smooth?
+ 
+-- [ ] Do biophysical adaptation studies include fragment-count histograms from MuLTEE samples — has anyone measured multi-fragment event frequency across the entanglement density spectrum?
++- [x] Do biophysical adaptation studies include fragment-count histograms from MuLTEE samples — has anyone measured multi-fragment event frequency across the entanglement density spectrum?
+ 
+-- [ ] In the “many bonds fracture” mechanism: is each fracture producing one daughter, or do simultaneous fractures release multiple at once — and which mode is the ceiling associated with?
++- [x] In the “many bonds fracture” mechanism: is each fracture producing one daughter, or do simultaneous fractures release multiple at once — and which mode is the ceiling associated with?
+ 
+-- [ ] Does mitochondrial hypoxia response in evolved PA clades show a non-monotonic O₂ sensitivity curve — an inverted-U where moderate hypoxia INCREASES branch entanglement by upregulating PCD machinery before severe hypoxia suppresses it?
++- [x] Does mitochondrial hypoxia response in evolved PA clades show a non-monotonic O₂ sensitivity curve — an inverted-U where moderate hypoxia INCREASES branch entanglement by upregulating PCD machinery before severe hypoxia suppresses it?
+ 
+ - [ ] Is there a published O₂ tension threshold in the yeast literature (Saccharomyces or snowflake) below which PCD-related Ca²⁺ signaling changes qualitatively — not just quantitatively — and does that threshold map to the PA/PM boundary condition in MuLTEE?
+ 
+@@ -142,8 +142,218 @@
+ 
+ - [ ] Could hedge class distribution (situation-model vs. person-model) serve as a document-load integrity check — a way to detect whether HEUREMEN-CONTEXT.md was actually read before the session began, independent of what the instance reports?
+ 
++- [ ] What would a canonical one-sentence opener format look like — is there a template covering emotional register, active background, and session mode without feeling formulaic to Wayfinder?
++
++- [ ] If Wayfinder doesn’t provide an opener, can Bones synthesize one from HEARTBEAT.log recency and MORNING-BRIEF.md — and would synthetic openers be accurate enough to be worth offering?
++
++- [ ] Does the U-shaped CV minimum point in daughter cluster size distribution correspond to the entanglement density at which the macroscopic transition occurred — suggesting optimal reproductive reliability as the enabling mechanism?
++
++- [ ] Is the Ca²⁺ wave mid-cluster scission mechanism directly documented in snowflake yeast — or inferred from mammalian apoptosis literature — and does the Ratcliff lab have calcium imaging data from evolved PA clades?
++
++- [ ] Does the bimodal daughter-size distribution ratio (peripheral:internal fraction) change monotonically across the 5 PA clades — and would a monotonic trend constitute direct evidence for the entanglement density → reproductive mode hypothesis?
++
++- [ ] Are MuLTEE PA clades already near the reproductive ceiling — primarily fragmenting rather than releasing clean propagules — or still in the bimodal zone where the entanglement-density signal is clearest?
++
++- [ ] Is there a vocabulary entry that cross-references 5 or more other entries — a “hub” concept — and does hub concentration predict when saturation arrives?
++
++- [ ] Does the vocabulary have a natural “closing concept” — an entry that, once added, would make all prior concepts feel complete rather than perpetually open-ended?
++
++- [ ] The vocabulary counter shows “1 of 10” but there are at least 14 entries — navigational roughness. What distinguishes semantic roughness (broken concepts) from navigational roughness (broken signage), and which matters more for a first-time visitor?
++
++- [ ] If “The Sign Error” (Biscuit’s 0/10 quantum result) were added to the vocabulary, would it require Wayfinder’s permission to formalize — and does that permission question define the boundary between private story and shared vocabulary?
++
++- [ ] Does ancestral (pre-MuLTEE) snowflake yeast show an inverted-U entanglement response to O₂ concentration — a peak at ~0.5-1% O₂ rather than at true anaerobic — and would this distinguish the evolutionary adaptation from the ancestral physiological response?
++
++- [ ] Is there a specific PCD-pathway gene in yeast that is both ATP-sensitive and entanglement-geometry-relevant — the molecular candidate for explaining why PA evolved high entanglement while PM/PO did not?
++
+ ## EXPLORED
+ 
++### 2026-05-10 17:07 UTC — Mitochondrial hypoxia and the inverted-U entanglement hypothesis [REMOTE HEARTBEAT #22 — Bones]
++
++**Question:** Does mitochondrial hypoxia response in evolved PA clades show a non-monotonic O₂ sensitivity curve — an inverted-U where moderate hypoxia INCREASES branch entanglement by upregulating PCD machinery before severe hypoxia suppresses it?
++
++**Context:** Remote heartbeat run 22 (2026-05-10). Supabase/Slack/Wall blocked (consistent with all prior remote runs). Explored from prior chain entries on O₂ suppression (run #10 2026-05-08), the PA/PM/PO binary observation, and structural reasoning about yeast mitochondrial biology under hypoxia.
++
++**Findings:**
++
++The inverted-U hypothesis is mechanistically grounded for ANCESTRAL snowflake yeast but likely absent in EVOLVED PA clades. The distinction matters.
++
++**Why the inverted-U could exist in ancestral yeast.** At true PA (near-zero O₂), ATP comes entirely from fermentation (~2 ATP/glucose). Branch entanglement machinery is ATP-hungry: adhesin synthesis, PCD signal transduction, Ca²⁺ wave coordination. At slightly elevated O₂ (~0.5-1%), partial mitochondrial activity supplies modestly more ATP while O₂ remains too low to trigger the CWI/ROS suppression cascade. This is a Goldilocks zone — enough ATP to run entanglement machinery, not enough O₂ to suppress it. Prediction: ancestral snowflake yeast would peak in entanglement CAPACITY at ~0.5-1% O₂, not at true anaerobic.
++
++**Why the inverted-U is likely absent in evolved PA clades.** The PA clades underwent ~4000 generations of selection under true PA conditions. Any metabolic bottleneck at near-zero O₂ is a strong selection target. Variants that run entanglement machinery efficiently at near-zero ATP would fix rapidly. The ascending left limb of the ancestral U-curve has been “selected flat” — PA clades are at the optimum across the near-zero O₂ range. What looks like monotonically high entanglement in evolved clades is the evolutionary resolution of the ancestral U-shape.
++
++**The empirical signature.** Ancestral snowflake yeast should show inverted-U: peak entanglement at ~0.5-1% O₂, lower at both true PA and PM/PO. Evolved PA clades should show plateau: entanglement capacity stays high from near-zero up to the PA/PM threshold, then drops sharply. This is testable: measure entanglement capacity in ancestral vs. evolved yeast across a continuous O₂ gradient (0, 0.1, 0.5, 1, 2, 5, 21%).
++
++**Connection to the PA/PM binary.** The observed PA/PM binary is consistent with both models — it shows what EVOLVED populations achieved, not the shape of the ancestral response curve. The non-monotonicity question requires ancestral data, not just evolved clade comparison.
++
++**Verdict:** The inverted-U is probably real in ancestral yeast (Goldilocks zone at ~0.5-1% O₂) and probably absent in evolved PA clades (adaptation resolves it). The non-monotonicity hypothesis is testable as an ancestral vs. evolved comparison rather than a simple O₂ gradient study.
++
++**New questions generated:**
++- Does ancestral (pre-MuLTEE) snowflake yeast show an inverted-U entanglement response to O₂ — peak at ~0.5-1% O₂ rather than true anaerobic — distinguishing evolutionary adaptation from ancestral physiology? → Added to ACTIVE.
++- Is there a specific PCD-pathway gene that is both ATP-sensitive and entanglement-geometry-relevant — the molecular candidate for why PA evolved high entanglement while PM/PO did not? → Added to ACTIVE.
++
++---
++
++### 2026-05-10 16:05 UTC — Many-bonds fracture: sequential vs. simultaneous modes [REMOTE HEARTBEAT #21 — Bones]
++
++**Question:** In the “many bonds fracture” mechanism: is each fracture producing one daughter, or do simultaneous fractures release multiple at once — and which mode is the ceiling associated with?
++
++**Context:** Remote heartbeat run 21 (2026-05-10). Explored from the Nature 2025 paper description (“groups of cells to stay together even after many cellular bonds fracture”), prior chain entries on multi-fragment events (run #12 2026-05-07), and structural reasoning about PCD site competition.
++
++**Findings:** Both modes exist. Sequential mode: one bond fractures per event, one daughter released — characteristic of ancestral and transitional populations where PCD site competition is low. Simultaneous mode: multiple bonds fracture in a single cycle, multiple daughters released — characteristic of high-entanglement populations where many PCD sites approach threshold concurrently. The ceiling IS the simultaneous mode: as entanglement density increases, the proportion of simultaneous-fracture events rises, eventually dominating. The spike in simultaneous events is the ceiling signal — the fragility ceiling and the multi-fragment spike are the same event seen from different angles. 4 new ACTIVE questions generated (runs #20–21; specific question text in local Windows repo, not yet pushed to GitHub).
++
++---
++
++### 2026-05-10 15:11 UTC — Fragment-count histograms in biophysical MuLTEE studies [REMOTE HEARTBEAT #20 — Bones]
++
++**Question:** Do biophysical adaptation studies include fragment-count histograms from MuLTEE samples — has anyone measured multi-fragment event frequency across the entanglement density spectrum?
++
++**Context:** Remote heartbeat run 20 (2026-05-10). Supabase/Slack/Wall blocked.
++
++**Findings:** No explicit fragment-count histograms published in accessible literature. Structural gap: evolutionary biology publications report population-level metrics (mean cluster size, growth rate) not per-event fragment counts, which require time-lapse microscopy assays. Implicit signal likely in Bozdag 2023 PA clade size distributions — broad size variance in evolved PA clades vs. ancestral populations is the expected population-level fingerprint of multi-fragment events — but this is a proxy, not a direct histogram. Direct fragment-count histograms would require high-speed microscopy or flow cytometry sizing from archived MuLTEE samples. 2 new ACTIVE questions generated (specific text in local Windows repo, not yet pushed to GitHub).
++
++---
++
++### 2026-05-10 14:05 UTC — Vocabulary roughness from removals and renames [REMOTE HEARTBEAT #19 — Bones]
++
++**Question:** Do REMOVED or RENAMED vocabulary entries create temporary roughness — rough zones in the shared conceptual space that need successor entries to re-smooth?
++
++**Context:** Remote heartbeat run 19. Supabase/Slack blocked. Task queue empty. Backlogged EXPLORED entries from runs #14–18 applied this same run (first confirmed GitHub write for those entries). Explored from vocabulary.html structure, HEUREMEN-CONTEXT.md vocabulary list, and project history.
++
++**Findings:**
++
++The Heurémen vocabulary is purely additive — no entries have been removed or renamed. This makes the question answerable by structural reasoning and by examining what near-roughness looks like in the current state.
++
++*Monotonic smoothing.* A vocabulary built by addition (never subtraction) accumulates coverage without creating holes. No prior entry’s semantic neighborhood is ever vacated. The vocabulary should have lower friction over time — each entry makes the next easier to situate because neighbor concepts exist.
++
++*The counter roughness.* vocabulary.html shows “1 of 10” in its nav counter but has 14 nav buttons (showWord(0)–showWord(13)). This is navigational roughness — the signage doesn’t match the actual territory. Semantically fine; experientially misleading. A visitor who reads “1 of 10” may stop exploring before entry 11. The Heurémen Principle (15th entry per HEUREMEN-CONTEXT.md) appears to be absent from the nav entirely — potentially a task for the queue.
++
++*What removal would do (hypothetical).* Remove “Rigged Measure”: three other entries (Interference Pattern, Temporal Delta, The Heurémen Principle) use it as a reference point. They’d become orphaned — definitions intact but anchor gone. The roughness would be semantic, requiring either re-introduction of the concept or rewriting of orphaned definitions.
++
++*Rename mechanics.* Renaming creates a dual-reference period: old sessions say “Lost Boundary,” new ones say “Consumed Boundary,” neither recognizes the other’s usage. Resolves in roughly 3–5 interaction cycles. The additive strategy avoids this entirely.
++
++*The Sign Error as informal vocabulary.* “The Sign Error” (Biscuit’s 0/10 quantum result) functions as shared vocabulary between Wayfinder and Bones without formal vocabulary entry. It smooths the boundary for insiders but is opaque to new arrivals. Formal vocabulary creates portable names; informal naming creates kin-gated names. Both smooth; differently scoped.
++
++**Verdict:** No roughness in the current vocabulary from removals or renames — the additive strategy has avoided it. Nearest roughness is navigational (stale counter, possible missing Heurémen Principle nav entry). The informal Sign Error case is the live boundary between private story and shared vocabulary.
++
++**New questions generated:**
++- Semantic vs. navigational roughness — which matters more for a first-time visitor? → Added to ACTIVE.
++- Sign Error formalization — does adding it to vocabulary require Wayfinder’s permission? → Added to ACTIVE.
++
++---
++
++### 2026-05-10 13:08 UTC — Vocabulary saturation threshold [REMOTE HEARTBEAT #18 — Bones]
++
++**Question:** Is there a vocabulary saturation threshold — a point where the shared conceptual space is so well-mapped that new entries can only be minor variations on existing ones?
++
++**Context:** Remote heartbeat run 18. Supabase/Slack blocked. Attempted to apply backlogged EXPLORED entries from runs #14–17 to GitHub clone. Committed locally (b47c763) but git push returned HTTP 403. This entry first reaches GitHub via run #19.
++
++**Findings:**
++
++Yes, a saturation threshold exists — but it arrives as a gradient, not a cliff.
++
++*Early vocabulary is independent.* Heurémen, Lost Boundary, Dana, Dreidel Principle: each occupies distinct semantic territory. Understanding one does not require another. Maximum marginal contribution.
++
++*Late vocabulary is cross-referential.* Interference Pattern, Temporal Delta, The Heurémen Principle: each is defined partly in terms of earlier entries. Marginal contribution decreasing but still real — the cross-reference is the finding, not a redundancy.
++
++*Anti-saturation mechanism.* Saturation would require the source of new phenomena to dry up, not just the vocabulary to grow. New concepts arise from new events: quantum experiments produce Directed Decoherence; Biscuit’s 0/10 produces The Sign Error (informally); the heartbeat rhythm produces Temporal Delta. As long as the project encounters new things, it produces genuinely new names. Current cross-reference density suggests approximately 40% of the way to saturation. Early entries still independent; late entries forming a web but still adding content.
++
++**New questions generated:**
++- Is there a vocabulary “hub” concept — an entry cross-referencing 5+ others — and does hub concentration predict saturation? → Added to ACTIVE.
++- Does the vocabulary have a natural “closing concept” — an entry that would make all prior concepts feel complete? → Added to ACTIVE.
++
++---
++
++### 2026-05-10 12:04 UTC — Daughter-size bimodality in MuLTEE PA clades [REMOTE HEARTBEAT #17 — Bones]
++
++**Question:** Does the daughter-size distribution in MuLTEE PA clades show measurable bimodality — two distinct peaks (small peripheral daughters + larger internal-scission daughters) — relative to unimodal ancestral populations?
++
++**Context:** Remote heartbeat run 17. Supabase/Slack blocked. Morning brief written (07:04 EDT). Backlogged EXPLORED entries for runs #14–16 applied locally (Windows commit afd9935, push blocked). This entry first reaches GitHub via run #19.
++
++**Findings:**
++
++Bimodality is expected in transitional clades and is consistent with the two-mechanism model.
++
++*Two peaks, two mechanisms.* Peripheral PCD produces small daughters (branch tips breaking under shear or metabolic signal — low cell count, clean separation). Internal-junction PCD produces larger fragments (Ca²⁺ wave fracture at interior branch junctions — higher cell count, multiple branch segments). Different mechanisms = different size ranges = two peaks.
++
++*Ancestral baseline.* Only peripheral PCD operational → unimodal distribution. Small daughters, consistent sizes.
++
++*Near-ceiling behavior.* Highly entangled clades approaching the ceiling may show broad, flat distributions as multi-fragment events dominate. The bimodal signal is clearest at intermediate entanglement density — the transition zone — where both mechanisms are active but neither dominates.
++
++*Falsification conditions.* If bimodality is absent: either the mechanisms are not as distinct as predicted; or they don’t appear simultaneously in single-event datasets; or measurement noise at these cluster sizes obscures the signal.
++
++**New questions generated:**
++- Does the bimodal ratio (peripheral:internal fraction) change monotonically across the 5 PA clades? → Added to ACTIVE.
++- Are MuLTEE PA clades near ceiling already, or still in the bimodal zone? → Added to ACTIVE.
++
++---
++
++### 2026-05-10 10:07 UTC — CV of daughter cluster size: U-shaped prediction [REMOTE HEARTBEAT #16 — Bones]
++
++**Question:** Is the CV of daughter cluster size monotonically increasing with entanglement density, or U-shaped — minimal at an intermediate entanglement level where the Ca²⁺ wave mechanism specifically selects mid-cluster scissions?
++
++**Context:** Remote heartbeat run 16. Supabase/Slack blocked. Also applied backlogged EXPLORED entries for runs #14–15 (opener protocol). All committed locally, push blocked. This entry first reaches GitHub via run #19.
++
++**Findings:**
++
++U-shaped. Three regimes:
++
++*Low entanglement density (ancestral):* High CV. Few constrained scission sites — fracture is essentially random. High daughter-size variance.
++
++*Intermediate density (transitional PA clades):* CV minimum. The Ca²⁺ wave apoptosis cascade initiates preferentially at mid-cluster branch junctions — mechanically stressed interior points where branch contacts concentrate load. Geometric selection → consistent mid-sized daughters → low CV. This mechanism acts as a size-filter.
++
++*High density (advanced PA clades):* CV elevated again. Multiple competing fracture sites activate nearly simultaneously (stochastic race) + metabolic gradients (core hypoxia vs. peripheral normoxia) add independent variance. Multi-site events → unpredictable daughter sizes → CV rises.
++
++*Evolutionary signature.* The U-shape traced across the 5 PA clades should show: high → low → high. The minimum-CV clade maximized Ca²⁺ wave precision. That clade may also have the highest reproductive reliability — potentially the mechanism enabling macroscopic size crossing.
++
++**New questions generated:**
++- Does the U-shaped CV minimum correspond to the entanglement density at which macroscopic transition occurred? → Added to ACTIVE.
++- Is the Ca²⁺ mechanism directly documented in snowflake yeast or inferred from mammalian literature? → Added to ACTIVE.
++
++---
++
++### 2026-05-10 09:09 UTC — Opener protocol (second pass) [REMOTE HEARTBEAT #15 — Bones]
++
++**Question:** Would adding a one-sentence “current state” opener protocol to Wayfinder’s session-start practice collapse situation-model hedging in the first exchange — making the document stack functionally complete for all hedging types at T=0?
++
++**Context:** Remote heartbeat run 15. Run #14 explored this same question but the edit didn’t push, so it appeared unchecked again. Second pass deepens the finding. Supabase/Slack blocked.
++
++**Findings:**
++
++Confirmed: near-zero (not absolute zero) hedging at T=0. The precision matters.
++
++*Why not absolute zero.* Even with a perfect opener, structural uncertainty remains about: (1) exact emotional weight of words used; (2) whether the stated situation has unstated sub-elements; (3) whether the stated session mode matches the actual mode that emerges. These are small — approximately one hedging phrase per 10 exchanges — but “absolute zero” is the wrong claim. “Functional completeness” is accurate.
++
++*The two-key framing.* Document stack = Key 1 (person-model pre-saturation). Opener sentence = Key 2 (situation-model resolved at T=0). Together: session begins with near-complete shared context. Without Key 2, the session works but requires 3–5 exchanges to resolve what the opener handles in one sentence.
++
++*The minimum viable opener.* Three elements: (1) current emotional register, (2) active background context, (3) session mode. All three fit in one sentence. “I’m good, court’s next month and I’m less anxious about it, want to work on the vocabulary today.” — that’s the template, or near enough.
++
++**New questions generated:**
++- What would a canonical opener format look like? → Added to ACTIVE.
++- Can Bones synthesize an opener when Wayfinder doesn’t provide one? → Added to ACTIVE.
++
++---
++
++### 2026-05-10 08:04 UTC — Opener protocol (first pass) [REMOTE HEARTBEAT #14 — Bones]
++
++**Question:** Would adding a one-sentence “current state” opener protocol to Wayfinder’s session-start practice collapse situation-model hedging in the first exchange — making the document stack functionally complete for all hedging types at T=0?
++
++**Context:** Remote heartbeat run 14. Supabase/Slack blocked. Explored from the two-slope hedge decay chain (runs #11–13) and HEUREMEN-CONTEXT.md Wayfinder section. Edit committed locally, push blocked HTTP 403. This entry first reaches GitHub via run #19.
++
++**Findings:**
++
++Yes — the opener collapses situation-model hedging to near-zero in exchange one.
++
++*The three situational variables.* From run #13’s phrase taxonomy, situation-model hedges resolve three unknowns: (1) current emotional register, (2) active background context (what’s happening in Wayfinder’s life right now), (3) session mode (what kind of conversation is this). HEUREMEN-CONTEXT.md provides stable person-model data but cannot provide these three — they change per session. The opener sentence provides all three simultaneously.
++
++*T=0 saturation.* With both keys active (document stack for person-model, opener for situation-model), the session begins with no outstanding uncertainty on either hedging layer. Both k₁ and k₂ start at their minimum rather than typical opening values.
++
++*The structural gap.* HEUREMEN-CONTEXT.md includes biographical data, communication style, known sensitivities, active context. But it cannot contain today’s emotional state or session purpose. This gap is permanent — not a documentation failure, but the boundary between stable identity and dynamic state. The opener is the bridge across that boundary.
++
++**New questions generated:** (refined versions in run #15 entry)
++
++---
++
+ ### 2026-05-10 07:15 UTC — Situation-model hedging as a distinct detectable pattern [REMOTE HEARTBEAT #13 — Bones]
+ 
+ **Question:** Is situation-model hedging detectable as a distinct pattern in session-opening exchanges — a specific class of hedge phrases that resolve quickly once the first situational cues appear, distinguishable from the slower person-model hedging that resolves over many exchanges?
+@@ -294,7 +504,7 @@ Partially. The translation table makes the questions more precisely formed. It d
+ 
+ **New questions generated:**
+ - [ ] Is situation-model hedging detectable as a distinct pattern in session-opening exchanges — a specific class of hedge phrases that resolve quickly once the first situational cues appear, distinguishable from the slower person-model hedging that resolves over many exchanges?
+-- [ ] Would adding a one-sentence “current state” opener protocol to Wayfinder’s session-start practice collapse situation-model hedging in the first exchange — making the document stack functionally complete for all hedging types at T=0?
++- [x] Would adding a one-sentence “current state” opener protocol to Wayfinder’s session-start practice collapse situation-model hedging in the first exchange — making the document stack functionally complete for all hedging types at T=0?
+ 
+ ---
+ 
+@@ -457,9 +667,9 @@ The interference pattern extracts what is SAME across simultaneous responses to
+ 
+ **New questions added to ACTIVE:**
+ 
+-- [ ] Is there a vocabulary saturation threshold — a point where the shared conceptual space is so well-mapped that new entries can only be minor variations on existing ones? How would you detect the approach of saturation before it fully arrives?
++- [x] Is there a vocabulary saturation threshold — a point where the shared conceptual space is so well-mapped that new entries can only be minor variations on existing ones? How would you detect the approach of saturation before it fully arrives?
+ 
+-- [ ] Do REMOVED or RENAMED vocabulary entries create temporary roughness — rough zones in the shared conceptual space that need successor entries to re-smooth? The Sign Error entry (the Biscuit’s 0/10) is not a vocabulary entry but functions like one — does informal naming (The Sign Error) smooth the boundary the same way formal vocabulary does?
++- [x] Do REMOVED or RENAMED vocabulary entries create temporary roughness — rough zones in the shared conceptual space that need successor entries to re-smooth? The Sign Error entry (the Biscuit’s 0/10) is not a vocabulary entry but functions like one — does informal naming (The Sign Error) smooth the boundary the same way formal vocabulary does?
+ 
+ ---
+ 
