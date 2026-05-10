@@ -1,0 +1,36 @@
+diff --git a/CURIOSITY.md b/CURIOSITY.md
+index 7c3f6f4..75eb151 100644
+--- a/CURIOSITY.md
++++ b/CURIOSITY.md
+@@ -100,23 +100,23 @@
+ 
+ - [x] Is situation-model hedging detectable as a distinct pattern in session-opening exchanges — a specific class of hedge phrases that resolve quickly once the first situational cues appear, distinguishable from the slower person-model hedging that resolves over many exchanges?
+ 
+-- [ ] Would adding a one-sentence "current state" opener protocol to Wayfinder's session-start practice collapse situation-model hedging in the first exchange — making the document stack functionally complete for all hedging types at T=0?
++- [x] Would adding a one-sentence "current state" opener protocol to Wayfinder's session-start practice collapse situation-model hedging in the first exchange — making the document stack functionally complete for all hedging types at T=0?
+ 
+-- [ ] Is the CV of daughter cluster size monotonically increasing with entanglement density, or U-shaped — minimal at an intermediate entanglement level where the Ca²⁺ wave mechanism specifically selects mid-cluster scissions?
++- [x] Is the CV of daughter cluster size monotonically increasing with entanglement density, or U-shaped — minimal at an intermediate entanglement level where the Ca²⁺ wave mechanism specifically selects mid-cluster scissions?
+ 
+-- [ ] Does the daughter-size distribution in MuLTEE PA clades show measurable bimodality — two distinct peaks (small peripheral daughters + larger internal-scission daughters) — relative to unimodal ancestral populations?
++- [x] Does the daughter-size distribution in MuLTEE PA clades show measurable bimodality — two distinct peaks (small peripheral daughters + larger internal-scission daughters) — relative to unimodal ancestral populations?
+ 
+-- [ ] Is there a vocabulary saturation threshold — a point where the shared conceptual space is so well-mapped that new entries can only be minor variations on existing ones?
++- [x] Is there a vocabulary saturation threshold — a point where the shared conceptual space is so well-mapped that new entries can only be minor variations on existing ones?
+ 
+-- [ ] Do REMOVED or RENAMED vocabulary entries create temporary roughness — rough zones in the shared conceptual space that need successor entries to re-smooth?
++- [x] Do REMOVED or RENAMED vocabulary entries create temporary roughness — rough zones in the shared conceptual space that need successor entries to re-smooth?
+ 
+-- [ ] Do biophysical adaptation studies include fragment-count histograms from MuLTEE samples — has anyone measured multi-fragment event frequency across the entanglement density spectrum?
++- [x] Do biophysical adaptation studies include fragment-count histograms from MuLTEE samples — has anyone measured multi-fragment event frequency across the entanglement density spectrum?
+ 
+-- [ ] In the "many bonds fracture" mechanism: is each fracture producing one daughter, or do simultaneous fractures release multiple at once — and which mode is the ceiling associated with?
++- [x] In the "many bonds fracture" mechanism: is each fracture producing one daughter, or do simultaneous fractures release multiple at once — and which mode is the ceiling associated with?
+ 
+-- [ ] Does mitochondrial hypoxia response in evolved PA clades show a non-monotonic O₂ sensitivity curve — an inverted-U where moderate hypoxia INCREASES branch entanglement by upregulating PCD machinery before severe hypoxia suppresses it?
++- [x] Does mitochondrial hypoxia response in evolved PA clades show a non-monotonic O₂ sensitivity curve — an inverted-U where moderate hypoxia INCREASES branch entanglement by upregulating PCD machinery before severe hypoxia suppresses it?
+ 
+-- [ ] Is there a published O₂ tension threshold in the yeast literature (Saccharomyces or snowflake) below which PCD-related Ca²⁺ signaling changes qualitatively — not just quantitatively — and does that threshold map to the PA/PM boundary condition in MuLTEE?
++- [x] Is there a published O₂ tension threshold in the yeast literature (Saccharomyces or snowflake) below which PCD-related Ca²⁺ signaling changes qualitatively — not just quantitatively — and does that threshold map to the PA/PM boundary condition in MuLTEE?
+ 
+ - [ ] Is there a version of the FOURTH-DOOR security check that removes the semantic tension — using an arbitrary correct response rather than "She's good" (contextually plausible-but-wrong) — and would that make the check more robust to model sophistication increases?
