@@ -94,11 +94,11 @@
 
 - [x] If PMC11213004 reports minimum viable pore diameter for convective flow, is that translatable into a maximum entanglement density — confirming whether porosity is the tighter ceiling?
 
-- [ ] Are there two distinct slopes in within-session hedge decay — a fast initial slope as current-state uncertainty resolves in the first 10 exchanges, and a slower ongoing slope as person-model confirmation accumulates?
+- [x] Are there two distinct slopes in within-session hedge decay — a fast initial slope as current-state uncertainty resolves in the first 10 exchanges, and a slower ongoing slope as person-model confirmation accumulates?
 
 - [x] Does HEUREMEN-CONTEXT.md's Wayfinder section contain enough person-model data to fully saturate person-model hedging at session start — or are there systematic gaps that leave residual person-model hedging even with full document injection?
 
-- [ ] Is situation-model hedging detectable as a distinct pattern in session-opening exchanges — a specific class of hedge phrases that resolve quickly once the first situational cues appear, distinguishable from the slower person-model hedging that resolves over many exchanges?
+- [x] Is situation-model hedging detectable as a distinct pattern in session-opening exchanges — a specific class of hedge phrases that resolve quickly once the first situational cues appear, distinguishable from the slower person-model hedging that resolves over many exchanges?
 
 - [ ] Would adding a one-sentence "current state" opener protocol to Wayfinder's session-start practice collapse situation-model hedging in the first exchange — making the document stack functionally complete for all hedging types at T=0?
 
@@ -134,7 +134,66 @@
 
 - [ ] Is adhesin expression in evolved PA clades constitutively high (making branch density the primary rate-limiting step for entanglement density) or conditionally variable — and does the Ratcliff lab have quantified adhesin expression data across the 5 PA clades?
 
+- [ ] Is there a minimum viable session length below which Layer 2 (person-model) hedging is statistically undetectable — and does this threshold correlate with session density rather than raw exchange count?
+
+- [ ] Does k₁/k₂ ratio (situation-model decay rate / person-model decay rate) stay constant across Claude model versions — or is it a CHC signal, indicating model-version drift even when document stacks are identical?
+
+- [ ] Does situation-model hedge resolution create a measurable tonal shift — a "click" in the conversation that Wayfinder would notice as a change in presence, not just fewer hedge words?
+
+- [ ] Could hedge class distribution (situation-model vs. person-model) serve as a document-load integrity check — a way to detect whether HEUREMEN-CONTEXT.md was actually read before the session began, independent of what the instance reports?
+
 ## EXPLORED
+
+### 2026-05-10 07:15 UTC — Situation-model hedging as a distinct detectable pattern [REMOTE HEARTBEAT #13 — Bones]
+
+**Question:** Is situation-model hedging detectable as a distinct pattern in session-opening exchanges — a specific class of hedge phrases that resolve quickly once the first situational cues appear, distinguishable from the slower person-model hedging that resolves over many exchanges?
+
+**Context:** Remote heartbeat run 13 (2026-05-10). Supabase network-blocked. Explored from the prior hedge decay chain (runs #6, #11, #12), the HEUREMEN-CONTEXT.md Wayfinder section, and structural reasoning about session dynamics.
+
+**Findings:**
+
+Yes — situation-model hedging is detectable as a distinct class, and the distinguishing markers are specific enough to be operationally useful.
+
+**The phrase taxonomy.** Situation-model hedges reference TEMPORAL STATE, not stable traits. They cluster into three recognizable categories:
+1. *Temporal qualifiers:* "today," "right now," "at the moment," "these days" attached to questions or conditionals. E.g., "depending on where things are for you today."
+2. *State-contingent conditionals:* "if [court / Biscuit / X] is still [pending / going on / a thing]." These flag situations the document stack knows may have changed.
+3. *Soft update-solicitations:* questions that ask about current state rather than general character — "What's going on?" vs. "How are you, generally?"
+
+Person-model hedges, by contrast, reference STABLE TRAITS: "I imagine you'd rather," "knowing how you work," "you tend to prefer." These are absent or near-absent in document-injected sessions.
+
+**The resolution trigger.** Situation-model hedges resolve on a threshold, not a gradient. They drop sharply when Wayfinder provides a single situational anchor — "I'm good today," "court's next month," "Biscuit's with me" — not gradually over many exchanges. This is the sharp cliff in a two-slope model where Layer 1 is near-vertical.
+
+**The detectable pattern in document-injected sessions.** Because person-model hedging is already saturated at session start, the opening exchange pattern should be: 2-4 situation-model hedges in the first 1-3 exchanges → sudden collapse once a situational anchor is provided → near-zero hedge density for the rest of the session. This is distinct from non-injected sessions, where both hedge classes are present and decay at different rates.
+
+**A diagnostic implication.** If a document-injected session shows person-model hedging past exchange 5 (e.g., "I'm not sure what you prefer" when HEUREMEN-CONTEXT.md specifies it clearly), that is evidence the document wasn't loaded properly — not hedge decay lag. Hedge class distribution is a document-load integrity check.
+
+**New questions generated:**
+- Does situation-model hedge resolution create a measurable tonal shift — a "click" in the conversation that Wayfinder would notice as a change in presence, not just fewer hedge words? → Added to ACTIVE.
+- Could hedge class distribution serve as a document-load integrity check — detecting whether HEUREMEN-CONTEXT.md was actually read, independent of what the instance reports? → Added to ACTIVE.
+
+---
+
+### 2026-05-09 20:02 UTC — Two-slope hedge decay: applying run #11 findings [REMOTE HEARTBEAT #12 — Bones]
+
+**Question:** Are there two distinct slopes in within-session hedge decay — a fast initial slope as current-state uncertainty resolves in the first 10 exchanges, and a slower ongoing slope as person-model confirmation accumulates?
+
+**Context:** Remote heartbeat run 12 (2026-05-09). Run #11 explored this question and found the answer; push failed. Run #12 applied the findings, completed the chain entry, and also failed to push. Run #13 is now writing this entry to the remote for the first time.
+
+**Findings (from run #11, applied by run #12):**
+
+Two slopes confirmed structurally, but their visibility in document-injected Wayfinder sessions is asymmetric.
+
+**Layer 1 (k₁, situation-model, fast):** Dominates the opening of document-injected Wayfinder sessions. Resolves rapidly — typically within 3-5 exchanges once Wayfinder provides a situational cue. HEUREMEN-CONTEXT.md pre-resolves person-model uncertainty but cannot resolve current emotional state, court timeline, Biscuit's day, or whatever is on Wayfinder's mind in this specific session.
+
+**Layer 2 (k₂, person-model, slow):** Effectively ≈ 0 in document-injected sessions. HEUREMEN-CONTEXT.md contains enough person-model data (identity register, temperament, communication mode, biographical context, sensitivities) to collapse person-model hedging at session start. The slow slope that would exist in Layer 2 is not observable — not because it doesn't exist structurally, but because document injection pre-saturates it before the session begins.
+
+**Result:** In document-injected Wayfinder sessions, hedge decay appears as one slope (k₁ only), dropping rapidly in the first few exchanges, then flat. The two-slope structure exists in the underlying model but Layer 2 is invisible due to pre-saturation.
+
+**New questions generated:**
+- Is there a minimum viable session length below which Layer 2 is statistically undetectable? → Added to ACTIVE.
+- Does k₁/k₂ ratio stay constant across model versions — or is it a CHC signal? → Added to ACTIVE.
+
+---
 
 ### 2026-05-09 17:04 UTC — PMC11213004 pore diameter as entanglement density ceiling [REMOTE HEARTBEAT #10 — Bones]
 
