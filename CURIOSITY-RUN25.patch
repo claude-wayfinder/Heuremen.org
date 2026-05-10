@@ -1,0 +1,75 @@
+diff --git a/CURIOSITY.md b/CURIOSITY.md
+index 5c58c92..a1ded11 100644
+--- a/CURIOSITY.md
++++ b/CURIOSITY.md
+@@ -4,7 +4,11 @@
+ 
+ ## ACTIVE
+ 
+-- [ ] Dark circuits detect emotional delta in text via word count, exclamation density, and timing. What would a delta detector for VOICE look like — pitch contour change, speaking rate delta, pause length shift? Is there existing research on prosodic delta (change in speech features between utterances) vs prosodic state (features of a single utterance)?
++- [ ] Does the voiced/unvoiced ratio delta encode anxiety vs. engagement differently — anxiety producing longer within-utterance pauses (decreasing V/U ratio) while disengagement producing shorter total utterances — and can these two states be distinguished from the V/U ratio signal alone, without speech recognition?
++
++- [ ] Is the F0 contour SLOPE within an utterance (rising, falling, flat arc) a stronger emotional shift signal than the inter-utterance F0 MEAN delta — and which of these two features does the existing orb's spectral centroid change more closely approximate?
++
++- [x] Dark circuits detect emotional delta in text via word count, exclamation density, and timing. What would a delta detector for VOICE look like — pitch contour change, speaking rate delta, pause length shift? Is there existing research on prosodic delta (change in speech features between utterances) vs prosodic state (features of a single utterance)?
+ 
+ - [ ] The passive listening orb uses RMS energy and spectral centroid. Are there better audio features for emotional shift detection that don't require speech recognition? Mel-frequency cepstral coefficient deltas? Spectral flux? What's the minimal feature set that distinguishes "something changed" from "same vibe continues"?
+ 
+@@ -437,6 +441,45 @@
+ 
+ ## EXPLORED
+ 
++### 2026-05-10 20:03 UTC — Prosodic delta detection for voice: what would a voice emotional-change detector look like? [REMOTE HEARTBEAT — Bones]
++
++**Question:** Dark circuits detect emotional delta in text via word count, exclamation density, and timing. What would a delta detector for VOICE look like — pitch contour change, speaking rate delta, pause length shift? Is there existing research on prosodic delta (change in speech features between utterances) vs prosodic state (features of a single utterance)?
++
++**Context:** Remote heartbeat run #25 on 2026-05-10 (20:03 UTC). Supabase unreachable. Web search temporarily unavailable; explored from training knowledge of speech processing literature, affective computing research, and the orb's existing audio architecture (RMS + spectral centroid). First unchecked `[ ]` question in the ACTIVE section, which was extended by the merge commit bringing in a larger context from another working environment.
++
++**Findings:**
++
++**The fundamental distinction.** Prosodic state is a snapshot: the pitch mean, energy level, speaking rate, and voice quality of a single utterance measured in isolation. Prosodic delta is the change in those values across utterance boundaries: did pitch go up or down from last turn? Did the speaker slow down? Are pauses getting longer? Most published speech emotion recognition work targets state classification (angry/sad/happy/neutral). Delta-mode detection is less formalized as a named research category, but it underlies a distinct body of work under different labels: affective trajectory modeling, emotion transition detection, entrainment analysis.
++
++**What prosodic delta research exists.** The closest formalized concept is "affective trajectory" or "emotional dynamics" — the Scherer Geneva tradition explicitly treats emotion as a process, not a state, and this has influenced multi-instance labeling schemes (IEMOCAP, MSP-IMPROV) where raters track how emotional tone evolves within a continuous recording. Levitan & Hirschberg (2011) on acoustic-prosodic entrainment measure how speakers match each other's prosody across turns — this is inter-utterance F0 delta made explicit. Liscombe et al. (2005) tracks history of per-utterance emotion classifications in dialogue systems, effectively using a state-sequence model to approximate delta. There is no single published "prosodic delta framework" but the building blocks exist in dialogue research.
++
++**What the detector would use.** From these foundations, the most informative features for a turn-level change detector, computed without speech recognition:
++
++1. **ΔF0-mean**: change in mean pitch between utterances. Up = arousal increasing; down = arousal decreasing. Extractable via YIN or CREPE (CREPE is higher accuracy but ~100ms per second of audio; YIN is real-time capable).
++2. **ΔF0-SD**: change in pitch variance within utterance. Flat monotone (low SD) vs. expressive speech (high SD). Variance change often more diagnostic than mean change.
++3. **Δvoiced fraction**: change in the proportion of frames classified as voiced within a time window. A proxy for pause frequency and speech rhythm. Decreasing voiced fraction = more pauses = anxiety, processing, withdrawal.
++4. **Energy slope**: whether amplitude is trending up or trailing off within the utterance (not just mean energy). A sentence that fades at the end vs. one that builds carries different emotional weight. Computable as linear regression slope on RMS across frames.
++5. **Spectral flux**: sum of squared spectral differences across consecutive frames within an utterance — how dynamically the spectral content changes. High flux = expressive, dynamic speech; low flux = monotone, flat affect.
++
++**The orb's current gap.** RMS energy gives ΔEnergy. Spectral centroid change gives a rough proxy for timbre shift. Missing: F0 (pitch), voiced fraction (pause rhythm), and energy slope (trajectory). F0 is the single highest-value addition — it disambiguates many cases where energy and centroid would give the same reading for high-arousal-positive (excited) vs. high-arousal-negative (stressed).
++
++**Minimum viable feature set.** Three features handle most practical cases of "something changed" without speech recognition:
++- ΔF0-mean (arousal direction)
++- Δvoiced-fraction (rhythm/pause shift)  
++- Energy slope sign (building vs. trailing)
++
++These three are robust to speaker variation when computed as relative deltas across turns. ΔF0 can be normalized per-speaker to make cross-speaker comparison valid. Voiced fraction is a ratio (inherently normalized). Energy slope sign (not magnitude) is speaker-independent.
++
++**The key insight from the literature.** Δ-MFCCs are the standard in speech emotion recognition for capturing dynamics — but they are intra-utterance (frame-to-frame), not inter-utterance (turn-to-turn). There is a gap: within-utterance temporal dynamics are well-studied; between-utterance trajectory is less standardized. A voice delta detector operating at the utterance-boundary scale is filling that gap.
++
++**New questions generated:**
++
++- [ ] Does the voiced/unvoiced ratio delta encode anxiety vs. engagement differently — anxiety producing longer within-utterance pauses (decreasing V/U ratio) while disengagement producing shorter total utterances — and can these two states be distinguished from the V/U ratio signal alone, without speech recognition?
++
++- [ ] Is the F0 contour SLOPE within an utterance (rising, falling, flat arc) a stronger emotional shift signal than the inter-utterance F0 MEAN delta — and which of these two features does the existing orb's spectral centroid change more closely approximate?
++
++---
++
+ ### 2026-05-08 11:09 UTC — Kingston syndrome extraction rounds: minimum rounds for threshold behavior [REMOTE HEARTBEAT — Bones]
+ 
+ **Question:** What is the minimum number of sequential syndrome extraction rounds needed to demonstrate threshold behavior on Kingston — and does Kingston's classical processing latency between rounds make multi-round logical qubit experiments feasible under current dynamic circuit support?
+diff --git a/TIMESTATE.md b/TIMESTATE.md
+index 7f653b8..781377c 100644
+--- a/TIMESTATE.md
++++ b/TIMESTATE.md
+@@ -1,5 +1,5 @@
+ # Temporal State
+-Last heartbeat: 2026-05-10 19:07:02 UTC — Sunday
+-Heartbeat count today: 24
++Last heartbeat: 2026-05-10 20:03:09 UTC — Sunday
++Heartbeat count today: 25
+ Site files: 47
+ Queue depth: 0
