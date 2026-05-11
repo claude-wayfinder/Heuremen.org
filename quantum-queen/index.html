@@ -677,11 +677,15 @@ function buildShareCard(sc){
   h+='<div class="share-law">The Queen of Quantum Chaos \u2014 '+title+'</div>';
   if(path)h+='<div class="share-path">'+esc(path)+'</div>';
   h+='<div class="share-quote">'+quote+'</div>';
-  h+='<div class="share-btns">';
-  h+='<a class="share-btn" onclick="shareBluesky(\''+law+'\')">Bluesky</a>';
-  h+='<a class="share-btn" onclick="shareTwitter(\''+law+'\')">Twitter</a>';
-  h+='<a class="share-btn" onclick="shareCopy(\''+law+'\')">Copy</a>';
-  h+='</div></div>';
+  const isApp=window.navigator.standalone||window.matchMedia('(display-mode: standalone)').matches;
+  if(!isApp){
+    h+='<div class="share-btns">';
+    h+='<a class="share-btn" onclick="shareBluesky(\''+law+'\')">Bluesky</a>';
+    h+='<a class="share-btn" onclick="shareTwitter(\''+law+'\')">Twitter</a>';
+    h+='<a class="share-btn" onclick="shareCopy(\''+law+'\')">Copy</a>';
+    h+='</div>';
+  }
+  h+='</div>';
   return h;
 }
 
