@@ -220,6 +220,8 @@ export class DarkCircuit {
   // ── Node detection ──
 
   _isNode() {
+    // Cold-start: fire once at message 3 as a warm-up read. Intentional —
+    // gives the engine one early calibration point before flight detection kicks in.
     if (this.readings.length < 3) return this.readings.length === 3;
 
     const current = this.readings[this.readings.length - 1];
@@ -227,7 +229,12 @@ export class DarkCircuit {
     const avgEnergy = window.reduce((a, r) => a + r.energy.score, 0) / window.length;
     const avgLength = window.reduce((a, r) => a + r.wordCount, 0) / window.length;
 
-    // Anti-node: rising energy streak
+    // Anti-node: fragile equilibrium — user just walked through something heavy
+    // and is now integrating with a quiet reply. Don't provoke. (Shuttle review)
+    if (this._recentHeavyResolution(current)) return false;
+
+    // Anti-node: rising energy streak. Uses <= so flat-at-same-level reads as
+    // rising — intentional, a sustained plateau shouldn't trigger a node.
     if (this.readings.length >= 3) {
       const last3 = this.readings.slice(-3).map(r => r.energy.score);
       if (last3[0] <= last3[1] && last3[1] <= last3[2] && last3[2] > 3) return false;
@@ -245,17 +252,34 @@ export class DarkCircuit {
     // Node: short message after long ones (the breath)
     const lengthBreath = current.wordCount < avgLength * this.coefficients.breathRatio && avgLength > this.coefficients.minAvgLength;
 
-    // Node: question after statements
+    // Node: question after statements — need >= 2 prior user messages to establish
+    // a pattern, otherwise [].every() returns true (JS quirk). (Shuttle review)
     const lastText = this.messages[this.messages.length - 1]?.text || '';
     const isQuestion = lastText.trimEnd().endsWith('?');
     const priorUser = this.messages.slice(-4, -1).filter(m => m.role === 'user');
-    const priorStatements = priorUser.length > 0 && priorUser.every(m => !m.text.trimEnd().endsWith('?'));
+    const priorStatements = priorUser.length >= 2 && priorUser.every(m => !m.text.trimEnd().endsWith('?'));
     const questionShift = isQuestion && priorStatements;
 
     // Node: compression spike (new vocabulary = new topic)
-    const compSpike = current.compression > 0.9 && this.readings.length > 3;
+    // Require >= 10 words to avoid false positives on short all-unique messages. (Shuttle review)
+    const compSpike = current.compression > 0.9 && this.readings.length > 3 && current.wordCount >= 10;
 
     return energyDip || lengthBreath || questionShift || compSpike;
+  }
+
+  // ── Fragile-equilibrium guard (Shuttle's ship-blocker fix) ──
+
+  _recentHeavyResolution(current) {
+    // If the conversation recently went through something heavy (valence dipped
+    // below 0.35 or arousal spiked above 0.7) and the current message is a
+    // low-energy short reply, that's integration — not a node to provoke.
+    if (this.readings.length < 4) return false;
+
+    const recentWindow = this.readings.slice(-6);
+    const hadHeavy = this.mood.valence < 0.35 || this.mood.arousal > 0.7;
+    const currentIsQuiet = current.energy.score <= 1 && current.wordCount <= 8;
+
+    return hadHeavy && currentIsQuiet;
   }
 
   // ── Flight state ──
