@@ -778,6 +778,15 @@ function sampleAudio() {
   else{ring.classList.remove('active');ring.style.transform='scale(1)';}
 }
 
+// ─── App mode: hide mic buttons (WebSpeech not available in WKWebView) ───
+(function(){
+  var isApp=window.navigator.standalone||window.matchMedia('(display-mode: standalone)').matches;
+  if(isApp){
+    var ids=['chatMic','orbMic','listenBtn'];
+    ids.forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
+  }
+})();
+
 // ─── Init ───────────────────────────────────────────────────
 initSetup();
 
