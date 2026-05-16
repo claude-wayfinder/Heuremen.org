@@ -41,6 +41,21 @@ var CompanionAuth = (function() {
       }
     });
 
+    // Handle magic link redirect (hash fragment contains tokens)
+    if (window.location.hash && window.location.hash.includes('access_token')) {
+      // Supabase SDK should pick this up automatically, but force a session check after a beat
+      setTimeout(function() {
+        supabase.auth.getSession().then(function(result) {
+          if (result.data.session) {
+            currentUser = result.data.session.user;
+            loadAccount();
+            // Clean the URL hash
+            history.replaceState(null, '', window.location.pathname);
+          }
+        });
+      }, 500);
+    }
+
     // Check existing session
     supabase.auth.getSession().then(function(result) {
       if (result.data.session) {
