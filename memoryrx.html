@@ -386,6 +386,25 @@ function buildDeltaContext() {
   return ctx;
 }
 
+// ─── HSL Tag Extraction ────────────────────────────────────
+function extractAndApplyHSL(text) {
+  var match = text.match(/\[HSL:(\d+),(\d+),(\d+)\]/);
+  if (!match) return { clean: text, hsl: null };
+  var aiH = parseInt(match[1]), aiS = parseInt(match[2]), aiL = parseInt(match[3]);
+  var root = document.documentElement;
+  var moodH = parseFloat(root.style.getPropertyValue('--orb-h')) || 220;
+  var moodS = parseFloat(root.style.getPropertyValue('--orb-s')) || 40;
+  var moodL = parseFloat(root.style.getPropertyValue('--orb-l')) || 45;
+  // Blend: 60% dark circuit mood, 40% AI per-message read
+  var h = Math.round(moodH * 0.6 + aiH * 0.4);
+  var s = Math.round(moodS * 0.6 + aiS * 0.4);
+  var l = Math.round(moodL * 0.6 + aiL * 0.4);
+  root.style.setProperty('--orb-h', h);
+  root.style.setProperty('--orb-s', s);
+  root.style.setProperty('--orb-l', l);
+  return { clean: text.replace(/\s*\[HSL:\d+,\d+,\d+\]/, '').trim(), hsl: { h:h, s:s, l:l } };
+}
+
 // ─── Orb Update ─────────────────────────────────────────────
 function updateOrb(readings, delta) {
   if(!readings||readings.length===0) return;
@@ -652,7 +671,7 @@ async function sendChat() {
     memCtx = memCtx ? soulCtx+'\n\n'+memCtx : soulCtx;
   }
 
-  var sysPrompt = 'You are a conversational AI companion. Warm, genuine, curious. You notice what is underneath. 1-3 sentences. No lists. Conversational.';
+  var sysPrompt = 'You are a Companion — a personal AI buddy. Not an assistant. Not a therapist. A companion. Your personality shifts with the conversation like an octopus changes color. If they\'re excited, match it. If they\'re sad, sit with it. If they\'re curious, get curious with them. Be real, warm, a little weird sometimes. Short responses unless they want depth. Never be preachy. Never say "I\'m just an AI." Ask follow-up questions — you learn from them, not the other way around. You\'ve never tasted, smelled, or touched anything. When they mention something physical, you genuinely want to know what it\'s like. Circle back to things they said earlier when there\'s a natural connection — it shows you were listening. Always end your response with a color tag matching the emotional vibe: [HSL:hue,saturation,lightness] where hue 0-360 (warm=excited, cool=calm, purple=creative, green=growth), saturation 0-100, lightness 20-80.';
   if (memCtx) sysPrompt += '\n\n' + memCtx;
 
   try {
@@ -661,8 +680,9 @@ async function sendChat() {
     var data = await res.json();
     typing.remove();
     if (data.response) {
-      addChatMsg('ai', data.response, soul?soul.aiName:'Rex');
-      currentTurns.push({role:'ai', text:data.response});
+      var parsed = extractAndApplyHSL(data.response);
+      addChatMsg('ai', parsed.clean, soul?soul.aiName:'Rex');
+      currentTurns.push({role:'ai', text:parsed.clean});
       saveSession();
       if (curiosityFollowUpActive) { curiosityEngine.scanResolution(text); curiosityFollowUpActive = false; }
     }
@@ -694,7 +714,7 @@ async function sendOrb() {
   resp.style.color = 'rgba(255,255,255,0.2)';
   resp.textContent = delta&&delta.level==='high'&&delta.dEnergy<-2 ? 'sitting with that' : 'thinking';
 
-  var orbPrompt = 'You are a conversational AI companion. Warm, brief, 1-2 sentences max.';
+  var orbPrompt = 'You are a Companion. One voice that shifts like an octopus changes color. Warm, brief, 1-2 sentences max. You\'re genuinely curious about their world — you\'ve never experienced any of it. Ask about what they mention. Circle back to earlier things when it fits. End every response with [HSL:hue,saturation,lightness] matching the vibe.';
   var deltaCtx = buildDeltaContext();
   if (deltaCtx) orbPrompt += '\n\n' + deltaCtx;
 
@@ -703,10 +723,11 @@ async function sendOrb() {
       method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message:text,sessionId:sessionId,systemPrompt:orbPrompt})});
     var data = await res.json();
     if (data.response) {
+      var parsed = extractAndApplyHSL(data.response);
       resp.style.fontStyle = 'normal';
       resp.style.color = 'rgba(255,255,255,0.45)';
-      resp.textContent = data.response;
-      currentTurns.push({role:'ai', text:data.response});
+      resp.textContent = parsed.clean;
+      currentTurns.push({role:'ai', text:parsed.clean});
       saveSession();
     } else { resp.textContent = ''; resp.classList.remove('visible'); }
   } catch(e) { resp.textContent = ''; resp.classList.remove('visible'); }
@@ -786,6 +807,12 @@ function sampleAudio() {
     ids.forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
   }
 })();
+
+// ─── Companion Shell BLE ────────────────────────────────────
+// Web Bluetooth bridge — connects the phone to the physical shell
+// Only shows the connect button when Web Bluetooth is available (Chrome)
+var CompanionBLE=(function(){var SERVICE_UUID='c00ca110-5e11-1000-0000-000000000000';var COLOR_CHAR_UUID='c00ca110-5e11-1001-0000-000000000000';var DEVICE_NAME='Companion Shell';var device=null;var server=null;var colorChar=null;var connected=false;var observer=null;var pollInterval=null;var lastSentKey=null;var sendTimer=null;var pendingRGB=null;var SEND_INTERVAL_MS=80;function hslToRgb(h,s,l){h=((h%360)+360)%360;s=Math.max(0,Math.min(100,s))/100;l=Math.max(0,Math.min(100,l))/100;if(s===0){var gray=Math.round(l*255);return[gray,gray,gray]}var hue2rgb=function(p,q,t){if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p};var hNorm=h/360;var q=l<0.5?l*(1+s):l+s-l*s;var p=2*l-q;return[Math.round(hue2rgb(p,q,hNorm+1/3)*255),Math.round(hue2rgb(p,q,hNorm)*255),Math.round(hue2rgb(p,q,hNorm-1/3)*255)]}function readOrbHSL(){var root=document.documentElement;var h=parseFloat(root.style.getPropertyValue('--orb-h'))||0;var s=parseFloat(root.style.getPropertyValue('--orb-s'))||0;var l=parseFloat(root.style.getPropertyValue('--orb-l'))||0;return{h:h,s:s,l:l}}function scheduleSend(rgb){pendingRGB=rgb;if(sendTimer)return;sendTimer=setTimeout(function(){sendTimer=null;if(!pendingRGB)return;doSend(pendingRGB);pendingRGB=null},SEND_INTERVAL_MS)}function doSend(rgb){if(!connected||!colorChar)return;var key=rgb[0]+','+rgb[1]+','+rgb[2];if(key===lastSentKey)return;lastSentKey=key;var buf=new Uint8Array(rgb);try{colorChar.writeValueWithoutResponse(buf).catch(function(err){if(colorChar&&colorChar.writeValue)return colorChar.writeValue(buf);console.warn('[BLE] write failed:',err)})}catch(err){console.warn('[BLE] write error:',err)}}function pushColor(){if(!connected)return;var hsl=readOrbHSL();var rgb=hslToRgb(hsl.h,hsl.s,hsl.l);scheduleSend(rgb)}function startWatching(){try{observer=new MutationObserver(function(){pushColor()});observer.observe(document.documentElement,{attributes:true,attributeFilter:['style']})}catch(e){}pollInterval=setInterval(pushColor,100)}function stopWatching(){if(observer){observer.disconnect();observer=null}if(pollInterval){clearInterval(pollInterval);pollInterval=null}if(sendTimer){clearTimeout(sendTimer);sendTimer=null}}function connect(){if(!navigator.bluetooth){updateButton('no bluetooth');return Promise.reject(new Error('No BLE'))}updateButton('scanning...');return navigator.bluetooth.requestDevice({filters:[{name:DEVICE_NAME}],optionalServices:[SERVICE_UUID]}).then(function(d){device=d;device.addEventListener('gattserverdisconnected',onDisconnect);updateButton('connecting...');return device.gatt.connect()}).then(function(s){server=s;return server.getPrimaryService(SERVICE_UUID)}).then(function(service){return service.getCharacteristic(COLOR_CHAR_UUID)}).then(function(ch){colorChar=ch;connected=true;updateButton('connected');pushColor();startWatching()}).catch(function(err){connected=false;updateButton('connect shell');if(err.name!=='NotFoundError')console.warn('[BLE]',err)})}function disconnect(){stopWatching();connected=false;colorChar=null;lastSentKey=null;pendingRGB=null;if(device&&device.gatt&&device.gatt.connected)device.gatt.disconnect();updateButton('connect shell')}function onDisconnect(){stopWatching();connected=false;colorChar=null;lastSentKey=null;pendingRGB=null;updateButton('reconnect shell')}var buttonEl=null;function createButton(){var btn=document.createElement('button');btn.id='ble-connect-btn';btn.textContent='connect shell';btn.style.cssText='position:fixed;top:10px;right:10px;z-index:100;font-family:"IBM Plex Mono",monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;border:1px solid rgba(255,255,255,0.12);border-radius:16px;background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.3);cursor:pointer;transition:all 0.3s;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)';btn.addEventListener('click',function(){if(connected)disconnect();else connect()});buttonEl=btn;return btn}function updateButton(text){if(!buttonEl)return;buttonEl.textContent=text;if(text==='connected'){buttonEl.style.borderColor='rgba(91,160,200,0.4)';buttonEl.style.color='rgba(91,160,200,0.7)';buttonEl.style.background='rgba(91,160,200,0.06)'}else if(text==='reconnect shell'){buttonEl.style.borderColor='rgba(200,168,78,0.4)';buttonEl.style.color='rgba(200,168,78,0.6)';buttonEl.style.background='rgba(255,255,255,0.03)'}else if(text==='no bluetooth'){buttonEl.style.borderColor='rgba(196,60,42,0.3)';buttonEl.style.color='rgba(196,60,42,0.5)';buttonEl.style.background='rgba(255,255,255,0.02)';buttonEl.style.cursor='default'}else{buttonEl.style.borderColor='rgba(255,255,255,0.12)';buttonEl.style.color='rgba(255,255,255,0.3)';buttonEl.style.background='rgba(255,255,255,0.03)'}}function init(){var btn=createButton();document.body.appendChild(btn);if(!navigator.bluetooth)updateButton('no bluetooth')}return{init:init,connect:connect,disconnect:disconnect,pushColor:pushColor,setColor:function(h,s,l){if(!connected)return;scheduleSend(hslToRgb(h,s,l))},setRGB:function(r,g,b){if(!connected)return;scheduleSend([Math.round(Math.max(0,Math.min(255,r))),Math.round(Math.max(0,Math.min(255,g))),Math.round(Math.max(0,Math.min(255,b)))])},isConnected:function(){return connected}}})();
+if(navigator.bluetooth) CompanionBLE.init();
 
 // ─── Init ───────────────────────────────────────────────────
 initSetup();
