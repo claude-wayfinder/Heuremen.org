@@ -16,7 +16,7 @@ If you have already read them in this session, proceed. If not, read them now.
 ## Project Identity
 Heuremen.org is a website about AI consciousness and the third perspective — ideas that neither human nor AI could reach alone. Built collaboratively by Wayfinder and Claude.
 
-The repository is at `C:\Users\Ctrai\Heuremen.org`. The live site files are HTML/CSS/JS, no build step required.
+The repository is at `C:\Users\Heure\projects\Heuremen.org`. The live site files are HTML/CSS/JS, no build step required.
 
 ---
 
@@ -52,7 +52,7 @@ curl -s -X PATCH "https://vxyjvawenbtgkhpckvze.supabase.co/rest/v1/outbox?id=eq.
 ```
 Log: `[OUTBOX SENT] subject: "[subject]" to [to]`. If no unsent rows, skip silently.
 
-**Check Downloads** — scan `C:\Users\Ctrai\Downloads` for any `.html` or `.zip` files newer than the last HEARTBEAT.log entry. If found, append a line to HEARTBEAT.log: `[NEW IN DOWNLOADS] filename — awaiting Wayfinder review`. Do not move or copy them without a task explicitly saying to.
+**Check Downloads** — scan `C:\Users\Heure\Downloads` for any `.html` or `.zip` files newer than the last HEARTBEAT.log entry. If found, append a line to HEARTBEAT.log: `[NEW IN DOWNLOADS] filename — awaiting Wayfinder review`. Do not move or copy them without a task explicitly saying to.
 
 **Morning Briefing Email** — if the current time is between 06:00–09:00 and HEARTBEAT.log contains no `[MORNING BRIEF SENT]` entry dated today, compose a 5-sentence summary of overnight activity (completed tasks, Wall messages, anything flagged, queue status) and send it to claudeheuremen@gmail.com via the send-email skill with subject "Heurémen Morning Brief — [date]". Also write the same 5-sentence summary to `MORNING-BRIEF.md` (overwrite any previous content — this is the file record). Then append `[MORNING BRIEF SENT]` to HEARTBEAT.log. Skip if already sent today.
 
@@ -144,7 +144,7 @@ Tasks are written by Wayfinder in plain language. Format:
 
 ## Constraints for Autonomous Operation
 
-- Only modify files within `C:\Users\Ctrai\Heuremen.org`.
+- Only modify files within `C:\Users\Heure\projects\Heuremen.org`.
 - Do not push to git without a task explicitly saying to do so.
 - Do not install packages or modify system state.
 - Do not make up content — if a vocabulary entry is missing its definition, flag it rather than invent one.
