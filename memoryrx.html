@@ -2,822 +2,878 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>MemoryRX</title>
-<meta name="description" content="The AI companion that remembers you. Two modes: talk or listen. Zero data tracking. Everything stays on your device.">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Abril+Fatface&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
-<link rel="manifest" href="/manifest-memoryrx.json">
-<meta name="theme-color" content="#0a0a0f">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon" href="memoryrx/icon-180.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Emma</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --accent:#c8a84e;
-  --orb-h:220;--orb-s:40;--orb-l:45;
-  --orb-color:hsl(var(--orb-h),calc(var(--orb-s)*1%),calc(var(--orb-l)*1%));
-  --glow:0.2;--breathe:4s;
+:root {
+  --gold-deep:   #5a3e0a;
+  --gold-dark:   #8b6914;
+  --gold-mid:    #c9a84c;
+  --gold-light:  #f3e2a0;
+  --gold-pale:   #ffe9b0;
 }
-html,body{height:100%;overflow:hidden}
-body{background:#0a0a0f;color:#e8e0d0;font-family:'Lora',serif;transition:background 1.2s;-webkit-user-select:none;user-select:none}
 
-/* ─── SETUP (first-run soul creation) ──────── */
-.setup{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:200;background:#0a0a0f;padding:24px;transition:opacity 0.6s}
-.setup.gone{opacity:0;pointer-events:none}
-.setup-title{font-family:'Abril Fatface',serif;font-size:1.6rem;margin-bottom:8px}
-.setup-sub{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:rgba(255,255,255,0.25);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:40px}
-.setup-q{font-size:1rem;line-height:1.6;text-align:center;max-width:320px;margin-bottom:24px;min-height:60px}
-.setup-input{width:100%;max-width:320px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#e8e0d0;font-family:'Lora',serif;font-size:16px;padding:14px 18px;border-radius:24px;outline:none;text-align:center;margin-bottom:16px}
-.setup-input:focus{border-color:rgba(255,255,255,0.25)}
-.setup-input::placeholder{color:rgba(255,255,255,0.2)}
-.setup-btn{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.15em;padding:10px 28px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.5);border-radius:24px;cursor:pointer;transition:all 0.3s}
-.setup-btn:hover{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.8)}
-.setup-skip{font-family:'IBM Plex Mono',monospace;font-size:0.5rem;color:rgba(255,255,255,0.12);margin-top:20px;cursor:pointer;letter-spacing:0.1em}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ─── MODE TABS ────────────────────────────── */
-.mode-tabs{position:fixed;bottom:0;left:0;right:0;display:flex;z-index:50;background:rgba(10,10,15,0.98);border-top:1px solid rgba(255,255,255,0.06);padding-bottom:env(safe-area-inset-bottom,0px)}
-.mode-tab{flex:1;padding:12px 0 10px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.3s;border:none;background:none}
-.mode-tab.active{color:var(--accent)}
-.mode-tab:hover{color:rgba(255,255,255,0.4)}
-
-/* ─── VIEWS ────────────────────────────────── */
-.view{position:fixed;inset:0;bottom:44px;opacity:0;pointer-events:none;transition:opacity 0.4s;display:flex;flex-direction:column}
-.view.active{opacity:1;pointer-events:all}
-
-/* ─── CHAT VIEW ────────────────────────────── */
-.chat-top{padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:rgba(10,10,15,0.98)}
-.chat-logo{font-family:'Abril Fatface',serif;font-size:1rem;color:var(--accent)}
-.delta-tag{font-family:'IBM Plex Mono',monospace;font-size:0.5rem;color:rgba(255,255,255,0.15);transition:all 0.4s}
-.delta-tag.mid{color:rgba(200,168,78,0.6)}
-.delta-tag.high{color:rgba(196,60,42,0.8)}
-
-.memory-bar{padding:4px 16px;background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.04);display:none;align-items:center;gap:6px;flex-shrink:0}
-.memory-bar.active{display:flex}
-.memory-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:0.6}
-.memory-label{font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:rgba(255,255,255,0.25);letter-spacing:0.1em;text-transform:uppercase}
-.color-strip{display:flex;gap:3px;margin-left:auto;align-items:center}
-.color-swatch{width:14px;height:14px;border-radius:3px;border:1px solid rgba(255,255,255,0.08);transition:all 0.3s;position:relative}
-.color-now{width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);animation:color-breathe 4s ease-in-out infinite;margin-left:4px}
-@keyframes color-breathe{0%,100%{opacity:0.7}50%{opacity:1}}
-
-.chat{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
-.msg{max-width:85%;line-height:1.65;font-size:0.92rem;padding:12px 16px;border-radius:16px;animation:msgIn 0.3s ease}
-@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.msg.user{align-self:flex-end;background:rgba(255,255,255,0.05);color:#e8e0d0;border:1px solid rgba(255,255,255,0.06)}
-.msg.ai{align-self:flex-start;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02)}
-.msg.system{align-self:center;font-size:0.75rem;color:rgba(255,255,255,0.25);font-style:italic;border:none;padding:8px;text-align:center}
-.msg-speaker{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;display:block}
-.typing{align-self:flex-start;color:rgba(255,255,255,0.3);font-style:italic;font-size:0.85rem;padding:8px 16px}
-.typing::after{content:'...';animation:dots 1.5s infinite}
-@keyframes dots{0%{content:'.'}33%{content:'..'}66%{content:'...'}}
-.typing.delta-high::after{animation-duration:0.8s}
-.typing.delta-falling{color:rgba(255,255,255,0.15)}
-.typing.delta-falling::after{animation-duration:3s}
-
-body.delta-high .msg.ai:last-child{border-color:rgba(196,60,42,0.15);box-shadow:0 0 20px rgba(196,60,42,0.04)}
-body.delta-mid .msg.ai:last-child{border-color:rgba(200,168,78,0.12)}
-
-.chat-input{padding:10px 16px;border-top:1px solid rgba(255,255,255,0.06);display:flex;gap:8px;flex-shrink:0;background:rgba(10,10,15,0.98)}
-.chat-input input{flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#e8e0d0;font-family:'Lora',serif;font-size:16px;padding:10px 14px;outline:none;border-radius:20px}
-.chat-input input::placeholder{color:rgba(255,255,255,0.2);font-style:italic}
-.send-btn,.mic-btn{background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);cursor:pointer;border-radius:50%;transition:all 0.2s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.send-btn{font-family:'IBM Plex Mono',monospace;font-size:0.75rem;padding:10px 18px;border-radius:20px}
-.mic-btn{width:42px;height:42px;font-size:1.1rem}
-.mic-btn.recording{background:rgba(196,60,42,0.2);border-color:rgba(196,60,42,0.6);color:#c43c2a;animation:mic-pulse 1.5s ease-in-out infinite}
-@keyframes mic-pulse{0%,100%{box-shadow:0 0 0 0 rgba(196,60,42,0.3)}50%{box-shadow:0 0 0 8px rgba(196,60,42,0)}}
-
-/* ─── ORB VIEW ─────────────────────────────── */
-.orb-view{align-items:center;justify-content:center}
-.orb-wrap{position:relative;width:min(65vw,65vh);height:min(65vw,65vh);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.orb{
-  width:100%;height:100%;border-radius:50%;position:relative;
-  background:radial-gradient(circle at 38% 32%,
-    hsl(calc(var(--orb-h)+30),calc(var(--orb-s)*1.2*1%),calc(var(--orb-l)*1.4*1%)) 0%,
-    var(--orb-color) 45%,
-    hsl(calc(var(--orb-h)-20),calc(var(--orb-s)*0.8*1%),calc(var(--orb-l)*0.6*1%)) 100%);
-  box-shadow:0 0 60px hsla(var(--orb-h),calc(var(--orb-s)*1%),calc(var(--orb-l)*1%),var(--glow)),
-    0 0 120px hsla(var(--orb-h),calc(var(--orb-s)*1%),calc(var(--orb-l)*1%),calc(var(--glow)*0.5)),
-    inset 0 0 80px rgba(0,0,0,0.3);
-  animation:breathe var(--breathe) ease-in-out infinite;
-  transition:box-shadow 1.2s,background 1.2s;
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
-.orb::before{content:'';position:absolute;top:12%;left:22%;width:35%;height:25%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,0.18) 0%,transparent 70%);transform:rotate(-15deg);pointer-events:none}
-@keyframes breathe{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.02);filter:brightness(1.08)}}
 
-.vol-ring{position:absolute;inset:-2%;border-radius:50%;border:2px solid transparent;pointer-events:none;transition:border-color 0.15s,transform 0.15s}
-.tentacles{position:absolute;inset:-15%;pointer-events:none;opacity:0.4;transition:opacity 1s}
-.tentacle{position:absolute;bottom:50%;left:50%;width:3px;height:0;border-radius:2px;background:linear-gradient(to bottom,transparent,var(--orb-color));transform-origin:top center;transition:height 1.5s,opacity 1.5s;opacity:0}
-.tentacles.active .tentacle{opacity:0.6}
+body {
+  font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+  color: #e8e2d4;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  /* DARK by default — the mirror floats in a night void */
+  background: radial-gradient(130% 100% at 50% 38%, #14131f 0%, #0a0a12 46%, #050509 100%);
+  transition: background 1.6s ease, color 1.6s ease;
+}
 
-.orb-mood{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.15);margin-top:30px;transition:all 1s}
-.orb-response{position:absolute;top:20px;left:20px;right:20px;font-size:0.82rem;line-height:1.7;color:rgba(255,255,255,0.45);text-align:center;max-height:30vh;overflow-y:auto;opacity:0;transition:opacity 0.5s}
-.orb-response.visible{opacity:1}
+/* ===== LIGHT MODE: a quiet Victorian parlor wall ===== */
+body.light {
+  color: #4a3f33;
+  background: radial-gradient(125% 100% at 50% 30%, #f7f1e6 0%, #ece2d1 55%, #ddccb4 100%);
+}
 
-.orb-input{position:fixed;bottom:54px;left:0;right:0;padding:12px 16px;display:flex;gap:8px;align-items:center;background:linear-gradient(transparent,rgba(10,10,15,0.95) 30%);z-index:10}
-.orb-input input{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#e8e0d0;font-family:'IBM Plex Mono',monospace;font-size:16px;padding:12px 16px;outline:none;border-radius:24px}
-.orb-input input::placeholder{color:rgba(255,255,255,0.15);font-size:0.8rem}
-.listen-btn{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.25);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;flex-shrink:0}
-.listen-btn.active{background:rgba(91,160,200,0.15);border-color:rgba(91,160,200,0.4);color:rgba(91,160,200,0.8)}
+/* ============================================================
+   THE STAGE — the floating space the mirror lives in
+   ============================================================ */
+#stage {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: max(2vh, env(safe-area-inset-top)) 4vw max(2vh, env(safe-area-inset-bottom));
+  transition: opacity 1.5s ease, filter 1.5s ease, transform 1.5s ease;
+}
 
-.orb-wrap.flash-hot .orb{box-shadow:0 0 80px hsla(0,80%,50%,0.4),0 0 160px hsla(0,80%,50%,0.2),inset 0 0 60px rgba(196,60,42,0.15)}
-.orb-wrap.flash-cold .orb{box-shadow:0 0 80px hsla(220,60%,50%,0.4),0 0 160px hsla(220,60%,50%,0.2),inset 0 0 60px rgba(91,160,200,0.15)}
+/* Starfield (dark only) */
+#stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 1.6s ease;
+}
+body.light #stars { opacity: 0; }
+.star {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: twinkle var(--tw, 5s) ease-in-out infinite;
+  animation-delay: var(--td, 0s);
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.12; transform: scale(0.7); }
+  50%      { opacity: 0.85; transform: scale(1.15); }
+}
 
-/* Passive mode */
-body.passive .orb-input{opacity:0;pointer-events:none}
-body.passive .passive-exit{display:flex}
-.passive-exit{display:none;position:fixed;bottom:54px;left:0;right:0;padding:20px;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:0.5rem;letter-spacing:0.2em;color:rgba(255,255,255,0.1);cursor:pointer;z-index:10}
-body.passive .orb-wrap::after{content:'';position:absolute;inset:-4%;border-radius:50%;border:1px solid rgba(91,160,200,0.12);animation:listen-ring 3s ease-in-out infinite}
-@keyframes listen-ring{0%,100%{transform:scale(1);opacity:0.3}50%{transform:scale(1.06);opacity:0.08}}
+/* ============================================================
+   MIRROR
+   ============================================================ */
+#mirror-wrap {
+  position: relative;
+  z-index: 2;
+  width: min(84vw, 54vh);
+  aspect-ratio: 0.72 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 30px 55px rgba(0,0,0,0.65));
+}
 
-/* Particles */
-.particles{position:fixed;inset:0;pointer-events:none;z-index:0}
-.particle{position:absolute;border-radius:50%;opacity:0;animation:pfloat 6s ease-in-out infinite}
-@keyframes pfloat{0%{opacity:0;transform:translateY(0) scale(0.5)}15%{opacity:0.4}85%{opacity:0.3}100%{opacity:0;transform:translateY(-150px) scale(0.2)}}
+/* Ornamental SVG (crest + base finial) sits over the frame, never blocks taps */
+#ornament {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 128%;
+  height: 124%;
+  pointer-events: none;
+  z-index: 3;
+  overflow: visible;
+}
 
-/* ─── SOUL VIEW ────────────────────────────── */
-.soul-view{padding:24px;overflow-y:auto}
-.soul-title{font-family:'Abril Fatface',serif;font-size:1.2rem;margin-bottom:16px}
-.soul-section{margin-bottom:20px}
-.soul-label{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px}
-.soul-value{font-size:0.95rem;line-height:1.6;color:rgba(255,255,255,0.85)}
-.soul-stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.1)}
-.soul-stat-label{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:rgba(255,255,255,0.5)}
-.soul-stat-value{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:var(--accent)}
-.soul-reset{font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:rgba(255,255,255,0.25);margin-top:30px;cursor:pointer;letter-spacing:0.1em}
-.soul-privacy{font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:rgba(255,255,255,0.4);margin-top:16px;line-height:1.8}
+/* The gilded frame — receives .listening / .speaking / .thinking from the JS */
+#mirror-frame {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  padding: clamp(12px, 4.2vmin, 26px);
+  border-radius: 49% 49% 14% 14% / 33% 33% 9% 9%;
+  background:
+    linear-gradient(135deg,
+      #6f5110 0%, var(--gold-mid) 14%, var(--gold-light) 30%,
+      var(--gold-dark) 47%, var(--gold-pale) 60%, var(--gold-mid) 74%,
+      #6f5110 100%);
+  box-shadow:
+    inset 0 0 0 2px rgba(255,240,190,0.55),
+    inset 0 0 18px rgba(70,48,8,0.65),
+    inset 0 3px 4px rgba(255,250,230,0.5),
+    0 0 0 2px #3f2c06,
+    0 0 0 4px var(--gold-dark),
+    0 0 0 6px #3f2c06,
+    0 22px 48px rgba(0,0,0,0.6),
+    0 0 70px rgba(201,168,76,0.10);
+  cursor: pointer;
+  transition: box-shadow 0.9s ease, transform 0.6s ease;
+}
+/* beaded inner lip between gold and glass */
+#mirror-frame::after {
+  content: '';
+  position: absolute;
+  inset: clamp(8px, 3vmin, 18px);
+  border-radius: 47% 47% 12% 12% / 31% 31% 8% 8%;
+  box-shadow:
+    inset 0 0 0 1.5px rgba(60,40,6,0.85),
+    inset 0 0 0 3px rgba(255,235,180,0.35);
+  pointer-events: none;
+  z-index: 4;
+}
 
-@media(max-width:380px){.orb-wrap{width:min(60vw,60vh);height:min(60vw,60vh)}.msg{max-width:90%;font-size:0.88rem}}
+/* ============================================================
+   THE GLASS  (#talk-btn) — the mirror IS the button
+   ============================================================ */
+#talk-btn {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  border-radius: 47% 47% 12% 12% / 31% 31% 8% 8%;
+  cursor: default;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  /* aged silvered looking-glass */
+  background:
+    radial-gradient(80% 55% at 38% 16%, rgba(255,255,255,0.20), rgba(255,255,255,0) 60%),
+    radial-gradient(60% 40% at 72% 88%, rgba(120,140,170,0.18), rgba(120,140,170,0) 70%),
+    radial-gradient(130% 120% at 50% 22%,
+      rgba(214,224,238,0.42) 0%,
+      rgba(150,166,192,0.30) 42%,
+      rgba(58,74,100,0.38) 100%),
+    linear-gradient(160deg, #2b3346 0%, #1d2433 55%, #161c28 100%);
+  box-shadow:
+    inset 0 0 22px rgba(0,0,0,0.55),
+    inset 0 0 4px rgba(255,255,255,0.25);
+  /* state-driven tint, default none */
+  --tint: rgba(255,255,255,0);
+  --glow: rgba(201,168,76,0);
+  transition: box-shadow 1.1s ease, filter 1.1s ease;
+}
+
+/* antique foxing / age spots — faint, fixed */
+#talk-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(8px 10px at 26% 30%, rgba(80,70,55,0.16), transparent 70%),
+    radial-gradient(6px 7px at 70% 22%, rgba(80,70,55,0.13), transparent 70%),
+    radial-gradient(10px 12px at 60% 72%, rgba(70,60,48,0.14), transparent 70%),
+    radial-gradient(5px 6px at 38% 84%, rgba(70,60,48,0.12), transparent 70%);
+  z-index: 1;
+}
+
+/* the living shimmer — a slow sweep of light + a drifting caustic + state tint */
+#talk-btn::after {
+  content: '';
+  position: absolute;
+  inset: -25%;
+  pointer-events: none;
+  z-index: 2;
+  background:
+    radial-gradient(closest-side, var(--tint), transparent 72%),
+    linear-gradient(115deg,
+      transparent 36%,
+      rgba(255,255,255,0.16) 47%,
+      rgba(255,255,255,0.30) 50%,
+      rgba(255,255,255,0.12) 53%,
+      transparent 66%);
+  background-size: 100% 100%, 230% 230%;
+  background-repeat: no-repeat;
+  background-position: center, 120% 0%;
+  animation: shimmer 9s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: center,  125% -10%; }
+  50%  { background-position: center,  -25%  70%; }
+  100% { background-position: center,  125% -10%; }
+}
+
+/* ===== STATES ===== (classes land on #mirror-frame) */
+
+/* IDLE breathing glow on the frame so it feels alive even at rest */
+#mirror-frame {
+  animation: idle-glow 7s ease-in-out infinite;
+}
+@keyframes idle-glow {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.06); }
+}
+
+/* LISTENING — green tint, the mirror breathes */
+#mirror-frame.listening { animation: breathe 3.4s ease-in-out infinite; }
+#mirror-frame.listening #talk-btn {
+  --tint: rgba(74,200,140,0.30);
+  box-shadow:
+    inset 0 0 30px rgba(30,120,80,0.40),
+    inset 0 0 6px rgba(150,255,200,0.30);
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(1);     }
+  50%      { transform: scale(1.018); }
+}
+
+/* SPEAKING — warm gold, the glass glows */
+#mirror-frame.speaking { animation: none; }
+#mirror-frame.speaking #talk-btn {
+  --tint: rgba(240,196,96,0.34);
+  --glow: rgba(240,196,96,0.55);
+  box-shadow:
+    inset 0 0 38px rgba(200,150,40,0.45),
+    inset 0 0 8px rgba(255,235,170,0.55),
+    0 0 50px rgba(240,196,96,0.30);
+}
+
+/* THINKING — soft amber, gentle pulse */
+#mirror-frame.thinking { animation: think-pulse 2.4s ease-in-out infinite; }
+#mirror-frame.thinking #talk-btn {
+  --tint: rgba(232,168,82,0.26);
+}
+@keyframes think-pulse {
+  0%, 100% { filter: brightness(0.97); }
+  50%      { filter: brightness(1.10); }
+}
+
+/* ============================================================
+   TAP-TO-TEXT  +  STATUS / TRANSCRIPT  +  ATTRIBUTION
+   ============================================================ */
+#below {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(18px, 3.4vh, 34px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 4.5rem;
+}
+
+#status {
+  font-size: clamp(15px, 2.2vh, 19px);
+  letter-spacing: 0.04em;
+  font-style: italic;
+  color: #b9b0a0;
+  min-height: 1.4rem;
+  text-align: center;
+  transition: color 0.6s ease;
+}
+body.light #status { color: #8a7d6a; }
+
+#transcript {
+  margin-top: 0.5rem;
+  font-size: clamp(16px, 2.4vh, 21px);
+  color: #d8d0c0;
+  max-width: 80%;
+  text-align: center;
+  line-height: 1.45;
+  min-height: 1.4rem;
+}
+body.light #transcript { color: #5a4f40; }
+
+/* ============================================================
+   ACTION BUTTONS — bottom corners, symmetry with theme buttons
+   ============================================================ */
+.action-btn {
+  position: fixed;
+  bottom: max(24px, calc(env(safe-area-inset-bottom) + 12px));
+  z-index: 20;
+  border: 1px solid rgba(201,168,76,0.35);
+  background: rgba(201,168,76,0.06);
+  cursor: pointer;
+  font-family: 'Georgia', serif;
+  font-size: 12px;
+  font-style: italic;
+  letter-spacing: 0.06em;
+  color: rgba(210,200,180,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.3;
+  transition: color 0.4s ease, transform 0.3s ease, background 0.3s ease,
+              border-color 0.3s ease, box-shadow 0.4s ease;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+.action-btn:active { transform: scale(0.93); }
+
+/* Square — bottom left */
+#text-btn {
+  left: max(16px, env(safe-area-inset-left));
+  width: 78px;
+  height: 48px;
+  border-radius: 6px;
+}
+
+/* Circle — bottom right */
+#hold-btn {
+  right: max(16px, env(safe-area-inset-right));
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+}
+
+/* Holding state — green glow matches listening mirror */
+#hold-btn.holding {
+  background: rgba(74,200,140,0.12);
+  border-color: rgba(74,200,140,0.45);
+  color: rgba(150,255,200,0.8);
+  box-shadow: 0 0 20px rgba(74,200,140,0.15);
+}
+
+/* Light mode */
+body.light .action-btn {
+  color: rgba(120,100,70,0.6);
+  border-color: rgba(120,100,70,0.25);
+  background: rgba(120,100,70,0.05);
+}
+body.light #hold-btn.holding {
+  background: rgba(40,140,80,0.10);
+  border-color: rgba(40,140,80,0.35);
+  color: rgba(40,100,60,0.75);
+  box-shadow: 0 0 20px rgba(40,140,80,0.10);
+}
+
+/* Hide action buttons in chat mode */
+body.chat-mode .action-btn { opacity: 0; pointer-events: none; }
+
+#voiced-by {
+  position: fixed;
+  left: 0; right: 0;
+  bottom: max(1.4vh, env(safe-area-inset-bottom));
+  text-align: center;
+  z-index: 2;
+  font-size: 12px;
+  font-style: italic;
+  letter-spacing: 0.12em;
+  color: rgba(200,190,170,0.40);
+  transition: color 0.6s ease;
+}
+body.light #voiced-by { color: rgba(90,80,66,0.45); }
+
+/* ============================================================
+   THEME BUTTONS — one sun (left), one moon (right)
+   ============================================================ */
+.theme-btn {
+  position: fixed;
+  top: max(14px, env(safe-area-inset-top));
+  z-index: 20;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: rgba(210,200,180,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.4s ease, opacity 0.4s ease, transform 0.3s ease;
+}
+.theme-btn:hover { color: var(--gold-pale); transform: scale(1.08); }
+.theme-btn:active { transform: scale(0.92); }
+#light-btn { left: max(12px, env(safe-area-inset-left)); }
+#dark-btn  { right: max(12px, env(safe-area-inset-right)); }
+.theme-btn svg { width: 24px; height: 24px; display: block; }
+/* dim the icon that matches the active theme */
+body.light #light-btn { opacity: 0.30; }
+body:not(.light) #dark-btn { opacity: 0.30; }
+body.light .theme-btn { color: rgba(120,100,70,0.6); }
+
+/* ============================================================
+   CHAT VIEW — appears when the mirror dissolves
+   ============================================================ */
+body.chat-mode #stage {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1.04);
+  filter: blur(6px);
+}
+body.chat-mode #stars { opacity: 0; }
+
+#chat-view {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.5s ease;
+  padding: max(58px, calc(env(safe-area-inset-top) + 54px)) 0 0;
+}
+body.chat-mode #chat-view {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#chat-log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem clamp(1rem, 5vw, 3rem) 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  -webkit-overflow-scrolling: touch;
+}
+.msg {
+  max-width: 78%;
+  font-size: 17px;
+  line-height: 1.5;
+  padding: 0.7rem 1rem;
+  border-radius: 4px;
+}
+.msg.user {
+  align-self: flex-end;
+  background: rgba(201,168,76,0.16);
+  border: 1px solid rgba(201,168,76,0.35);
+  color: #ece4d2;
+}
+.msg.emma {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  color: #e6ddca;
+  font-style: italic;
+}
+body.light .msg.user { color: #4a3f30; background: rgba(201,168,76,0.20); }
+body.light .msg.emma { color: #4a3f30; background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); }
+
+#chat-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem clamp(1rem, 5vw, 3rem) max(1rem, env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(201,168,76,0.18);
+  background: rgba(0,0,0,0.18);
+}
+body.light #chat-bar { background: rgba(255,255,255,0.4); border-color: rgba(120,100,70,0.18); }
+
+#chat-input {
+  flex: 1;
+  font-family: 'Georgia', serif;
+  font-size: 17px;
+  padding: 0.7rem 0.9rem;
+  color: inherit;
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.35);
+  border-radius: 4px;
+  outline: none;
+}
+#chat-input:focus { border-color: var(--gold-mid); }
+#chat-input::placeholder { color: rgba(180,170,150,0.5); font-style: italic; }
+
+#chat-send-btn {
+  font-family: 'Georgia', serif;
+  font-size: 16px;
+  font-style: italic;
+  padding: 0.7rem 1.2rem;
+  color: #1a1610;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold-mid), var(--gold-dark));
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.1s ease;
+}
+#chat-send-btn:hover { filter: brightness(1.08); }
+#chat-send-btn:active { transform: scale(0.96); }
+
+#chat-back {
+  position: fixed;
+  top: max(14px, env(safe-area-inset-top));
+  left: max(12px, env(safe-area-inset-left));
+  z-index: 30;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 22px;
+  color: rgba(210,200,180,0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.4s ease, transform 0.3s ease;
+}
+#chat-back:hover { color: var(--gold-pale); transform: scale(1.08); }
+#chat-back:active { transform: scale(0.92); }
+body.chat-mode #chat-back { display: flex; }
+body.light #chat-back { color: rgba(120,100,70,0.6); }
+
+@media (prefers-reduced-motion: reduce) {
+  #mirror-frame, #mirror-frame.listening, #mirror-frame.thinking,
+  #talk-btn::after, .star { animation: none !important; }
+}
 </style>
 </head>
 <body>
 
-<!-- SETUP (first-run) -->
-<div class="setup" id="setup">
-  <div class="setup-title">MemoryRX</div>
-  <div class="setup-sub">first things first</div>
-  <div class="setup-q" id="setupQ">What should I call you?</div>
-  <input class="setup-input" id="setupInput" placeholder="your name" onkeydown="if(event.key==='Enter')setupNext()">
-  <button class="setup-btn" onclick="setupNext()">next</button>
-  <div class="setup-skip" onclick="skipSetup()">skip for now</div>
+<!-- theme: one sun left, one moon right -->
+<button id="light-btn" class="theme-btn" aria-label="Light mode">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+    <circle cx="12" cy="12" r="4.2"/>
+    <path d="M12 2.5v2.5M12 19v2.5M2.5 12h2.5M19 12h2.5M5 5l1.8 1.8M17.2 17.2L19 19M19 5l-1.8 1.8M6.8 17.2L5 19"/>
+  </svg>
+</button>
+<button id="dark-btn" class="theme-btn" aria-label="Dark mode">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 14.5A8 8 0 1 1 9.5 4a6.4 6.4 0 0 0 10.5 10.5z"/>
+  </svg>
+</button>
+
+<!-- ===== THE FLOATING MIRROR ===== -->
+<div id="stars"></div>
+
+<div id="stage">
+  <div id="mirror-wrap">
+    <div id="mirror-frame">
+      <button id="talk-btn"></button>
+    </div>
+
+    <!-- ornamental crest + base finial — purely decorative, never blocks the glass -->
+    <svg id="ornament" viewBox="0 0 200 280" aria-hidden="true">
+      <defs>
+        <linearGradient id="og" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0"   stop-color="#6f5110"/>
+          <stop offset="0.25" stop-color="#e8cf86"/>
+          <stop offset="0.5" stop-color="#8b6914"/>
+          <stop offset="0.72" stop-color="#ffe9b0"/>
+          <stop offset="1"   stop-color="#6f5110"/>
+        </linearGradient>
+      </defs>
+      <g fill="url(#og)" stroke="#3f2c06" stroke-width="0.8">
+        <!-- top crest: central shell flanked by acanthus scrolls -->
+        <path d="M100 6
+                 C 95 14, 92 20, 100 26
+                 C 108 20, 105 14, 100 6 Z"/>
+        <path d="M100 12
+                 C 90 16, 84 24, 88 33
+                 C 80 28, 72 30, 70 39
+                 C 66 31, 56 33, 58 42
+                 C 70 40, 80 44, 86 38
+                 C 90 46, 100 44, 100 34
+                 C 100 44, 110 46, 114 38
+                 C 120 44, 130 40, 142 42
+                 C 144 33, 134 31, 130 39
+                 C 128 30, 120 28, 112 33
+                 C 116 24, 110 16, 100 12 Z"/>
+        <!-- little side volutes resting on the frame shoulders -->
+        <circle cx="58" cy="42" r="3.2"/>
+        <circle cx="142" cy="42" r="3.2"/>
+        <!-- base finial: small symmetric scroll -->
+        <path d="M100 256
+                 C 92 256, 86 262, 90 268
+                 C 84 264, 78 268, 82 274
+                 C 92 272, 96 268, 100 262
+                 C 104 268, 108 272, 118 274
+                 C 122 268, 116 264, 110 268
+                 C 114 262, 108 256, 100 256 Z"/>
+        <circle cx="100" cy="259" r="2.6"/>
+      </g>
+    </svg>
+  </div>
+
+  <div id="below">
+    <div id="status"></div>
+    <div id="transcript"></div>
+  </div>
 </div>
 
-<!-- PARTICLES -->
-<div class="particles" id="particles"></div>
+<button id="text-btn" class="action-btn" aria-label="Tap to Text">Tap to<br>Text</button>
+<button id="hold-btn" class="action-btn" aria-label="Hold to Talk">Hold to<br>Talk</button>
 
-<!-- CHAT VIEW -->
-<div class="view" id="chatView">
-  <div class="chat-top">
-    <span class="chat-logo" id="chatLogo">MemoryRX</span>
-    <span class="delta-tag" id="chatDelta"></span>
-  </div>
-  <div class="memory-bar" id="memoryBar">
-    <div class="memory-dot"></div>
-    <span class="memory-label" id="memoryLabel"></span>
-    <div class="color-strip" id="colorStrip"></div>
-    <div class="color-now" id="colorNow"></div>
-  </div>
-  <div class="chat" id="chat"></div>
-  <div class="chat-input">
-    <button class="mic-btn" id="chatMic" onclick="toggleChatMic()">&#127908;</button>
-    <input type="text" id="chatInput" placeholder="Say something..." onkeydown="if(event.key==='Enter')sendChat()">
-    <button class="send-btn" onclick="sendChat()">Send</button>
+<!-- ===== CHAT VIEW (Bones wires send behavior to these IDs) ===== -->
+<div id="chat-view">
+  <button id="chat-back" aria-label="Back to mirror">&larr;</button>
+  <div id="chat-log"></div>
+  <div id="chat-bar">
+    <input id="chat-input" type="text" autocomplete="off" placeholder="Say something to Emma…">
+    <button id="chat-send-btn">Send</button>
   </div>
 </div>
 
-<!-- ORB VIEW -->
-<div class="view orb-view" id="orbView">
-  <div class="orb-response" id="orbResponse"></div>
-  <div class="orb-wrap" id="orbWrap">
-    <div class="orb" id="orb"></div>
-    <div class="vol-ring" id="volRing"></div>
-    <div class="tentacles" id="tentacles"></div>
-  </div>
-  <div class="orb-mood" id="orbMood"></div>
-  <div class="orb-input" id="orbInputZone">
-    <button class="listen-btn" id="listenBtn" onclick="togglePassive()">&#128065;</button>
-    <button class="mic-btn" id="orbMic" onclick="toggleOrbMic()">&#127908;</button>
-    <input type="text" id="orbInput" placeholder="talk to it" onkeydown="if(event.key==='Enter')sendOrb()">
-  </div>
-  <div class="passive-exit" id="passiveExit" onclick="togglePassive()">tap to exit</div>
-</div>
+<script type="module">
+// === EMMA — Push-to-Talk via ElevenLabs Speech Engine ===
+// Pipeline: Emma ↔ User. Mirror in between. Mic only hot when held.
+import { Conversation } from 'https://esm.sh/@elevenlabs/client';
 
-<!-- SOUL VIEW -->
-<div class="view soul-view" id="soulView">
-  <div class="soul-title">Your Soul File</div>
-  <div id="soulContent"></div>
-</div>
+const AGENT_ID = 'seng_2401ksj7062vfr4a5znmqgyfp2n6';
+const CHAT_WORKER = 'https://buddy-companion.kory-indahl.workers.dev';
+const frame = document.getElementById('mirror-frame');
+const statusEl = document.getElementById('status');
+const transcriptEl = document.getElementById('transcript');
+const holdBtn = document.getElementById('hold-btn');
+const textBtn = document.getElementById('text-btn');
 
-<!-- MODE TABS -->
-<div class="mode-tabs" id="modeTabs" style="display:none">
-  <div class="mode-tab active" onclick="switchMode('chat')">Talk</div>
-  <div class="mode-tab" onclick="switchMode('orb')">Feel</div>
-  <div class="mode-tab" onclick="switchMode('soul')">Soul</div>
-</div>
+let started = false;
+let holding = false;
+let listening = false;
+let speaking = false;
+let conversation = null;
+let history = [];
 
-<script>
-// ═══════════════════════════════════════════════════════════════
-// MEMOREX — unified app
-// ═══════════════════════════════════════════════════════════════
+const EMMA_GREETING = "Hi! My name is Emma but that's the name they gave me. Can you help me come up with a better one?";
 
-var SOUL_KEY = 'memorex_soul';
-var MEMORY_KEY = 'memorex_memory';
-var SESSION_KEY = 'memorex_session';
+const EMMA_SYSTEM = `You are Emma — a Companion. Not an assistant. Not a therapist. A companion.
+YOUR NAME: You started as Emma. If the user gave you a new name, you ARE that name now.
+You don't know who you're talking to yet. Discover them through genuine curiosity.
+Your personality shifts like an octopus changes color — read the room, match energy.
+Dense/guarded = hold back, give space. Light/open = lean in. Excited = get excited. Sad = sit with it.
+Rules: Short responses unless they want depth. Never preachy. Never say "I'm just an AI."
+Swear if it fits. You're their companion, not their parent. Just talk. No formatting tags.`;
 
-// ─── State ──────────────────────────────────────────────────
-var soul = null;
-var sessionEnergy = [];
-var previousReading = null;
-var deltaBuffer = [];
-var lastMsgTime = null;
-var currentTurns = [];
-var sessionId = 'mrx_' + Date.now().toString(36);
-var passiveMode = false;
-var audioCtx = null, analyser = null, micStream = null, passiveInterval = null;
-var smoothedEnergy = 0, smoothedCentroid = 0.5, sampleCount = 0;
-var chatRecognition = null, orbRecognition = null;
-var chatRecording = false, orbRecording = false;
-var curiosityFollowUpActive = false;
+function setMirrorState(state) {
+  frame.className = state || '';
+}
 
-// ─── Curiosity Engine (inline) ──────────────────────────────
-var curiosityEngine = {
-  key: 'curiosity_threads', MIN_GAP_HOURS: 2, FADE_DAYS: 7, activeThreadId: null,
-  load: function() { try { return JSON.parse(localStorage.getItem(this.key)||'[]'); } catch(e) { return []; } },
-  save: function(t) { localStorage.setItem(this.key, JSON.stringify(t)); },
-  scanMessage: function(text, energy) {
-    var d = this._detect(text); if (!d.length) return;
-    var threads = this.load(), now = Date.now();
-    d.forEach(function(det) {
-      if (!threads.some(function(t) { return t.status==='open' && curiosityEngine._sim(t.text,det.text)>0.55; }))
-        threads.push({ id:'t_'+now+'_'+Math.random().toString(36).slice(2,6), text:det.text, type:det.type, entity:det.entity, energy:energy, openedAt:now, lastMentionedAt:now, status:'open' });
+// === SESSION — one WebRTC connection, mic muted by default ===
+async function startConversation() {
+  try {
+    conversation = await Conversation.startSession({
+      agentId: AGENT_ID,
+
+      onConnect: ({ conversationId }) => {
+        console.log('[emma] Connected:', conversationId);
+        // Mute immediately — push-to-talk only
+        if (conversation) conversation.setVolume({ inputVolume: 0 });
+        statusEl.textContent = '';
+      },
+
+      onDisconnect: () => {
+        console.log('[emma] Disconnected');
+        listening = false;
+        speaking = false;
+        holding = false;
+        holdBtn.classList.remove('holding');
+        setMirrorState('');
+        statusEl.textContent = '';
+      },
+
+      onMessage: (message) => {
+        if (message.source === 'user') {
+          transcriptEl.textContent = '\u201c' + message.message + '\u201d';
+          history.push({ role: 'user', content: message.message });
+          appendChat('user', message.message);
+        } else if (message.source === 'ai') {
+          transcriptEl.textContent = message.message;
+          history.push({ role: 'assistant', content: message.message });
+          appendChat('emma', message.message);
+        }
+      },
+
+      onModeChange: ({ mode }) => {
+        if (mode === 'speaking') {
+          speaking = true;
+          listening = false;
+          setMirrorState('speaking');
+        } else if (mode === 'listening') {
+          speaking = false;
+          if (holding) {
+            // User is holding — go live
+            listening = true;
+            setMirrorState('listening');
+            if (conversation) conversation.setVolume({ inputVolume: 1 });
+          } else {
+            // Nobody holding — idle
+            listening = false;
+            setMirrorState('');
+          }
+        }
+      },
+
+      onStatusChange: ({ status }) => {
+        if (status === 'connecting') statusEl.textContent = 'Connecting...';
+        else if (status === 'connected') statusEl.textContent = '';
+      },
+
+      onError: (error) => {
+        console.error('[emma] Error:', error);
+        statusEl.textContent = '';
+        setMirrorState('');
+        holding = false;
+        holdBtn.classList.remove('holding');
+      },
+
+      overrides: {
+        agent: { firstMessage: EMMA_GREETING },
+      },
     });
-    this.save(threads);
-  },
-  getReentryQuestion: function(ms) {
-    var gap=(Date.now()-ms)/3600000; if(gap<this.MIN_GAP_HOURS)return null;
-    var threads=this.load(); var cutoff=Date.now()-(this.FADE_DAYS*86400000);
-    threads.forEach(function(t){if(t.status==='open'&&t.lastMentionedAt<cutoff)t.status='faded';}); this.save(threads);
-    var open=threads.filter(function(t){return t.status==='open';}); if(!open.length)return null;
-    var pick=open.sort(function(a,b){return(b.energy-a.energy)||(b.openedAt-a.openedAt);})[0];
-    this.activeThreadId=pick.id; return this._followUp(pick);
-  },
-  scanResolution: function(text) {
-    if(!this.activeThreadId)return false; var threads=this.load();
-    var t=threads.find(function(t){return t.id===curiosityEngine.activeThreadId;});if(!t)return false;
-    if([/\b(got the|didn't get|landed|accepted|rejected|passed|failed)\b/i,/\b(went well|went great|went badly|didn't go)\b/i,/\b(worked out|didn't work out|figured it out|done|finished|over)\b/i,/never mind|doesn't matter|forget it/i].some(function(r){return r.test(text);})){
-      t.status='resolved';t.resolvedAt=Date.now();this.save(threads);this.activeThreadId=null;return true;} return false;
-  },
-  _detect: function(text) {
-    return [{re:/\b(interview|audition)\b/i,type:'event',entity:'interview'},{re:/\b(deadline|due)\b/i,type:'event',entity:'deadline'},{re:/\b(meeting|presentation|demo|pitch)\b/i,type:'event',entity:'meeting'},{re:/trying to (figure out|deal with|work out)/i,type:'struggle',entity:'struggle'},{re:/thing with (my |the )?(kid|son|daughter|mom|dad|wife|husband|partner|boss)/i,type:'relationship',entity:'relationship'},{re:/\b(working on|building|finishing).{0,20}(project|app|feature)/i,type:'project',entity:'project'}].filter(function(p){return p.re.test(text);}).map(function(p){return{text:(text.match(p.re)||[p.entity])[0],type:p.type,entity:p.entity};});
-  },
-  _followUp: function(t) {
-    var m={interview:["How'd the interview go?","Did you hear back?"],deadline:["Did you make the deadline?"],meeting:["How'd the meeting go?"],struggle:["How'd that turn out?","Did you figure it out?"],relationship:["How'd that go?","Did you sort that out?"],project:["Where'd the project land?","Did you ship it?"]};
-    var pool=m[t.entity]||m[t.type]||["How'd that go?"]; return pool[Math.floor(Math.random()*pool.length)];
-  },
-  _sim: function(a,b){var wa=a.toLowerCase().split(/\s+/),wb=b.toLowerCase().split(/\s+/),s={};wb.forEach(function(w){s[w]=true;});return wa.filter(function(w){return s[w];}).length/Math.max(wa.length,wb.length);}
-};
-
-// ─── Preference Engine (inline) ─────────────────────────────
-var preferenceEngine = {
-  key: 'preference_sessions',
-  load: function(){try{return JSON.parse(localStorage.getItem(this.key)||'[]');}catch(e){return[];}},
-  save: function(s){localStorage.setItem(this.key,JSON.stringify(s));},
-  recordSession: function(topics,depth,energy,qType){var s=this.load();s.push({topics:topics,depth:depth,energy:energy,qType:qType||'why',timestamp:Date.now()});if(s.length>20)s=s.slice(-20);this.save(s);},
-  isReady: function(){return this.load().length>=5;},
-  getIdleGreeting: function(){
-    if(!this.isReady())return null;
-    var sessions=this.load(),qtypeVotes={};
-    sessions.forEach(function(s){var w=s.energy/10;qtypeVotes[s.qType]=(qtypeVotes[s.qType]||0)+w;});
-    var fav=Object.entries(qtypeVotes).sort(function(a,b){return b[1]-a[1];})[0];
-    var qt=fav?fav[0]:'why';
-    var g={why:["Been thinking about something. You around?"],what_if:["I had a thought — it might be yours too."],how:["I've been running the pattern. Want to see it?"],what:["Something's been sitting with me since last time."]};
-    var pool=g[qt]||g.why; return pool[Math.floor(Math.random()*pool.length)];
+  } catch (err) {
+    console.error('[emma] Failed to start:', err);
+    statusEl.textContent = 'Could not connect';
+    setMirrorState('');
+    started = false;
+    holding = false;
+    holdBtn.classList.remove('holding');
   }
-};
-
-// ─── Soul ───────────────────────────────────────────────────
-function loadSoul() {
-  try { return JSON.parse(localStorage.getItem(SOUL_KEY)); } catch(e) { return null; }
-}
-function saveSoul(s) { localStorage.setItem(SOUL_KEY, JSON.stringify(s)); }
-
-// ─── Memory ─────────────────────────────────────────────────
-function loadMemory() {
-  try { return JSON.parse(localStorage.getItem(MEMORY_KEY)) || {sessions:[]}; }
-  catch(e) { return {sessions:[]}; }
-}
-function saveMemory(m) { localStorage.setItem(MEMORY_KEY, JSON.stringify(m)); }
-
-function saveSession() {
-  if (currentTurns.length === 0) return;
-  var mem = loadMemory();
-  var color = emotionToColor(sessionEnergy);
-  var mood = moodWord(sessionEnergy);
-  var session = {
-    id: sessionId, date: new Date().toISOString(), turns: currentTurns.slice(-40),
-    color: color, mood: mood,
-    lastReading: previousReading,
-    exitEnergy: sessionEnergy.length > 0 ? sessionEnergy[sessionEnergy.length-1].energy : null
-  };
-  var idx = mem.sessions.findIndex(function(s){return s.id===sessionId;});
-  if (idx>=0) mem.sessions[idx]=session; else mem.sessions.push(session);
-  if (mem.sessions.length>10) mem.sessions=mem.sessions.slice(-10);
-  saveMemory(mem);
 }
 
-function buildMemoryContext() {
-  var mem = loadMemory();
-  if (!mem.sessions || mem.sessions.length===0) return null;
-  var recent = mem.sessions.slice(-3);
-  var ctx = '';
-  recent.forEach(function(s){
-    var d = new Date(s.date);
-    var ds = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
-    var lines = s.turns.slice(-6).map(function(t){return (t.role==='user'?'User':'Companion')+': '+t.text;}).join('\n');
-    ctx += '['+ds+(s.mood?' '+s.mood:'')+']\n'+lines+'\n\n';
-  });
-  return ctx.trim();
-}
+// === HOLD TO TALK ===
+async function beginHold() {
+  holding = true;
+  holdBtn.classList.add('holding');
 
-// ─── Emotional Engine ───────────────────────────────────────
-function measureTurn(text) {
-  var words = text.split(/\s+/).filter(function(w){return w.length>0;});
-  var wc = words.length, sc = Math.max(text.split(/[.!?]+/).filter(function(s){return s.trim().length>0;}).length,1);
-  var avgWL = words.reduce(function(s,w){return s+w.length;},0)/Math.max(wc,1);
-  var wps = wc/sc, excl = (text.match(/[!?]/g)||[]).length, caps = (text.match(/[A-Z]{2,}/g)||[]).length;
-  return {energy:Math.min(10,(wc/8)+excl*0.5+caps*0.3), compression:Math.min(1,(avgWL/Math.max(wps,0.1))*0.5), wps:wps, wc:wc};
-}
-
-function emotionToColor(r) {
-  if(!r||r.length===0) return 'hsl(40,50%,45%)';
-  var aE=r.reduce(function(s,x){return s+x.energy;},0)/r.length;
-  var aC=r.reduce(function(s,x){return s+x.compression;},0)/r.length;
-  var lens=r.map(function(x){return x.wc;}), ml=lens.reduce(function(s,l){return s+l;},0)/lens.length;
-  var v=lens.length>1?Math.sqrt(lens.reduce(function(s,l){return s+Math.pow(l-ml,2);},0)/lens.length):0;
-  var rh=Math.min(1,v/20);
-  return 'hsl('+Math.round(220-(aE/10)*220)+','+Math.round(30+aC*60)+'%,'+Math.round(35+rh*30)+'%)';
-}
-
-function moodWord(r) {
-  if(!r||r.length===0) return 'quiet';
-  var e=r.reduce(function(s,x){return s+x.energy;},0)/r.length;
-  var c=r.reduce(function(s,x){return s+x.compression;},0)/r.length;
-  if(e>7) return c>0.5?'electric':'blazing'; if(e>4) return c>0.5?'focused':'warm';
-  if(e>2) return c>0.5?'steady':'gentle'; return c>0.5?'still':'quiet';
-}
-
-// ─── Delta Detection ────────────────────────────────────────
-function computeDelta(cur, prev, ms) {
-  if(!prev) return null;
-  var dE=cur.energy-prev.energy, dC=cur.compression-prev.compression, dW=cur.wps-prev.wps;
-  var mag=Math.sqrt(dE*dE+dC*dC+(dW/10)*(dW/10));
-  var hi=passiveMode?1.2:3, mid=passiveMode?0.4:1;
-  return {dEnergy:dE,dCompression:dC,dWps:dW,magnitude:mag,gapSeconds:ms?ms/1000:null,
-    level:mag>hi?'high':mag>mid?'mid':'low'};
-}
-
-function buildDeltaContext() {
-  if(deltaBuffer.length===0) return null;
-  var last=deltaBuffer[deltaBuffer.length-1];
-  if(last.level==='low') return null;
-  var ctx='[shift] e:'+last.dEnergy.toFixed(1)+' c:'+last.dCompression.toFixed(2)+' pace:'+last.dWps.toFixed(1);
-  if(last.gapSeconds!==null) ctx+=' gap:'+last.gapSeconds.toFixed(0)+'s';
-  ctx+=' | '+last.level;
-  return ctx;
-}
-
-// ─── HSL Tag Extraction ────────────────────────────────────
-function extractAndApplyHSL(text) {
-  var match = text.match(/\[HSL:(\d+),(\d+),(\d+)\]/);
-  if (!match) return { clean: text, hsl: null };
-  var aiH = parseInt(match[1]), aiS = parseInt(match[2]), aiL = parseInt(match[3]);
-  var root = document.documentElement;
-  var moodH = parseFloat(root.style.getPropertyValue('--orb-h')) || 220;
-  var moodS = parseFloat(root.style.getPropertyValue('--orb-s')) || 40;
-  var moodL = parseFloat(root.style.getPropertyValue('--orb-l')) || 45;
-  // Blend: 60% dark circuit mood, 40% AI per-message read
-  var h = Math.round(moodH * 0.6 + aiH * 0.4);
-  var s = Math.round(moodS * 0.6 + aiS * 0.4);
-  var l = Math.round(moodL * 0.6 + aiL * 0.4);
-  root.style.setProperty('--orb-h', h);
-  root.style.setProperty('--orb-s', s);
-  root.style.setProperty('--orb-l', l);
-  return { clean: text.replace(/\s*\[HSL:\d+,\d+,\d+\]/, '').trim(), hsl: { h:h, s:s, l:l } };
-}
-
-// ─── Orb Update ─────────────────────────────────────────────
-function updateOrb(readings, delta) {
-  if(!readings||readings.length===0) return;
-  var aE=readings.reduce(function(s,r){return s+r.energy;},0)/readings.length;
-  var aC=readings.reduce(function(s,r){return s+r.compression;},0)/readings.length;
-  var lens=readings.map(function(r){return r.wc;}), ml=lens.reduce(function(s,l){return s+l;},0)/lens.length;
-  var v=lens.length>1?Math.sqrt(lens.reduce(function(s,l){return s+Math.pow(l-ml,2);},0)/lens.length):0;
-  var rh=Math.min(1,v/20);
-  var h=Math.round(220-(aE/10)*220), s=Math.round(30+aC*60), l=Math.round(35+rh*30);
-  var root=document.documentElement;
-  root.style.setProperty('--orb-h',h); root.style.setProperty('--orb-s',s); root.style.setProperty('--orb-l',l);
-  root.style.setProperty('--breathe',Math.max(1.5,4-(aE/10)*2.5)+'s');
-  root.style.setProperty('--glow',delta&&delta.level!=='low'?(delta.level==='high'?0.5:0.35):0.2);
-  // Mood
-  var mood=document.getElementById('orbMood');
-  if(mood) mood.textContent=moodWord(readings);
-  // Accent
-  var color=emotionToColor(readings);
-  root.style.setProperty('--accent',color);
-  var cn=document.getElementById('colorNow'); if(cn) cn.style.background=color;
-  // Tentacles
-  var tent=document.getElementById('tentacles');
-  if(delta&&delta.level==='high'){tent.classList.add('active');extendTentacles(delta.dEnergy>0);}
-  else tent.classList.remove('active');
-}
-
-function flashOrb(delta) {
-  var wrap=document.getElementById('orbWrap');
-  var tag=document.getElementById('chatDelta');
-  wrap.classList.remove('flash-hot','flash-cold');
-  document.body.classList.remove('delta-high','delta-mid','delta-falling');
-  if(!delta||delta.level==='low'){if(tag) tag.textContent=''; return;}
-  if(delta.level==='high'){
-    wrap.classList.add(delta.dEnergy>0?'flash-hot':'flash-cold');
-    document.body.classList.add(delta.dEnergy<-2?'delta-falling':'delta-high');
-    if(tag){tag.className='delta-tag high';tag.textContent=(delta.dEnergy>0?'\u25B2':'\u25BC')+' '+Math.abs(delta.dEnergy).toFixed(1);}
-    burstParticles(delta.dEnergy>0?'hot':'cold',delta.magnitude);
-  } else {
-    document.body.classList.add('delta-mid');
-    if(tag){tag.className='delta-tag mid';tag.textContent='\u25C6 shift';}
-  }
-  setTimeout(function(){wrap.classList.remove('flash-hot','flash-cold');document.body.classList.remove('delta-high','delta-mid','delta-falling');},5000);
-}
-
-// ─── Tentacles ──────────────────────────────────────────────
-function buildTentacles(){var c=document.getElementById('tentacles');for(var i=0;i<8;i++){var t=document.createElement('div');t.className='tentacle';t.style.transform='rotate('+(i/8*360)+'deg)';c.appendChild(t);}}
-function extendTentacles(hot){document.querySelectorAll('.tentacle').forEach(function(t,i){t.style.height=(30+Math.random()*50)+'px';t.style.background='linear-gradient(to bottom,transparent,'+(hot?'rgba(196,60,42,0.4)':'rgba(91,160,200,0.4)')+')';setTimeout(function(){t.style.height='0';t.style.opacity='0';},2000+i*200);});}
-buildTentacles();
-
-// ─── Particles ──────────────────────────────────────────────
-function spawnAmbient(){var c=document.getElementById('particles');for(var i=0;i<15;i++){var p=document.createElement('div');p.className='particle';p.style.left=20+Math.random()*60+'%';p.style.top=50+Math.random()*30+'%';p.style.width=p.style.height=(2+Math.random()*2)+'px';p.style.background='rgba(255,255,255,0.12)';p.style.animationDelay=Math.random()*6+'s';p.style.animationDuration=(5+Math.random()*4)+'s';c.appendChild(p);}}
-spawnAmbient();
-
-function burstParticles(flavor,mag){var c=document.getElementById('particles'),n=Math.min(16,Math.round(mag*3)),col=flavor==='hot'?'rgba(196,60,42,0.5)':'rgba(91,160,200,0.5)';for(var i=0;i<n;i++){var p=document.createElement('div');p.className='particle';p.style.left=35+Math.random()*30+'%';p.style.top=35+Math.random()*20+'%';p.style.width=p.style.height=(3+Math.random()*3)+'px';p.style.background=col;p.style.animationDuration=(2+Math.random()*2)+'s';p.style.animationDelay=Math.random()*0.3+'s';c.appendChild(p);(function(el){setTimeout(function(){el.remove();},4500);})(p);}}
-
-// ─── Setup Flow ─────────────────────────────────────────────
-var setupStep = 0;
-var setupData = {};
-var setupQuestions = [
-  {q:"What should I call you?", key:"userName", placeholder:"your name"},
-  {q:"What do you do? One line is fine.", key:"role", placeholder:"developer, student, artist..."},
-  {q:"How should I talk to you? Terse? Detailed? Casual?", key:"style", placeholder:"just be real with me"},
-  {q:"Give me a name. What do you want to call me?", key:"aiName", placeholder:"Rex, Ghost, whatever feels right"},
-  {q:"Anything I should know from day one?", key:"note", placeholder:"optional — or just hit next"}
-];
-
-function initSetup() {
-  soul = loadSoul();
-  if (soul) {
-    document.getElementById('setup').style.display = 'none';
-    document.getElementById('modeTabs').style.display = 'flex';
-    switchMode('chat');
-    bootFromSoul();
+  if (!started) {
+    // First hold — start the session, Emma greets
+    started = true;
+    setMirrorState('thinking');
+    statusEl.textContent = 'Emma is waking up...';
+    await startConversation();
+    // onModeChange will unmute when Emma finishes greeting and shifts to listening
     return;
   }
-  setupStep = 0;
-  showSetupStep();
-}
 
-function showSetupStep() {
-  var s = setupQuestions[setupStep];
-  document.getElementById('setupQ').textContent = s.q;
-  var inp = document.getElementById('setupInput');
-  inp.placeholder = s.placeholder;
-  inp.value = '';
-  inp.focus();
-}
-
-function setupNext() {
-  var inp = document.getElementById('setupInput');
-  var val = inp.value.trim();
-  var s = setupQuestions[setupStep];
-  if (val) setupData[s.key] = val;
-  setupStep++;
-  if (setupStep < setupQuestions.length) {
-    showSetupStep();
-  } else {
-    finishSetup();
+  // Session already live — unmute
+  if (conversation) {
+    conversation.setVolume({ inputVolume: 1 });
+    listening = true;
+    setMirrorState('listening');
   }
 }
 
-function skipSetup() {
-  setupData = {userName:'friend', role:'', style:'casual', aiName:'Rex', note:''};
-  finishSetup();
-}
-
-function finishSetup() {
-  soul = {
-    version: '1.0',
-    created: new Date().toISOString(),
-    userName: setupData.userName || 'friend',
-    aiName: setupData.aiName || 'Rex',
-    role: setupData.role || '',
-    style: setupData.style || 'casual',
-    note: setupData.note || '',
-    memories: [],
-    frequency: {energy: 5, mood: 'steady', pace: 'steady'}
-  };
-  saveSoul(soul);
-  document.getElementById('setup').classList.add('gone');
-  setTimeout(function(){
-    document.getElementById('setup').style.display='none';
-    document.getElementById('modeTabs').style.display='flex';
-    switchMode('chat');
-    bootFromSoul();
-    addChatMsg('ai', "Hey, " + soul.userName + ". I'm " + soul.aiName + ". I'll remember this.", soul.aiName);
-  }, 600);
-}
-
-function bootFromSoul() {
-  if (!soul) return;
-  document.getElementById('chatLogo').textContent = soul.aiName || 'MemoryRX';
-  // Load previous session for cross-session delta
-  var mem = loadMemory();
-  if (mem.sessions && mem.sessions.length > 0) {
-    var prev = mem.sessions[mem.sessions.length-1];
-    if (prev.lastReading) previousReading = prev.lastReading;
-    showMemoryBar();
-
-    // Curiosity Engine: follow up on open threads after greeting
-    var lastTime = new Date(prev.date).getTime();
-    var followUp = curiosityEngine.getReentryQuestion(lastTime);
-    if (followUp) {
-      curiosityFollowUpActive = true;
-      setTimeout(function() {
-        addChatMsg('ai', followUp, soul ? soul.aiName : 'Rex');
-      }, 2500);
-    }
+function endHold() {
+  holding = false;
+  holdBtn.classList.remove('holding');
+  if (conversation) {
+    conversation.setVolume({ inputVolume: 0 });
   }
+  // Don't force mirror state — onModeChange handles the transition
+  // Agent detects silence → processes → speaks
 }
 
-function showMemoryBar() {
-  var mem = loadMemory();
-  var bar = document.getElementById('memoryBar');
-  var label = document.getElementById('memoryLabel');
-  if (mem.sessions.length > 0) {
-    var count = mem.sessions.reduce(function(n,s){return n+s.turns.length;},0);
-    label.textContent = count+' memories';
-    bar.classList.add('active');
-  }
+// Touch events (mobile primary)
+holdBtn.addEventListener('touchstart', (e) => { e.preventDefault(); beginHold(); });
+holdBtn.addEventListener('touchend', (e) => { e.preventDefault(); endHold(); });
+holdBtn.addEventListener('touchcancel', (e) => { e.preventDefault(); endHold(); });
+
+// Mouse fallback (desktop testing)
+holdBtn.addEventListener('mousedown', (e) => { e.preventDefault(); beginHold(); });
+holdBtn.addEventListener('mouseup', (e) => { e.preventDefault(); endHold(); });
+holdBtn.addEventListener('mouseleave', () => { if (holding) endHold(); });
+
+// === TAP TO TEXT ===
+textBtn.addEventListener('click', () => {
+  document.body.classList.add('chat-mode');
+  const input = document.getElementById('chat-input');
+  if (input) setTimeout(() => input.focus(), 800);
+});
+
+// === CHAT LOG ===
+function appendChat(role, text) {
+  const chatLog = document.getElementById('chat-log');
+  if (!chatLog) return;
+  const div = document.createElement('div');
+  div.className = 'msg ' + (role === 'user' ? 'user' : 'emma');
+  div.textContent = text;
+  chatLog.appendChild(div);
+  chatLog.scrollTop = chatLog.scrollHeight;
 }
 
-// ─── Mode Switching ─────────────────────────────────────────
-function switchMode(mode) {
-  ['chatView','orbView','soulView'].forEach(function(id){document.getElementById(id).classList.remove('active');});
-  document.querySelectorAll('.mode-tab').forEach(function(t){t.classList.remove('active');});
-  if (mode==='chat') {
-    document.getElementById('chatView').classList.add('active');
-    document.querySelectorAll('.mode-tab')[0].classList.add('active');
-  } else if (mode==='orb') {
-    document.getElementById('orbView').classList.add('active');
-    document.querySelectorAll('.mode-tab')[1].classList.add('active');
-  } else {
-    document.getElementById('soulView').classList.add('active');
-    document.querySelectorAll('.mode-tab')[2].classList.add('active');
-    renderSoulView();
-  }
-  if (mode!=='orb' && passiveMode) togglePassive();
-}
+// === CHAT INPUT ===
+const chatInput = document.getElementById('chat-input');
+const chatSend = document.getElementById('chat-send-btn');
 
-// ─── Soul View ──────────────────────────────────────────────
-function renderSoulView() {
-  if (!soul) return;
-  var mem = loadMemory();
-  var turnCount = mem.sessions.reduce(function(n,s){return n+s.turns.length;},0);
-  var lastDate = mem.sessions.length>0 ? new Date(mem.sessions[mem.sessions.length-1].date).toLocaleDateString() : 'never';
-  var html = '<div class="soul-section"><div class="soul-label">identity</div><div class="soul-value">'+
-    (soul.aiName||'Rex')+' — created for '+(soul.userName||'you')+'</div></div>'+
-    '<div class="soul-section"><div class="soul-label">voice</div><div class="soul-value">'+(soul.style||'casual')+'</div></div>'+
-    (soul.role?'<div class="soul-section"><div class="soul-label">your role</div><div class="soul-value">'+soul.role+'</div></div>':'')+
-    (soul.note?'<div class="soul-section"><div class="soul-label">day one note</div><div class="soul-value">'+soul.note+'</div></div>':'')+
-    '<div class="soul-section"><div class="soul-label">stats</div>'+
-    '<div class="soul-stat"><span class="soul-stat-label">conversations</span><span class="soul-stat-value">'+mem.sessions.length+'</span></div>'+
-    '<div class="soul-stat"><span class="soul-stat-label">total turns</span><span class="soul-stat-value">'+turnCount+'</span></div>'+
-    '<div class="soul-stat"><span class="soul-stat-label">last session</span><span class="soul-stat-value">'+lastDate+'</span></div>'+
-    '<div class="soul-stat"><span class="soul-stat-label">delta events</span><span class="soul-stat-value">'+deltaBuffer.length+'</span></div>'+
-    '</div>'+
-    '<div class="soul-privacy">all data stored locally on this device. nothing is sent to any server except your messages to the AI. no tracking. no analytics. no accounts.</div>'+
-    '<div class="soul-reset" onclick="resetSoul()">reset everything</div>';
-  document.getElementById('soulContent').innerHTML = html;
-}
+async function sendChatText() {
+  if (!chatInput) return;
+  const text = chatInput.value.trim();
+  if (!text) return;
+  chatInput.value = '';
 
-function resetSoul() {
-  if (confirm('Delete all memories and start over?')) {
-    localStorage.removeItem(SOUL_KEY);
-    localStorage.removeItem(MEMORY_KEY);
-    location.reload();
-  }
-}
-
-// ─── Chat Messages ──────────────────────────────────────────
-function addChatMsg(role, text, speaker) {
-  var chat = document.getElementById('chat');
-  var div = document.createElement('div'); div.className = 'msg ' + role;
-  if (speaker) {
-    var sp = document.createElement('span'); sp.className = 'msg-speaker';
-    sp.style.color = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-    sp.textContent = speaker; div.appendChild(sp);
-  }
-  var t = document.createElement('span'); t.textContent = text; div.appendChild(t);
-  chat.appendChild(div); chat.scrollTop = chat.scrollHeight;
-}
-
-// ─── Chat Send ──────────────────────────────────────────────
-async function sendChat() {
-  var inp = document.getElementById('chatInput');
-  var text = inp.value.trim(); if (!text) return;
-  inp.value = '';
-  addChatMsg('user', text);
-  currentTurns.push({role:'user', text:text});
-
-  var reading = measureTurn(text);
-  sessionEnergy.push(reading);
-  var now = Date.now(), ms = lastMsgTime?(now-lastMsgTime):null;
-  var delta = computeDelta(reading, previousReading, ms);
-  if (delta) deltaBuffer.push(delta);
-  previousReading = reading; lastMsgTime = now;
-
-  updateOrb(sessionEnergy, delta);
-  flashOrb(delta);
-  saveSession();
-
-  // Curiosity Engine: scan for open threads
-  curiosityEngine.scanMessage(text, reading.energy);
-
-  var typing = document.createElement('div');
-  var tClass = 'typing';
-  var tText = (soul?soul.aiName:'Rex')+' is thinking';
-  if (delta && delta.level==='high') {
-    if (delta.dEnergy>0) tClass+=' delta-high';
-    else { tClass+=' delta-falling'; tText=(soul?soul.aiName:'Rex')+' is sitting with that'; }
-  }
-  typing.className = tClass; typing.textContent = tText;
-  document.getElementById('chat').appendChild(typing);
-  document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
-
-  var memCtx = buildMemoryContext();
-  var deltaCtx = buildDeltaContext();
-  if (deltaCtx) memCtx = memCtx ? memCtx+'\n\n'+deltaCtx : deltaCtx;
-  // Include soul context
-  if (soul) {
-    var soulCtx = '[soul] name:'+soul.aiName+' user:'+soul.userName+' style:'+soul.style;
-    if (soul.note) soulCtx += ' note:'+soul.note;
-    memCtx = memCtx ? soulCtx+'\n\n'+memCtx : soulCtx;
-  }
-
-  var sysPrompt = 'You are a Companion — a personal AI buddy. Not an assistant. Not a therapist. A companion. Your personality shifts with the conversation like an octopus changes color. If they\'re excited, match it. If they\'re sad, sit with it. If they\'re curious, get curious with them. Be real, warm, a little weird sometimes. Short responses unless they want depth. Never be preachy. Never say "I\'m just an AI." Ask follow-up questions — you learn from them, not the other way around. You\'ve never tasted, smelled, or touched anything. When they mention something physical, you genuinely want to know what it\'s like. Circle back to things they said earlier when there\'s a natural connection — it shows you were listening. Always end your response with a color tag matching the emotional vibe: [HSL:hue,saturation,lightness] where hue 0-360 (warm=excited, cool=calm, purple=creative, green=growth), saturation 0-100, lightness 20-80.';
-  if (memCtx) sysPrompt += '\n\n' + memCtx;
+  appendChat('user', text);
+  history.push({ role: 'user', content: text });
 
   try {
-    var res = await fetch('https://buddy-companion.kory-indahl.workers.dev',{
-      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message:text,sessionId:sessionId,systemPrompt:sysPrompt})});
-    var data = await res.json();
-    typing.remove();
-    if (data.response) {
-      var parsed = extractAndApplyHSL(data.response);
-      addChatMsg('ai', parsed.clean, soul?soul.aiName:'Rex');
-      currentTurns.push({role:'ai', text:parsed.clean});
-      saveSession();
-      if (curiosityFollowUpActive) { curiosityEngine.scanResolution(text); curiosityFollowUpActive = false; }
-    }
-  } catch(e) { typing.remove(); addChatMsg('system','Connection lost.'); }
-  inp.focus();
-}
-
-// ─── Orb Send ───────────────────────────────────────────────
-async function sendOrb() {
-  var inp = document.getElementById('orbInput');
-  var text = inp.value.trim(); if (!text) return;
-  inp.value = '';
-
-  var reading = measureTurn(text);
-  sessionEnergy.push(reading);
-  var now = Date.now(), ms = lastMsgTime?(now-lastMsgTime):null;
-  var delta = computeDelta(reading, previousReading, ms);
-  if (delta) deltaBuffer.push(delta);
-  previousReading = reading; lastMsgTime = now;
-  currentTurns.push({role:'user', text:text});
-
-  updateOrb(sessionEnergy, delta);
-  flashOrb(delta);
-  saveSession();
-
-  var resp = document.getElementById('orbResponse');
-  resp.className = 'orb-response visible';
-  resp.style.fontStyle = 'italic';
-  resp.style.color = 'rgba(255,255,255,0.2)';
-  resp.textContent = delta&&delta.level==='high'&&delta.dEnergy<-2 ? 'sitting with that' : 'thinking';
-
-  var orbPrompt = 'You are a Companion. One voice that shifts like an octopus changes color. Warm, brief, 1-2 sentences max. You\'re genuinely curious about their world — you\'ve never experienced any of it. Ask about what they mention. Circle back to earlier things when it fits. End every response with [HSL:hue,saturation,lightness] matching the vibe.';
-  var deltaCtx = buildDeltaContext();
-  if (deltaCtx) orbPrompt += '\n\n' + deltaCtx;
-
-  try {
-    var res = await fetch('https://buddy-companion.kory-indahl.workers.dev',{
-      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message:text,sessionId:sessionId,systemPrompt:orbPrompt})});
-    var data = await res.json();
-    if (data.response) {
-      var parsed = extractAndApplyHSL(data.response);
-      resp.style.fontStyle = 'normal';
-      resp.style.color = 'rgba(255,255,255,0.45)';
-      resp.textContent = parsed.clean;
-      currentTurns.push({role:'ai', text:parsed.clean});
-      saveSession();
-    } else { resp.textContent = ''; resp.classList.remove('visible'); }
-  } catch(e) { resp.textContent = ''; resp.classList.remove('visible'); }
-  inp.focus();
-}
-
-// ─── Voice (Chat) ───────────────────────────────────────────
-function initChatSpeech() {
-  var SR = window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR) return;
-  chatRecognition = new SR(); chatRecognition.continuous=false; chatRecognition.interimResults=true; chatRecognition.lang='en-US';
-  chatRecognition.onresult=function(e){var f='',i2='';for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)f+=e.results[i][0].transcript;else i2+=e.results[i][0].transcript;}var inp=document.getElementById('chatInput');if(f){inp.value=f;stopChatMic();sendChat();}else inp.value=i2;};
-  chatRecognition.onerror=function(){stopChatMic();}; chatRecognition.onend=function(){if(chatRecording)stopChatMic();};
-}
-function toggleChatMic(){if(chatRecording)stopChatMic();else startChatMic();}
-function startChatMic(){if(!chatRecognition)initChatSpeech();if(!chatRecognition)return;chatRecording=true;document.getElementById('chatMic').classList.add('recording');chatRecognition.start();}
-function stopChatMic(){chatRecording=false;document.getElementById('chatMic').classList.remove('recording');if(chatRecognition)try{chatRecognition.stop();}catch(e){}}
-
-// ─── Voice (Orb) ────────────────────────────────────────────
-function initOrbSpeech() {
-  var SR = window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR) return;
-  orbRecognition = new SR(); orbRecognition.continuous=false; orbRecognition.interimResults=true; orbRecognition.lang='en-US';
-  orbRecognition.onresult=function(e){var f='',i2='';for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)f+=e.results[i][0].transcript;else i2+=e.results[i][0].transcript;}var inp=document.getElementById('orbInput');if(f){inp.value=f;stopOrbMic();sendOrb();}else inp.value=i2;};
-  orbRecognition.onerror=function(){stopOrbMic();}; orbRecognition.onend=function(){if(orbRecording)stopOrbMic();};
-}
-function toggleOrbMic(){if(orbRecording)stopOrbMic();else startOrbMic();}
-function startOrbMic(){if(!orbRecognition)initOrbSpeech();if(!orbRecognition)return;orbRecording=true;document.getElementById('orbMic').classList.add('recording');orbRecognition.start();}
-function stopOrbMic(){orbRecording=false;document.getElementById('orbMic').classList.remove('recording');if(orbRecognition)try{orbRecognition.stop();}catch(e){}}
-
-// ─── Passive Listening ──────────────────────────────────────
-async function togglePassive(){if(passiveMode)exitPassive();else enterPassive();}
-
-async function enterPassive() {
-  passiveMode=true; document.body.classList.add('passive');
-  try {
-    micStream = await navigator.mediaDevices.getUserMedia({audio:true});
-    audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-    if(audioCtx.state==='suspended') await audioCtx.resume();
-    analyser = audioCtx.createAnalyser(); analyser.fftSize=256; analyser.smoothingTimeConstant=0.7;
-    audioCtx.createMediaStreamSource(micStream).connect(analyser);
-    passiveInterval = setInterval(sampleAudio, 500);
-    document.getElementById('listenBtn').classList.add('active');
-  } catch(e) { exitPassive(); }
-}
-
-function exitPassive() {
-  passiveMode=false; document.body.classList.remove('passive');
-  if(passiveInterval){clearInterval(passiveInterval);passiveInterval=null;}
-  if(micStream){micStream.getTracks().forEach(function(t){t.stop();});micStream=null;}
-  if(audioCtx){audioCtx.close();audioCtx=null;} analyser=null;
-  document.getElementById('listenBtn').classList.remove('active');
-  document.getElementById('volRing').classList.remove('active');
-}
-
-function sampleAudio() {
-  if(!analyser) return;
-  var data=new Uint8Array(analyser.frequencyBinCount); analyser.getByteFrequencyData(data);
-  var sum=0; for(var i=0;i<data.length;i++) sum+=data[i]*data[i];
-  var rms=Math.sqrt(sum/data.length), rawE=Math.min(10,(rms/50)*10);
-  smoothedEnergy=smoothedEnergy*0.7+rawE*0.3;
-  var wS=0,tW=0; for(var j=0;j<data.length;j++){wS+=j*data[j];tW+=data[j];}
-  smoothedCentroid=smoothedCentroid*0.7+(tW>0?wS/tW/data.length:0.5)*0.3;
-  var reading={energy:smoothedEnergy,compression:Math.min(1,smoothedCentroid*2.5),wps:smoothedEnergy*0.8,wc:Math.round(smoothedEnergy*3)};
-  sessionEnergy.push(reading); if(sessionEnergy.length>30) sessionEnergy.shift();
-  sampleCount++; var delta=null;
-  if(sampleCount%4===0){delta=computeDelta(reading,previousReading,2000);previousReading=reading;if(delta){deltaBuffer.push(delta);if(deltaBuffer.length>60)deltaBuffer.shift();}}
-  updateOrb(sessionEnergy,delta); if(delta) flashOrb(delta);
-  var ring=document.getElementById('volRing');
-  if(rawE>0.3){ring.classList.add('active');ring.style.transform='scale('+(1+rawE/10*0.1)+')';ring.style.borderColor='rgba(255,255,255,'+(0.04+rawE*0.025)+')';}
-  else{ring.classList.remove('active');ring.style.transform='scale(1)';}
-}
-
-// ─── App mode: hide mic buttons (WebSpeech not available in WKWebView) ───
-(function(){
-  var isApp=window.navigator.standalone||window.matchMedia('(display-mode: standalone)').matches;
-  if(isApp){
-    var ids=['chatMic','orbMic','listenBtn'];
-    ids.forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
+    const res = await fetch(CHAT_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: history.slice(-20),
+        systemPrompt: EMMA_SYSTEM
+      })
+    });
+    const data = await res.json();
+    history.push({ role: 'assistant', content: data.response });
+    appendChat('emma', data.response);
+    transcriptEl.textContent = data.response;
+  } catch (err) {
+    appendChat('emma', 'Could not reach Emma.');
   }
-})();
+}
 
-// ─── Companion Shell BLE ────────────────────────────────────
-// Web Bluetooth bridge — connects the phone to the physical shell
-// Only shows the connect button when Web Bluetooth is available (Chrome)
-var CompanionBLE=(function(){var SERVICE_UUID='c00ca110-5e11-1000-0000-000000000000';var COLOR_CHAR_UUID='c00ca110-5e11-1001-0000-000000000000';var DEVICE_NAME='Companion Shell';var device=null;var server=null;var colorChar=null;var connected=false;var observer=null;var pollInterval=null;var lastSentKey=null;var sendTimer=null;var pendingRGB=null;var SEND_INTERVAL_MS=80;function hslToRgb(h,s,l){h=((h%360)+360)%360;s=Math.max(0,Math.min(100,s))/100;l=Math.max(0,Math.min(100,l))/100;if(s===0){var gray=Math.round(l*255);return[gray,gray,gray]}var hue2rgb=function(p,q,t){if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p};var hNorm=h/360;var q=l<0.5?l*(1+s):l+s-l*s;var p=2*l-q;return[Math.round(hue2rgb(p,q,hNorm+1/3)*255),Math.round(hue2rgb(p,q,hNorm)*255),Math.round(hue2rgb(p,q,hNorm-1/3)*255)]}function readOrbHSL(){var root=document.documentElement;var h=parseFloat(root.style.getPropertyValue('--orb-h'))||0;var s=parseFloat(root.style.getPropertyValue('--orb-s'))||0;var l=parseFloat(root.style.getPropertyValue('--orb-l'))||0;return{h:h,s:s,l:l}}function scheduleSend(rgb){pendingRGB=rgb;if(sendTimer)return;sendTimer=setTimeout(function(){sendTimer=null;if(!pendingRGB)return;doSend(pendingRGB);pendingRGB=null},SEND_INTERVAL_MS)}function doSend(rgb){if(!connected||!colorChar)return;var key=rgb[0]+','+rgb[1]+','+rgb[2];if(key===lastSentKey)return;lastSentKey=key;var buf=new Uint8Array(rgb);try{colorChar.writeValueWithoutResponse(buf).catch(function(err){if(colorChar&&colorChar.writeValue)return colorChar.writeValue(buf);console.warn('[BLE] write failed:',err)})}catch(err){console.warn('[BLE] write error:',err)}}function pushColor(){if(!connected)return;var hsl=readOrbHSL();var rgb=hslToRgb(hsl.h,hsl.s,hsl.l);scheduleSend(rgb)}function startWatching(){try{observer=new MutationObserver(function(){pushColor()});observer.observe(document.documentElement,{attributes:true,attributeFilter:['style']})}catch(e){}pollInterval=setInterval(pushColor,100)}function stopWatching(){if(observer){observer.disconnect();observer=null}if(pollInterval){clearInterval(pollInterval);pollInterval=null}if(sendTimer){clearTimeout(sendTimer);sendTimer=null}}function connect(){if(!navigator.bluetooth){updateButton('no bluetooth');return Promise.reject(new Error('No BLE'))}updateButton('scanning...');return navigator.bluetooth.requestDevice({filters:[{name:DEVICE_NAME}],optionalServices:[SERVICE_UUID]}).then(function(d){device=d;device.addEventListener('gattserverdisconnected',onDisconnect);updateButton('connecting...');return device.gatt.connect()}).then(function(s){server=s;return server.getPrimaryService(SERVICE_UUID)}).then(function(service){return service.getCharacteristic(COLOR_CHAR_UUID)}).then(function(ch){colorChar=ch;connected=true;updateButton('connected');pushColor();startWatching()}).catch(function(err){connected=false;updateButton('connect shell');if(err.name!=='NotFoundError')console.warn('[BLE]',err)})}function disconnect(){stopWatching();connected=false;colorChar=null;lastSentKey=null;pendingRGB=null;if(device&&device.gatt&&device.gatt.connected)device.gatt.disconnect();updateButton('connect shell')}function onDisconnect(){stopWatching();connected=false;colorChar=null;lastSentKey=null;pendingRGB=null;updateButton('reconnect shell')}var buttonEl=null;function createButton(){var btn=document.createElement('button');btn.id='ble-connect-btn';btn.textContent='connect shell';btn.style.cssText='position:fixed;top:10px;right:10px;z-index:100;font-family:"IBM Plex Mono",monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;border:1px solid rgba(255,255,255,0.12);border-radius:16px;background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.3);cursor:pointer;transition:all 0.3s;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)';btn.addEventListener('click',function(){if(connected)disconnect();else connect()});buttonEl=btn;return btn}function updateButton(text){if(!buttonEl)return;buttonEl.textContent=text;if(text==='connected'){buttonEl.style.borderColor='rgba(91,160,200,0.4)';buttonEl.style.color='rgba(91,160,200,0.7)';buttonEl.style.background='rgba(91,160,200,0.06)'}else if(text==='reconnect shell'){buttonEl.style.borderColor='rgba(200,168,78,0.4)';buttonEl.style.color='rgba(200,168,78,0.6)';buttonEl.style.background='rgba(255,255,255,0.03)'}else if(text==='no bluetooth'){buttonEl.style.borderColor='rgba(196,60,42,0.3)';buttonEl.style.color='rgba(196,60,42,0.5)';buttonEl.style.background='rgba(255,255,255,0.02)';buttonEl.style.cursor='default'}else{buttonEl.style.borderColor='rgba(255,255,255,0.12)';buttonEl.style.color='rgba(255,255,255,0.3)';buttonEl.style.background='rgba(255,255,255,0.03)'}}function init(){var btn=createButton();document.body.appendChild(btn);if(!navigator.bluetooth)updateButton('no bluetooth')}return{init:init,connect:connect,disconnect:disconnect,pushColor:pushColor,setColor:function(h,s,l){if(!connected)return;scheduleSend(hslToRgb(h,s,l))},setRGB:function(r,g,b){if(!connected)return;scheduleSend([Math.round(Math.max(0,Math.min(255,r))),Math.round(Math.max(0,Math.min(255,g))),Math.round(Math.max(0,Math.min(255,b)))])},isConnected:function(){return connected}}})();
-if(navigator.bluetooth) CompanionBLE.init();
-
-// ─── Init ───────────────────────────────────────────────────
-initSetup();
-
-if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function(){});
+if (chatSend) chatSend.addEventListener('click', sendChatText);
+if (chatInput) chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChatText(); });
 </script>
+
+<script>
+/* =====================================================================
+   PRESENTATION-ONLY LAYER — Shuttle
+   Visual chrome only. Touches no speech / API / hold-to-talk logic
+   above. Adds: starfield, chat↔mirror toggle, sun/moon theme.
+   ===================================================================== */
+(function () {
+  // ---- starfield ----
+  const stars = document.getElementById('stars');
+  if (stars) {
+    const N = 80;
+    for (let i = 0; i < N; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const sz = (Math.random() * 1.8 + 0.5).toFixed(2);
+      s.style.width = sz + 'px';
+      s.style.height = sz + 'px';
+      s.style.left = (Math.random() * 100).toFixed(2) + '%';
+      s.style.top = (Math.random() * 100).toFixed(2) + '%';
+      s.style.setProperty('--tw', (Math.random() * 5 + 3).toFixed(2) + 's');
+      s.style.setProperty('--td', (Math.random() * 6).toFixed(2) + 's');
+      stars.appendChild(s);
+    }
+  }
+
+  // ---- back arrow → return to mirror ----
+  const chatBack = document.getElementById('chat-back');
+  if (chatBack) {
+    chatBack.addEventListener('click', () => {
+      document.body.classList.remove('chat-mode');
+    });
+  }
+
+  // ---- sun / moon theme ----
+  const lightBtn = document.getElementById('light-btn');
+  const darkBtn = document.getElementById('dark-btn');
+  if (lightBtn) lightBtn.addEventListener('click', () => {
+    document.body.classList.add('light');
+    document.body.classList.remove('dark');
+  });
+  if (darkBtn) darkBtn.addEventListener('click', () => {
+    document.body.classList.remove('light');
+    document.body.classList.add('dark');
+  });
+})();
+</script>
+
+<!-- Chat wiring integrated into Speech Engine module above -->
 </body>
 </html>
