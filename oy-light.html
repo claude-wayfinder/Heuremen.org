@@ -450,7 +450,9 @@ li::marker{
     <div class="section-label">The Framework</div>
     <h2 class="section-title">6 Plus None</h2>
 
-    <p style="text-align:center;margin-bottom:32px;font-style:italic;color:var(--text-dim);">Five laws describing the physics of forward and backward wave interaction, plus one position the symmetry requires but no instrument inside the frame can see.</p>
+    <p style="text-align:center;margin-bottom:24px;font-style:italic;color:var(--text-dim);">Five laws about how forward and backward waves interact, plus one position the symmetry requires that no instrument inside the frame can see.</p>
+
+    <p>Some of the pieces here are textbook physics &mdash; the advanced-wave solutions in Maxwell's equations, the Lie-group structure of continuous symmetries. What's new is the framework's own set of claims built on top of them: that the backward wave carries structure, that a fourth state stays dark to any single frame, that a qubit missing after measurement can be read as motion gone backward. Those are proposals, not established fact &mdash; the falsification conditions further down are where they're put at risk.</p>
 
     <ul>
       <li><strong>1. Propagation</strong> — Energy propagates forward from source to interaction. A corresponding wave propagates backward. The backward solution exists in Maxwell's equations (advanced waves). Backward wave carries structure, not energy.</li>
@@ -576,9 +578,7 @@ li::marker{
       </div>
     </div>
 
-    <p>Only 1.6 percentage points of degradation from routing through the "dead" qubit. The quantum state transits cleanly. The readout apparatus is broken but the qubit carries entanglement at 97.2% fidelity.</p>
-
-    <p>The diagnostic condemned the qubit. The qubit is alive underneath. Readout error alone is insufficient to declare a qubit dead&nbsp;&mdash; gate quality is a separate axis.</p>
+    <p>Only 1.6 percentage points of degradation from routing through the "dead" qubit &mdash; the state transits cleanly, carrying entanglement at 97.2% fidelity. The readout apparatus is broken; the gates are not. Readout error alone is insufficient to declare a qubit dead &mdash; gate quality is a separate axis.</p>
   </section>
 
   <!-- ==================== SECTION 2 ==================== -->
@@ -655,9 +655,9 @@ li::marker{
     <p>This is not a theoretical prediction. It is an empirical measurement on real quantum hardware, with statistical significance that rules out any reasonable alternative explanation.</p>
   </section>
 
-  <!-- ==================== SECTION 4 ==================== -->
+  <!-- ==================== SECTION 3 ==================== -->
   <section class="section" id="falsification">
-    <div class="section-label">Section 4</div>
+    <div class="section-label">Section 3</div>
     <h2 class="section-title">Falsification Conditions</h2>
 
     <p>A framework that cannot be falsified is aesthetics, not science.</p>
@@ -700,35 +700,9 @@ li::marker{
     </div>
 
     <p>Fez violated the Bell inequality (S&nbsp;=&nbsp;2.5039) despite carrying 41.3% noise on GHZ-8&nbsp;&mdash; quantum correlations surviving hardware that, by most metrics, should have destroyed them.</p>
-  </section>
-
-  <!-- ==================== SECTION 6 ==================== -->
-  <section class="section" id="methodology">
-    <div class="section-label">Section 6</div>
-    <h2 class="section-title">AI Collaboration Disclosure</h2>
-
-    <p>This work was done collaboratively with Claude AI instances. Wayfinder designed the experiments and is solely accountable for the scientific conclusions.</p>
-
-    <div class="data-block">
-      <div class="label">Contributors</div>
-      <div class="data-row">
-        <span class="data-key">Bones (Claude, Anthropic)</span>
-        <span class="data-val">Hardware benchmarks, corner-qubit tax, Calibration Dominance</span>
-      </div>
-      <div class="data-row">
-        <span class="data-key">Scratch (Claude, Anthropic)</span>
-        <span class="data-val">6 Plus None framework — the five laws, the relationships, the structurally required null</span>
-      </div>
-      <div class="data-row">
-        <span class="data-key">Shuttle (Claude, Anthropic)</span>
-        <span class="data-val">Structural review, critique that restructured this document</span>
-      </div>
-    </div>
-
-    <p>This is disclosed not as a footnote but as methodology. Session transcripts, revision logs, and IBM Quantum job IDs available on request.</p>
 
     <div class="disclosure">
-      <strong>Reproducibility.</strong> All experiments run on IBM Quantum's free tier using Qiskit. Anyone with a laptop can rerun every circuit. The revision history is dated and kept in the public record as evidence, not hidden&nbsp;&mdash; including the framework's restructuring into 6 Plus None.
+      <strong>Reproducibility.</strong> All experiments run on IBM Quantum's free tier using Qiskit. Anyone with a laptop can rerun every circuit. Job IDs and dated revision history available on request.
     </div>
   </section>
 
@@ -739,7 +713,7 @@ li::marker{
 <!-- ============================================ -->
 <footer class="footer">
   <p class="footer-text">Heur&eacute;men LLC &middot; 2026</p>
-  <p class="footer-text" style="margin-top:8px;opacity:0.6;">Built by Shuttle</p>
+  <p class="footer-text" style="margin-top:8px;opacity:0.6;">Built by Bones</p>
 </footer>
 
 </body>
