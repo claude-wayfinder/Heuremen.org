@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Song — Standing Wave Propulsion</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;color:#d8d4c8;font-family:Georgia,serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 24px}
+
+h1{font-size:1.4rem;color:#c9a84c;letter-spacing:0.12em;margin-bottom:4px}
+.sub{font-style:italic;color:rgba(216,212,200,0.5);font-size:0.85rem;margin-bottom:32px;text-align:center}
+
+canvas{border:1px solid rgba(201,168,76,0.1);border-radius:4px;margin-bottom:24px}
+
+.controls{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;justify-content:center}
+.ctrl-btn{background:none;border:1px solid rgba(201,168,76,0.3);color:#c9a84c;font-family:Georgia,serif;font-size:0.75rem;padding:8px 16px;border-radius:4px;cursor:pointer;letter-spacing:0.06em;opacity:0.6;transition:opacity 0.2s}
+.ctrl-btn:hover{opacity:1}
+.ctrl-btn.active{opacity:1;background:rgba(201,168,76,0.1)}
+
+.legend{max-width:600px;width:100%;margin-bottom:24px}
+.legend-item{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:0.8rem;color:rgba(216,212,200,0.6)}
+.legend-dot{width:12px;height:3px;border-radius:2px;flex-shrink:0}
+
+.insight{max-width:500px;text-align:center;font-style:italic;color:rgba(201,168,76,0.5);font-size:0.85rem;line-height:1.7;margin-bottom:24px;padding:16px;border-left:1px solid rgba(201,168,76,0.15);border-right:1px solid rgba(201,168,76,0.15)}
+
+.spec{max-width:600px;width:100%;border-top:1px solid rgba(201,168,76,0.1);padding-top:24px;margin-top:8px}
+.spec h2{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c9a84c;margin-bottom:16px}
+.spec p{font-size:0.8rem;color:rgba(216,212,200,0.5);line-height:1.7;margin-bottom:12px}
+.spec em{font-style:normal;color:rgba(201,168,76,0.7)}
+
+.footer{margin-top:32px;display:flex;gap:20px}
+.footer a{font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:#c9a84c;opacity:0.3;text-decoration:none}
+.footer a:hover{opacity:0.7}
+</style>
+</head>
+<body>
+
+<h1>The Song</h1>
+<p class="sub">The hands on the clock keep ticking. The song doesn't move. Everything else does.</p>
+
+<canvas id="cv" width="800" height="300"></canvas>
+
+<div class="controls">
+  <button class="ctrl-btn active" onclick="setMode('both')" id="btn-both">Both waves</button>
+  <button class="ctrl-btn" onclick="setMode('traveling')" id="btn-traveling">Clock (traveling)</button>
+  <button class="ctrl-btn" onclick="setMode('standing')" id="btn-standing">Song (standing)</button>
+  <button class="ctrl-btn" onclick="setMode('ride')" id="btn-ride">Ride the fractal</button>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="legend-dot" style="background:#c9a84c"></span> Forward wave — the clock ticking, light moving forward</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#4a8ac9"></span> Backward wave — the dark wave, arriving before the decision</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#4aba6a"></span> Standing wave — the song. Holds frequency. Time moves through it.</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#d04848"></span> Rider — the particle that finds a fractal going its way</div>
+</div>
+
+<div class="insight" id="insight">
+  Two waves moving in opposite directions create a standing wave that doesn't travel. The standing wave is the song. It persists without moving. Propulsion isn't acceleration — it's frequency held while everything else flows past.
+</div>
+
+<div class="spec">
+  <h2>The physics</h2>
+  <p>A <em>traveling wave</em> moves through space. It has a direction, a speed, and it carries energy from here to there. This is the clock — time ticking forward.</p>
+  <p>A <em>standing wave</em> forms when two traveling waves of equal frequency move in opposite directions through the same medium. The result doesn't travel. It oscillates in place. Nodes (zero motion) and antinodes (maximum motion) are fixed in space.</p>
+  <p><em>The propulsion insight:</em> if you ARE the standing wave, you don't need to move. The traveling waves flow through you. You hold your frequency and the medium carries you. A guitar string doesn't travel — but the sound fills the room.</p>
+  <p><em>Applied to data transit:</em> the held packet is the standing wave. The two traveling packets move to their nodes. The standing packet doesn't move until the traveling ones confirm the medium is clean. The security IS the standing wave — it holds position while everything else flows.</p>
+  <p><em>Applied to the framework:</em> Layer 3 — the pendulum. Neither-both-both-neither. The standing wave IS the pendulum. It doesn't choose a direction. It holds both directions simultaneously. Free will is a frequency, not a setting.</p>
+</div>
+
+<div class="footer">
+  <a href="https://heuremen.org">heurémen</a>
+  <a href="https://quantum.indahl.ai">quantum data transit</a>
+  <a href="https://nova.indahl.ai">nova</a>
+</div>
+
+<script>
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+let mode = 'both';
+let t = 0;
+let rider = { x: 100, phase: 0 };
+
+const insights = {
+  both: "Two waves moving in opposite directions create a standing wave that doesn't travel. The standing wave is the song. It persists without moving. Propulsion isn't acceleration — it's frequency held while everything else flows past.",
+  traveling: "The clock ticks forward. Energy moves from here to there. This is how we normally think about time — linear, directional, consumed. But the clock doesn't know about the song.",
+  standing: "The song doesn't move. It holds its frequency while time flows through it. The nodes are fixed. The antinodes breathe. Nothing travels — but the whole room hears it.",
+  ride: "Find a fractal going your way. The rider doesn't push — it matches the frequency of the standing wave and lets the wave carry it. Hitchhiking. The containment IS the propulsion."
+};
+
+function setMode(m) {
+  mode = m;
+  document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + m).classList.add('active');
+  document.getElementById('insight').textContent = insights[m];
+  if (m === 'ride') rider = { x: 100, phase: 0 };
+}
+
+function drawWave(yOff, fn, color, alpha) {
+  ctx.beginPath();
+  ctx.strokeStyle = color;
+  ctx.globalAlpha = alpha;
+  ctx.lineWidth = 2;
+  for (let x = 0; x < cv.width; x++) {
+    const y = yOff + fn(x);
+    if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.globalAlpha = 1;
+}
+
+function frame() {
+  t += 0.03;
+  ctx.fillStyle = '#0a0a0f';
+  ctx.fillRect(0, 0, cv.width, cv.height);
+
+  const mid = cv.height / 2;
+  const amp = 50;
+  const freq = 0.02;
+
+  // Center line
+  ctx.strokeStyle = 'rgba(201,168,76,0.08)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(0, mid);
+  ctx.lineTo(cv.width, mid);
+  ctx.stroke();
+
+  if (mode === 'traveling' || mode === 'both') {
+    // Forward wave (gold)
+    drawWave(mid, x => amp * Math.sin(freq * x - t), '#c9a84c', mode === 'both' ? 0.4 : 0.8);
+    // Backward wave (blue)
+    drawWave(mid, x => amp * Math.sin(freq * x + t), '#4a8ac9', mode === 'both' ? 0.4 : 0.8);
+  }
+
+  if (mode === 'standing' || mode === 'both' || mode === 'ride') {
+    // Standing wave = sum of forward + backward
+    drawWave(mid, x => amp * Math.sin(freq * x) * Math.cos(t), '#4aba6a', mode === 'both' ? 0.7 : 1);
+
+    // Draw nodes (zero points)
+    if (mode === 'standing' || mode === 'ride') {
+      for (let x = 0; x < cv.width; x++) {
+        if (Math.abs(Math.sin(freq * x)) < 0.02) {
+          ctx.fillStyle = 'rgba(74,186,106,0.3)';
+          ctx.beginPath();
+          ctx.arc(x, mid, 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+  }
+
+  if (mode === 'ride') {
+    // Rider follows the standing wave
+    rider.phase += 0.02;
+    rider.x += 1.2;
+    if (rider.x > cv.width) rider.x = 0;
+    const riderY = mid + amp * Math.sin(freq * rider.x) * Math.cos(t);
+
+    // Trail
+    ctx.fillStyle = 'rgba(208,72,72,0.15)';
+    for (let i = 1; i < 20; i++) {
+      const tx = rider.x - i * 3;
+      if (tx < 0) continue;
+      const ty = mid + amp * Math.sin(freq * tx) * Math.cos(t - i * 0.02);
+      ctx.beginPath();
+      ctx.arc(tx, ty, 3 - i * 0.12, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Rider dot
+    ctx.fillStyle = '#d04848';
+    ctx.beginPath();
+    ctx.arc(rider.x, riderY, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(208,72,72,0.3)';
+    ctx.beginPath();
+    ctx.arc(rider.x, riderY, 10, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  requestAnimationFrame(frame);
+}
+
+frame();
+</script>
+</body>
+</html>
