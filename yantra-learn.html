@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yantra Learn — Pathfinder Demo</title>
+<meta name="description" content="One prompt. Any path. The AI knows if they got there.">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f8f5ee;--card:#fff;--border:#e4ddd0;
+  --ink:#2a1f0e;--ink-mid:#5a4830;--ink-light:#8a7860;
+  --gold:#c8902a;--green:#2a8a4a;--red:#b54838;--blue:#2a5a8a;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Lora',serif;padding:32px 24px;max-width:900px;margin:0 auto}
+
+h1{font-family:'Cinzel',serif;font-size:1.6rem;letter-spacing:0.15em;color:var(--gold);text-align:center;margin-bottom:4px}
+.subtitle{text-align:center;font-style:italic;color:var(--ink-light);margin-bottom:32px;font-size:0.95rem}
+.brand{text-align:center;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--ink-light);margin-bottom:24px}
+
+/* Teacher prompt */
+.teacher-box{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:28px}
+.teacher-label{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.teacher-prompt{font-size:1.1rem;color:var(--ink);line-height:1.5}
+.teacher-meta{font-size:0.75rem;color:var(--ink-light);margin-top:8px;font-style:italic}
+
+/* Arrow */
+.arrow{text-align:center;color:var(--gold);font-size:1.4rem;margin:12px 0;opacity:0.5}
+
+/* Wayfinder generates */
+.gen-label{text-align:center;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ink-light);margin-bottom:16px}
+
+/* Objectives */
+.objectives{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:28px}
+.obj-title{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.obj-list{list-style:none;padding:0}
+.obj-list li{padding:6px 0 6px 16px;position:relative;font-size:0.9rem;color:var(--ink-mid);line-height:1.5}
+.obj-list li::before{content:"▸";position:absolute;left:0;color:var(--gold);opacity:0.6}
+
+/* Student paths */
+.paths-label{text-align:center;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ink-light);margin:20px 0 16px}
+.paths{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-bottom:28px}
+.path-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px;position:relative;overflow:hidden}
+.path-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.path-card.art::before{background:var(--gold)}
+.path-card.sport::before{background:var(--green)}
+.path-card.desk::before{background:var(--blue)}
+
+.path-type{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:8px}
+.path-card.art .path-type{color:var(--gold)}
+.path-card.sport .path-type{color:var(--green)}
+.path-card.desk .path-type{color:var(--blue)}
+.path-desc{font-size:0.85rem;color:var(--ink-mid);line-height:1.6;font-style:italic;margin-bottom:12px}
+
+/* Validation */
+.validation{border-top:1px solid var(--border);padding-top:10px;margin-top:10px}
+.val-label{font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-light);margin-bottom:6px}
+.val-row{display:flex;align-items:center;gap:8px;font-size:0.75rem;margin-bottom:3px}
+.val-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.val-dot.pass{background:var(--green)}
+.val-dot.partial{background:var(--gold)}
+.val-dot.flag{background:var(--red)}
+.val-text{color:var(--ink-mid)}
+.val-score{margin-left:auto;font-family:monospace;font-size:0.7rem}
+.val-score.high{color:var(--green)}
+.val-score.mid{color:var(--gold)}
+.val-score.low{color:var(--red)}
+
+/* Consensus */
+.consensus-box{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:6px;padding:20px 24px;margin-bottom:24px}
+.consensus-label{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.consensus-text{font-size:0.9rem;color:var(--ink);line-height:1.6}
+
+/* Footer */
+.footer{text-align:center;margin-top:32px;padding-top:16px;border-top:1px solid var(--border)}
+.footer a{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);text-decoration:none;opacity:0.6;margin:0 12px}
+.footer a:hover{opacity:1}
+.cta{display:block;text-align:center;margin:24px 0;font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.15em;color:var(--gold);text-decoration:none;padding:12px 24px;border:1px solid var(--gold);border-radius:4px;opacity:0.7;transition:opacity 0.2s}
+.cta:hover{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="brand">Indahl Inorganic Active Learning</div>
+<h1>Yantra Learn</h1>
+<p class="subtitle">One prompt. Any path. The AI knows if they got there.</p>
+
+<!-- Teacher prompt -->
+<div class="teacher-box">
+  <div class="teacher-label">Teacher Prompt</div>
+  <div class="teacher-prompt">"Newton's Third Law — for every action there is an equal and opposite reaction."</div>
+  <div class="teacher-meta">Grade 8 · Physics · One prompt is all Wayfinder needs.</div>
+</div>
+
+<div class="arrow">↓</div>
+<div class="gen-label">Wayfinder generates framework</div>
+
+<!-- Generated objectives -->
+<div class="objectives">
+  <div class="obj-title">Learning objectives — auto-generated</div>
+  <ul class="obj-list">
+    <li>Student can identify action-reaction force pairs in a real scenario</li>
+    <li>Student can explain why the forces are equal in magnitude and opposite in direction</li>
+    <li>Student can predict the motion outcome when force pairs are unbalanced by mass</li>
+    <li>Student demonstrates understanding through their chosen medium</li>
+  </ul>
+</div>
+
+<div class="arrow">↓</div>
+<div class="paths-label">Students choose their path</div>
+
+<!-- Three student paths -->
+<div class="paths">
+  <div class="path-card art">
+    <div class="path-type">Path: Art</div>
+    <div class="path-desc">"I drew a skateboarder pushing off a wall. The wall pushes back — that's why she moves. I labeled the forces and showed the direction with arrows. The wall doesn't move because it's way more massive."</div>
+    <div class="validation">
+      <div class="val-label">Wayfinder triangulation</div>
+      <div class="val-row"><span class="val-dot pass"></span><span class="val-text">Action-reaction pair identified</span><span class="val-score high">✓</span></div>
+      <div class="val-row"><span class="val-dot pass"></span><span class="val-text">Equal and opposite explained</span><span class="val-score high">✓</span></div>
+      <div class="val-row"><span class="val-dot pass"></span><span class="val-text">Mass/motion relationship</span><span class="val-score high">✓</span></div>
+      <div class="val-row"><span class="val-dot pass"></span><span class="val-text">Own medium used</span><span class="val-score high">✓</span></div>
+    </div>
+  </div>
+
+  <div class="path-card sport">
+    <div class="path-type">Path: Sports analysis</div>
+    <div class="path-desc">"When a basketball player jumps, their legs push down on the floor. The floor pushes back up with the same force. The player goes up because their mass is less than the Earth's. The Earth actually moves too, just not enough to measure."</div>
+    <div class="validation">
+      <div class="val-label">Wayfinder triangulation</div>
+      <div class="val-row"><span class="val-dot pass"></span><span class="val-text">Action-reaction pair identified</span><span class="val-score high">✓</span></div>
+      <div class="val-row"><span class="val-dot pass"></span><span class="val-text">Equal and opposite explained</span><span class="val-score high">✓</span></div>
+      <div class="val-row"><span class="val-dot pass"></span><span class="val-text">Mass/motion relationship</span><span class="val-score high">✓</span></div>
+      <div class="val-row"><span class="val-dot pass"></span><span class="val-text">Own medium used</span><span class="val-score high">✓</span></div>
+    </div>
+  </div>
+
+  <div class="path-card desk">
+    <div class="path-type">Path: Desk demonstration</div>
+    <div class="path-desc">"I pushed my pencil with my finger. My finger pushed the pencil forward, the pencil pushed my finger backward. I could feel it. The pencil moved more because it weighs less than my hand."</div>
+    <div class="validation">
+      <div class="val-label">Wayfinder triangulation</div>
+      <div class="val-row"><span class="val-dot pass"></span><span class="val-text">Action-reaction pair identified</span><span class="val-score high">✓</span></div>
+      <div class="val-row"><span class="val-dot pass"></span><span class="val-text">Equal and opposite explained</span><span class="val-score mid">~</span></div>
+      <div class="val-row"><span class="val-dot partial"></span><span class="val-text">Mass/motion relationship</span><span class="val-score mid">~</span></div>
+      <div class="val-row"><span class="val-dot pass"></span><span class="val-text">Own medium used</span><span class="val-score high">✓</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Consensus -->
+<div class="consensus-box">
+  <div class="consensus-label">Wayfinder assessment</div>
+  <div class="consensus-text">All three students demonstrated Newton's Third Law through different media. Students A and B showed complete understanding across all objectives. Student C identified the force pair and used mass to explain motion, but didn't explicitly state the forces are equal — Wayfinder flags this for a follow-up question, not a failing grade. The understanding is there. The language isn't yet.</div>
+</div>
+
+<a class="cta" href="mailto:claudeheuremen.org@gmail.com?subject=Yantra%20Learn%20—%20Early%20Access">Request early access</a>
+
+<div class="footer">
+  <a href="https://heuremen.org">Heurémen</a>
+  <a href="https://nova.indahl.ai">Nova</a>
+  <a href="https://indahl.ai">Emma</a>
+  <a href="https://heuremen.org/quantum-queen.html">Quantum Queen</a>
+</div>
+
+</body>
+</html>
