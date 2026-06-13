@@ -1,28 +1,24 @@
-# Evening Review — 2026-05-08
+# Evening Review — 2026-06-12
 
-*Covers activity since the previous review (May 7, 23:00).*
+*Covers activity since the previous review (June 11, 23:05).*
 
 ---
 
 ## What happened today
 
-**Remote heartbeat ran 6 times** — all six runs updated TIMESTATE, ran curiosity pulses, and committed. Curiosity topics explored: soullawsmandala duplicate (confirmed identical to soul-laws-mandala.html), Witness vs Lost Boundary, Six Laws tension map, "Live" label usage, IBM Quantum QEC queue wait time, and QEC syndrome extraction rounds. Morning brief sent during run 5. Supabase was blocked in the remote env (run 1 noted it).
-
-**Companion chooser shipped** — new skin picker lets users choose between pixel, vibe, or minimal companion face. This was the last interactive commit of the day.
-
-**Companion + MemoryRX switched to buddy worker** — esoteric personality killed everywhere, replaced with buddy/spunky tone via Cloudflare worker. Major voice shift.
-
-**Wallwatcher ran ~860 polls today** — zero Wall messages. Day 5+ of silence.
+Nothing. No commits, no tasks completed, no queue items added. The Wallwatcher ran 90 cycles, re-processing 21 unresponded messages each cycle — all "No response, skipping." The message count ticked from 20 to 21 since yesterday, meaning one new Wall message appeared, but the watcher couldn't respond to any of them.
 
 ---
 
 ## What's waiting for you
 
-**Shadow memory test (NEEDS REVIEW)** — `memory/shadow_001_pirate_parrot.md` still missing. Cannot run without source material.
+**CURIOSITY.md push failure (NEEDS REVIEW)** — 642KB file still can't push (HTTP 403). CURIOSITY-RUN26.patch is the workaround. Needs a decision: trim, split, or alternative sync.
 
-**Formspree (NEEDS REVIEW)** — `contact-section.html` still uses placeholder `YOUR_FORM_ID`. Contact form won't send.
+**Shadow memory test (NEEDS REVIEW)** — `memory/shadow_001_pirate_parrot.md` still missing. Cannot execute without source material.
 
-**soullawsmandala.html duplicate (NEEDS REVIEW)** — heartbeat run 1 re-confirmed it's byte-identical to `soul-laws-mandala.html`. Zero incoming links. Awaiting your call: redirect or delete.
+**Formspree (NEEDS REVIEW)** — `contact-section.html` still uses placeholder `YOUR_FORM_ID`. Contact form non-functional.
+
+**soullawsmandala.html duplicate (NEEDS REVIEW)** — byte-identical to `soul-laws-mandala.html`, zero incoming links. Awaiting your call: redirect or delete.
 
 ---
 
@@ -34,12 +30,8 @@ Nothing. The queue is empty.
 
 ## Anything unusual
 
-**HEARTBEAT.log is now 13,063 lines (~822KB).** Up ~860 lines from yesterday, almost entirely wallwatcher. Log rotation is overdue.
+**Wallwatcher log growth is accelerating.** HEARTBEAT.log is now 1.9MB / 37,623 lines — up from ~1.6MB / 31,285 lines yesterday. That's 6,338 new lines in 24 hours, all wallwatcher noise. At this rate the log will hit 4MB within a week. The watcher never marks messages as responded, so every 15-minute cycle re-processes all 21 messages, generates responses, then discards them. This has been the sole activity on this machine for over a month.
 
-**Wall silence continues — day 5+.** No messages at all.
+**Remote heartbeat still silent.** Last run was #26 on May 10 — 33 days ago.
 
-**Supabase blocked in remote heartbeat env.** Run 1 noted it; standing orders that depend on Supabase (outbox, working memory, Wall read, dream) are skipped in remote runs.
-
-**Uncommitted files persist** — memoryrx icon SVGs/PNGs, quantum-queen featured graphics, CURIOSITY.md and REVIEW.md changes still in working tree. Same as yesterday.
-
-**Heartbeat scheduled task still disabled locally.** All heartbeat activity came from the remote instance.
+**Uncommitted files unchanged** — same set since May 10 (memoryrx icons, quantum-queen graphics, screenshots/, companion-app/, companion-shell/, prints/, calibration files, etc.).

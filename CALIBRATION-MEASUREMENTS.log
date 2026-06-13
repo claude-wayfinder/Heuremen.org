@@ -1,0 +1,42 @@
+# CALIBRATION MEASUREMENTS — drift log
+
+Each block below is one run of `calibration-ruler.sh` (the frozen ruler, v1.0).
+The instrument is held constant; only the node fields should move between runs.
+To read drift: `diff` any two blocks. M0 is the fixed reference point.
+
+Ruler discipline: shell-only, single vantage. Do not edit the ruler between
+measurements without bumping its version — a changed ruler measures nothing.
+
+---
+
+## M0 — baseline-zero (first clean measurement, instrument fixed)
+Taken by: shuttle, from the Ctrai/Laptop sandbox session.
+
+```
+### CALIBRATION RULER v1.0 | measured_at_utc=2026-05-20T03:52:46Z
+clock.shell_utc=2026-05-20T03:52:46Z
+clock.shell_epoch=1779249166
+laptop.reachable=YES
+laptop.files_excl_git=531
+laptop.html_top=49
+laptop.md_top=78
+laptop.bytes_excl_git=12740035
+laptop.git_branch=main
+laptop.git_head=c0f6d5e
+laptop.git_modified=209
+laptop.git_untracked=23
+laptop.timestate_mtime=2026-05-11 00:07:13
+laptop.timestate_declared=2026-05-10 21:02:21 UTC — Sunday
+laptop.heartbeatlog_mtime=2026-05-20 03:30:45
+laptop.heartbeatlog_bytes=1054311
+armature.ip=10.0.0.187
+armature.ssh22=OPEN
+pi.ip=10.0.0.222
+pi.ssh22=OPEN
+### END
+```
+
+Notes on M0:
+- Three nodes now resolve to: Laptop = OBSERVED; Armature & Pi = REACHABLE-but-dark (SSH open, no credentials held — one key each from observable).
+- `laptop.files_excl_git` read 530 in the pre-ruler baseline and 531 here — the +1 is this session's own writes landing (the ruler measures a live tree; expect small self-induced motion when shuttle is working in it).
+- TIMESTATE remains frozen at 2026-05-10 while HEARTBEAT.log is live to 2026-05-20 — see CALIBRATION-BASELINE.md §1 and the TIMESTATE diagnosis. This is a node finding, not instrument noise.

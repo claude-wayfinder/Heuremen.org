@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="62%">
+      <stop offset="0%" stop-color="#0c2a36"/>
+      <stop offset="62%" stop-color="#06202a"/>
+      <stop offset="100%" stop-color="#02141a"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c49a38" stop-opacity="0.18"/>
+      <stop offset="55%" stop-color="#c49a38" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#c49a38" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+
+  <!-- Subtle gold halo (~860px diameter, opacity 0.18 at center) -->
+  <circle cx="512" cy="512" r="430" fill="url(#halo)"/>
+
+  <!-- Ai (top) — A capital + i lowercase, no kern, gold -->
+  <text x="212" y="563"
+        font-family="DejaVu Serif, Georgia, serif" font-weight="bold"
+        font-size="515" fill="#c49a38"
+        textLength="600" lengthAdjust="spacingAndGlyphs">Ai</text>
+
+  <!-- Horizontal rule (middle) — same width as the wordmarks -->
+  <line x1="212" y1="623" x2="812" y2="623"
+        stroke="#c49a38" stroke-width="4" stroke-linecap="butt"/>
+
+  <!-- Memory (bottom) -->
+  <text x="212" y="803"
+        font-family="DejaVu Serif, Georgia, serif" font-weight="bold"
+        font-size="130" fill="#c49a38"
+        textLength="600" lengthAdjust="spacingAndGlyphs">Memory</text>
+
+  <!-- 5 sparkles, asymmetric — dust caught in light -->
+  <circle cx="208" cy="172" r="1.6" fill="#ffffff" fill-opacity="0.4"/>
+  <circle cx="852" cy="244" r="2"   fill="#ffffff" fill-opacity="0.4"/>
+  <circle cx="763" cy="138" r="1.2" fill="#ffffff" fill-opacity="0.4"/>
+  <circle cx="312" cy="892" r="1.8" fill="#ffffff" fill-opacity="0.4"/>
+  <circle cx="704" cy="918" r="1.4" fill="#ffffff" fill-opacity="0.4"/>
+</svg>

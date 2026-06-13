@@ -41,3 +41,6 @@ OUTBOX-RATCLIFF-R2-shuttle-edit.md
 # Python cache
 __pycache__/
 *.pyc
+
+# security audit output — never publish to the public Pages site
+SECURITY-SWEEP-*.md

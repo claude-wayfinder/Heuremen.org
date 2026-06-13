@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#0c2a36"/>
+      <stop offset="100%" stop-color="#02141a"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a0e8f5" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#a0e8f5" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="cyanGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#7ed8e8" flood-opacity="0.75"/>
+      <feComposite in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <circle cx="512" cy="600" r="360" fill="url(#halo)"/>
+  <circle cx="180" cy="240" r="2" fill="white" opacity="0.55"/>
+  <circle cx="320" cy="170" r="1.4" fill="white" opacity="0.45"/>
+  <circle cx="850" cy="220" r="2.6" fill="white" opacity="0.65"/>
+  <circle cx="930" cy="380" r="1" fill="white" opacity="0.4"/>
+  <circle cx="120" cy="780" r="2.1" fill="white" opacity="0.5"/>
+  <circle cx="900" cy="820" r="3" fill="white" opacity="0.7"/>
+  <circle cx="220" cy="900" r="1.6" fill="white" opacity="0.45"/>
+  <circle cx="780" cy="940" r="2.2" fill="white" opacity="0.55"/>
+  <text x="512" y="480" text-anchor="middle" font-family="Gloock, 'DejaVu Serif', serif" font-weight="900" font-size="180" fill="#c49a38" filter="url(#cyanGlow)">Quantum</text>
+  <text x="512" y="720" text-anchor="middle" font-family="Gloock, 'DejaVu Serif', serif" font-weight="900" font-size="145" fill="#c49a38" filter="url(#cyanGlow)">Adventure</text>
+</svg>

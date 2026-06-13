@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#0c2a36"/>
+      <stop offset="100%" stop-color="#02141a"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c49a38" stop-opacity="0.25"/>
+      <stop offset="60%" stop-color="#c49a38" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#c49a38" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Solid teal radial background -->
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+
+  <!-- Soft gold radial halo behind wordmark -->
+  <circle cx="512" cy="500" r="360" fill="url(#halo)"/>
+
+  <!-- Line 1: "Ai" — capital A, lowercase i — stretched to fit width -->
+  <!-- A anchored to start at left edge ~77, i anchored to end at right edge ~947 -->
+  <text x="77" y="380"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-weight="bold"
+        font-size="340"
+        fill="#c49a38"
+        text-anchor="start"
+        dominant-baseline="alphabetic">A</text>
+  <text x="947" y="380"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-weight="bold"
+        font-size="340"
+        fill="#c49a38"
+        text-anchor="end"
+        dominant-baseline="alphabetic">i</text>
+
+  <!-- Line 2: "Memory" — supporting subtitle -->
+  <text x="512" y="720"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-weight="normal"
+        font-size="140"
+        fill="#e0d8c8"
+        text-anchor="middle"
+        dominant-baseline="alphabetic">Memory</text>
+
+  <!-- 8 small white sparkle dots, opacity 0.4–0.7, r 1–3 -->
+  <circle cx="148" cy="220" r="2" fill="#ffffff" opacity="0.6"/>
+  <circle cx="892" cy="180" r="3" fill="#ffffff" opacity="0.5"/>
+  <circle cx="240" cy="540" r="1.5" fill="#ffffff" opacity="0.7"/>
+  <circle cx="800" cy="600" r="2" fill="#ffffff" opacity="0.45"/>
+  <circle cx="412" cy="860" r="1" fill="#ffffff" opacity="0.55"/>
+  <circle cx="640" cy="880" r="2.5" fill="#ffffff" opacity="0.4"/>
+  <circle cx="96" cy="780" r="1.5" fill="#ffffff" opacity="0.5"/>
+  <circle cx="940" cy="820" r="2" fill="#ffffff" opacity="0.65"/>
+</svg>

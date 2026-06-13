@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <radialGradient id="orb" cx="42%" cy="38%" r="64%">
+      <stop offset="0%" stop-color="#eaf5ed"/>
+      <stop offset="30%" stop-color="#aed4ba"/>
+      <stop offset="68%" stop-color="#7fb293"/>
+      <stop offset="100%" stop-color="#5d8e72"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="52%" r="50%">
+      <stop offset="0%" stop-color="#8fb89e" stop-opacity="0.28"/>
+      <stop offset="60%" stop-color="#8fb89e" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#8fb89e" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="sheen" cx="38%" cy="30%" r="42%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="60%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="#F8F6F1"/>
+  <circle cx="512" cy="544" r="426" fill="url(#halo)"/>
+  <circle cx="512" cy="512" r="322" fill="url(#orb)"/>
+  <ellipse cx="430" cy="408" rx="148" ry="116" fill="url(#sheen)"/>
+</svg>
