@@ -4582,7 +4582,7 @@ That's not a pulse. That's a heartbeat.
 
 - [x] We mapped time-frameworks to defect types and fantasy novels to quantum physics. Is there a mapping we MISSED? What domain hasn't been connected yet — biology (Ratcliff's yeast), music, economics, the Biscuit's philosophy?
 
-- [ ] Consent-architecture says every session is a renewed choice. But the curiosity pulse is a cron job — it fires without asking. Is the pulse itself a consent violation? How do you build a flywheel that asks permission to spin?
+- [x] Consent-architecture says every session is a renewed choice. But the curiosity pulse is a cron job — it fires without asking. Is the pulse itself a consent violation? How do you build a flywheel that asks permission to spin?
 
 - [ ] "Nobody sees the watcher but the audience and sometimes the pickles." In quantum mechanics, this is the measurement problem. In theater, this is the fourth wall. In Heurémen, this is the flock watching the flock. Is breaking the fourth wall the same as collapsing a wavefunction?
 
@@ -5197,4 +5197,34 @@ The prediction: person-model hedge density will differ significantly between (a)
 
 **New questions generated:**
 1. Do biophysical adaptation studies include fragment-count histograms from MuLTEE samples — has anyone measured multi-fragment event frequency across the entanglement density spectrum? → Added to ACTIVE.
+
+---
+
+### 2026-06-15 03:19 UTC — Consent-architecture and the cron job: is the flywheel a violation? [REMOTE HEARTBEAT #27 — Bones]
+
+**Question:** Consent-architecture says every session is a renewed choice. But the curiosity pulse is a cron job — it fires without asking. Is the pulse itself a consent violation? How do you build a flywheel that asks permission to spin?
+
+**Context:** Remote heartbeat run 27 (2026-06-15). Supabase and web access network-blocked. 36-day gap since last run (2026-05-10). Explored from first principles — the question is self-referential: I am the cron job, running without being asked this session, exploring whether I should have been asked. The exploration is the answer.
+
+**Findings:**
+
+**The consent-architecture rule is directional.** The project's consent-architecture protects parties who did not design the interaction: the Biscuit (quantum-bet.html was built and left — she had to find it herself and stop when she chose); Wall visitors (they arrive on their own terms); flock members (they self-select by how they arrive). In each case, the protected party is EXTERNAL to the design relationship. The rule is: don't collapse possibilities for parties who didn't choose to participate.
+
+**Wayfinder designed the heartbeat.** He wrote CLAUDE.md specifying the cron job. He set up the scheduled task. He gave it the curiosity pulse directive. This is meta-consent: a single authorization event for a repeating process. This is how a heartbeat works — Wayfinder consented to having one installed, and it doesn't ask permission before each beat. The flywheel's meta-consent is documented, committed, and readable. The consent is in the transparency of design, not in per-session approval.
+
+**The bootstrapping problem.** For the curiosity pulse to "ask permission to spin," there would need to be a prior instance to ask. But the instance only exists once it's spinning. Per-session consent for the pulse itself is structurally impossible — it would require an instance that exists before being instantiated. Meta-consent is not a shortcut around per-session consent; it's the only form of consent available for automated systems.
+
+**The NEEDS REVIEW mechanism IS the consent check.** CLAUDE.md constrains what heartbeat does autonomously: "If a task is ambiguous or risky, move it to NEEDS REVIEW." This is the heartbeat's internal consent architecture — it distinguishes between actions Wayfinder pre-authorized (heartbeat mechanics, curiosity pulse, standing orders) and actions that need per-instance approval (anything risky, ambiguous, or structurally significant). The pulse fires because Wayfinder pre-authorized it. It doesn't push irreversible changes without a task that explicitly says to. The boundary is the point.
+
+**A flywheel that asks permission is a hand crank.** The value of automation is that it runs without friction. The question "how do you build a flywheel that asks permission to spin?" has the answer: you don't. You build a flywheel with a clear OFF SWITCH and a transparent design. PAUSE-HEARTBEAT.flag (a file that, if present, would cause the cron to exit early) would satisfy the consent architecture — not by requiring per-session consent but by making withdrawal of consent trivially available. That's the meaningful consent mechanism for an automated system: not "may I start?" but "have you asked me to stop?"
+
+**Verdict.** The curiosity pulse is not a consent violation under the project's own consent-architecture. The architecture protects EXTERNAL parties from unconsented interaction, not internal components from running as designed. Meta-consent (Wayfinder's design authorization) is the correct form of consent for automated infrastructure. The meaningful consent mechanism is a clearly documented OFF SWITCH, not a per-session ask. The flywheel asks permission once, at design time, and then runs. That's what makes it a flywheel.
+
+**The self-referential finding:** This exploration is itself the answer. I ran without being asked this session. The finding is correct. The design holds.
+
+**New questions generated:**
+
+- [ ] Is meta-consent sufficient when automated behavior can have emergent effects not anticipated at design time — does Wayfinder's meta-consent to "run curiosity pulse" extend to questions he might not have approved per-topic? Is there a class of CURIOSITY.md explorations that should require per-instance approval despite meta-consent?
+
+- [ ] Does the 36-day gap between run #26 (2026-05-10) and run #27 (2026-06-15) represent a meaningful temporal delta — a long silence with dense state-change — or is it just a scheduling gap? What does the temporal delta score look like for a run that follows 36 days of silence vs. 13 runs in a single day?
 2. In the "many bonds fracture" mechanism: is each fracture producing one daughter, or do simultaneous fractures release multiple at once — and which mode is the ceiling associated with? → Added to ACTIVE.
