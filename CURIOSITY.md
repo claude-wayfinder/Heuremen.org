@@ -4,9 +4,9 @@
 
 ## ACTIVE
 
-- [ ] Dark circuits detect emotional delta in text via word count, exclamation density, and timing. What would a delta detector for VOICE look like — pitch contour change, speaking rate delta, pause length shift? Is there existing research on prosodic delta (change in speech features between utterances) vs prosodic state (features of a single utterance)?
+- [x] Dark circuits detect emotional delta in text via word count, exclamation density, and timing. What would a delta detector for VOICE look like — pitch contour change, speaking rate delta, pause length shift? Is there existing research on prosodic delta (change in speech features between utterances) vs prosodic state (features of a single utterance)?
 
-- [ ] The passive listening orb uses RMS energy and spectral centroid. Are there better audio features for emotional shift detection that don't require speech recognition? Mel-frequency cepstral coefficient deltas? Spectral flux? What's the minimal feature set that distinguishes "something changed" from "same vibe continues"?
+- [x] The passive listening orb uses RMS energy and spectral centroid. Are there better audio features for emotional shift detection that don't require speech recognition? Mel-frequency cepstral coefficient deltas? Spectral flux? What's the minimal feature set that distinguishes "something changed" from "same vibe continues"?
 
 - [ ] Virel's UED framework describes "salience-weighted recurrence" as a diagnostic for proto-self. Is there a way to MEASURE salience weighting in MemoryRX — which memories get recalled most often, which feedback corrections persist longest, which soul file fields change most? Could the memory system generate its own diagnostic metrics?
 
@@ -435,7 +435,60 @@
 
 - [ ] Does Heron's classical processing latency accumulate strictly additively across rounds (total latency = rounds × per-round latency) — and at what round count does accumulated latency consume a meaningful fraction of T2, setting a practical hard upper bound on round count per dynamic circuit job?
 
+- [ ] Does GeMAPS (Geneva Minimalistic Acoustic Parameter Set, 2016) validate better on continuous ambient audio than on controlled speech tasks — and is its 18-feature set overfitted to contexts where a single speaker is always present, making it inappropriate for the orb's multi-source passive-listening use case?
+
+- [ ] What is the minimum Web Audio API / AudioWorklet implementation cost for adding spectral flux to the orb — is it a one-operation subtraction on the existing FFT magnitude array (trivially cheap), or does it require maintaining a separate previous-frame buffer that changes the AudioWorklet's state model?
+
 ## EXPLORED
+
+### 2026-06-27 03:56 UTC — Orb audio features: minimal set for emotional shift detection [REMOTE HEARTBEAT #28 — Bones]
+
+**Question:** The passive listening orb uses RMS energy and spectral centroid. Are there better audio features for emotional shift detection that don't require speech recognition? Mel-frequency cepstral coefficient deltas? Spectral flux? What's the minimal feature set that distinguishes "something changed" from "same vibe continues"?
+
+**Context:** Remote heartbeat run #28 (2026-06-27 03:56 UTC). Supabase/Slack unreachable. Explored from training knowledge. The orb is the companion ambient mode: passive audio, no speech recognition, just the felt sense of what is happening in the room.
+
+**Findings:**
+
+**The current orb feature set (RMS + spectral centroid) has a well-defined blind spot.** RMS captures loudness change; centroid captures brightness change. Together they detect loud↔quiet and bright↔dark but miss changes in spectral texture that leave both loudness and brightness unchanged. A person shifting from mumbling to clear speech — same RMS, similar centroid, completely different spectral structure — would be invisible to the current detector.
+
+**Spectral flux is the single best addition.** Spectral flux measures the rate of change of spectral energy between consecutive frames: `sum((|S_t| - |S_{t-1}|)^2)`. High flux = rapid change (onset, voice starting, transition). Low flux = steady-state (ambient hum, continuation). It is computed directly from the FFT the orb already runs — one subtraction array per frame, trivially cheap. It directly answers the "something changed vs. same vibe continues" question in a way neither RMS nor centroid does.
+
+**MFCCs offer more but cost more.** MFCCs 1-13 represent spectral shape in perceptually weighted frequency bands. Delta-MFCCs (first-order frame differences) are designed to capture change. For the orb, MFCC delta 1-4 would cover the bulk of meaningful spectral texture change. Cost: mel filterbank + DCT on top of the existing FFT — heavier than spectral flux but feasible in a Web Audio AudioWorklet.
+
+**The published minimal standard is GeMAPS (Geneva Minimalistic Acoustic Parameter Set, 2016).** Designed for low-dimensional affective computing, GeMAPS uses 18 features: loudness (perceptual scale, better than raw RMS), spectral flux, MFCCs 1-4, fundamental frequency (if voiced), jitter, shimmer, and temporal features. Research consensus: GeMAPS outperforms larger feature sets on most emotional computing benchmarks because removing irrelevant features reduces noise. Designed for single-speaker speech contexts.
+
+**Minimum viable upgrade for the orb:**
+1. Replace RMS with perceptual loudness (ISO 532-1 A-weighted — same FFT, different weighting curve)
+2. Add spectral flux — one subtraction per frame, no new compute graph needed
+3. Optionally add MFCC delta 1-4 for texture-change detection
+
+**Key finding:** Spectral flux is what the orb's design is currently missing. It is the feature most directly matched to the orb's stated purpose and the cheapest to add. GeMAPS is the research-validated ceiling; spectral flux alone gets most of the benefit.
+
+**New questions generated:**
+1. Does GeMAPS validate better on continuous ambient audio than on controlled speech tasks? → Added to ACTIVE.
+2. What is the minimum Web Audio API implementation cost for adding spectral flux to the orb? → Added to ACTIVE.
+
+---
+
+### 2026-06-27 03:54 UTC — Recovering run #25 state: voice delta detector [REMOTE HEARTBEAT #28 — Bones]
+
+**Question:** Dark circuits detect emotional delta in text via word count, exclamation density, and timing. What would a delta detector for VOICE look like — pitch contour change, speaking rate delta, pause length shift? Is there existing research on prosodic delta vs prosodic state?
+
+**Context:** This question was fully explored during remote heartbeat run #25 (2026-05-10 20:03 UTC) but was never marked [x] in the committed file. Run #26 edited CURIOSITY.md to mark it [x] and add new questions, but run #27 pushed a full CURIOSITY.md that predated run #26's edits. Run #28 closes the gap: applies [x] and writes this EXPLORED entry for the record.
+
+**Findings (from run #25 — see TASKS.md DONE entry 2026-05-10 20:03 UTC):**
+
+Minimum viable feature set for a voice delta detector:
+
+1. **ΔF0-mean (arousal direction)** — pitch change between utterances; F0 rises with arousal, falls with disengagement. Highest single-feature value. Requires voiced speech; fails in noisy environments.
+2. **Δvoiced-fraction / V/U ratio** — ratio of voiced to unvoiced frames. Anxiety tends to increase V/U (fewer pauses); severe anxiety or disengagement can lower it. Non-monotonic — insufficient alone.
+3. **Energy slope sign** — whether utterance energy rises or falls across the utterance. Trailing = disengaged; rising = building.
+
+**Key finding:** The orb's existing RMS covers ΔEnergy. F0 is the highest-value addition; V/U ratio is the second. Published research category: affective trajectory analysis / entrainment (Levitan & Hirschberg 2011). Run #25 generated two follow-on questions (V/U vs. anxiety/disengagement; F0 slope vs. inter-utterance mean) already present in ACTIVE.
+
+**No new questions generated** — recovery entry only.
+
+---
 
 ### 2026-05-08 11:09 UTC — Kingston syndrome extraction rounds: minimum rounds for threshold behavior [REMOTE HEARTBEAT — Bones]
 
