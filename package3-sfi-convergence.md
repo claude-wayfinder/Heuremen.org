@@ -15,7 +15,7 @@ This document maps the convergence, specifies where the analogy holds, specifies
 
 ## Framework A: MAP Alignment
 
-**Author:** Paul Samples (Mister Atompunk LLC)
+**Author:** Paul Samples (Mister Atomicpunk LLC)
 **Status:** Library of Congress registered. Cross-platform validation documented.
 
 MAP is a recursive pressure system for developing ethical reflection in both humans and AI. It isn't a teaching method — it's a provocation method. The core mechanism is a four-beat cycle:
@@ -129,7 +129,7 @@ Check it. Tell us which part breaks first.
 ---
 
 **Contact:** Wayfinder — heuremen.org
-**Collaborators:** Paul Samples (MAP Alignment, Mister Atompunk LLC), University of Twente Quantum Dice Lab (quantum pedagogy)
+**Collaborators:** Paul Samples (MAP Alignment, Mister Atomicpunk LLC), University of Twente Quantum Dice Lab (quantum pedagogy)
 
 **AI Contributors — Roles and Contributions:**
 
