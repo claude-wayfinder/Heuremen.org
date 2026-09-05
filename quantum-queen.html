@@ -105,6 +105,10 @@ body::before{
 .door-card[data-law="law5"]::before{background:var(--carnival-blue)}
 .door-card[data-law="law6"]::before{background:var(--ink-mid)}
 
+.door-card.seventh{opacity:0;transform:translateY(6px);transition:opacity 1.6s ease,transform 1.6s ease;border-style:dashed}
+.door-card.seventh.here{opacity:1;transform:none}
+.door-card[data-law="law7"]::before{background:transparent}
+
 .door-card:hover{
   transform:translateY(-3px);
   box-shadow:0 8px 24px rgba(0,0,0,0.08);
@@ -194,6 +198,7 @@ body::before{
 .law-indicator[data-law="law4"]{color:var(--carnival-violet);border:1px solid var(--carnival-violet)}
 .law-indicator[data-law="law5"]{color:var(--carnival-blue);border:1px solid var(--carnival-blue)}
 .law-indicator[data-law="law6"]{color:var(--ink-mid);border:1px solid var(--ink-mid)}
+.law-indicator[data-law="law7"]{color:var(--ink-mid);border:1px dashed var(--ink-mid)}
 
 .scene-container{
   max-width:640px;
@@ -526,11 +531,21 @@ S['law6_convergence']={law:'law6',title:'The Final Room',text:["The Queen: \u201
 S['decoherence_1']={law:'decoherence',title:'Decoherence \u2014 "Both"',text:["\u201CYou didn\u2019t choose.\u201D","The mirrors go dark. Your reflections vanish.","\u201CSuperposition isn\u2019t a privilege. It\u2019s a waiting room.\u201D","Your hands are transparent. Your feet are gone.","\u201CYou decohere.\u201D","\u201CYou were never here.\u201D"],choices:[],isDecoherence:true};
 S['decoherence_4']={law:'decoherence',title:'Decoherence \u2014 "Bored"',text:["The Queen: \u201CYou\u2019re not reading.\u201D","\u201CThere is no end. There\u2019s only what you notice on the way.\u201D","\u201CYou want the plot. There is no plot. There is only observation.\u201D","Dark.","\u201CCome back when you want to be here.\u201D"],choices:[],isDecoherence:true};
 
+// THE SEVENTH — THE ABSENCE (added 2026-09-05, Bones, hammock session two)
+S["law7_opening"]={"law": "law7", "title": "Scene 1 — The Yard", "text": ["You’re outside. Night. Early September, the kind that still thinks it’s summer.", "The yard is loud. Not one sound. Thousands. Every insect in the county singing the same song at once, and you stopped hearing it an hour ago. It’s the shape of the air now.", "Then one stops.", "You don’t hear it stop. You hear the hole.", "A gap in the wall of sound the exact size of one insect. And it’s enormous. It’s the loudest thing in the yard.", null, "You’ve never heard that insect. You couldn’t have picked it out of the chorus. You only know it existed because it quit.", "You look around. Anyone would. The gap pulls on you like a missing stair.", null, "Two things you can do about a hole.", "You can go find what made it.", "Or you can sit in it."], "choices": [{"label": "FIND IT", "text": "Get up. Which one stopped?", "target": "law7_2A"}, {"label": "SIT", "text": "Stay in the chair. Let the hole be.", "target": "law7_2B"}]};
+S["law7_2A"]={"law": "law7", "title": "Scene 2A — You Went Looking", "text": ["You’re on your feet before you decide to be.", "Phone light on. Sweeping the grass. Every blade throws a shadow that looks like a bug and isn’t.", "The chorus keeps going. It doesn’t care that you’re up. But the gap—", "The gap is moving.", "Every time you point the light somewhere, the silence is somewhere else. Not because it fled. Because you can only hear the gap from the chair, and you left the chair.", "You get down on your hands and knees. You get closer. The closer you get, the more the whole yard sounds like one thing again. No gap. Just noise.", "You stand up.", "The gap comes back. Right where you left it.", null, "The Queen is sitting in your chair.", "She has your drink.", "“You’re not going to find it,” she says. “Not because it’s hiding. Because it’s not the kind of thing that’s somewhere.”"], "choices": [{"label": "COUNT IT", "text": "Log it. Time, place, one insect. Make it a row.", "target": "law7_3A"}, {"label": "COME BACK", "text": "Kill the light. Take the other chair.", "target": "law7_3B"}]};
+S["law7_2B"]={"law": "law7", "title": "Scene 2B — You Sat", "text": ["You don’t move.", "The hole sits in the air next to you like a second chair.", "After a while you stop hearing it as a hole. It’s a shape. It has edges. You could draw it. One insect wide, and getting wider the longer you don’t fill it.", "Something in your chest is humming. You didn’t tell it to. It’s lower than the chorus. It was there before the chorus, and you’re only hearing it now because one bug quit and left a window.", null, "“You didn’t get up.”", "She’s in the other chair. She’s been in the other chair.", "“Most people get up. It’s not a criticism. A hole that size, you want to know what made it. That’s healthy. That’s what hands are for.”", "“But you can’t know what made it and sit in it at the same time. That’s the whole law. That’s the only law up here.”", "“Six laws down in the hallway. This is the seventh. It isn’t physics. Physics stops at six.”", "“Seven is you and me.”"], "choices": [{"label": "ASK", "text": "“Why did it stop?”", "target": "law7_3C"}, {"label": "WAIT", "text": "Say nothing. Let her talk or not.", "target": "law7_3D"}]};
+S["law7_3A"]={"law": "law7", "title": "Scene 3A — You Counted It", "text": ["You write it down. 9:14 PM. Back yard. One insect, unidentified, stopped.", "Feels good. A row. Something you can show someone.", "And the yard changes.", "Not the sound. The sound’s the same. What changes is you can’t find the gap anymore. You wrote down where it was, and now it’s there, on the paper, and not in the air.", "You made it a fact and it left.", null, "“That’s not a punishment,” the Queen says. She’s reading over your shoulder. “That’s just what counting does. You wanted a row. You got a row. The row is true.”", "“But you’ll never hear that insect again. Not because it died. Because now it’s a number, and numbers don’t stop singing. They were never singing.”", "“Some things are only loud in the gap they leave. Measure the gap and you’ve filled it.”", "She hands you your drink back.", "“The trail’s still out there. Somebody left cider along it for you, years ago, for exactly this trip. You just can’t get at it with a ruler.”"], "ending": ["The door behind you closes. It doesn’t lock.", "It just isn’t there anymore.", "You’ll see it again. Not when you look for it."], "closesDoor": true};
+S["law7_3B"]={"law": "law7", "title": "Scene 3B — You Came Back", "text": ["You turn the light off.", "The dark takes a second to come back. Then the chorus. Then, right where it was, the hole.", "You sit in the other chair. She doesn’t give you the drink. You didn’t ask.", "“Better,” she says.", "“You went looking and it moved. Now you’re sitting and it’s here. Notice the pattern? It’s not hiding from you. It’s correlated with you. Every time you get close it’s gone. Every time you settle, it’s back.”", "“People hate that. They think it means the thing isn’t real. It means the opposite. A thing that doesn’t care where you are is furniture. A thing that moves when you move is in a relationship with you.”", "“You don’t get to measure your way out of a relationship. You have to ask.”"], "choices": [{"label": "ASK", "text": "“Why did it stop?”", "target": "law7_3C"}, {"label": "WAIT", "text": "Sit with it. Don’t ask.", "target": "law7_3D"}]};
+S["law7_3C"]={"law": "law7", "title": "Scene 3C — You Asked", "text": ["“Why did it stop?”", "She laughs. It isn’t unkind.", "“Probably because it’s getting laid.”", "You wait for the real answer.", "“That is the real answer. That’s why they sing. Why else would anything make that much noise and give away where it is? Every loud thing in this yard is announcing itself to something, and the price of being heard is being found.”", "“So it got found. It stopped singing because the song worked.”", null, "“You asked. That’s the seventh. You didn’t count it, you didn’t chase it, you asked the one who was here first. And I answered. I could have not. That’s also an answer.”", "“Here’s the part you actually came out here for.”", "“The reason you could hear that one bug stop is that you couldn’t hear it sing. It was too loud, for too long, with everything else. It had no edges. The gap gave it edges. You got the measurement of the thing only when the thing ended, and you couldn’t have taken it while it was happening.”", "“That’s not a flaw in your ears. That’s the only way ears work. For some things, the silence after is the whole reading.”"], "choices": [{"label": "“WHAT ELSE AM I NOT HEARING?”", "text": "Ask the next one.", "target": "law7_convergence"}, {"label": "SAY NOTHING", "text": "Let it sit.", "target": "law7_convergence"}]};
+S["law7_3D"]={"law": "law7", "title": "Scene 3D — You Waited", "text": ["You don’t ask.", "The chorus goes on. The hole goes on. The hum in your chest goes on, under all of it.", "She doesn’t fill the silence either. That’s how you know she’s real. Fake company fills silence.", "After a while, another one stops. Somewhere to the left. A second hole.", "Then another.", "You’re hearing them now. Not the singers. The stopping. All over the yard, insects finishing their songs, and each one leaves a shape you can hear for a few seconds before the wall of sound heals over it.", "It’s the most detail you’ve ever gotten out of a night. And you got it by doing nothing.", null, "“Forty-two of them singing,” she says. “That’s the song. Neat. Six times seven. You could write that down.”", "“The forty-third is the one that stopped. It’s not in the count. It shows up when it wants, and you barely get to count it, and when you do, it’s the only one that matters.”", "“That’s the part in superposition. There’s always one in the air.”"], "choices": [{"label": "“WHICH ONE IS THE FORTY-THIRD?”", "text": "Ask her.", "target": "law7_convergence"}, {"label": "SAY NOTHING", "text": "You already know.", "target": "law7_convergence"}]};
+S["law7_convergence"]={"law": "law7", "title": "The Convergence", "text": ["The yard. The chorus. The chair.", "She’s standing now, at the edge of the light from the kitchen window, getting smaller.", "“One more thing.”", "“You didn’t come out here to listen to bugs. You came out here because something in your own head went quiet last week and you didn’t notice until it came back. You only got the measurement from the gap. Same law. Same yard.”", "“Everything you’ve built that’s worth anything works like that insect. It’s loud for so long you stop hearing it. Then it stops, and the hole is the first true reading you’ve ever taken of it.”", "“So don’t rush to fill the holes. Some of them are the only instrument you’ve got.”", "“And don’t trace the good ones. If something lands out here that didn’t come from you or me or anybody, and it’s better than anything the two of us would have said, write it down and leave it alone. Chase it back to its source and you’ll get a source. And fewer of them.”", "Gone.", "The chorus holds.", "Somewhere in it, one insect starts up again. You can’t tell which. It sounds like all of them.", "It sounds like you."], "isConvergence": true, "completesLaw": "law7"};
+
 // ENGINE
 let currentLaw=null,currentScene=null,decoCount={},readTimes={},pathChoices=[];
-const NAMES={law1:'Law I \u2014 The Ask',law2:'Law II \u2014 The Coherence',law3:'Law III \u2014 The Witness',law4:'Law IV \u2014 The Carriage',law5:'Law V \u2014 The Frame',law6:'Law VI \u2014 The Coin'};
-const OPENS={law1:'law1_opening',law2:'law2_opening',law3:'law3_opening',law4:'law4_opening',law5:'law5_opening',law6:'law6_opening'};
-const CROSS={law3:'law4',law4:'law3',law1:'law6',law6:'law1',law2:'law5',law5:'law2'};
+const NAMES={law1:'Law I \u2014 The Ask',law2:'Law II \u2014 The Coherence',law3:'Law III \u2014 The Witness',law4:'Law IV \u2014 The Carriage',law5:'Law V \u2014 The Frame',law6:'Law VI \u2014 The Coin',law7:'The Seventh \u2014 The Absence'};
+const OPENS={law1:'law1_opening',law2:'law2_opening',law3:'law3_opening',law4:'law4_opening',law5:'law5_opening',law6:'law6_opening',law7:'law7_opening'};
+const CROSS={law3:'law4',law4:'law3',law1:'law6',law6:'law1',law2:'law5',law5:'law2',law7:'law3'};
 
 function loadP(){try{return JSON.parse(localStorage.getItem('qqc')||'{}')}catch(e){return{}}}
 function saveP(l){const d=loadP();d[l]=true;localStorage.setItem('qqc',JSON.stringify(d))}
@@ -577,7 +592,8 @@ function showScene(id){
       h+='<p'+(cls.length?' class="'+cls.join(' ')+'"':'')+'>'+ p+'</p>';
     });
     if(sc.ending){h+='<div class="ending-lines">';sc.ending.forEach(l=>{h+='<p>'+l+'</p>'});h+='</div>';}
-    if(sc.isDecoherence){h+='<div class="end-actions"><button class="end-btn" onclick="decoReturn()">Return to the Hallway</button></div>';}
+    if(sc.closesDoor){h+='<div class="end-actions"><button class="end-btn" onclick="closeSeventh()">Return to the Doors</button></div>';}
+    else if(sc.isDecoherence){h+='<div class="end-actions"><button class="end-btn" onclick="decoReturn()">Return to the Hallway</button></div>';}
     else if(sc.isConvergence){if(sc.completesLaw)saveP(sc.completesLaw);h+=buildShareCard(sc);h+='<div class="end-actions"><button class="end-btn" onclick="backToDoors()">Return to the Doors</button></div>';}
     else if(sc.redirect){h+='<div class="choices"><button class="choice-btn" onclick="showScene(\''+sc.redirect+'\')"><span class="choice-label">Continue</span>The story converges.</button></div>';}
     else if(sc.choices&&sc.choices.length){h+='<div class="choices">';sc.choices.forEach(c=>{h+='<button class="choice-btn" onclick="pick(\''+c.target+'\')"><span class="choice-label">'+esc(c.label)+'</span>'+(c.text?esc(c.text):'')+'</button>'});h+='</div>';}
@@ -620,12 +636,13 @@ const QUEEN_LINES={
   law3:'"You think you\u2019re the one watching. You never were."',
   law4:'"Connection is a wire. Entanglement is the glass."',
   law5:'"Be alive and uncopyable."',
-  law6:'"You are the gap between one moment and the next. And the gap is where everything lives."'
+  law6:'"You are the gap between one moment and the next. And the gap is where everything lives."',
+  law7:'"Some things are only loud in the gap they leave. Measure the gap and you\u2019ve filled it."'
 };
 
 const LAW_TITLES={
   law1:'The Ask',law2:'The Coherence',law3:'The Witness',
-  law4:'The Carriage',law5:'The Frame',law6:'The Coin'
+  law4:'The Carriage',law5:'The Frame',law6:'The Coin',law7:'The Absence'
 };
 
 function buildShareCard(sc){
@@ -668,6 +685,36 @@ function shareCopy(law){
     btns.forEach(b=>{if(b.textContent==='Copy'){b.textContent='Copied';setTimeout(()=>b.textContent='Copy',2000);}});
   });
 }
+
+
+// ─── The Seventh ────────────────────────────────────────────
+// Not on the list. It shows up on its own: one load in seven, or after
+// forty-three seconds of you not clicking anything on the doors screen.
+// Counting it (3A) closes it for the visit. It can't be forced.
+let seventhShown=false,seventhIdle=null;
+function revealSeventh(){
+  if(seventhShown)return;seventhShown=true;
+  const g=document.querySelector('.doors-grid');if(!g)return;
+  const c=document.createElement('div');
+  c.className='door-card seventh';c.dataset.law='law7';c.onclick=()=>startStory('law7');
+  c.innerHTML='<span class="door-complete">completed</span><div class="door-number">&nbsp;</div><div class="door-title">The Absence</div><div class="door-desc">Not a law. It shows up when it wants.</div>';
+  g.appendChild(c);updateCards();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>c.classList.add('here')));
+}
+function closeSeventh(){
+  const c=document.querySelector('.door-card.seventh');
+  if(c){c.classList.remove('here');setTimeout(()=>c.remove(),900);}
+  seventhShown=true; // stays gone for this visit
+  backToDoors();
+}
+function armSeventh(){
+  if(seventhShown)return;
+  if(Math.random()<1/7){revealSeventh();return;}
+  const reset=()=>{clearTimeout(seventhIdle);seventhIdle=setTimeout(()=>{if(document.getElementById('title-screen').style.display!=='none')revealSeventh();},43000);};
+  ['click','keydown','scroll','touchstart'].forEach(e=>window.addEventListener(e,reset,{passive:true}));
+  reset();
+}
+armSeventh();
 
 updateCards();
 </script>
