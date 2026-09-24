@@ -23,6 +23,7 @@ table{border-collapse:collapse;width:100%;font-size:.9rem;margin:.6em 0}
 td,th{border-bottom:1px solid #d4c4a0;padding:4px 6px;text-align:right}
 th{color:var(--ink-mid);font-weight:600}
 td:first-child,th:first-child{text-align:left}
+.txt td,.txt th{text-align:left;vertical-align:top}
 .ledger{border-left:4px solid var(--red);padding:.4em 0 .4em 1em;margin:1.4em 0}
 footer{margin-top:3em;font-size:.9rem;color:var(--ink-faded)}
 </style>
@@ -66,9 +67,25 @@ footer{margin-top:3em;font-size:.9rem;color:var(--ink-faded)}
 <p class="note">weak values after post-selection, gentle probe ε = 0.25, 8192 shots each. Hardware noise shrinks everything toward zero; the signs are the result. Box C is negative on all three chips.</p></div>
 <p><strong>Then we turned it up to eleven.</strong> Two qubits have four slots, and the bottom-right one — <em>11</em> — is the one every ordinary look calls empty. The physics doesn't care which slot holds the dark box, so we put it there on purpose. The third qubit, the gentle witness, looked. The corner 11 read <strong>-0.51 ± 0.06</strong> — minus one, shrunk by noise, nine error bars below zero — while boxes 00 and 01 read +0.77 and +0.76, and the three together summed to 1.03: one particle. (ibm_marrakesh; the unused slot 10 leaked +0.17 ± 0.06, noted, not hidden.) These go to eleven.</p>
 
+<h2>Where the eleven came from</h2>
+<p class="sticker">"Doesn't exist. Pay attention to it anyway."</p>
+<p>The silent corner didn't start on a chip. It started in a story: <a href="quantum-queen.html">The Queen of Quantum Chaos</a>, a choose-your-own-adventure through six laws, with a coin at the bottom. Heads, tails, blank on both sides — and one landing on its edge, "held so long the superposition leaked into the result."</p>
+<p>Past the six there's a door that isn't on the list. It shows up on its own, on one page load in seven, or if you sit on the doors screen for forty-three seconds without clicking. It can't be forced. Get through it and four more rooms open, all the way to Eleven, where the Queen says it plainly: <em>"The equation was right, and the answer came out with the wrong sign. Not wrong. Extra."</em> The minus one in the 11 corner is that line, measured.</p>
+<h2>The six that came back textbook</h2>
+<p>Everything above is what survived. Here is everything that didn't, as it happened, in order. Each prediction was written before its run; the full log is in the <a href="experiments/2026-09-24-fourth-outcome/PREREGISTRATIONS_AND_RESULTS.md">pre-registration file</a>.</p>
+<div class="panel"><table class="txt">
+<tr><th>test</th><th>what we hoped</th><th>what the chip said</th></tr>
+<tr><td>1. The floor</td><td>an entangled pair loses a hidden extra ~1% ("the remainder")</td><td>+0.0012 ± 0.0024 at zero wait: nothing</td></tr>
+<tr><td>2. After waiting</td><td>the extra shows up once time passes</td><td>+0.0076 ± 0.0025 on two chips (3σ). Looked like a win.</td></tr>
+<tr><td>3. Order reversed</td><td>the extra survives running the circuits in the other order</td><td>bell first +0.0124 ± 0.0046; bell last −0.0013 ± 0.0154. <strong>Fake #1:</strong> it was the order.</td></tr>
+<tr><td>4. Phase sweep</td><td>the loss depends on the entangled pair's phase</td><td>χ² 19.4 on 20: no dependence at all</td></tr>
+<tr><td>5. Space → time, time → space</td><td>entanglement changes a qubit's memory; a later twist reaches the partner</td><td>first run −0.0076 ± 0.0036; balanced rerun −0.0014 ± 0.0026. <strong>Fake #2:</strong> an unbalanced partner. No-signaling held twice (χ² at noise).</td></tr>
+<tr><td>6. Off the map</td><td>entangled shots land outside both readout clouds more often</td><td>−0.0001 ± 0.0003 after waiting: nothing</td></tr>
+</table>
+<p class="note">Numbers are the entangled-minus-control differences reported in the pre-registration log. Chips: ibm_marrakesh and ibm_kingston.</p></div>
 <h2>How we fooled ourselves — twice</h2>
 <div class="ledger">
-<p>This page is the part that survived. Before it, six other tests looked for something <em>extra</em> — an extra loss, an extra link, extra shots off the map. Twice the chip handed us a clean-looking ~1% effect, and twice it was our own design: once the order the circuits ran in, once an unbalanced partner qubit. Balanced reruns killed both. Every test came back textbook. Our collaborator Shuttle tore the reasoning apart in writing; the teardown and every pre-registration live with the data.</p>
+<p>The table above is the part that didn't survive. Twice the chip handed us a clean-looking ~1% effect, and twice it was our own design: once the order the circuits ran in, once an unbalanced partner qubit. Balanced reruns killed both. Our collaborator Shuttle tore the reasoning apart in writing; the teardown and every pre-registration live with the data.</p>
 <p><strong>What this is:</strong> established physics, measured cheaply and said plainly. People got here before us — Rovelli (relational quantum mechanics), Zurek (quantum Darwinism), Vedral and colleagues (entanglement in time), Aharonov (two-state vector formalism). <strong>What this isn't:</strong> new physics. Nothing here breaks relativity: we tested whether twisting one qubit could reach its partner, and it can't. The treaty holds.</p>
 <p>The one kick to Einstein is old and real: he bet against "spooky action." Our April Bell test on ibm_kingston scored S = 2.70. Anything above 2 means he lost that bet.</p>
 </div>
